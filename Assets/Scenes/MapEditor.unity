@@ -991,7 +991,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194227}
-  mouseRefecence: {fileID: 744500820}
+  virtualCamera: {fileID: 1624198486}
+  minZoom: -40
+  maxZoom: -10
 --- !u!4 &744500822
 Transform:
   m_ObjectHideFlags: 0
@@ -1806,7 +1808,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3339844, y: 1}
+    m_SensorSize: {x: 1.3325943, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16

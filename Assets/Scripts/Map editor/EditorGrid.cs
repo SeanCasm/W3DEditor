@@ -35,9 +35,13 @@ namespace WEditor.Scenario
         public void SetPreviewTileOnAim(Vector2 pos)
         {
             Vector3Int cellPos = previewTilemap.WorldToCell(pos);
-                previewTilemap.SetTile(currentWorldPos, null);
+            if (tilemap.HasTile(cellPos))
+            {
+                previewTilemap.SetTile(currentWorldPos, gridTile);
                 previewTilemap.SetTile(cellPos, helperTile);
                 currentWorldPos = cellPos;
+            }
+
         }
 
     }

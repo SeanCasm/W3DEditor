@@ -11,10 +11,11 @@ namespace WEditor.Input
     {
         public static MouseHandler instance;
         [SerializeField] Camera mainCamera;
-        [SerializeField] GameObject mouseRefecence;
+        [Header("Scroll settings")]
+        [SerializeField] Transform virtualCamera;
+        [SerializeField] float minZoom, maxZoom;
         private SpriteRenderer cursor;
         private WInput wInput;
-        public GameObject Mouse { get => mouseRefecence; }
         public Sprite cursorSprite { get => cursor.sprite; set => cursor.sprite = value; }
         private Tile tileRef;
         private Vector2 mousePosition, worldPosition;
@@ -35,7 +36,7 @@ namespace WEditor.Input
         public void OnAim(InputAction.CallbackContext context)
         {
             mousePosition = context.ReadValue<Vector2>();
-            worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10));
+            worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, virtualCamera.position.z * -1));
             transform.position = worldPosition;
             EditorGrid.instance.SetPreviewTileOnAim(worldPosition);
         }
@@ -45,6 +46,19 @@ namespace WEditor.Input
             if (context.started)
             {
                 EditorGrid.instance.SetTile(worldPosition, tileRef);
+            }
+        }
+
+        public void OnZoom(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                float cameraZoom = context.ReadValue<Vector2>().normalized.y;
+                Vector3 cameraPos = virtualCamera.position;
+                if (cameraPos.z >= minZoom && cameraPos.z <= maxZoom)
+                {
+                    virtualCamera.position = new Vector3(cameraPos.x, cameraPos.y, Mathf.Clamp(cameraPos.z + cameraZoom, minZoom, maxZoom));
+                }
             }
         }
     }
