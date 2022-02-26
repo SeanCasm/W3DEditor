@@ -26,7 +26,7 @@ namespace WEditor.Scenario
             float posX = dropdownRect.anchoredPosition.x;
             while (time < dropdownTime)
             {
-                dropdownRect.anchoredPosition = new Vector2(posX += speed * Time.deltaTime * currentDir, 0);
+                dropdownRect.anchoredPosition = new Vector2(posX += speed * Time.deltaTime * currentDir, dropdownRect.anchoredPosition.y);
                 time += Time.deltaTime;
                 yield return null;
             }

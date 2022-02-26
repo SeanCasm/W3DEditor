@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 using System;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Tilemaps;
-using WEditor.Input;
+using WEditor.ScenarioInput;
 using UnityEngine.UI;
 
 namespace WEditor.UI

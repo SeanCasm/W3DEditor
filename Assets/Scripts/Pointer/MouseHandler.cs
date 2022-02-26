@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using WEditor.Scenario;
 using static WInput;
-namespace WEditor.Input
+namespace WEditor.ScenarioInput
 {
     public class MouseHandler : MonoBehaviour, IMapEditorActions
     {
@@ -45,7 +45,7 @@ namespace WEditor.Input
         {
             if (context.started)
             {
-                EditorGrid.instance.SetTile(worldPosition, tileRef);
+                if (tileRef != null) EditorGrid.instance.SetTile(worldPosition, tileRef);
             }
         }
 
