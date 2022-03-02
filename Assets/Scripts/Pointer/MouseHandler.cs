@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using WEditor.Scenario;
+using WEditor.Events;
 using static WInput;
 namespace WEditor.ScenarioInput
 {
@@ -24,9 +25,24 @@ namespace WEditor.ScenarioInput
             if (!instance) instance = this;
             else Destroy(this);
             wInput = new WInput();
-            wInput.Enable();
+            wInput.MapEditor.Enable();
             wInput.MapEditor.SetCallbacks(this);
             cursor = GetComponent<SpriteRenderer>();
+
+            GameEvent.instance.onPreviewModeEnter += OnMouseDisabled;
+            GameEvent.instance.onPreviewModeExit += OnMouseEnabled;
+        }
+        private void OnDisable()
+        {
+            GameEvent.instance.onPreviewModeEnter -= OnMouseDisabled;
+            GameEvent.instance.onPreviewModeExit -= OnMouseEnabled;
+        }
+        private void OnMouseEnabled(){
+            wInput.MapEditor.Enable();
+        }
+        private void OnMouseDisabled()
+        {
+            wInput.MapEditor.Disable();
         }
         public void SetAsset(Sprite sprite, Tile tile)
         {
@@ -61,6 +77,8 @@ namespace WEditor.ScenarioInput
                 }
             }
         }
+
+        
     }
 
 }

@@ -12,10 +12,11 @@ namespace WEditor.UI
 {
     public class ItemSelectable : MonoBehaviour
     {
-        [SerializeField] protected Sprite assetSprite;
+        protected Sprite assetSprite;
         private Button button;
         protected void OnEnable()
         {
+            assetSprite = GetComponent<Image>().sprite;
             button = GetComponent<Button>();
             button.onClick.AddListener(Button_SelectItem);
         }
