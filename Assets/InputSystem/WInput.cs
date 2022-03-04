@@ -46,13 +46,13 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Zoom"",
-                    ""type"": ""Value"",
-                    ""id"": ""f6d139e2-0c9d-4cbb-9e9d-7b7940f6fc35"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""Open inventary"",
+                    ""type"": ""Button"",
+                    ""id"": ""4bb30fec-b055-4c15-941e-c2dd2c1b5892"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -80,12 +80,12 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2c3ed340-82fb-4505-8c1e-441cc18fa416"",
-                    ""path"": ""<Mouse>/scroll"",
-                    ""interactions"": """",
+                    ""id"": ""1bfb7d85-8ae0-48fa-84f0-b67d884dd01b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Zoom"",
+                    ""action"": ""Open inventary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -698,6 +698,98 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""MapEditorCamera"",
+            ""id"": ""8be83266-2657-4a2d-a2ec-da3fe3a09d1c"",
+            ""actions"": [
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""0265c546-80ad-45fa-aa17-760ad79728b0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""eadfe3b6-8963-4499-b0d4-9f1038817efa"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""55b5b1f5-f695-4f0c-9446-26811d8cf0cc"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""5b6dcea8-a18c-41df-b7c4-ee6ac35a4428"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1409b675-518d-4883-823b-a3c87d06d7d3"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""59b0e516-4f5b-42d9-8271-0b2300d60d06"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d64115e1-621d-4fbe-a102-424575fdd28d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""8f16295b-2010-43f7-849f-db792319f505"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -706,7 +798,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         m_MapEditor = asset.FindActionMap("MapEditor", throwIfNotFound: true);
         m_MapEditor_Aim = m_MapEditor.FindAction("Aim", throwIfNotFound: true);
         m_MapEditor_Click = m_MapEditor.FindAction("Click", throwIfNotFound: true);
-        m_MapEditor_Zoom = m_MapEditor.FindAction("Zoom", throwIfNotFound: true);
+        m_MapEditor_Openinventary = m_MapEditor.FindAction("Open inventary", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -723,6 +815,10 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         m_MapPreview = asset.FindActionMap("MapPreview", throwIfNotFound: true);
         m_MapPreview_Rotate = m_MapPreview.FindAction("Rotate", throwIfNotFound: true);
         m_MapPreview_Move = m_MapPreview.FindAction("Move", throwIfNotFound: true);
+        // MapEditorCamera
+        m_MapEditorCamera = asset.FindActionMap("MapEditorCamera", throwIfNotFound: true);
+        m_MapEditorCamera_Zoom = m_MapEditorCamera.FindAction("Zoom", throwIfNotFound: true);
+        m_MapEditorCamera_Move = m_MapEditorCamera.FindAction("Move", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -784,14 +880,14 @@ public partial class @WInput : IInputActionCollection2, IDisposable
     private IMapEditorActions m_MapEditorActionsCallbackInterface;
     private readonly InputAction m_MapEditor_Aim;
     private readonly InputAction m_MapEditor_Click;
-    private readonly InputAction m_MapEditor_Zoom;
+    private readonly InputAction m_MapEditor_Openinventary;
     public struct MapEditorActions
     {
         private @WInput m_Wrapper;
         public MapEditorActions(@WInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Aim => m_Wrapper.m_MapEditor_Aim;
         public InputAction @Click => m_Wrapper.m_MapEditor_Click;
-        public InputAction @Zoom => m_Wrapper.m_MapEditor_Zoom;
+        public InputAction @Openinventary => m_Wrapper.m_MapEditor_Openinventary;
         public InputActionMap Get() { return m_Wrapper.m_MapEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -807,9 +903,9 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 @Click.started -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnClick;
                 @Click.performed -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnClick;
                 @Click.canceled -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnClick;
-                @Zoom.started -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnZoom;
-                @Zoom.performed -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnZoom;
-                @Zoom.canceled -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnZoom;
+                @Openinventary.started -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnOpeninventary;
+                @Openinventary.performed -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnOpeninventary;
+                @Openinventary.canceled -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnOpeninventary;
             }
             m_Wrapper.m_MapEditorActionsCallbackInterface = instance;
             if (instance != null)
@@ -820,9 +916,9 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 @Click.started += instance.OnClick;
                 @Click.performed += instance.OnClick;
                 @Click.canceled += instance.OnClick;
-                @Zoom.started += instance.OnZoom;
-                @Zoom.performed += instance.OnZoom;
-                @Zoom.canceled += instance.OnZoom;
+                @Openinventary.started += instance.OnOpeninventary;
+                @Openinventary.performed += instance.OnOpeninventary;
+                @Openinventary.canceled += instance.OnOpeninventary;
             }
         }
     }
@@ -973,11 +1069,52 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         }
     }
     public MapPreviewActions @MapPreview => new MapPreviewActions(this);
+
+    // MapEditorCamera
+    private readonly InputActionMap m_MapEditorCamera;
+    private IMapEditorCameraActions m_MapEditorCameraActionsCallbackInterface;
+    private readonly InputAction m_MapEditorCamera_Zoom;
+    private readonly InputAction m_MapEditorCamera_Move;
+    public struct MapEditorCameraActions
+    {
+        private @WInput m_Wrapper;
+        public MapEditorCameraActions(@WInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Zoom => m_Wrapper.m_MapEditorCamera_Zoom;
+        public InputAction @Move => m_Wrapper.m_MapEditorCamera_Move;
+        public InputActionMap Get() { return m_Wrapper.m_MapEditorCamera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MapEditorCameraActions set) { return set.Get(); }
+        public void SetCallbacks(IMapEditorCameraActions instance)
+        {
+            if (m_Wrapper.m_MapEditorCameraActionsCallbackInterface != null)
+            {
+                @Zoom.started -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnZoom;
+                @Zoom.performed -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnZoom;
+                @Zoom.canceled -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnZoom;
+                @Move.started -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnMove;
+            }
+            m_Wrapper.m_MapEditorCameraActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Zoom.started += instance.OnZoom;
+                @Zoom.performed += instance.OnZoom;
+                @Zoom.canceled += instance.OnZoom;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+            }
+        }
+    }
+    public MapEditorCameraActions @MapEditorCamera => new MapEditorCameraActions(this);
     public interface IMapEditorActions
     {
         void OnAim(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
-        void OnZoom(InputAction.CallbackContext context);
+        void OnOpeninventary(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -995,6 +1132,11 @@ public partial class @WInput : IInputActionCollection2, IDisposable
     public interface IMapPreviewActions
     {
         void OnRotate(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IMapEditorCameraActions
+    {
+        void OnZoom(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
     }
 }

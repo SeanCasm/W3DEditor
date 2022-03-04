@@ -14,7 +14,6 @@ namespace WEditor.ScenarioInput
         [SerializeField] Camera mainCamera;
         [Header("Scroll settings")]
         [SerializeField] Transform virtualCamera;
-        [SerializeField] float minZoom, maxZoom;
         private SpriteRenderer cursor;
         private WInput wInput;
         public Sprite cursorSprite { get => cursor.sprite; set => cursor.sprite = value; }
@@ -37,7 +36,8 @@ namespace WEditor.ScenarioInput
             GameEvent.instance.onPreviewModeEnter -= OnMouseDisabled;
             GameEvent.instance.onPreviewModeExit -= OnMouseEnabled;
         }
-        private void OnMouseEnabled(){
+        private void OnMouseEnabled()
+        {
             wInput.MapEditor.Enable();
         }
         private void OnMouseDisabled()
@@ -65,20 +65,12 @@ namespace WEditor.ScenarioInput
             }
         }
 
-        public void OnZoom(InputAction.CallbackContext context)
+        public void OnOpeninventary(InputAction.CallbackContext context)
         {
             if (context.started)
             {
-                float cameraZoom = context.ReadValue<Vector2>().normalized.y;
-                Vector3 cameraPos = virtualCamera.position;
-                if (cameraPos.z >= minZoom && cameraPos.z <= maxZoom)
-                {
-                    virtualCamera.position = new Vector3(cameraPos.x, cameraPos.y, Mathf.Clamp(cameraPos.z + cameraZoom, minZoom, maxZoom));
-                }
+                GameEvent.instance.EditorInventoryOpened();
             }
         }
-
-        
     }
-
 }

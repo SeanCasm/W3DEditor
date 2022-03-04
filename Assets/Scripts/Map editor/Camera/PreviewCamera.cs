@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static WInput;
 using UnityEngine.InputSystem;
-
+using WEditor.Events;
 namespace WEditor.CameraUtils
 {
     public class PreviewCamera : BaseCamera, IMapPreviewActions
@@ -11,15 +11,13 @@ namespace WEditor.CameraUtils
         private new void Start()
         {
             base.Start();
+            wInput.MapPreview.Enable();
             wInput.MapPreview.SetCallbacks(this);
         }
-        private new void OnEnable()
-        {
-            base.OnEnable();
-            wInput.MapPreview.Enable();
+        private void OnEnable() {
+            wInput?.MapPreview.Enable();
         }
-        private void OnDisable()
-        {
+        private void OnDisable() {
             wInput.MapPreview.Disable();
         }
         public void OnRotate(InputAction.CallbackContext context)
@@ -39,15 +37,25 @@ namespace WEditor.CameraUtils
         {
             while (axis != 0)
             {
-                virtualCam.transform.RotateAround(pointViewCenter, Vector3.up, 30 * axis * Time.deltaTime);
+                transform.Rotate(-Vector3.forward, axis, Space.World);
                 yield return null;
             }
         }
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            throw new System.NotImplementedException();
+            base.CamMove(context);
         }
+        IEnumerator MoveCamera(Vector2 move)
+        {
+            while (move != Vector2.zero)
+            {
+                transform.Translate(Vector3.up * move.y * speed * Time.deltaTime);
+                transform.Translate(Vector3.right * move.x * speed * Time.deltaTime);
+                yield return null;
+            }
+        }
+
     }
 
 

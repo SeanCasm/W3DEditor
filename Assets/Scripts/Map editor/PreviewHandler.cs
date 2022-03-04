@@ -14,11 +14,6 @@ namespace WEditor.UI
         private void Awake()
         {
             buttonText = GetComponentInChildren<TextMeshProUGUI>();
-
-        }
-        private void OnDisable()
-        {
-
         }
         public void OnChangeHandler()
         {

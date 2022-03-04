@@ -48,9 +48,10 @@ namespace WEditor.Scenario
                 }
             }
         }
-        public void SetPreviewTileOnAim(Vector2 pos)
+        public void SetPreviewTileOnAim(Vector3 pos)
         {
             Vector3Int cellPos = previewTilemap.WorldToCell(pos);
+
             if (tilemap.HasTile(cellPos))
             {
                 previewTilemap.SetTile(currentWorldPos, gridTile);
