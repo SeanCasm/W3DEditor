@@ -15,27 +15,12 @@ namespace WEditor.CameraUtils
         [SerializeField] protected float speed;
         [SerializeField] float zInitialPosition;
         protected CinemachineVirtualCamera virtualCam;
-        protected WInput wInput;
         protected Vector3 pointViewCenter;
         protected void Start()
         {
-            wInput = new WInput();
             pointViewCenter = EditorGrid.instance.center;
             virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
-            transform.position = new Vector3(pointViewCenter.x, pointViewCenter.y, zInitialPosition);
+            transform.position = new Vector3(pointViewCenter.x,zInitialPosition, pointViewCenter.y);
         }
-        protected void CamMove(InputAction.CallbackContext context)
-        {
-            Vector2 move = context.ReadValue<Vector2>();
-            if (context.started)
-            {
-                StartCoroutine("MoveCamera", move);
-            }
-            else if (context.canceled)
-            {
-                StopCoroutine("MoveCamera");
-            }
-        }
-
     }
 }

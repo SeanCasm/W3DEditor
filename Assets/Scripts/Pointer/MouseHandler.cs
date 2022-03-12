@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using WEditor.Scenario;
 using WEditor.Events;
+using Cinemachine;
 using static WInput;
 namespace WEditor.ScenarioInput
 {
@@ -12,22 +13,27 @@ namespace WEditor.ScenarioInput
     {
         public static MouseHandler instance;
         [SerializeField] Camera mainCamera;
-        [Header("Scroll settings")]
-        [SerializeField] Transform virtualCamera;
+        [SerializeField] GameObject itemPanel;
+        [SerializeField] Sprite eraserSprite;
+        [SerializeField] Sprite spawnSprite;
+        [SerializeField] Tile spawnTile;
         private SpriteRenderer cursor;
-        private WInput wInput;
+        public bool isEraser { get; set; }//reference in editor
         public Sprite cursorSprite { get => cursor.sprite; set => cursor.sprite = value; }
         private Tile tileRef;
-        private Vector2 mousePosition, worldPosition;
-        private void Awake()
+        private Vector2 mousePosition;
+        private Vector3 worldPosition;
+        private void Start()
         {
             if (!instance) instance = this;
             else Destroy(this);
-            wInput = new WInput();
-            wInput.MapEditor.Enable();
-            wInput.MapEditor.SetCallbacks(this);
-            cursor = GetComponent<SpriteRenderer>();
 
+            GameInput.instance.EnableMapEditorInputsAndSetCallbacks(this);
+
+            cursor = GetComponent<SpriteRenderer>();
+        }
+        private void OnEnable()
+        {
             GameEvent.instance.onPreviewModeEnter += OnMouseDisabled;
             GameEvent.instance.onPreviewModeExit += OnMouseEnabled;
         }
@@ -38,11 +44,18 @@ namespace WEditor.ScenarioInput
         }
         private void OnMouseEnabled()
         {
-            wInput.MapEditor.Enable();
+            cursor.enabled=true;
+            GameInput.instance.ChangeActiveMapEditorInputs(true);
         }
         private void OnMouseDisabled()
         {
-            wInput.MapEditor.Disable();
+            cursor.enabled=false;
+            GameInput.instance.ChangeActiveMapEditorInputs(false);
+        }
+        public void Button_SetSpawn()
+        {
+            cursorSprite = spawnSprite;
+            tileRef = spawnTile;
         }
         public void SetAsset(Sprite sprite, Tile tile)
         {
@@ -52,16 +65,24 @@ namespace WEditor.ScenarioInput
         public void OnAim(InputAction.CallbackContext context)
         {
             mousePosition = context.ReadValue<Vector2>();
-            worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, virtualCamera.position.z * -1));
+            worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, mainCamera.nearClipPlane*20));
+            worldPosition = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
             transform.position = worldPosition;
             EditorGrid.instance.SetPreviewTileOnAim(worldPosition);
         }
 
         public void OnClick(InputAction.CallbackContext context)
         {
-            if (context.started)
+            if (context.started && tileRef != null)
             {
-                if (tileRef != null) EditorGrid.instance.SetTile(worldPosition, tileRef);
+                if (!isEraser)
+                {
+                    EditorGrid.instance.SetTile(worldPosition, tileRef);
+                }
+                else
+                {
+                    EditorGrid.instance.EraseTile(worldPosition);
+                }
             }
         }
 
@@ -69,7 +90,16 @@ namespace WEditor.ScenarioInput
         {
             if (context.started)
             {
-                GameEvent.instance.EditorInventoryOpened();
+                GameEvent.instance.EditorInventoryActiveChanged(!itemPanel.activeSelf);
+            }
+        }
+
+        public void OnEraser(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                isEraser = !isEraser;
+                cursor.sprite = isEraser ? cursorSprite : null;
             }
         }
     }

@@ -1,0 +1,3 @@
+dg_ge: A door needs to have walls around, left-right or top-bottom.
+pp: A spawn point is required to change to preview.
+sp_pl: The spawn point cannot be located over a wall or prop

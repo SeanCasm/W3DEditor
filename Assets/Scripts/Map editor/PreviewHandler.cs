@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 using WEditor.Events;
+using WEditor.Scenario;
 namespace WEditor.UI
 {
     public class PreviewHandler : MonoBehaviour
@@ -17,6 +18,11 @@ namespace WEditor.UI
         }
         public void OnChangeHandler()
         {
+            if (!EditorGrid.instance.isSpawnLocated)
+            {
+                TextMessageHandler.instance.PP();
+                return;
+            }
             onPreview = !onPreview;
 
             if (onPreview) OnPreview();
@@ -25,6 +31,7 @@ namespace WEditor.UI
 
         private void OnPreview()
         {
+            EditorGrid.instance.InitGeneration();
             objectsToDisable.ForEach(item =>
             {
                 item.SetActive(false);

@@ -11,16 +11,15 @@ namespace WEditor.CameraUtils
         new void Start()
         {
             base.Start();
-            wInput.MapEditorCamera.Enable();
-            wInput.MapEditorCamera.SetCallbacks(this);
+            GameInput.instance.EnableMapEditorCameraInputsAndSetCallbacks(this);
         }
         private void OnEnable()
         {
-            wInput?.MapEditorCamera.Enable();
+            GameInput.instance.ChangeActiveMapEditorCameraInputs(true);
         }
         private void OnDisable()
         {
-            wInput.MapEditorCamera.Disable();
+            GameInput.instance.ChangeActiveMapEditorCameraInputs(false);
         }
         public void OnZoom(InputAction.CallbackContext context)
         {
@@ -37,13 +36,21 @@ namespace WEditor.CameraUtils
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            base.CamMove(context);
+            Vector2 move = context.ReadValue<Vector2>();
+            if (context.started)
+            {
+                StartCoroutine("MoveCamera", move);
+            }
+            else if (context.canceled)
+            {
+                StopCoroutine("MoveCamera");
+            }
         }
         IEnumerator MoveCamera(Vector2 move)
         {
             while (move != Vector2.zero)
             {
-                transform.Translate(Vector3.up * move.y * speed * Time.deltaTime);
+                transform.Translate(Vector3.forward * move.y * speed * Time.deltaTime);
                 transform.Translate(Vector3.right * move.x * speed * Time.deltaTime);
                 yield return null;
             }

@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using static WInput;
 using UnityEngine.InputSystem;
-using WEditor.Events;
 namespace WEditor.CameraUtils
 {
     public class PreviewCamera : BaseCamera, IMapPreviewActions
     {
+        private Rigidbody rigid;
         private new void Start()
         {
             base.Start();
-            wInput.MapPreview.Enable();
-            wInput.MapPreview.SetCallbacks(this);
+            rigid = GetComponent<Rigidbody>();
+            GameInput.instance.EnableMapPreviewInputsAndSetCallbacks(this);
         }
-        private void OnEnable() {
-            wInput?.MapPreview.Enable();
+        private void OnEnable()
+        {
+            GameInput.instance.ChangeActiveMapPreviewInputs(true);
         }
-        private void OnDisable() {
-            wInput.MapPreview.Disable();
+        private void OnDisable()
+        {
+            GameInput.instance.ChangeActiveMapPreviewInputs(false);
         }
         public void OnRotate(InputAction.CallbackContext context)
         {
@@ -37,20 +39,29 @@ namespace WEditor.CameraUtils
         {
             while (axis != 0)
             {
-                transform.Rotate(-Vector3.forward, axis, Space.World);
+                transform.Rotate(Vector3.up, axis, Space.World);
                 yield return null;
             }
         }
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            base.CamMove(context);
+            Vector2 move = context.ReadValue<Vector2>();
+            if (context.started)
+            {
+                StartCoroutine("MoveCamera", move);
+            }
+            else if (context.canceled)
+            {
+                rigid.velocity = Vector3.zero;
+                StopCoroutine("MoveCamera");
+            }
         }
         IEnumerator MoveCamera(Vector2 move)
         {
             while (move != Vector2.zero)
             {
-                transform.Translate(Vector3.up * move.y * speed * Time.deltaTime);
+                transform.Translate(Vector3.forward * move.y * speed * Time.deltaTime);
                 transform.Translate(Vector3.right * move.x * speed * Time.deltaTime);
                 yield return null;
             }

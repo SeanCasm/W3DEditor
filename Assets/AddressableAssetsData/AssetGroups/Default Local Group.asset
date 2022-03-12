@@ -23,42 +23,6 @@ MonoBehaviour:
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
-  - m_GUID: b2d771e9376f6db4290669a7bbf763bb
-    m_Address: Assets/Tiles/GroundEditor/Ground_0.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: db9c2aa4e868cf84596be887cf532b49
-    m_Address: Assets/Tiles/GroundEditor/Ground_5.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 43bed48acfc62f342b952334fa4d88c5
-    m_Address: Assets/Tiles/GroundEditor/Ground_2.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 4b22e74f934857542b2b31a34b228b7f
-    m_Address: Assets/Tiles/GroundEditor/Ground_1.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: db840baa624394a43b10145f7e9d8aef
-    m_Address: Assets/Tiles/GroundEditor/Ground_3.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 666122aab59cd9b45a6ed86dc92e4368
-    m_Address: Assets/Tiles/GroundEditor/Ground_4.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1d4621371227e0642a864acbb42f9abd, type: 2}
   m_SchemaSet:

@@ -15,7 +15,7 @@ namespace WEditor.Events
 
         public event Action onPreviewModeEnter;
         public event Action onPreviewModeExit;
-        public event Action onEditorInventoryOpened;
+        public event Action<bool> onEditorInventoryActiveChanged;
         public event Action<int> onEditorInventorySelected;
         public void EditorInventorySelected(int id)
         {
@@ -24,11 +24,11 @@ namespace WEditor.Events
                 onEditorInventorySelected(id);
             }
         }
-        public void EditorInventoryOpened()
+        public void EditorInventoryActiveChanged(bool enable)
         {
-            if (onEditorInventoryOpened != null)
+            if (onEditorInventoryActiveChanged != null)
             {
-                onEditorInventoryOpened();
+                onEditorInventoryActiveChanged(enable);
             }
         }
         public void PreviewModeEnter()

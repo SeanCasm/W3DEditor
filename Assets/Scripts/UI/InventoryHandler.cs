@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using WEditor.Events;
+using WEditor.ScenarioInput;
 namespace WEditor.UI
 {
 
@@ -11,16 +11,24 @@ namespace WEditor.UI
         [SerializeField] GameObject itemPanel;
         private void OnEnable()
         {
-            GameEvent.instance.onEditorInventoryOpened += OnInventaryActiveChanged;
+            GameEvent.instance.onEditorInventoryActiveChanged += OnInventaryActiveChanged;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onEditorInventoryOpened -= OnInventaryActiveChanged;
+            GameEvent.instance.onEditorInventoryActiveChanged -= OnInventaryActiveChanged;
         }
-        
-        private void OnInventaryActiveChanged()
+
+        private void OnInventaryActiveChanged(bool enable)
         {
-            itemPanel.SetActive(!itemPanel.activeSelf);
+            itemPanel.SetActive(enable);
+
+            if (enable)
+            {
+                MouseHandler.instance.isEraser=false;
+                GameInput.instance.DisableInputsForInventoryOpened();
+                return;
+            }
+            GameInput.instance.EnableInputsForInventoryClosed();
         }
     }
 }

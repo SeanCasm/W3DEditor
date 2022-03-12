@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using WEditor.UI;
 namespace WEditor.Scenario
 {
     public class EditorGrid : MonoBehaviour
@@ -13,7 +13,8 @@ namespace WEditor.Scenario
         [SerializeField] int width, height;
         [SerializeField] string folderAssetPath;
         [SerializeField] ScenarioGenerator scenarioGenerator;
-        GeneratorInfo[,] grid;
+        [SerializeField] BoxCollider confinerCollider;
+        public bool isSpawnLocated { get; private set; }
         private Vector3Int currentWorldPos, currentWorldPos2;
         public Vector2 center { get => new Vector2((float)width / 2, (float)height / 2); }
         private void Start()
@@ -21,59 +22,105 @@ namespace WEditor.Scenario
             if (!instance) instance = this;
             else Destroy(this);
 
-            grid = new GeneratorInfo[width, height];
             previewTilemap.size = new Vector3Int(width, height, 0);
             tilemap.size = new Vector3Int(width, height, 0);
             miscTilemap.size = new Vector3Int(width, height, 0);
+
+            confinerCollider.size = new Vector3(tilemap.size.x, tilemap.size.y, 60);
+            confinerCollider.transform.position = center;
+
             tilemap.BoxFill(Vector3Int.zero, gridTile, 0, 0, width, height);
+            DataHandler.TileDataSize(width, height);
         }
-        public void SetTile(Vector2 pos, Tile tile)
+        public void EraseTile(Vector3 pos)
         {
             Vector3Int cellPos = tilemap.WorldToCell(pos);
-
+            tilemap.SetTile(cellPos, gridTile);
+        }
+        public void SetTile(Vector3 pos, Tile tile)
+        {
+            Vector3Int cellPos = tilemap.WorldToCell(pos);
             if (tilemap.HasTile(cellPos))
             {
+                string nameToLower = tile.name.ToLower();
                 if (!tile.name.ToLower().Contains("hud"))
                 {
-                    bool isGround = tile.name.ToLower().Contains("ground");
-
-                    grid[cellPos.x, cellPos.y] = new GeneratorInfo(isGround, folderAssetPath + tile.name);
-                    tilemap.SetTile(cellPos, tile);
+                    if (nameToLower.StartsWith("door"))
+                    {
+                        CheckWallsAroundDoorLocation(cellPos, tile);
+                    }
+                    else
+                    {
+                        tilemap.SetTile(cellPos, tile);
+                    }
                 }
                 else
                 {
+                    string nameToLower2 = tilemap.GetTile(cellPos).name.ToLower();
+                    //spawn point
+                    if (nameToLower2 == "wall" || nameToLower2 == "props")
+                    {
+                        TextMessageHandler.instance.SP_PL();
+                        return;
+                    }
                     miscTilemap.SetTile(currentWorldPos2, null);
                     miscTilemap.SetTile(cellPos, tile);
                     currentWorldPos2 = cellPos;
+                    isSpawnLocated = true;
                 }
+                DataHandler.SetTileData(cellPos.x, cellPos.y, new TileData(folderAssetPath + tile.name, cellPos));
             }
+        }
+        private void CheckWallsAroundDoorLocation(Vector3Int cellPos, Tile tile)
+        {
+            bool error = false;
+
+            error = SetDoor(cellPos, tile);
+
+            if (error) TextMessageHandler.instance.DB_GE();
         }
         public void SetPreviewTileOnAim(Vector3 pos)
         {
             Vector3Int cellPos = previewTilemap.WorldToCell(pos);
-
             if (tilemap.HasTile(cellPos))
             {
                 previewTilemap.SetTile(currentWorldPos, gridTile);
                 previewTilemap.SetTile(cellPos, helperTile);
                 currentWorldPos = cellPos;
             }
+        }
+        private bool SetDoor(Vector3Int cellPos, Tile tile)
+        {
+            //Gets top and bottom tiles position in tilemap
+            Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);
+            Vector3Int bottomPos = new Vector3Int(cellPos.x, cellPos.y - 1, cellPos.z);
+            //Checks top and bottom tiles
+            TileBase topTile = tilemap.GetTile(topPos);
+            TileBase bottomTile = tilemap.GetTile(bottomPos);
 
+            if (topTile.name.ToLower().StartsWith("wall") && bottomTile.name.ToLower().StartsWith("wall"))
+            {
+                tilemap.SetTile(cellPos, tile);
+                return false;
+            }
+
+            Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
+            Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
+            //Checks left and right tiles
+            TileBase leftTile = tilemap.GetTile(leftPos);
+            TileBase rightTile = tilemap.GetTile(rightPos);
+
+            if (leftTile.name.ToLower().StartsWith("wall") && rightTile.name.ToLower().StartsWith("wall"))
+            {
+                tilemap.SetTile(cellPos, tile);
+                return false;
+            }
+            return true;
         }
-        public void Button_InitGeneration()
+        public void InitGeneration()
         {
-            scenarioGenerator.InitGeneration(grid, tilemap);
+            scenarioGenerator.InitGeneration(tilemap);
         }
     }
-    [System.Serializable]
-    public struct GeneratorInfo
-    {
-        public GeneratorInfo(bool isGround, string assetPath)
-        {
-            this.isGround = isGround;
-            this.assetPath = assetPath;
-        }
-        public bool isGround { get; set; }
-        public string assetPath { get; set; }
-    }
+
 }

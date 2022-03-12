@@ -53,6 +53,15 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Eraser"",
+                    ""type"": ""Button"",
+                    ""id"": ""64695916-dc42-40f3-b353-fc084e7c656b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -86,6 +95,17 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Open inventary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72758742-0913-4ed0-a158-73ab16e27c8b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Eraser"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -799,6 +819,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         m_MapEditor_Aim = m_MapEditor.FindAction("Aim", throwIfNotFound: true);
         m_MapEditor_Click = m_MapEditor.FindAction("Click", throwIfNotFound: true);
         m_MapEditor_Openinventary = m_MapEditor.FindAction("Open inventary", throwIfNotFound: true);
+        m_MapEditor_Eraser = m_MapEditor.FindAction("Eraser", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -881,6 +902,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_MapEditor_Aim;
     private readonly InputAction m_MapEditor_Click;
     private readonly InputAction m_MapEditor_Openinventary;
+    private readonly InputAction m_MapEditor_Eraser;
     public struct MapEditorActions
     {
         private @WInput m_Wrapper;
@@ -888,6 +910,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_MapEditor_Aim;
         public InputAction @Click => m_Wrapper.m_MapEditor_Click;
         public InputAction @Openinventary => m_Wrapper.m_MapEditor_Openinventary;
+        public InputAction @Eraser => m_Wrapper.m_MapEditor_Eraser;
         public InputActionMap Get() { return m_Wrapper.m_MapEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -906,6 +929,9 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 @Openinventary.started -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnOpeninventary;
                 @Openinventary.performed -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnOpeninventary;
                 @Openinventary.canceled -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnOpeninventary;
+                @Eraser.started -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnEraser;
+                @Eraser.performed -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnEraser;
+                @Eraser.canceled -= m_Wrapper.m_MapEditorActionsCallbackInterface.OnEraser;
             }
             m_Wrapper.m_MapEditorActionsCallbackInterface = instance;
             if (instance != null)
@@ -919,6 +945,9 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 @Openinventary.started += instance.OnOpeninventary;
                 @Openinventary.performed += instance.OnOpeninventary;
                 @Openinventary.canceled += instance.OnOpeninventary;
+                @Eraser.started += instance.OnEraser;
+                @Eraser.performed += instance.OnEraser;
+                @Eraser.canceled += instance.OnEraser;
             }
         }
     }
@@ -1115,6 +1144,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnOpeninventary(InputAction.CallbackContext context);
+        void OnEraser(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
