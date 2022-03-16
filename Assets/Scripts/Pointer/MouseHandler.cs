@@ -16,9 +16,10 @@ namespace WEditor.ScenarioInput
         [SerializeField] GameObject itemPanel;
         [SerializeField] Sprite eraserSprite;
         [SerializeField] Sprite spawnSprite;
-        [SerializeField] Tile spawnTile;
+        [SerializeField] GameObject spawnPrefab;
         private SpriteRenderer cursor;
         public bool isEraser { get; set; }//reference in editor
+        private bool isSpawn { get; set; }
         public Sprite cursorSprite { get => cursor.sprite; set => cursor.sprite = value; }
         private Tile tileRef;
         private Vector2 mousePosition;
@@ -28,7 +29,7 @@ namespace WEditor.ScenarioInput
             if (!instance) instance = this;
             else Destroy(this);
 
-            GameInput.instance.EnableMapEditorInputsAndSetCallbacks(this);
+            MapEditorInput.instance.EnableMapEditorInputsAndSetCallbacks(this);
 
             cursor = GetComponent<SpriteRenderer>();
         }
@@ -44,28 +45,30 @@ namespace WEditor.ScenarioInput
         }
         private void OnMouseEnabled()
         {
-            cursor.enabled=true;
-            GameInput.instance.ChangeActiveMapEditorInputs(true);
+            cursor.enabled = true;
+            MapEditorInput.instance.ChangeActiveMapEditorInputs(true);
         }
         private void OnMouseDisabled()
         {
-            cursor.enabled=false;
-            GameInput.instance.ChangeActiveMapEditorInputs(false);
+            cursor.enabled = false;
+            MapEditorInput.instance.ChangeActiveMapEditorInputs(false);
         }
         public void Button_SetSpawn()
         {
+            isSpawn = true;
+            spawnSprite = spawnPrefab.GetComponent<SpriteRenderer>().sprite;
             cursorSprite = spawnSprite;
-            tileRef = spawnTile;
         }
         public void SetAsset(Sprite sprite, Tile tile)
         {
+            isSpawn = false;
             cursorSprite = sprite;
             tileRef = tile;
         }
         public void OnAim(InputAction.CallbackContext context)
         {
             mousePosition = context.ReadValue<Vector2>();
-            worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, mainCamera.nearClipPlane*20));
+            worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, mainCamera.nearClipPlane * mainCamera.transform.position.y));
             worldPosition = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
             transform.position = worldPosition;
             EditorGrid.instance.SetPreviewTileOnAim(worldPosition);
@@ -73,13 +76,19 @@ namespace WEditor.ScenarioInput
 
         public void OnClick(InputAction.CallbackContext context)
         {
-            if (context.started && tileRef != null)
+            if (context.started)
             {
-                if (!isEraser)
+                if (isSpawn)
+                {
+                    EditorGrid.instance.SetSpawnObject(worldPosition,spawnPrefab);
+                    return;
+                }
+                
+                if (!isEraser && tileRef != null)
                 {
                     EditorGrid.instance.SetTile(worldPosition, tileRef);
                 }
-                else
+                else if(tileRef != null)
                 {
                     EditorGrid.instance.EraseTile(worldPosition);
                 }

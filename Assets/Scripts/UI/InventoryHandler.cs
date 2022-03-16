@@ -25,10 +25,10 @@ namespace WEditor.UI
             if (enable)
             {
                 MouseHandler.instance.isEraser=false;
-                GameInput.instance.DisableInputsForInventoryOpened();
+                MapEditorInput.instance.DisableInputsForInventoryOpened();
                 return;
             }
-            GameInput.instance.EnableInputsForInventoryClosed();
+            MapEditorInput.instance.EnableInputsForInventoryClosed();
         }
     }
 }

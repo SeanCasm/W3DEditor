@@ -1,0 +1,795 @@
+fileFormatVersion: 2
+guid: 68dfec264f3872c40973f8f3c08b5348
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2783149428158673734
+    second: Props-ground_0-c
+  - first:
+      213: 36012303475202014
+    second: Props-ground_1-c
+  - first:
+      213: -6911432918116183810
+    second: Props-ground_2-c
+  - first:
+      213: -2705096294079751049
+    second: Props-ground_3
+  - first:
+      213: -4197169231007067282
+    second: Props-ground_4
+  - first:
+      213: 5108982493105579552
+    second: Props-ground_5-c
+  - first:
+      213: -9081440904626684685
+    second: Props-ground_6
+  - first:
+      213: 1141784691194670118
+    second: Props-ground_8-c
+  - first:
+      213: -460545996900633221
+    second: Props-ground_9
+  - first:
+      213: 328161933773483051
+    second: Props-ground_10-c
+  - first:
+      213: -8887604033860581042
+    second: Props-ground_12
+  - first:
+      213: -4244331222995797883
+    second: Props-ground_13
+  - first:
+      213: 8998252298625942366
+    second: Props-ground_14-c
+  - first:
+      213: 6774447355312217728
+    second: Props-ground_15-c
+  - first:
+      213: -7117337260615649712
+    second: Props-ground_16-c
+  - first:
+      213: -5455477410663678676
+    second: Props-ground_17-c
+  - first:
+      213: -6302493081123231480
+    second: Props-ground_18
+  - first:
+      213: 1655327702665713395
+    second: Props-ground_19-c
+  - first:
+      213: 7976169764869853600
+    second: Props-ground_20
+  - first:
+      213: -8147017676272858122
+    second: Props-ground_21
+  - first:
+      213: -2563659307945080486
+    second: Props-ground_22-c
+  - first:
+      213: 3472596551057296228
+    second: Props-ground_23-c
+  - first:
+      213: 3981013974423328882
+    second: Props-ground_24-c
+  - first:
+      213: -5436150461686541722
+    second: Props-ground_25
+  - first:
+      213: 1035528272798040392
+    second: Props-ground_26-c
+  - first:
+      213: 2123621605584113555
+    second: Props-ground_27
+  - first:
+      213: 2361005792718310285
+    second: Props-ground_28-c
+  - first:
+      213: 5213076278592611701
+    second: Props-ground_29-c
+  - first:
+      213: 5770861953326352530
+    second: Props-ground_30
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Props-ground_0-c
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 197
+        width: 38
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abc45c147544069d0800000000000000
+      internalID: -2783149428158673734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_1-c
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 197
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed7de2ccff0ff7000800000000000000
+      internalID: 36012303475202014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_2-c
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 195
+        width: 57
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef05eba1168a510a0800000000000000
+      internalID: -6911432918116183810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_3
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 243
+        width: 61
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77c9624b041957ad0800000000000000
+      internalID: -2705096294079751049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_5-c
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 219
+        width: 46
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0266f394280c6e640800000000000000
+      internalID: 5108982493105579552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_6
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 227
+        width: 56
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fc360fdc9d38f180800000000000000
+      internalID: -9081440904626684685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_8-c
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 197
+        width: 42
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62c23a0902f68df00800000000000000
+      internalID: 1141784691194670118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_9
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 209
+        width: 62
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b75720c1bdfcb99f0800000000000000
+      internalID: -460545996900633221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_10-c
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 192
+        width: 54
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2caf534a8ddd8400800000000000000
+      internalID: 328161933773483051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_12
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 194
+        width: 62
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4949614833e8a480800000000000000
+      internalID: -8887604033860581042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_13
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 161
+        width: 47
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5887c387d3b1915c0800000000000000
+      internalID: -4244331222995797883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_14-c
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 128
+        width: 38
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5301f27ac630ec70800000000000000
+      internalID: 8998252298625942366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_15-c
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 128
+        width: 48
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08e18f22afba30e50800000000000000
+      internalID: 6774447355312217728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_16-c
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 128
+        width: 37
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0563a5288732a3d90800000000000000
+      internalID: -7117337260615649712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_17-c
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 131
+        width: 42
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2d393903304a44b0800000000000000
+      internalID: -5455477410663678676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_18
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 146
+        width: 40
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 809ea4c4feb0988a0800000000000000
+      internalID: -6302493081123231480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_19-c
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 126
+        width: 52
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f6d04876c7e8f610800000000000000
+      internalID: 1655327702665713395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_20
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 132
+        width: 62
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a1574f342c01be60800000000000000
+      internalID: 7976169764869853600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_21
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 111
+        width: 60
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fb8de2969affee80800000000000000
+      internalID: -8147017676272858122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_22-c
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 92
+        width: 41
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a594fc8317d0c6cd0800000000000000
+      internalID: -2563659307945080486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_23-c
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 81
+        width: 55
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46b44022a24213030800000000000000
+      internalID: 3472596551057296228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_24-c
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 83
+        width: 47
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2785e5f0e176f3730800000000000000
+      internalID: 3981013974423328882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_25
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 83
+        width: 62
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 662199105f9ee84b0800000000000000
+      internalID: -5436150461686541722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_26-c
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 83
+        width: 54
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84140074a7fee5e00800000000000000
+      internalID: 1035528272798040392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_27
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 83
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39f8f2e499e987d10800000000000000
+      internalID: 2123621605584113555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_28-c
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 13
+        width: 46
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8b4d93624af3c020800000000000000
+      internalID: 2361005792718310285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_29-c
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 34
+        width: 37
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 575278c5141985840800000000000000
+      internalID: 5213076278592611701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Props-ground_30
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 13
+        width: 60
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29885d70f58361050800000000000000
+      internalID: 5770861953326352530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: b0c724bfb4a0b9042aa3d0a21856b645
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

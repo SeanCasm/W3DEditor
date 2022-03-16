@@ -12,9 +12,6 @@ namespace WEditor.UI
         [SerializeField] float messageTime;
         [SerializeField] string errorsPath;
         private Dictionary<string, string> errors = new Dictionary<string, string>();
-        private const string dg_ge = "dg_ge";
-        private const string pp = "pp";
-        private const string sp_pl = "sp_pl";
         private void Awake()
         {
             instance = this;
@@ -22,15 +19,15 @@ namespace WEditor.UI
         }
         public void DB_GE()
         {
-            SetError(dg_ge);
+            SetError("dg_ge");
         }
         public void PP()
         {
-            SetError(pp);
+            SetError("pp");
         }
         public void SP_PL()
         {
-            SetError(sp_pl);
+            SetError("sp_pl");
         }
         private void SetError(string id)
         {

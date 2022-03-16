@@ -13,14 +13,14 @@ namespace WEditor.CameraUtils
     {
         [SerializeField] protected float minZoom, maxZoom;
         [SerializeField] protected float speed;
-        [SerializeField] float zInitialPosition;
+        [SerializeField] float yInitialPosition;
         protected CinemachineVirtualCamera virtualCam;
         protected Vector3 pointViewCenter;
         protected void Start()
         {
             pointViewCenter = EditorGrid.instance.center;
             virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
-            transform.position = new Vector3(pointViewCenter.x,zInitialPosition, pointViewCenter.y);
+            transform.position = new Vector3(pointViewCenter.x,yInitialPosition, pointViewCenter.y);
         }
     }
 }

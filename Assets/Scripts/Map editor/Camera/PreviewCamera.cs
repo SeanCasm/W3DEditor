@@ -5,22 +5,22 @@ using static WInput;
 using UnityEngine.InputSystem;
 namespace WEditor.CameraUtils
 {
-    public class PreviewCamera : BaseCamera, IMapPreviewActions
+    public class PreviewCamera : BaseCamera, IMapPreviewActions, IPlayerView
     {
         private Rigidbody rigid;
         private new void Start()
         {
             base.Start();
             rigid = GetComponent<Rigidbody>();
-            GameInput.instance.EnableMapPreviewInputsAndSetCallbacks(this);
+            MapEditorInput.instance.EnableMapPreviewInputsAndSetCallbacks(this);
         }
         private void OnEnable()
         {
-            GameInput.instance.ChangeActiveMapPreviewInputs(true);
+            MapEditorInput.instance.ChangeActiveMapPreviewInputs(true);
         }
         private void OnDisable()
         {
-            GameInput.instance.ChangeActiveMapPreviewInputs(false);
+            MapEditorInput.instance.ChangeActiveMapPreviewInputs(false);
         }
         public void OnRotate(InputAction.CallbackContext context)
         {
@@ -61,13 +61,13 @@ namespace WEditor.CameraUtils
         {
             while (move != Vector2.zero)
             {
-                transform.Translate(Vector3.forward * move.y * speed * Time.deltaTime);
-                transform.Translate(Vector3.right * move.x * speed * Time.deltaTime);
+                Vector3 dir = transform.forward * move.y + transform.right * move.x;
+                rigid.MovePosition(rigid.position + dir * speed * Time.deltaTime);
                 yield return null;
             }
         }
-
     }
-
-
+}
+public interface IPlayerView
+{
 }

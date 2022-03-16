@@ -8,18 +8,19 @@ namespace WEditor.CameraUtils
 {
     public class EditorCamera : BaseCamera, IMapEditorCameraActions
     {
+        MapEditorInput mapEditorInput;
         new void Start()
         {
             base.Start();
-            GameInput.instance.EnableMapEditorCameraInputsAndSetCallbacks(this);
+            MapEditorInput.instance.EnableMapEditorCameraInputsAndSetCallbacks(this);
         }
         private void OnEnable()
         {
-            GameInput.instance.ChangeActiveMapEditorCameraInputs(true);
+            MapEditorInput.instance.ChangeActiveMapEditorCameraInputs(true);
         }
         private void OnDisable()
         {
-            GameInput.instance.ChangeActiveMapEditorCameraInputs(false);
+            MapEditorInput.instance.ChangeActiveMapEditorCameraInputs(false);
         }
         public void OnZoom(InputAction.CallbackContext context)
         {
