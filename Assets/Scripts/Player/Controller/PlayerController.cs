@@ -17,6 +17,7 @@ namespace WEditor.Game.Player
         private void Start()
         {
             rigid = GetComponent<Rigidbody>();
+            gunHandler = GetComponentInChildren<GunHandler>();
             playerControllerInput = new PlayerControllerInput();
             playerControllerInput.EnableAndSetCallbacks(this);
             currentSpeed = speed;
@@ -53,6 +54,14 @@ namespace WEditor.Game.Player
         public void OnRotatemouse(InputAction.CallbackContext context)
         {
             Vector2 mousePosition = context.ReadValue<Vector2>();
+            // if (context.started)
+            // {
+            //     StartCoroutine(nameof(RotateAround), mousePosition.x);
+            // }
+            // else if (context.canceled)
+            // {
+            //     StopCoroutine(nameof(RotateAround));
+            // }
         }
 
         IEnumerator RotateAround(float axis)
@@ -87,6 +96,10 @@ namespace WEditor.Game.Player
 
         public void OnSwapgun(InputAction.CallbackContext context)
         {
+            if (context.started)
+            {
+                gunHandler.TrySwapGun();
+            }
         }
     }
 }

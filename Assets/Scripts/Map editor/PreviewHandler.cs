@@ -9,7 +9,8 @@ namespace WEditor.UI
 {
     public class PreviewHandler : MonoBehaviour
     {
-        [SerializeField] List<GameObject> objectsToDisable;
+        [SerializeField] UnityEvent<bool> changeActiveState;
+        [SerializeField] GameObject previewUI;
         private TextMeshProUGUI buttonText;
         private bool onPreview = false;
         private void Awake()
@@ -32,20 +33,16 @@ namespace WEditor.UI
         private void OnPreview()
         {
             EditorGrid.instance.InitGeneration();
-            objectsToDisable.ForEach(item =>
-            {
-                item.SetActive(false);
-            });
+            changeActiveState.Invoke(false);
+            previewUI.SetActive(true);
             GameEvent.instance.PreviewModeEnter();
             buttonText.text = "Exit";
         }
         private void OnEdit()
         {
             buttonText.text = "Preview";
-            objectsToDisable.ForEach(item =>
-            {
-                item.SetActive(true);
-            });
+            changeActiveState.Invoke(true);
+            previewUI.SetActive(false);
             GameEvent.instance.PreviewModeExit();
         }
     }

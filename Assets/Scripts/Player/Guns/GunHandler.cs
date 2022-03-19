@@ -1,32 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static WInput;
+using System;
 
 namespace WEditor.Game.Guns
 {
     public class GunHandler : MonoBehaviour
     {
-        [SerializeField] Gun pistol, knife;
-        Gun currentGun;
-        List<Gun> guns = new List<Gun>();
+        [SerializeField] List<Gun> playerGuns;
+        private Gun currentGun { get => playerGuns[gunIndex]; }
+        private int playerGunsCount { get => playerGuns.Count; }
         int gunIndex = 0;
         private void Start()
         {
-            guns.Add(pistol);
-            guns.Add(knife);
+            playerGuns[0].Init(true);
+            playerGuns.ForEach(gun =>
+            {
+                gun.onEmptyAmmo = TrySwapGun;
+            });
         }
 
-        public void SwapGun()
+        public void TrySwapGun()
         {
-            currentGun = guns[gunIndex++];
-            while (!currentGun.hasAmmo)
+            if (currentGun.isShooting && currentGun.onGunStoppedFire == null)
             {
-                gunIndex++;
-                currentGun = guns[gunIndex];
-                Mathf.Clamp(gunIndex, 0, guns.Count);
+                currentGun.onGunStoppedFire = SwapToGunWithAmmo;
             }
+            else
+            {
+                SwapToGunWithAmmo();
+            }
+        }
+
+        private void SwapToGunWithAmmo()
+        {
+            do
+            {
+                currentGun.Init(false);
+                gunIndex++;
+
+                if (gunIndex == playerGunsCount)
+                {
+                    gunIndex = 0;
+                }
+
+                currentGun.Init(true);
+
+            } while (!currentGun.hasAmmo);
         }
     }
 }

@@ -5,11 +5,13 @@ using static WInput;
 
 namespace WEditor
 {
-    public class GunInput
+    public class GunInput : MonoBehaviour
     {
+        public static GunInput instance;
         private WInput wInput;
-        public GunInput()
+        private void Start()
         {
+            instance=this;
             wInput = GameInput.instance.wInput;
         }
         public void EnableAndSetCallbacks(IGunActions callbacks)

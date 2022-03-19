@@ -6,6 +6,9 @@ namespace WEditor.Game.Player
 {
     public class Health : HealthBase<int>
     {
+        [SerializeField] int maxArmour;
+        private int currentArmour;
+        public bool isFullHealth { get => currentHealth == maxHealth; }
         public void Add(int amount)
         {
             if (currentHealth >= maxHealth)
@@ -15,7 +18,13 @@ namespace WEditor.Game.Player
             currentHealth += amount;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         }
-
+        public void AddArmour(int amount)
+        {
+            if (currentArmour >= maxArmour)
+            {
+                return;
+            }
+        }
         public override void Take(int amount)
         {
             currentHealth -= amount;
