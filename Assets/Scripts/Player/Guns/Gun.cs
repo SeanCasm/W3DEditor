@@ -80,7 +80,6 @@ namespace WEditor.Game.Guns
             ShootRay();
             isShooting = true;
             animator.SetTrigger("Shoot");
-            animator.SetBool("isShooting", true);
         }
         public void AnimationEvent_StopShooting()
         {

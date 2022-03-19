@@ -995,7 +995,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""id"": ""9a36b03b-d299-4420-9dac-8d3c75f69ffc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press,Hold"",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 }
             ],
