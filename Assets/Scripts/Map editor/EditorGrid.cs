@@ -17,6 +17,7 @@ namespace WEditor.Scenario
         public bool isSpawnLocated { get; private set; }
         private Vector3Int currentWorldPos;
         private GameObject currentSpawn;
+        private Vector3 spawnPosition;
         public Vector2 center { get => new Vector2((float)width / 2, (float)height / 2); }
         private void Start()
         {
@@ -77,13 +78,16 @@ namespace WEditor.Scenario
                 TextMessageHandler.instance.SP_PL();
                 return;
             }
-            
+
             Destroy(currentSpawn);
+
+            spawnPosition = pos;
+            spawnPosition.Set(spawnPosition.x, spawnPosition.y + .5f, spawnPosition.z);
 
             pos = mainGround.CellToWorld(cellPos);
             //fix tile pivot
             pos = new Vector3(pos.x + .5f, pos.y, pos.z + .5f);
-            currentSpawn = Instantiate(spawnPrefab, pos, Quaternion.Euler(90,0,0));
+            currentSpawn = Instantiate(spawnPrefab, pos, Quaternion.Euler(90, 0, 0));
             isSpawnLocated = true;
         }
         private bool TileIsInsideTilemap(Vector3Int cellPos)
@@ -142,7 +146,7 @@ namespace WEditor.Scenario
         }
         public void InitGeneration()
         {
-            scenarioGenerator.InitGeneration(mainGround, prop);
+            scenarioGenerator.InitGeneration(mainGround, prop, spawnPosition);
         }
     }
 }

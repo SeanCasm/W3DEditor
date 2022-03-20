@@ -321,7 +321,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Preview
+  m_text: Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1511,14 +1511,13 @@ GameObject:
   m_Component:
   - component: {fileID: 618503830}
   - component: {fileID: 618503829}
-  - component: {fileID: 618503832}
   - component: {fileID: 618503831}
   - component: {fileID: 618503833}
   - component: {fileID: 618503834}
   - component: {fileID: 618503835}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1564,27 +1563,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618503828}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &618503832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618503828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46b73d6260b1f264988db1718c5cb4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
 --- !u!65 &618503833
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1596,7 +1582,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.6, z: 1}
+  m_Size: {x: 0.6, y: 0.6, z: 0.6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &618503834
 MonoBehaviour:
@@ -3135,7 +3121,7 @@ RectTransform:
   m_Children:
   - {fileID: 1341265548}
   m_Father: {fileID: 1855725533}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3906,7 +3892,7 @@ GameObject:
   - component: {fileID: 1288809856}
   - component: {fileID: 1288809857}
   m_Layer: 5
-  m_Name: Button preview
+  m_Name: Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3919,17 +3905,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288809851}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 43331071}
-  m_Father: {fileID: 1855725533}
-  m_RootOrder: 0
+  m_Father: {fileID: 1510166766}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20, y: -10.5}
+  m_AnchoredPosition: {x: -60.97, y: 70.46998}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1288809853
@@ -4101,6 +4087,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1510166765}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   previewUI: {fileID: 541994774}
 --- !u!114 &1288809857
 MonoBehaviour:
@@ -4119,8 +4117,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1473167742}
-          m_TargetAssemblyTypeName: WEditor.GameInput, Assembly-CSharp
+        - m_Target: {fileID: 1473167745}
+          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
           m_MethodName: DisableInputsForInventoryOpened
           m_Mode: 1
           m_Arguments:
@@ -4135,8 +4133,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1473167742}
-          m_TargetAssemblyTypeName: WEditor.GameInput, Assembly-CSharp
+        - m_Target: {fileID: 1473167745}
+          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
           m_MethodName: EnableInputsForInventoryClosed
           m_Mode: 1
           m_Arguments:
@@ -4987,6 +4985,7 @@ GameObject:
   - component: {fileID: 1473167745}
   - component: {fileID: 1473167746}
   - component: {fileID: 1473167747}
+  - component: {fileID: 1473167748}
   m_Layer: 0
   m_Name: '[SINGLETONS]'
   m_TagString: Untagged
@@ -5228,8 +5227,6 @@ MonoBehaviour:
   - {fileID: 2855734495882653383, guid: 7a3494dfa50127f41bdb834766367231, type: 3}
   - {fileID: 8430051116552450063, guid: 7a3494dfa50127f41bdb834766367231, type: 3}
   - {fileID: -2062634973810387478, guid: 7a3494dfa50127f41bdb834766367231, type: 3}
-  - {fileID: -8719159019531532211, guid: 7a3494dfa50127f41bdb834766367231, type: 3}
-  - {fileID: 2243477216217227865, guid: 7a3494dfa50127f41bdb834766367231, type: 3}
   - {fileID: 7648073941143849908, guid: 7a3494dfa50127f41bdb834766367231, type: 3}
   - {fileID: 5014545771349230519, guid: 7a3494dfa50127f41bdb834766367231, type: 3}
   - {fileID: 4175932663735230419, guid: 7a3494dfa50127f41bdb834766367231, type: 3}
@@ -5343,6 +5340,19 @@ MonoBehaviour:
   ammo: {fileID: 971204365}
   score: {fileID: 2084986908}
   health: {fileID: 138764464}
+--- !u!114 &1473167748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473167735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b73d6260b1f264988db1718c5cb4ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 618503834}
 --- !u!1 &1490437522
 GameObject:
   m_ObjectHideFlags: 0
@@ -5551,8 +5561,10 @@ RectTransform:
   m_Children:
   - {fileID: 1891095858}
   - {fileID: 247178418}
+  - {fileID: 1288809852}
+  - {fileID: 1943039093}
   m_Father: {fileID: 1855725533}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5853,7 +5865,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3326489, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6533,7 +6545,7 @@ RectTransform:
   - {fileID: 1648137380}
   - {fileID: 236743562}
   m_Father: {fileID: 1855725533}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6941,8 +6953,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1288809852}
-  - {fileID: 1943039093}
   - {fileID: 1510166766}
   - {fileID: 1746505675}
   - {fileID: 1024128552}
@@ -7092,15 +7102,15 @@ RectTransform:
   m_GameObject: {fileID: 1943039092}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_Children:
   - {fileID: 801211743}
-  m_Father: {fileID: 1855725533}
-  m_RootOrder: 1
+  m_Father: {fileID: 1510166766}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 180, y: -10.5}
+  m_AnchoredPosition: {x: 99.03, y: 70.46998}
   m_SizeDelta: {x: 23, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1943039094
@@ -7150,6 +7160,30 @@ MonoBehaviour:
       - m_Target: {fileID: 744500821}
         m_TargetAssemblyTypeName: WEditor.ScenarioInput.MouseHandler, Assembly-CSharp
         m_MethodName: Button_SetSpawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1510166765}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1473167745}
+        m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
+        m_MethodName: EnableInputsForInventoryClosed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7214,8 +7248,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1473167742}
-          m_TargetAssemblyTypeName: WEditor.GameInput, Assembly-CSharp
+        - m_Target: {fileID: 1473167745}
+          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
           m_MethodName: DisableInputsForInventoryOpened
           m_Mode: 1
           m_Arguments:
@@ -7230,8 +7264,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1473167742}
-          m_TargetAssemblyTypeName: WEditor.GameInput, Assembly-CSharp
+        - m_Target: {fileID: 1473167745}
+          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
           m_MethodName: EnableInputsForInventoryClosed
           m_Mode: 1
           m_Arguments:

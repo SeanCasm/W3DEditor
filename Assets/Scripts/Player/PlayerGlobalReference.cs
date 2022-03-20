@@ -8,12 +8,12 @@ namespace WEditor.Game.Player
     {
         public static PlayerGlobalReference instance;
         [SerializeField] PlayerController playerController;
-        public IPlayerView viewReference { get; set; }
+        // public IPlayerView viewReference { get; set; }
         private void Start()
         {
             instance = this;
-            viewReference = GetComponent<IPlayerView>();
+            // viewReference = GetComponent<IPlayerView>();
         }
-        public Vector3 playerPosition{get=>playerController.transform.position;}
+        public Vector3 playerPosition{get=>playerController.transform.position;set=>playerController.transform.position = value;}
     }
 }

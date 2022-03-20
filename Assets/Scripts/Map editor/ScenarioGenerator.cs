@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using WEditor.Events;
+using WEditor.Game.Player;
+
 namespace WEditor.Scenario
 {
     public class ScenarioGenerator : MonoBehaviour
@@ -34,7 +36,7 @@ namespace WEditor.Scenario
         {
             GameEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
         }
-        public void InitGeneration(Tilemap tilemap, Tilemap props)
+        public void InitGeneration(Tilemap tilemap, Tilemap props,Vector3 spawnPosition)
         {
 
             wallGroundTilemap.size = tilemap.size;
@@ -79,6 +81,8 @@ namespace WEditor.Scenario
             }
             HandleDoorsGeneration(tilemap);
             wallGroundTilemap.transform.SetParent(grid.transform);
+            
+            PlayerGlobalReference.instance.playerPosition = spawnPosition;
         }
         private void AddDoorToList(Vector3Int cellPos, Tilemap tilemap, string tileName)
         {

@@ -40,7 +40,7 @@ namespace WEditor.UI
         }
         private void OnEdit()
         {
-            buttonText.text = "Preview";
+            buttonText.text = "Play";
             changeActiveState.Invoke(true);
             previewUI.SetActive(false);
             GameEvent.instance.PreviewModeExit();
