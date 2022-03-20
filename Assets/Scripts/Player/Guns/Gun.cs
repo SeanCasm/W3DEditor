@@ -2,13 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static WInput;
 using WEditor.Events;
+using WEditor.Game.Guns;
 
-namespace WEditor.Game.Guns
+namespace WEditor.Game.Player.Guns
 {
-    public class Gun : GunBase, IGunActions
+    public class Gun : GunBase
     {
         [SerializeField] protected int maxAmmo;
         protected int currentAmmo;
@@ -19,9 +18,9 @@ namespace WEditor.Game.Guns
         protected Animator animator;
         public Action onGunStoppedFire;
         public Action onEmptyAmmo;
-        protected void Start()
+        private new void Start()
         {
-            GunInput.instance.EnableAndSetCallbacks(this);
+            base.Start();
             animator = GetComponent<Animator>();
         }
         private void OnEnable()
@@ -34,6 +33,16 @@ namespace WEditor.Game.Guns
             onGunStoppedFire = null;
             onEmptyAmmo = null;
         }
+        public void FireCanceled()
+        {
+            isHolding = false;
+            StopCoroutine(nameof(QueueShooting));
+        }
+        public void FirePerformed()
+        {
+            isHolding = true;
+            StartCoroutine(nameof(QueueShooting));
+        }
         public void Init(bool enable)
         {
             if (!isInitialized)
@@ -44,21 +53,7 @@ namespace WEditor.Game.Guns
 
             gameObject.SetActive(enable);
         }
-        public void OnFire(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                print("performed");
-                isHolding = true;
-                StartCoroutine(nameof(QueueShooting));
-            }
-            else
-            if (context.canceled)
-            {
-                isHolding = false;
-                StopCoroutine(nameof(QueueShooting));
-            }
-        }
+
         private void LateUpdate()
         {
             animator.SetBool("isShooting", isShooting);

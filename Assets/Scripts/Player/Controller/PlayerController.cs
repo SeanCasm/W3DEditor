@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static WInput;
-using WEditor.Game.Guns;
+using WEditor.Game.Player.Guns;
 namespace WEditor.Game.Player
 {
 
@@ -11,9 +11,18 @@ namespace WEditor.Game.Player
     {
         [SerializeField] float speed, sprintSpeed;
         private Rigidbody rigid;
+        private PlayerControllerInput playerControllerInput;
+        private GunHandler gunHandler;
+        private bool isMovingMouse;
         private float currentSpeed;
-        PlayerControllerInput playerControllerInput;
-        GunHandler gunHandler;
+        private void OnEnable()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        private void OnDisable()
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
         private void Start()
         {
             rigid = GetComponent<Rigidbody>();
@@ -53,15 +62,18 @@ namespace WEditor.Game.Player
 
         public void OnRotatemouse(InputAction.CallbackContext context)
         {
-            Vector2 mousePosition = context.ReadValue<Vector2>();
-            // if (context.started)
-            // {
-            //     StartCoroutine(nameof(RotateAround), mousePosition.x);
-            // }
-            // else if (context.canceled)
-            // {
-            //     StopCoroutine(nameof(RotateAround));
-            // }
+            float mousePosition = context.ReadValue<Vector2>().x;
+            mousePosition = mousePosition > 0 ? 1 : -1;
+            if (context.performed)
+            {
+                if (!isMovingMouse) StartCoroutine(nameof(RotateAround), mousePosition);
+                isMovingMouse = true;
+            }
+            else if (context.canceled)
+            {
+                isMovingMouse = false;
+                StopCoroutine(nameof(RotateAround));
+            }
         }
 
         IEnumerator RotateAround(float axis)

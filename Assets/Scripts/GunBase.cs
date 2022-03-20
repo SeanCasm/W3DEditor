@@ -7,10 +7,14 @@ namespace WEditor.Game.Guns
 {
     public class GunBase : MonoBehaviour
     {
-        [SerializeField] protected Transform shootPoint;
         [SerializeField] protected float checkDistance;
         [SerializeField] protected LayerMask hitLayer;
         [SerializeField] protected float damage;
+        protected Transform shootPoint;
+        protected void Start()
+        {
+            shootPoint = transform.GetChild(0);
+        }
         public Tuple<bool, RaycastHit> ShootRay()
         {
             RaycastHit raycastHit;

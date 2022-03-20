@@ -839,7 +839,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""id"": ""a6366a49-5ea1-4e7e-af37-5fc099f6d2fd"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
@@ -953,7 +953,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cf184afe-d8e7-46ff-b121-ae225d77615b"",
-                    ""path"": ""<Mouse>/position"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

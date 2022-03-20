@@ -16,12 +16,20 @@ namespace WEditor.Events
         public event Action onPreviewModeEnter;
         public event Action onPreviewModeExit;
         public event Action<bool> onEditorInventoryActiveChanged;
-        public event Action<int> onEditorInventorySelected, onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged;
+        public event Action<int> onEditorInventorySelected;
+        public event Action<int> onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
         public void HealthChanged(int amount)
         {
             if (onHealthChanged != null)
             {
                 onHealthChanged(amount);
+            }
+        }
+        public void ArmourhChanged(int amount)
+        {
+            if (onArmourhChanged != null)
+            {
+                onArmourhChanged(amount);
             }
         }
         public void LivesChanged(int amount)

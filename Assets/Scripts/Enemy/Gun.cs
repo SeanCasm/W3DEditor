@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using WEditor.Game.Guns;
 
-namespace WEditor.Game.Guns
+namespace WEditor.Game.Enemy.Guns
 {
-    public class SingleFire : Gun
+    public class Gun : GunBase
     {
         
     }
