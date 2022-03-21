@@ -18,7 +18,7 @@ namespace WEditor.UI
         }
         public void OnPause(InputAction.CallbackContext context)
         {
-            if (context.started)
+            if (context.started && PreviewHandler.onPreview)
             {
                 switch (menuEnable)
                 {

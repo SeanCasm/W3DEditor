@@ -54,7 +54,7 @@ namespace WEditor.Scenario
                     }
                     else if (nameToLower.StartsWith("prop"))
                     {
-                        prop.SetTile(cellPos, tile);
+                        HandlePropLocation(cellPos, tile);
                     }
                     else
                     {
@@ -98,7 +98,7 @@ namespace WEditor.Scenario
         {
             bool error = false;
 
-            error = SetDoor(cellPos, tile);
+            error = HandleDoorLocation(cellPos, tile);
 
             if (error) TextMessageHandler.instance.DB_GE();
         }
@@ -112,7 +112,17 @@ namespace WEditor.Scenario
                 currentWorldPos = cellPos;
             }
         }
-        private bool SetDoor(Vector3Int cellPos, Tile tile)
+        private void HandlePropLocation(Vector3Int cellPos, Tile tile)
+        {
+            if (mainGround.HasTile(cellPos))
+            {
+                TextMessageHandler.instance.PP_LL();
+                return;
+            }
+
+            prop.SetTile(cellPos, tile);
+        }
+        private bool HandleDoorLocation(Vector3Int cellPos, Tile tile)
         {
             //Gets top and bottom tiles position in tilemap
             Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);

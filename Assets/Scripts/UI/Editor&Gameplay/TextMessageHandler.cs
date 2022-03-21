@@ -37,6 +37,10 @@ namespace WEditor.UI
         {
             SetError("sp_pl");
         }
+        public void PP_LL()
+        {
+            SetError("pp_ll");
+        }
         private void SetError(string id)
         {
             errorPanel.SetActive(true);

@@ -11,12 +11,7 @@ namespace WEditor.UI
     {
         [SerializeField] UnityEvent<bool> changeActiveState;
         [SerializeField] GameObject previewUI;
-        private TextMeshProUGUI buttonText;
-        private bool onPreview = false;
-        private void Awake()
-        {
-            buttonText = GetComponentInChildren<TextMeshProUGUI>();
-        }
+        public static bool onPreview;
         public void OnChangeHandler()
         {
             if (!EditorGrid.instance.isSpawnLocated)

@@ -9,7 +9,7 @@ namespace WEditor.Game
     {
         void Update()
         {
-            transform.LookAt(PlayerGlobalReference.instance.transform);
+            transform.LookAt(PlayerGlobalReference.instance.playerPosition);
         }
     }
 }
