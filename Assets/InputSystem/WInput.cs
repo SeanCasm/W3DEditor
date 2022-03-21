@@ -1023,6 +1023,82 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Pause"",
+            ""id"": ""c459baa6-464a-4e83-a019-7aacd4acd180"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""a06c14f8-56f2-4f49-9573-a6aceccb3d65"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""34910073-2e14-4eee-9715-a804a35afb00"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""CommandConsole"",
+            ""id"": ""98ea90a2-cc68-4bb5-81a9-8c2936e5c95c"",
+            ""actions"": [
+                {
+                    ""name"": ""Open"",
+                    ""type"": ""Button"",
+                    ""id"": ""2208a1d0-bd7e-405d-ba0a-a44d2be3a3cd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""d53b0d65-c739-4285-a54d-ec6f9f8a36d9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f4de553a-8b2b-4273-aaf3-f4217b493351"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11313cd6-457f-4e20-876e-5513b07a4fe1"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -1063,6 +1139,13 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         // Gun
         m_Gun = asset.FindActionMap("Gun", throwIfNotFound: true);
         m_Gun_Fire = m_Gun.FindAction("Fire", throwIfNotFound: true);
+        // Pause
+        m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
+        m_Pause_Pause = m_Pause.FindAction("Pause", throwIfNotFound: true);
+        // CommandConsole
+        m_CommandConsole = asset.FindActionMap("CommandConsole", throwIfNotFound: true);
+        m_CommandConsole_Open = m_CommandConsole.FindAction("Open", throwIfNotFound: true);
+        m_CommandConsole_Enter = m_CommandConsole.FindAction("Enter", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1460,6 +1543,80 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         }
     }
     public GunActions @Gun => new GunActions(this);
+
+    // Pause
+    private readonly InputActionMap m_Pause;
+    private IPauseActions m_PauseActionsCallbackInterface;
+    private readonly InputAction m_Pause_Pause;
+    public struct PauseActions
+    {
+        private @WInput m_Wrapper;
+        public PauseActions(@WInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_Pause_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Pause; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PauseActions set) { return set.Get(); }
+        public void SetCallbacks(IPauseActions instance)
+        {
+            if (m_Wrapper.m_PauseActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_PauseActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PauseActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PauseActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_PauseActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+        }
+    }
+    public PauseActions @Pause => new PauseActions(this);
+
+    // CommandConsole
+    private readonly InputActionMap m_CommandConsole;
+    private ICommandConsoleActions m_CommandConsoleActionsCallbackInterface;
+    private readonly InputAction m_CommandConsole_Open;
+    private readonly InputAction m_CommandConsole_Enter;
+    public struct CommandConsoleActions
+    {
+        private @WInput m_Wrapper;
+        public CommandConsoleActions(@WInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Open => m_Wrapper.m_CommandConsole_Open;
+        public InputAction @Enter => m_Wrapper.m_CommandConsole_Enter;
+        public InputActionMap Get() { return m_Wrapper.m_CommandConsole; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CommandConsoleActions set) { return set.Get(); }
+        public void SetCallbacks(ICommandConsoleActions instance)
+        {
+            if (m_Wrapper.m_CommandConsoleActionsCallbackInterface != null)
+            {
+                @Open.started -= m_Wrapper.m_CommandConsoleActionsCallbackInterface.OnOpen;
+                @Open.performed -= m_Wrapper.m_CommandConsoleActionsCallbackInterface.OnOpen;
+                @Open.canceled -= m_Wrapper.m_CommandConsoleActionsCallbackInterface.OnOpen;
+                @Enter.started -= m_Wrapper.m_CommandConsoleActionsCallbackInterface.OnEnter;
+                @Enter.performed -= m_Wrapper.m_CommandConsoleActionsCallbackInterface.OnEnter;
+                @Enter.canceled -= m_Wrapper.m_CommandConsoleActionsCallbackInterface.OnEnter;
+            }
+            m_Wrapper.m_CommandConsoleActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Open.started += instance.OnOpen;
+                @Open.performed += instance.OnOpen;
+                @Open.canceled += instance.OnOpen;
+                @Enter.started += instance.OnEnter;
+                @Enter.performed += instance.OnEnter;
+                @Enter.canceled += instance.OnEnter;
+            }
+        }
+    }
+    public CommandConsoleActions @CommandConsole => new CommandConsoleActions(this);
     public interface IMapEditorActions
     {
         void OnAim(InputAction.CallbackContext context);
@@ -1501,5 +1658,14 @@ public partial class @WInput : IInputActionCollection2, IDisposable
     public interface IGunActions
     {
         void OnFire(InputAction.CallbackContext context);
+    }
+    public interface IPauseActions
+    {
+        void OnPause(InputAction.CallbackContext context);
+    }
+    public interface ICommandConsoleActions
+    {
+        void OnOpen(InputAction.CallbackContext context);
+        void OnEnter(InputAction.CallbackContext context);
     }
 }

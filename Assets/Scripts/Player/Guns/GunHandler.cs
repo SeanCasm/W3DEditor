@@ -10,7 +10,7 @@ namespace WEditor.Game.Player.Guns
     public class GunHandler : MonoBehaviour, IGunActions
     {
         [SerializeField] List<Gun> playerGuns;
-        private Gun currentGun { get => playerGuns[gunIndex]; }
+        public Gun currentGun { get => playerGuns[gunIndex]; }
         private int playerGunsCount { get => playerGuns.Count; }
         int gunIndex = 0;
         private void Start()

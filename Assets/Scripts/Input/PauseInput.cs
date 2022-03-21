@@ -5,27 +5,23 @@ using static WInput;
 
 namespace WEditor
 {
-    public class GunInput : MonoBehaviour
+    public class PauseInput : MonoBehaviour
     {
-        public static GunInput instance;
+        public static PauseInput instance;
         private WInput wInput;
         private void Start()
         {
             instance = this;
             wInput = GameInput.instance.wInput;
         }
-        public void EnableAndSetCallbacks(IGunActions callbacks)
+        public void EnableAndSetCallbacks(IPauseActions callbacks)
         {
-            wInput.Gun.Enable();
-            wInput.Gun.SetCallbacks(callbacks);
+            wInput.Pause.Enable();
+            wInput.Pause.SetCallbacks(callbacks);
         }
         public void Disable()
         {
-            wInput.Gun.Disable();
-        }
-        public void Enable()
-        {
-            wInput.Gun.Enable();
+            wInput.Pause.Disable();
         }
     }
 }

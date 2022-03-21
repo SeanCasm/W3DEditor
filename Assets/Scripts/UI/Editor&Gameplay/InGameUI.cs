@@ -8,6 +8,7 @@ namespace WEditor.Game.UI
     public class InGameUI : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI lives, ammo, score, health;
+        [SerializeField] Animator playerStatusUIAnimator;
 
         private void OnEnable()
         {
@@ -30,6 +31,9 @@ namespace WEditor.Game.UI
         private void OnLivesChanged(int amount)
         {
             lives.text = "Lives <br>" + amount;
+            int healthTier = amount / 16;
+            playerStatusUIAnimator.SetInteger("hurtTier", healthTier);
+
         }
         private void OnScoreChanged(int amount)
         {

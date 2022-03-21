@@ -10,6 +10,7 @@ namespace WEditor.Game.Player
         [SerializeField] int maxArmour;
         [SerializeField] int initialLives;
         private int currentArmour, currentLives;
+        public bool isImmortal { get; set; }
         public bool isFullHealth { get => currentHealth == maxHealth; }
         private void Start()
         {
@@ -30,6 +31,8 @@ namespace WEditor.Game.Player
 
             currentHealth += amount;
             if (currentHealth > maxHealth) currentHealth = maxHealth;
+
+
             GameEvent.instance.HealthChanged(currentHealth);
         }
         public void AddArmour(int amount)
@@ -45,6 +48,8 @@ namespace WEditor.Game.Player
         }
         public override void Take(int amount)
         {
+            if (isImmortal) return;
+
             currentHealth -= amount;
             if (currentHealth < 0) currentHealth = 0;
             GameEvent.instance.HealthChanged(currentHealth);

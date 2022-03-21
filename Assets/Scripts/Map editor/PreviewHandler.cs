@@ -36,11 +36,9 @@ namespace WEditor.UI
             changeActiveState.Invoke(false);
             previewUI.SetActive(true);
             GameEvent.instance.PreviewModeEnter();
-            buttonText.text = "Exit";
         }
         private void OnEdit()
         {
-            buttonText.text = "Play";
             changeActiveState.Invoke(true);
             previewUI.SetActive(false);
             GameEvent.instance.PreviewModeExit();

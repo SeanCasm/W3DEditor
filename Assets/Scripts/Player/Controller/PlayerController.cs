@@ -9,9 +9,10 @@ namespace WEditor.Game.Player
 
     public class PlayerController : MonoBehaviour, IPlayerActions
     {
+        [Header("Movement")]
         [SerializeField] float speed, sprintSpeed;
+        [SerializeField] float rotationSpeed;
         private Rigidbody rigid;
-        private PlayerControllerInput playerControllerInput;
         private GunHandler gunHandler;
         private bool isMovingMouse;
         private float currentSpeed;
@@ -27,8 +28,7 @@ namespace WEditor.Game.Player
         {
             rigid = GetComponent<Rigidbody>();
             gunHandler = GetComponentInChildren<GunHandler>();
-            playerControllerInput = new PlayerControllerInput();
-            playerControllerInput.EnableAndSetCallbacks(this);
+            PlayerControllerInput.instance.EnableAndSetCallbacks(this);
             currentSpeed = speed;
         }
 
@@ -80,7 +80,7 @@ namespace WEditor.Game.Player
         {
             while (axis != 0)
             {
-                transform.Rotate(Vector3.up, axis, Space.World);
+                transform.Rotate(Vector3.up, axis * rotationSpeed, Space.World);
                 yield return null;
             }
         }
