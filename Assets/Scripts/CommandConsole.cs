@@ -98,7 +98,7 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
     }
     private void HideHelpGuide()
     {
-        helpText.gameObject.SetActive(false);
+        helpText.text="";
     }
     public void OnOpen(InputAction.CallbackContext context)
     {
