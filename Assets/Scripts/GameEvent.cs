@@ -10,14 +10,43 @@ namespace WEditor.Events
         public static GameEvent instance;
         private void Awake()
         {
-            instance = this;
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+            else
+            {
+                Destroy(this);
+            }
         }
-
-        public event Action onPreviewModeEnter;
-        public event Action onPreviewModeExit;
+        public event Action onSrollViewEnable, onSrollViewDisable;
+        public event Action onPreviewModeEnter, onPreviewModeExit;
         public event Action<bool> onEditorInventoryActiveChanged;
         public event Action<int> onEditorInventorySelected;
         public event Action<int> onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
+        public event Action onCreate;
+        public void SrollViewDisable()
+        {
+            if (onSrollViewDisable != null)
+            {
+                onSrollViewDisable();
+            }
+        }
+        public void SrollViewEnable()
+        {
+            if (onSrollViewEnable != null)
+            {
+                onSrollViewEnable();
+            }
+        }
+        public void Create()
+        {
+            if (onCreate != null)
+            {
+                onCreate();
+            }
+        }
         public void HealthChanged(int amount)
         {
             if (onHealthChanged != null)
@@ -81,6 +110,5 @@ namespace WEditor.Events
                 onPreviewModeExit();
             }
         }
-
     }
 }

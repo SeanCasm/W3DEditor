@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using WEditor.Scenario;
-using static WInput;
-using UnityEngine.InputSystem;
+using WEditor.Scenario.Editor;
 
 namespace WEditor.CameraUtils
 {

@@ -9,7 +9,7 @@ namespace WEditor
     {
         public static MapEditorInput instance;
         private WInput wInput;
-        private void Awake()
+        private void Start()
         {
             instance = this;
             wInput = GameInput.instance.wInput;

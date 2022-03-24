@@ -42,7 +42,7 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
 
         if (method == null)
         {
-            TextMessageHandler.instance.CC_LL();
+            TextMessageHandler.instance.SetError("cc_ll");
             return;
         }
         if (method.GetParameters().Length > 0)
@@ -98,7 +98,7 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
     }
     private void HideHelpGuide()
     {
-        helpText.text="";
+        helpText.text = "";
     }
     public void OnOpen(InputAction.CallbackContext context)
     {

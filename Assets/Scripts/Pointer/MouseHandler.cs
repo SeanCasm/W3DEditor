@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-using WEditor.Scenario;
+using WEditor.Scenario.Editor;
 using WEditor.Events;
-using Cinemachine;
 using static WInput;
 namespace WEditor.ScenarioInput
 {
@@ -24,25 +23,31 @@ namespace WEditor.ScenarioInput
         private Tile tileRef;
         private Vector2 mousePosition;
         private Vector3 worldPosition;
-        private void Start()
-        {
-            if (!instance) instance = this;
-            else Destroy(this);
-
-            MapEditorInput.instance.EnableMapEditorInputsAndSetCallbacks(this);
-
-            cursor = GetComponent<SpriteRenderer>();
-        }
         private void OnEnable()
         {
+            GameEvent.instance.onCreate += OnInit;
             GameEvent.instance.onPreviewModeEnter += OnMouseDisabled;
             GameEvent.instance.onPreviewModeExit += OnMouseEnabled;
         }
         private void OnDisable()
         {
+            GameEvent.instance.onCreate -= OnInit;
             GameEvent.instance.onPreviewModeEnter -= OnMouseDisabled;
             GameEvent.instance.onPreviewModeExit -= OnMouseEnabled;
         }
+        private void Start()
+        {
+            if (!instance) instance = this;
+            else Destroy(this);
+
+            cursor = GetComponent<SpriteRenderer>();
+        }
+
+        private void OnInit()
+        {
+            MapEditorInput.instance.EnableMapEditorInputsAndSetCallbacks(this);
+        }
+
         private void OnMouseEnabled()
         {
             cursor.enabled = true;
@@ -80,15 +85,15 @@ namespace WEditor.ScenarioInput
             {
                 if (isSpawn)
                 {
-                    EditorGrid.instance.SetSpawnObject(worldPosition,spawnPrefab);
+                    EditorGrid.instance.SetSpawnObject(worldPosition, spawnPrefab);
                     return;
                 }
-                
+
                 if (!isEraser && tileRef != null)
                 {
                     EditorGrid.instance.SetTile(worldPosition, tileRef);
                 }
-                else if(tileRef != null)
+                else if (tileRef != null)
                 {
                     EditorGrid.instance.EraseTile(worldPosition);
                 }

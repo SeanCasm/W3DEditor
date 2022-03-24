@@ -17,31 +17,7 @@ namespace WEditor.UI
             instance = this;
             TextReader();
         }
-        public void CL_MP()
-        {
-            SetError("cl_mp");
-        }
-        public void DB_GE()
-        {
-            SetError("dg_ge");
-        }
-        public void PP()
-        {
-            SetError("pp");
-        }
-        public void CC_LL()
-        {
-            SetError("cc_ll");
-        }
-        public void SP_PL()
-        {
-            SetError("sp_pl");
-        }
-        public void PP_LL()
-        {
-            SetError("pp_ll");
-        }
-        private void SetError(string id)
+        public void SetError(string id)
         {
             errorPanel.SetActive(true);
             errorMessage.text = errors[id];

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 using WEditor.Events;
-using WEditor.Scenario;
+using WEditor.Scenario.Editor;
 namespace WEditor.UI
 {
     public class PreviewHandler : MonoBehaviour
@@ -16,7 +16,7 @@ namespace WEditor.UI
         {
             if (!EditorGrid.instance.isSpawnLocated)
             {
-                TextMessageHandler.instance.PP();
+                TextMessageHandler.instance.SetError("pp");
                 return;
             }
             onPreview = !onPreview;
