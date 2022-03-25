@@ -50,12 +50,12 @@ namespace WEditor.Input
         private void OnMouseEnabled()
         {
             cursor.enabled = true;
-            EditorCameraInput.instance.ChangeActiveCameraInputs(true);
+            MapEditorInput.instance.ChangeInputActiveState(true);
         }
         private void OnMouseDisabled()
         {
             cursor.enabled = false;
-            EditorCameraInput.instance.ChangeActiveCameraInputs(false);
+            MapEditorInput.instance.ChangeInputActiveState(false);
 
         }
         public void Button_SetSpawn()

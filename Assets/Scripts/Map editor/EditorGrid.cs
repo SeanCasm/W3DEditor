@@ -143,7 +143,7 @@ namespace WEditor.Scenario.Editor
                 TextMessageHandler.instance.SetError("pp_ll");
                 return;
             }
-
+            prop.SetTile(cellPos,tile);
             DataHandler.SetGroundWallTileData(cellPos.x, cellPos.y, new TileData(folderAssetPath + tile.name, cellPos));
         }
         private void HandleDoorLocation(Vector3Int cellPos, Tile tile)
