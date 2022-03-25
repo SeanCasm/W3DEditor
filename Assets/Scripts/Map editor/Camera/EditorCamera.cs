@@ -4,23 +4,24 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static WInput;
 using WEditor.Events;
+using WEditor.Input;
 namespace WEditor.CameraUtils
 {
     public class EditorCamera : BaseCamera, IMapEditorCameraActions
     {
-        MapEditorInput mapEditorInput;
         new void Start()
         {
             base.Start();
-            MapEditorInput.instance.EnableMapEditorCameraInputsAndSetCallbacks(this);
+            EditorCameraInput.instance.SetRotateInput(false);
+            EditorCameraInput.instance.EnableAndSetCallbacks(this);
         }
         private void OnEnable()
         {
-            MapEditorInput.instance.ChangeActiveMapEditorCameraInputs(true);
+            EditorCameraInput.instance.ChangeActiveCameraInputs(true);
         }
         private void OnDisable()
         {
-            MapEditorInput.instance.ChangeActiveMapEditorCameraInputs(false);
+            EditorCameraInput.instance.ChangeActiveCameraInputs(false);
         }
         public void OnZoom(InputAction.CallbackContext context)
         {
@@ -54,6 +55,28 @@ namespace WEditor.CameraUtils
                 transform.Translate(Vector3.forward * move.y * speed * Time.deltaTime);
                 transform.Translate(Vector3.right * move.x * speed * Time.deltaTime);
                 yield return null;
+            }
+        }
+        IEnumerator RotateAround(float axis)
+        {
+            while (axis != 0)
+            {
+                transform.Rotate(Vector3.up, axis, Space.World);
+                yield return null;
+            }
+        }
+
+        public void OnRotate(InputAction.CallbackContext context)
+        {
+            float axis = context.ReadValue<float>();
+
+            if (context.started)
+            {
+                StartCoroutine(nameof(RotateAround), axis);
+            }
+            else if (context.canceled)
+            {
+                StopCoroutine(nameof(RotateAround));
             }
         }
     }

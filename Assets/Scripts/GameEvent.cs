@@ -26,6 +26,7 @@ namespace WEditor.Events
         public event Action<int> onEditorInventorySelected;
         public event Action<int> onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
         public event Action onCreate;
+      
         public void SrollViewDisable()
         {
             if (onSrollViewDisable != null)

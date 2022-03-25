@@ -7,12 +7,20 @@ namespace WEditor
     public class GameInput : MonoBehaviour
     {
         public static GameInput instance;
-        public WInput wInput { get; private set;}
-        
+        public WInput wInput { get; private set; }
+
         private void Awake()
         {
-            instance = this;
-            wInput = new WInput();
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+                wInput = new WInput();
+            }
+            else
+            {
+                Destroy(this);
+            }
         }
     }
 }

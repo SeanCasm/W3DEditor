@@ -3489,7 +3489,7 @@ Transform:
   - {fileID: 511209812}
   - {fileID: 1130504469}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &618503831
 Rigidbody:
@@ -4359,7 +4359,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &705507996
 MonoBehaviour:
@@ -4527,7 +4527,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &744500823
 SpriteRenderer:
@@ -5418,7 +5418,7 @@ Transform:
   m_Children:
   - {fileID: 1624198486}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &921784494
 GameObject:
@@ -5629,7 +5629,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 39.362, y: -178.797, z: 0.12}
 --- !u!114 &963194229
 MonoBehaviour:
@@ -8104,7 +8104,6 @@ GameObject:
   - component: {fileID: 1288809855}
   - component: {fileID: 1288809854}
   - component: {fileID: 1288809853}
-  - component: {fileID: 1288809857}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -8226,51 +8225,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288809851}
   m_CullTransparentMesh: 1
---- !u!114 &1288809857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1288809851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1473167745}
-          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
-          m_MethodName: DisableInputsForInventoryOpened
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1473167745}
-          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
-          m_MethodName: EnableInputsForInventoryClosed
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1302868194
 GameObject:
   m_ObjectHideFlags: 0
@@ -9634,9 +9588,8 @@ GameObject:
   - component: {fileID: 1473167736}
   - component: {fileID: 1473167741}
   - component: {fileID: 1473167744}
-  - component: {fileID: 1473167745}
-  - component: {fileID: 1473167748}
   - component: {fileID: 1473167742}
+  - component: {fileID: 1473167740}
   m_Layer: 0
   m_Name: '[HANDLERS]'
   m_TagString: Untagged
@@ -9885,6 +9838,19 @@ MonoBehaviour:
   propXOffset: 0.5
   propYOffset: 0
   propZOffset: 0.5
+--- !u!114 &1473167740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473167735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b73d6260b1f264988db1718c5cb4ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 618503828}
 --- !u!114 &1473167741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10014,31 +9980,6 @@ MonoBehaviour:
   errorMessage: {fileID: 1341265546}
   messageTime: 5
   errorsPath: Assets/Resources/txt/errors.txt
---- !u!114 &1473167745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473167735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f835d2b89ba4158488fce81b4675da2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1473167748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473167735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46b73d6260b1f264988db1718c5cb4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 618503834}
 --- !u!1 &1490437522
 GameObject:
   m_ObjectHideFlags: 0
@@ -10759,7 +10700,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.334038, y: 1}
+    m_SensorSize: {x: 1.3341014, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -10835,7 +10776,7 @@ Transform:
   - {fileID: 1302868195}
   - {fileID: 1656483691}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1637979545
 Grid:
@@ -11419,7 +11360,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1683585938
 GameObject:
@@ -12085,7 +12026,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1473167745}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
           m_MethodName: DisableInputsForInventoryOpened
           m_Mode: 1
@@ -12101,7 +12042,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1473167745}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
           m_MethodName: EnableInputsForInventoryClosed
           m_Mode: 1
@@ -13090,7 +13031,7 @@ RectTransform:
   - {fileID: 413780486}
   - {fileID: 642895697}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -13426,7 +13367,6 @@ GameObject:
   - component: {fileID: 1943039096}
   - component: {fileID: 1943039095}
   - component: {fileID: 1943039094}
-  - component: {fileID: 1943039097}
   m_Layer: 5
   m_Name: Spawn
   m_TagString: Untagged
@@ -13522,18 +13462,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1473167745}
-        m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
-        m_MethodName: EnableInputsForInventoryClosed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1943039095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13572,51 +13500,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943039092}
   m_CullTransparentMesh: 1
---- !u!114 &1943039097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943039092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1473167745}
-          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
-          m_MethodName: DisableInputsForInventoryOpened
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1473167745}
-          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
-          m_MethodName: EnableInputsForInventoryClosed
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1979383669
 GameObject:
   m_ObjectHideFlags: 0
@@ -13764,7 +13647,6 @@ GameObject:
   - component: {fileID: 1982415354}
   - component: {fileID: 1982415353}
   - component: {fileID: 1982415352}
-  - component: {fileID: 1982415351}
   - component: {fileID: 1982415350}
   - component: {fileID: 1982415355}
   m_Layer: 0
@@ -13784,18 +13666,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acbea88b08f927d42b1500bb56b11642, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1982415351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982415349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b8be1a29e14a754d8a2d894a0e23356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1982415352

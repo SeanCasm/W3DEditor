@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Events;
-using WEditor.ScenarioInput;
+using WEditor.Input;
 namespace WEditor.UI
 {
 
@@ -24,11 +24,11 @@ namespace WEditor.UI
 
             if (enable)
             {
-                MouseHandler.instance.isEraser=false;
-                MapEditorInput.instance.DisableInputsForInventoryOpened();
+                MouseHandler.instance.isEraser = false;
+                EditorCameraInput.instance.ChangeActiveCameraInputs(false);
                 return;
             }
-            MapEditorInput.instance.EnableInputsForInventoryClosed();
+            EditorCameraInput.instance.ChangeActiveCameraInputs(true);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using WEditor.Events;
-using WEditor.ScenarioInput;
+using WEditor.Input;
 namespace WEditor.UI
 {
     public class Inventory : MonoBehaviour

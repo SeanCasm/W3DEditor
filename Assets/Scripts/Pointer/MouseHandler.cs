@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 using WEditor.Scenario.Editor;
 using WEditor.Events;
 using static WInput;
-namespace WEditor.ScenarioInput
+namespace WEditor.Input
 {
     public class MouseHandler : MonoBehaviour, IMapEditorActions
     {
@@ -42,25 +42,26 @@ namespace WEditor.ScenarioInput
 
             cursor = GetComponent<SpriteRenderer>();
         }
-
         private void OnInit()
         {
-            MapEditorInput.instance.EnableMapEditorInputsAndSetCallbacks(this);
+            MapEditorInput.instance.EnableAndSetCallbacks(this);
         }
 
         private void OnMouseEnabled()
         {
             cursor.enabled = true;
-            MapEditorInput.instance.ChangeActiveMapEditorInputs(true);
+            EditorCameraInput.instance.ChangeActiveCameraInputs(true);
         }
         private void OnMouseDisabled()
         {
             cursor.enabled = false;
-            MapEditorInput.instance.ChangeActiveMapEditorInputs(false);
+            EditorCameraInput.instance.ChangeActiveCameraInputs(false);
+
         }
         public void Button_SetSpawn()
         {
             isSpawn = true;
+            MapEditorInput.instance.ChangeInputOnInventory(true);
             spawnSprite = spawnPrefab.GetComponent<SpriteRenderer>().sprite;
             cursorSprite = spawnSprite;
         }
@@ -99,12 +100,12 @@ namespace WEditor.ScenarioInput
                 }
             }
         }
-
         public void OnOpeninventary(InputAction.CallbackContext context)
         {
             if (context.started)
             {
                 GameEvent.instance.EditorInventoryActiveChanged(!itemPanel.activeSelf);
+                MapEditorInput.instance.ChangeInputOnInventory(!itemPanel.activeSelf);
             }
         }
 

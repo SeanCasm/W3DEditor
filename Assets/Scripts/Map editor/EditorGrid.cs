@@ -98,10 +98,6 @@ namespace WEditor.Scenario.Editor
                         groundWall.SetTile(cellPos, tile);
                     }
                 }
-                else
-                {
-
-                }
             }
         }
         public void SetSpawnObject(Vector3 pos, GameObject spawnPrefab)
@@ -152,6 +148,7 @@ namespace WEditor.Scenario.Editor
         }
         private void HandleDoorLocation(Vector3Int cellPos, Tile tile)
         {
+            bool tilesAround = false;
             //Gets top and bottom tiles position in tilemap
             Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);
             Vector3Int bottomPos = new Vector3Int(cellPos.x, cellPos.y - 1, cellPos.z);
@@ -164,6 +161,7 @@ namespace WEditor.Scenario.Editor
                  topTile.name.ToLower().StartsWith("wall") && bottomTile.name.ToLower().StartsWith("wall"))
             {
                 groundWall.SetTile(cellPos, tile);
+                tilesAround = true;
             }
 
             Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
@@ -177,10 +175,15 @@ namespace WEditor.Scenario.Editor
                  leftTile.name.ToLower().StartsWith("wall") && rightTile.name.ToLower().StartsWith("wall"))
             {
                 groundWall.SetTile(cellPos, tile);
+                tilesAround = true;
+            }
 
+            if (!tilesAround)
+            {
+                TextMessageHandler.instance.SetError("dg_ge");
+                return;
             }
             DataHandler.SetPropDoorTileData(cellPos.x, cellPos.y, new TileData(folderAssetPath + tile.name, cellPos));
-            TextMessageHandler.instance.SetError("db_ge");
         }
         public void InitGeneration()
         {

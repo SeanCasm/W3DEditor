@@ -606,120 +606,6 @@ public partial class @WInput : IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""MapPreview"",
-            ""id"": ""27d79480-d2cc-4544-b5a7-69dd61f8df3f"",
-            ""actions"": [
-                {
-                    ""name"": ""Rotate"",
-                    ""type"": ""Button"",
-                    ""id"": ""4ab4f816-c0b8-416f-95c9-5129fc674cb1"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""608307e2-b393-49f4-b607-3f1fd06db97d"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""53101567-59a9-4450-93e5-d1772b1301d0"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""f7b86975-035e-4517-8ec9-690944b6b62f"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""1f535c21-98f0-4aeb-b722-ffaae4597d8a"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""2149620f-66bb-47f9-82a0-81aeeeb7888e"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""ace94568-0d97-42fa-8780-eeb1b6a9a081"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""149a83ac-a2e6-42a1-bc87-47bfecfa1e96"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""68d410a5-269b-4845-b43d-a9397929a058"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""8b2fe0a2-73be-425a-a0ab-cc2196ba890e"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                }
-            ]
-        },
-        {
             ""name"": ""MapEditorCamera"",
             ""id"": ""8be83266-2657-4a2d-a2ec-da3fe3a09d1c"",
             ""actions"": [
@@ -740,6 +626,15 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""37c9726e-e993-47fd-9b64-79636ac5509a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -806,6 +701,39 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""aa1ea68e-25ac-448d-8ddc-42bbf0a695d6"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""ad9847e2-b012-4c4d-b6cf-94afc5e4e65c"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""1dc0e221-8218-4002-a922-cf76eb1a9529"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -1121,14 +1049,11 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
-        // MapPreview
-        m_MapPreview = asset.FindActionMap("MapPreview", throwIfNotFound: true);
-        m_MapPreview_Rotate = m_MapPreview.FindAction("Rotate", throwIfNotFound: true);
-        m_MapPreview_Move = m_MapPreview.FindAction("Move", throwIfNotFound: true);
         // MapEditorCamera
         m_MapEditorCamera = asset.FindActionMap("MapEditorCamera", throwIfNotFound: true);
         m_MapEditorCamera_Zoom = m_MapEditorCamera.FindAction("Zoom", throwIfNotFound: true);
         m_MapEditorCamera_Move = m_MapEditorCamera.FindAction("Move", throwIfNotFound: true);
+        m_MapEditorCamera_Rotate = m_MapEditorCamera.FindAction("Rotate", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
@@ -1364,58 +1289,19 @@ public partial class @WInput : IInputActionCollection2, IDisposable
     }
     public UIActions @UI => new UIActions(this);
 
-    // MapPreview
-    private readonly InputActionMap m_MapPreview;
-    private IMapPreviewActions m_MapPreviewActionsCallbackInterface;
-    private readonly InputAction m_MapPreview_Rotate;
-    private readonly InputAction m_MapPreview_Move;
-    public struct MapPreviewActions
-    {
-        private @WInput m_Wrapper;
-        public MapPreviewActions(@WInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Rotate => m_Wrapper.m_MapPreview_Rotate;
-        public InputAction @Move => m_Wrapper.m_MapPreview_Move;
-        public InputActionMap Get() { return m_Wrapper.m_MapPreview; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MapPreviewActions set) { return set.Get(); }
-        public void SetCallbacks(IMapPreviewActions instance)
-        {
-            if (m_Wrapper.m_MapPreviewActionsCallbackInterface != null)
-            {
-                @Rotate.started -= m_Wrapper.m_MapPreviewActionsCallbackInterface.OnRotate;
-                @Rotate.performed -= m_Wrapper.m_MapPreviewActionsCallbackInterface.OnRotate;
-                @Rotate.canceled -= m_Wrapper.m_MapPreviewActionsCallbackInterface.OnRotate;
-                @Move.started -= m_Wrapper.m_MapPreviewActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_MapPreviewActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_MapPreviewActionsCallbackInterface.OnMove;
-            }
-            m_Wrapper.m_MapPreviewActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Rotate.started += instance.OnRotate;
-                @Rotate.performed += instance.OnRotate;
-                @Rotate.canceled += instance.OnRotate;
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
-            }
-        }
-    }
-    public MapPreviewActions @MapPreview => new MapPreviewActions(this);
-
     // MapEditorCamera
     private readonly InputActionMap m_MapEditorCamera;
     private IMapEditorCameraActions m_MapEditorCameraActionsCallbackInterface;
     private readonly InputAction m_MapEditorCamera_Zoom;
     private readonly InputAction m_MapEditorCamera_Move;
+    private readonly InputAction m_MapEditorCamera_Rotate;
     public struct MapEditorCameraActions
     {
         private @WInput m_Wrapper;
         public MapEditorCameraActions(@WInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Zoom => m_Wrapper.m_MapEditorCamera_Zoom;
         public InputAction @Move => m_Wrapper.m_MapEditorCamera_Move;
+        public InputAction @Rotate => m_Wrapper.m_MapEditorCamera_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_MapEditorCamera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1431,6 +1317,9 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnMove;
+                @Rotate.started -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_MapEditorCameraActionsCallbackInterface.OnRotate;
             }
             m_Wrapper.m_MapEditorCameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -1441,6 +1330,9 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
             }
         }
     }
@@ -1637,15 +1529,11 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
     }
-    public interface IMapPreviewActions
-    {
-        void OnRotate(InputAction.CallbackContext context);
-        void OnMove(InputAction.CallbackContext context);
-    }
     public interface IMapEditorCameraActions
     {
         void OnZoom(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
     public interface IPlayerActions
     {

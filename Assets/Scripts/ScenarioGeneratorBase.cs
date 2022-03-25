@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using WEditor.Game.Player;
-using WEditor.Scenario.Editor;
+using WEditor.Events;
 
 namespace WEditor.Scenario
 {
@@ -70,7 +70,7 @@ namespace WEditor.Scenario
             HandleDoorsGeneration(groundWallTilemap);
             playableTilemap.transform.SetParent(grid.transform);
 
-            PlayerGlobalReference.instance.playerPosition = spawnPosition;
+            PlayerGlobalReference.instance.position = spawnPosition;
         }
         private void HandleWallGeneration(string tileName, Vector3Int pos)
         {

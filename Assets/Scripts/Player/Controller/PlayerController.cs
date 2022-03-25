@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static WInput;
 using WEditor.Game.Player.Guns;
+using WEditor.Events;
 namespace WEditor.Game.Player
 {
 
@@ -31,6 +32,7 @@ namespace WEditor.Game.Player
             PlayerControllerInput.instance.EnableAndSetCallbacks(this);
             currentSpeed = speed;
         }
+    
 
         public void OnMovement(InputAction.CallbackContext context)
         {

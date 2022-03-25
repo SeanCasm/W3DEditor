@@ -12,7 +12,7 @@ namespace WEditor.Game.Enemy
         private Rigidbody rigid;
         private bool isAttacking, isAlerted;
         private bool playerDetected;
-        private float distanceToPlayer { get => Vector3.Distance(transform.position, PlayerGlobalReference.instance.playerPosition); }
+        private float distanceToPlayer { get => Vector3.Distance(transform.position, PlayerGlobalReference.instance.position); }
         void Start()
         {
             rigid = GetComponent<Rigidbody>();
@@ -21,7 +21,7 @@ namespace WEditor.Game.Enemy
 
         void Update()
         {
-            Debug.DrawRay(transform.position, PlayerGlobalReference.instance.playerPosition, Color.red);
+            Debug.DrawRay(transform.position, PlayerGlobalReference.instance.position, Color.red);
             if (distanceToPlayer <= checkDistance && !playerDetected)
             {
                 isAttacking = true;

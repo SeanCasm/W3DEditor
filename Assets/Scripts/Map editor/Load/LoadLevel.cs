@@ -4,21 +4,14 @@ using UnityEngine;
 using TMPro;
 using WEditor.Events;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace WEditor.Scenario
 {
     public class LoadLevel : MonoBehaviour
     {
         [SerializeField] GameObject scrollViewContent;
-        [SerializeField] AssetReference levelButton;
+        [SerializeField] GameObject levelPrefab;
         [SerializeField] WEditor.Scenario.Playable.ScenarioGenerator scenarioGenerator;
-        GameObject content;
-        private void Start()
-        {
-            levelButton.LoadAssetAsync<GameObject>().Completed += OnLoadComplete;
-        }
         private void OnEnable()
         {
             GameEvent.instance.onSrollViewEnable += LoadToScrollView;
@@ -28,12 +21,7 @@ namespace WEditor.Scenario
         {
             GameEvent.instance.onSrollViewEnable -= LoadToScrollView;
             GameEvent.instance.onSrollViewDisable -= UnloadScrollViewContent;
-            levelButton.LoadAssetAsync<GameObject>().Completed -= OnLoadComplete;
 
-        }
-        private void OnLoadComplete(AsyncOperationHandle<GameObject> resultOperation)
-        {
-            content = resultOperation.Result;
         }
         public void LoadToScrollView()
         {
@@ -44,14 +32,19 @@ namespace WEditor.Scenario
         {
             levelData.ForEach(level =>
             {
-                TextMeshProUGUI contentText = content.GetComponentInChildren<TextMeshProUGUI>();
+                GameObject newLevel = Instantiate(levelPrefab);
+
+                Button buttonLevel = newLevel.GetComponent<Button>();
+                TextMeshProUGUI contentText = newLevel.GetComponentInChildren<TextMeshProUGUI>();
                 contentText.text = level.levelName;
 
-                Button button = content.GetComponent<Button>();
-                button.onClick.AddListener(() =>
+                buttonLevel.onClick.AddListener(() =>
                 {
                     scenarioGenerator.InitGeneration(new Vector3(level.levelSpawn.x, level.levelSpawn.z));
                 });
+                newLevel.transform.SetParent(scrollViewContent.transform);
+                RectTransform rect =  newLevel.GetComponent<RectTransform>();
+                rect.anchoredPosition = Vector2.zero;
             });
         }
 

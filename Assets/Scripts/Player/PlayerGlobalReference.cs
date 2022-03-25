@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Game.Player;
 
-namespace WEditor.Game.Player
+namespace WEditor
 {
     public class PlayerGlobalReference : MonoBehaviour
     {
         public static PlayerGlobalReference instance;
-        [SerializeField] PlayerController playerController;
-        // public IPlayerView viewReference { get; set; }
+        [SerializeField] GameObject player;
         private void Start()
         {
             instance = this;
-            // viewReference = GetComponent<IPlayerView>();
         }
-        public Vector3 playerPosition{get=>playerController.transform.position;set=>playerController.transform.position = value;}
+        public Vector3 position { get => player.transform.position; set => player.transform.position = value; }
+
     }
 }
