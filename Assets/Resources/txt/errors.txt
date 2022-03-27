@@ -6,5 +6,6 @@ pp_ll: Props cannot be located over a wall or door.
 cc_zl: Map dimensions are required and cannot be zero or less.
 cc_le: Map width and heigth cannot be upper to 50.
 sl_ln: Set a level name before save.
+sl_ic: The underscore '_' is not allowed to use in the level name. 
+sl_sp: Spawn point is required.
 ln_ep: A saved level with the same name was found.
-el_ic: The underscore '_' is not allowed to use in the level name. 

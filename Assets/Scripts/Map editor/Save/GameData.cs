@@ -8,33 +8,36 @@ namespace WEditor
     public class GameData
     {
         public (int x, int z) levelSpawn;
-        public List<(string assetPath, int xpos, int ypos)> groundWallTiles { get; set; } = new List<(string assetPath, int xpos, int ypos)>();
-        public List<(string assetPath, int xpos, int ypos)> propDoorTiles { get; set; } = new List<(string assetPath, int xpos, int ypos)>();
+        public List<(int assetListIndex, int xpos, int ypos, string tileName)> levelTiles { get; set; } = new List<(int assetListIndex, int xpos, int ypos, string tileName)>();
+        public (int x, int y) levelSize;
         public string levelName;
-        public GameData(string levelName, Vector3Int levelSpawn)
+        public GameData(string levelName, Vector3Int levelSpawn, (int w, int h) size, TileData[,] tileData)
         {
             this.levelName = levelName;
             this.levelSpawn.x = levelSpawn.x;
             this.levelSpawn.z = levelSpawn.y;
-            foreach (var item in DataHandler.groundWallTiles)
+            this.levelSize = size;
+            foreach (var item in tileData)
             {
-                groundWallTiles.Add((item.assetPath, item.position.x, item.position.y));
-            }
-            foreach (var item in DataHandler.propDoorTiles)
-            {
-                propDoorTiles.Add((item.assetPath, item.position.x, item.position.y));
+                if (item.tileName != null)
+                {
+                    Debug.Log(item.tileName);
+                    levelTiles.Add((item.assetListIndex, item.position.x, item.position.y, item.tileName));
+                }
             }
         }
     }
 
     public struct TileData
     {
-        public TileData(string assetPath, Vector3Int position)
+        public TileData(int assetListIndex, Vector3Int position, string tileName)
         {
-            this.assetPath = assetPath;
+            this.assetListIndex = assetListIndex;
             this.position = position;
+            this.tileName = tileName;
         }
-        public string assetPath { get; private set; }
+        public string tileName { get; private set; }
+        public int assetListIndex { get; private set; }
         public Vector3Int position { get; private set; }
 
     }

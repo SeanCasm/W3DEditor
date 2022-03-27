@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using WEditor.Game.Player;
-using WEditor.Events;
 
 namespace WEditor.Scenario
 {
     public class ScenarioGeneratorBase : MonoBehaviour
     {
-        [SerializeField] protected GameObject grid;
-        [SerializeField] protected Tilemap playableTilemap, props, groundWallTilemap;
+        [SerializeField] protected Tilemap mainTilemap;
         [SerializeField] protected float xOffset, yOffset, zOffset;
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallGameObject;
@@ -27,57 +24,17 @@ namespace WEditor.Scenario
         protected List<Door> doorsLocation = new List<Door>();
         protected List<GameObject> objectsGenerated = new List<GameObject>();
         protected List<Wall> walls = new List<Wall>();
-        public void InitGeneration(Vector3 spawnPosition)
+        public virtual void InitGeneration()
         {
-            playableTilemap.size = groundWallTilemap.size;
 
-            for (int x = 0; x < playableTilemap.size.x; x++)
-            {
-                for (int y = 0; y < playableTilemap.size.y; y++)
-                {
-
-                    Vector3Int pos = new Vector3Int(x, y, 0);
-
-                    if (groundWallTilemap.HasTile(pos))
-                    {
-                        TileBase tile = groundWallTilemap.GetTile(pos);
-                        string tileName = tile.name.ToLower();
-
-                        if (tileName.StartsWith("ground"))
-                        {
-                            playableTilemap.SetTile(pos, tile);
-                        }
-                        else if (tileName.StartsWith("door"))
-                        {
-                            AddDoorToList(pos, groundWallTilemap, tileName);
-                        }
-                        else if (tileName.StartsWith("wall"))
-                        {
-                            HandleWallGeneration(tileName, pos);
-                        }
-                    }
-
-                    if (props.HasTile(pos))
-                    {
-                        TileBase tileProp = props.GetTile(pos);
-                        string propTileName = tileProp.name.ToLower();
-
-                        if (propTileName.StartsWith("props"))
-                            HandlePropGeneration(propTileName, pos);
-                    }
-                }
-            }
-            HandleDoorsGeneration(groundWallTilemap);
-            playableTilemap.transform.SetParent(grid.transform);
-
-            PlayerGlobalReference.instance.position = spawnPosition;
         }
-        private void HandleWallGeneration(string tileName, Vector3Int pos)
+        protected void HandleWallGeneration(string tileName, Vector3Int pos)
         {
             //world position
-            Vector3 position = playableTilemap.CellToWorld(pos);
+            Vector3 position = mainTilemap.CellToWorld(pos);
 
-            Sprite wallSprite = wallTextures.Find(item => item.name.ToLower().StartsWith(tileName));
+            int index = wallTextures.FindIndex(item => item.name.ToLower().StartsWith(tileName));
+            Sprite wallSprite = wallTextures[index];
 
             GameObject wallObject = Instantiate(wallGameObject);
 
@@ -125,11 +82,11 @@ namespace WEditor.Scenario
             side2.GetComponent<SpriteRenderer>().sprite = wallFacingDoor;
         }
 
-        private void AddDoorToList(Vector3Int cellPos, Tilemap tilemap, string tileName)
+        protected void AddDoorToList(Vector3Int cellPos, string tileName)
         {
             Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);
             Vector3Int bottomPos = new Vector3Int(cellPos.x, cellPos.y - 1, cellPos.z);
-            if (tilemap.HasTile(topPos) && tilemap.HasTile(bottomPos))
+            if (mainTilemap.HasTile(topPos) && mainTilemap.HasTile(bottomPos))
             {
                 doorsLocation.Add(new Door(cellPos, true, tileName));
                 return;
@@ -137,18 +94,20 @@ namespace WEditor.Scenario
 
             Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
             Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
-            if (tilemap.HasTile(leftPos) && tilemap.HasTile(rightPos))
+            if (mainTilemap.HasTile(leftPos) && mainTilemap.HasTile(rightPos))
             {
                 doorsLocation.Add(new Door(cellPos, false, tileName));
             }
         }
-        private void HandleDoorsGeneration(Tilemap tilemap)
+        protected void HandleDoorsGeneration()
         {
             foreach (var door in doorsLocation)
             {
-                if (tilemap.GetTile(door.position))
+                if (mainTilemap.GetTile(door.position))
                 {
-                    Sprite doorSprite = doorSprites.Find(item => item.name.ToLower().StartsWith(door.name));
+                    int index = doorSprites.FindIndex(item => item.name.ToLower().StartsWith(door.name));
+                    Sprite doorSprite = doorSprites[index];
+
                     GameObject doorObject = Instantiate(doorPrefab);
                     doorObject.GetComponent<SpriteRenderer>().sprite = doorSprite;
                     Vector3 position = Vector3.zero;
@@ -167,10 +126,10 @@ namespace WEditor.Scenario
                 }
             }
         }
-        private void HandlePropGeneration(string tileName, Vector3Int pos)
+        protected void HandlePropGeneration(string tileName, Vector3Int pos)
         {
             //world position
-            Vector3 position = playableTilemap.CellToWorld(pos);
+            Vector3 position = mainTilemap.CellToWorld(pos);
 
             GameObject propObject = Instantiate(propPrefab);
 

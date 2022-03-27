@@ -10,50 +10,41 @@ namespace WEditor
     {
         private static string tailPath = ".wEditor";
         private static string tailPath2 = ".wEditor.paths";
-        public static void SaveToLocal(string levelName,Vector3Int levelSpawn)
+        private static string persistentDataPath = Application.persistentDataPath + "/";
+
+        public static void SaveToLocal(string levelName, Vector3Int levelSpawn, (int w, int h) size)
         {
-            string path = Application.persistentDataPath + $"/{levelName}{tailPath}";
+            string path = persistentDataPath + $"{levelName}{tailPath}";
             if (File.Exists(path))
             {
                 TextMessageHandler.instance.SetError("ln_ep");
                 return;
             }
 
-            string pathContainer = Application.persistentDataPath + $"/{tailPath2}";
+            string pathContainer = persistentDataPath + $"{tailPath2}";
 
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Create);
 
-            if (PlayerPrefs.HasKey("levelNames"))
-            {
-                string levels = PlayerPrefs.GetString("levelNames");
-                levels = $"{levels}_{levelName}";
-                PlayerPrefs.SetString("levelNames", levels);
-            }
-            else
-            {
-                PlayerPrefs.SetString("levelNames", levelName);
-            }
-
-            GameData data = new GameData(levelName,levelSpawn);
+            GameData data = new GameData(levelName, levelSpawn, size, DataHandler.levelTiles);
             formatter.Serialize(stream, data);
             stream.Close();
+            TextMessageHandler.instance.SetMessage("ss_cc");
         }
-        public static GameData LoadLocalLevel(string levelName)
+        public static GameData[] LoadLocalLevels()
         {
 
-            string path = Application.persistentDataPath + $"/{levelName}{tailPath}";
-
-            if (!File.Exists(path))
+            string[] levelPaths = Directory.GetFiles(persistentDataPath);
+            GameData[] gameDatas = new GameData[levelPaths.Length];
+            for (int i = 0; i < levelPaths.Length; i++)
             {
-                return null;
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream stream = new FileStream(levelPaths[i], FileMode.Open);
+                GameData data = formatter.Deserialize(stream) as GameData;
+                gameDatas[i] = data;
+                stream.Close();
             }
-
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-            GameData data = formatter.Deserialize(stream) as GameData;
-            stream.Close();
-            return data;
+            return gameDatas;
         }
     }
 }

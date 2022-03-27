@@ -20,13 +20,20 @@ namespace WEditor.Events
                 Destroy(this);
             }
         }
+        public event Action onEditorExit;
         public event Action onSrollViewEnable, onSrollViewDisable;
         public event Action onPreviewModeEnter, onPreviewModeExit;
         public event Action<bool> onEditorInventoryActiveChanged;
         public event Action<int> onEditorInventorySelected;
         public event Action<int> onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
-        public event Action onCreate;
-      
+        public event Action onEditorEnter;
+        public void EditorExit()
+        {
+            if (onEditorExit != null)
+            {
+                onEditorExit();
+            }
+        }
         public void SrollViewDisable()
         {
             if (onSrollViewDisable != null)
@@ -41,11 +48,11 @@ namespace WEditor.Events
                 onSrollViewEnable();
             }
         }
-        public void Create()
+        public void EditorEnter()
         {
-            if (onCreate != null)
+            if (onEditorEnter != null)
             {
-                onCreate();
+                onEditorEnter();
             }
         }
         public void HealthChanged(int amount)

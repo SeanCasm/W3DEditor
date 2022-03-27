@@ -6,26 +6,16 @@ namespace WEditor
 {
     public static class DataHandler
     {
-        public static TileData[,] groundWallTiles { get; private set; }
-        public static TileData[,] propDoorTiles { get; private set; }
-      
-        public static void SetPropDoorTileData(int dimension, int dimension2, TileData data)
+        public static TileData[,] levelTiles { get; private set; }
+        public static Vector3 currentLevelPosition { get; set; }
+        public static string currentLevelName { get; set; }
+        public static void SetLevelTiles(int dimension, int dimension2, TileData data)
         {
-            propDoorTiles[dimension, dimension2] = data;
+            levelTiles[dimension, dimension2] = data;
         }
-        public static void SetGroundWallTileData(int dimension, int dimension2, TileData data)
+        public static void LevelTileSize(int dimension, int dimension2)
         {
-            groundWallTiles[dimension, dimension2] = data;
+            levelTiles = new TileData[dimension, dimension2];
         }
-        public static void TileDataSize(int dimension, int dimension2)
-        {
-            groundWallTiles = new TileData[dimension, dimension2];
-            propDoorTiles = new TileData[dimension, dimension2];
-        }
-        public static void Save(string levelName, Vector3Int levelSpawn)
-        {
-            SaveData.SaveToLocal(levelName, levelSpawn);
-        }
-
     }
 }

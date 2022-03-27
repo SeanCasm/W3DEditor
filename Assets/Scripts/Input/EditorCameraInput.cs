@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Events;
 using static WInput;
 namespace WEditor.Input
 {
@@ -8,6 +9,16 @@ namespace WEditor.Input
     {
         public static EditorCameraInput instance;
         private WInput wInput;
+        private void OnEnable()
+        {
+            GameEvent.instance.onPreviewModeEnter += OnPreviewMode;
+            GameEvent.instance.onPreviewModeExit += OnEditorMode;
+        }
+        private void OnDisable()
+        {
+            GameEvent.instance.onPreviewModeEnter -= OnPreviewMode;
+            GameEvent.instance.onPreviewModeExit -= OnEditorMode;
+        }
         private void Start()
         {
             instance = this;
@@ -23,17 +34,24 @@ namespace WEditor.Input
             wInput.MapEditorCamera.Enable();
             wInput.MapEditorCamera.SetCallbacks(callbacks);
         }
+        private void OnEditorMode()
+        {
+            wInput.MapEditorCamera.Rotate.Disable();
+        }
+        private void OnPreviewMode()
+        {
+            wInput.MapEditorCamera.Rotate.Enable();
+        }
         public void ChangeActiveCameraInputs(bool enable)
         {
             if (enable)
             {
                 wInput.MapEditorCamera.Enable();
-                wInput.MapEditorCamera.Rotate.Enable();
+                wInput.MapEditorCamera.Rotate.Disable();
             }
             else
             {
                 wInput.MapEditorCamera.Disable();
-                wInput.MapEditorCamera.Rotate.Disable();
             }
         }
 

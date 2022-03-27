@@ -4,13 +4,13 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -2783149428158673734
-    second: Props-ground_0-c
+    second: c-Props-ground_0
   - first:
       213: 36012303475202014
-    second: Props-ground_1-c
+    second: c-Props-ground_1
   - first:
       213: -6911432918116183810
-    second: Props-ground_2-c
+    second: c-Props-ground_2
   - first:
       213: -2705096294079751049
     second: Props-ground_3
@@ -19,19 +19,19 @@ TextureImporter:
     second: Props-ground_4
   - first:
       213: 5108982493105579552
-    second: Props-ground_5-c
+    second: c-Props-ground_5
   - first:
       213: -9081440904626684685
     second: Props-ground_6
   - first:
       213: 1141784691194670118
-    second: Props-ground_8-c
+    second: c-Props-ground_8
   - first:
       213: -460545996900633221
     second: Props-ground_9
   - first:
       213: 328161933773483051
-    second: Props-ground_10-c
+    second: c-Props-ground_10
   - first:
       213: -8887604033860581042
     second: Props-ground_12
@@ -40,22 +40,22 @@ TextureImporter:
     second: Props-ground_13
   - first:
       213: 8998252298625942366
-    second: Props-ground_14-c
+    second: c-Props-ground_14
   - first:
       213: 6774447355312217728
-    second: Props-ground_15-c
+    second: c-Props-ground_15
   - first:
       213: -7117337260615649712
-    second: Props-ground_16-c
+    second: c-Props-ground_16
   - first:
       213: -5455477410663678676
-    second: Props-ground_17-c
+    second: c-Props-ground_17
   - first:
       213: -6302493081123231480
     second: Props-ground_18
   - first:
       213: 1655327702665713395
-    second: Props-ground_19-c
+    second: c-Props-ground_19
   - first:
       213: 7976169764869853600
     second: Props-ground_20
@@ -64,28 +64,28 @@ TextureImporter:
     second: Props-ground_21
   - first:
       213: -2563659307945080486
-    second: Props-ground_22-c
+    second: c-Props-ground_22
   - first:
       213: 3472596551057296228
-    second: Props-ground_23-c
+    second: c-Props-ground_23
   - first:
       213: 3981013974423328882
-    second: Props-ground_24-c
+    second: c-Props-ground_24
   - first:
       213: -5436150461686541722
     second: Props-ground_25
   - first:
       213: 1035528272798040392
-    second: Props-ground_26-c
+    second: c-Props-ground_26
   - first:
       213: 2123621605584113555
     second: Props-ground_27
   - first:
       213: 2361005792718310285
-    second: Props-ground_28-c
+    second: c-Props-ground_28
   - first:
       213: 5213076278592611701
-    second: Props-ground_29-c
+    second: c-Props-ground_29
   - first:
       213: 5770861953326352530
     second: Props-ground_30
@@ -190,7 +190,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Props-ground_0-c
+      name: c-Props-ground_0
       rect:
         serializedVersion: 2
         x: 0
@@ -211,7 +211,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_1-c
+      name: c-Props-ground_1
       rect:
         serializedVersion: 2
         x: 41
@@ -232,7 +232,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_2-c
+      name: c-Props-ground_2
       rect:
         serializedVersion: 2
         x: 134
@@ -274,7 +274,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_5-c
+      name: c-Props-ground_5
       rect:
         serializedVersion: 2
         x: 269
@@ -316,7 +316,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_8-c
+      name: c-Props-ground_8
       rect:
         serializedVersion: 2
         x: 81
@@ -358,7 +358,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_10-c
+      name: c-Props-ground_10
       rect:
         serializedVersion: 2
         x: 269
@@ -421,7 +421,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_14-c
+      name: c-Props-ground_14
       rect:
         serializedVersion: 2
         x: 71
@@ -442,7 +442,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_15-c
+      name: c-Props-ground_15
       rect:
         serializedVersion: 2
         x: 110
@@ -463,7 +463,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_16-c
+      name: c-Props-ground_16
       rect:
         serializedVersion: 2
         x: 168
@@ -484,7 +484,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_17-c
+      name: c-Props-ground_17
       rect:
         serializedVersion: 2
         x: 261
@@ -526,7 +526,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_19-c
+      name: c-Props-ground_19
       rect:
         serializedVersion: 2
         x: 209
@@ -589,7 +589,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_22-c
+      name: c-Props-ground_22
       rect:
         serializedVersion: 2
         x: 74
@@ -610,7 +610,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_23-c
+      name: c-Props-ground_23
       rect:
         serializedVersion: 2
         x: 235
@@ -631,7 +631,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_24-c
+      name: c-Props-ground_24
       rect:
         serializedVersion: 2
         x: 8
@@ -673,7 +673,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_26-c
+      name: c-Props-ground_26
       rect:
         serializedVersion: 2
         x: 142
@@ -715,7 +715,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_28-c
+      name: c-Props-ground_28
       rect:
         serializedVersion: 2
         x: 11
@@ -736,7 +736,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-ground_29-c
+      name: c-Props-ground_29
       rect:
         serializedVersion: 2
         x: 83

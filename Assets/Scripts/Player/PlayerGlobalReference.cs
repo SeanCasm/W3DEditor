@@ -9,7 +9,7 @@ namespace WEditor
     {
         public static PlayerGlobalReference instance;
         [SerializeField] GameObject player;
-        private void Start()
+        private void Awake()
         {
             instance = this;
         }

@@ -25,15 +25,17 @@ namespace WEditor.Input
         private Vector3 worldPosition;
         private void OnEnable()
         {
-            GameEvent.instance.onCreate += OnInit;
+            GameEvent.instance.onEditorEnter += OnInit;
             GameEvent.instance.onPreviewModeEnter += OnMouseDisabled;
             GameEvent.instance.onPreviewModeExit += OnMouseEnabled;
+            GameEvent.instance.onEditorExit += OnMouseDisabled;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onCreate -= OnInit;
+            GameEvent.instance.onEditorEnter -= OnInit;
             GameEvent.instance.onPreviewModeEnter -= OnMouseDisabled;
             GameEvent.instance.onPreviewModeExit -= OnMouseEnabled;
+            GameEvent.instance.onEditorExit -= OnMouseDisabled;
         }
         private void Start()
         {
@@ -64,6 +66,10 @@ namespace WEditor.Input
             MapEditorInput.instance.ChangeInputOnInventory(true);
             spawnSprite = spawnPrefab.GetComponent<SpriteRenderer>().sprite;
             cursorSprite = spawnSprite;
+        }
+        private void Disable()
+        {
+            gameObject.SetActive(false);
         }
         public void SetAsset(Sprite sprite, Tile tile)
         {

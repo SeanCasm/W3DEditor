@@ -12,8 +12,8 @@ namespace WEditor.CameraUtils
         new void Start()
         {
             base.Start();
-            EditorCameraInput.instance.SetRotateInput(false);
             EditorCameraInput.instance.EnableAndSetCallbacks(this);
+            EditorCameraInput.instance.SetRotateInput(false);
         }
         private void OnEnable()
         {

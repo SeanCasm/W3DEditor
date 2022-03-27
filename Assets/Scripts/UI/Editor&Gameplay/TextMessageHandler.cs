@@ -10,12 +10,20 @@ namespace WEditor.UI
         [SerializeField] GameObject errorPanel;
         [SerializeField] TMPro.TextMeshProUGUI errorMessage;
         [SerializeField] float messageTime;
-        [SerializeField] string errorsPath;
+        [SerializeField] string errorsPath, messagesPath;
         private Dictionary<string, string> errors = new Dictionary<string, string>();
+        private Dictionary<string, string> messages = new Dictionary<string, string>();
         private void Awake()
         {
             instance = this;
-            TextReader();
+            ReadErrors();
+            ReadMessages();
+        }
+        public void SetMessage(string id)
+        {
+            errorPanel.SetActive(true);
+            errorMessage.text = messages[id];
+            Invoke(nameof(ClearMessage), messageTime);
         }
         public void SetError(string id)
         {
@@ -28,7 +36,16 @@ namespace WEditor.UI
             errorPanel.SetActive(false);
             errorMessage.text = "";
         }
-        private void TextReader()
+        private void ReadMessages()
+        {
+            string[] lines = System.IO.File.ReadAllLines(messagesPath);
+            foreach (var line in lines)
+            {
+                (string key, string value) = GetErrorTextKeyAndValue(line);
+                messages.Add(key, value);
+            }
+        }
+        private void ReadErrors()
         {
             string[] lines = System.IO.File.ReadAllLines(errorsPath);
             foreach (var line in lines)
