@@ -20,5 +20,9 @@ namespace WEditor.UI
             levelSelectorMenu.SetActive(false);
             GameEvent.instance.SrollViewDisable();
         }
+        public void Button_Exit()
+        {
+            Application.Quit();
+        }
     }
 }

@@ -21,7 +21,6 @@ namespace WEditor
             {
                 if (item.tileName != null)
                 {
-                    Debug.Log(item.tileName);
                     levelTiles.Add((item.assetListIndex, item.position.x, item.position.y, item.tileName));
                 }
             }

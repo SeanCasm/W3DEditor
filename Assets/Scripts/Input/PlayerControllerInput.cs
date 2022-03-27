@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Events;
 using static WInput;
 namespace WEditor
 {
@@ -15,7 +16,7 @@ namespace WEditor
         }
         public void EnableAndSetCallbacks(IPlayerActions callbacks)
         {
-            wInput.Player.Enable();
+            Enable();
             wInput.Player.SetCallbacks(callbacks);
         }
         public void Enable()

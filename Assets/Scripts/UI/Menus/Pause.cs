@@ -12,13 +12,31 @@ namespace WEditor.UI
         [SerializeField] GameObject pauseUI;
         [SerializeField] GameObject settingsMenu;
         private ActualMenu menuEnable = ActualMenu.None;
-        private void Start()
+        private void OnEnable()
+        {
+            GameEvent.instance.onPreviewModeEnter += EnableInput;
+            GameEvent.instance.onPreviewModeExit += DisableInput;
+            GameEvent.instance.onPlayModeEnter += EnableInput;
+            GameEvent.instance.onPlayModeExit += DisableInput;
+        }
+        private void OnDisable()
+        {
+            GameEvent.instance.onPreviewModeEnter -= EnableInput;
+            GameEvent.instance.onPreviewModeExit -= DisableInput;
+            GameEvent.instance.onPlayModeEnter -= EnableInput;
+            GameEvent.instance.onPlayModeExit -= DisableInput;
+        }
+        private void EnableInput()
         {
             PauseInput.instance.EnableAndSetCallbacks(this);
         }
+        private void DisableInput()
+        {
+            PauseInput.instance.Disable();
+        }
         public void OnPause(InputAction.CallbackContext context)
         {
-            if (context.started && PreviewHandler.onPreview)
+            if (context.started)
             {
                 switch (menuEnable)
                 {
@@ -28,10 +46,12 @@ namespace WEditor.UI
                         PlayerControllerInput.instance.Disable();
                         GunInput.instance.Disable();
                         Cursor.lockState = CursorLockMode.None;
-
+                        Time.timeScale = 0;
+                        menuEnable = ActualMenu.Pause;
                         break;
                     case ActualMenu.Pause:
 
+                        menuEnable = ActualMenu.None;
                         Resume();
 
                         break;
@@ -46,9 +66,10 @@ namespace WEditor.UI
         private void Resume()
         {
             pauseUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
             PlayerControllerInput.instance.Enable();
             GunInput.instance.Enable();
-            Cursor.lockState = CursorLockMode.Locked;
         }
         public void Button_Resume()
         {
@@ -58,6 +79,13 @@ namespace WEditor.UI
         {
             pauseUI.SetActive(false);
             GameEvent.instance.PreviewModeExit();
+            Time.timeScale = 1;
+        }
+        public void Button_ExitPlayMode()
+        {
+            GameEvent.instance.PlayModeExit();
+            SceneHandler.instance.LoadMain();
+            Time.timeScale = 1;
         }
     }
     public enum ActualMenu

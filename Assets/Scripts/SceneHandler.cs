@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using WEditor.Scenario;
 using WEditor;
 using WEditor.Scenario.Playable;
+using WEditor.Events;
+
 public class SceneHandler : MonoBehaviour
 {
     public static SceneHandler instance;
@@ -38,5 +40,6 @@ public class SceneHandler : MonoBehaviour
     {
         ScenarioGenerator scenarioGenerator = GameObject.FindObjectOfType<ScenarioGenerator>();
         scenarioGenerator.InitGeneration(gameData);
+        GameEvent.instance.PlayModeEnter();
     }
 }

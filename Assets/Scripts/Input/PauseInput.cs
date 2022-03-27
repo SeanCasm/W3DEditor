@@ -9,7 +9,7 @@ namespace WEditor
     {
         public static PauseInput instance;
         private WInput wInput;
-        private void Start()
+        private void OnEnable()
         {
             instance = this;
             wInput = GameInput.instance.wInput;
@@ -18,6 +18,10 @@ namespace WEditor
         {
             wInput.Pause.Enable();
             wInput.Pause.SetCallbacks(callbacks);
+        }
+        public void Enable()
+        {
+            wInput.Pause.Enable();
         }
         public void Disable()
         {

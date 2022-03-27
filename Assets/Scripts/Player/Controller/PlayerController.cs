@@ -17,22 +17,20 @@ namespace WEditor.Game.Player
         private GunHandler gunHandler;
         private bool isMovingMouse;
         private float currentSpeed;
-        private void OnEnable()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
         private void OnDisable()
         {
             Cursor.lockState = CursorLockMode.None;
+            StopAllCoroutines();
         }
-        private void Start()
+        private void OnEnable()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             rigid = GetComponent<Rigidbody>();
             gunHandler = GetComponentInChildren<GunHandler>();
             PlayerControllerInput.instance.EnableAndSetCallbacks(this);
             currentSpeed = speed;
         }
-    
+
 
         public void OnMovement(InputAction.CallbackContext context)
         {

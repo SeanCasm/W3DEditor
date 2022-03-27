@@ -20,18 +20,32 @@ namespace WEditor.Events
                 Destroy(this);
             }
         }
-        public event Action onEditorExit;
+        public event Action onEditorExit, onEditorEnter;
         public event Action onSrollViewEnable, onSrollViewDisable;
         public event Action onPreviewModeEnter, onPreviewModeExit;
+        public event Action onPlayModeEnter, onPlayModeExit;
         public event Action<bool> onEditorInventoryActiveChanged;
         public event Action<int> onEditorInventorySelected;
         public event Action<int> onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
-        public event Action onEditorEnter;
         public void EditorExit()
         {
             if (onEditorExit != null)
             {
                 onEditorExit();
+            }
+        }
+        public void PlayModeEnter()
+        {
+            if (onPlayModeEnter != null)
+            {
+                onPlayModeEnter();
+            }
+        }
+        public void PlayModeExit()
+        {
+            if (onPlayModeExit != null)
+            {
+                onPlayModeExit();
             }
         }
         public void SrollViewDisable()

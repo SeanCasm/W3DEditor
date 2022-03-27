@@ -11,7 +11,6 @@ namespace WEditor.UI
     {
         [SerializeField] UnityEvent<bool> changeActiveState;
         [SerializeField] GameObject previewUI,editorPanel;
-        public static bool onPreview;
         public void OnPreview()
         {
             if (!EditorGrid.instance.isSpawnLocated)
@@ -19,7 +18,6 @@ namespace WEditor.UI
                 TextMessageHandler.instance.SetError("pp");
                 return;
             }
-            onPreview=true;
             EditorGrid.instance.InitGeneration();
             changeActiveState.Invoke(false);
             previewUI.SetActive(true);
@@ -31,7 +29,6 @@ namespace WEditor.UI
             changeActiveState.Invoke(true);
             previewUI.SetActive(false);
             GameEvent.instance.PreviewModeExit();
-            onPreview=false;
         }
     }
 }

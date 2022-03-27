@@ -29,7 +29,7 @@ namespace WEditor.Game.Player.Guns
         }
         private void OnDisable()
         {
-            StopCoroutine(nameof(QueueShooting));
+            StopAllCoroutines();
             onGunStoppedFire = null;
             onEmptyAmmo = null;
         }
