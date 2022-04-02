@@ -13,15 +13,7 @@ public class SceneHandler : MonoBehaviour
     private GameData gameData;
     private void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this);
-        }
+        instance = this;
     }
     public void LoadEditor()
     {
