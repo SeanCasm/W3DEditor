@@ -18,7 +18,7 @@ namespace WEditor.Scenario.Playable
 
                 if (itemTile.name.Contains("top"))
                 {
-                    itemTile.sprite = propsTopSprites[item.assetListIndex];
+                    itemTile.sprite = propsTopSprites.spritesCollection[item.assetListIndex];
                     mainTilemap.SetTile(cellPos, itemTile);
 
                     HandlePropGeneration(tileName, cellPos);
@@ -26,14 +26,14 @@ namespace WEditor.Scenario.Playable
 
                 else if (tileName.Contains("wall"))
                 {
-                    itemTile.sprite = wallTextures[item.assetListIndex];
+                    itemTile.sprite = wallTextures.spritesCollection[item.assetListIndex];
                     mainTilemap.SetTile(cellPos, itemTile);
 
                     HandleWallGeneration(tileName, cellPos);
                 }
                 else if (tileName.Contains("prop"))
                 {
-                    itemTile.sprite = propsDefaultSprites[item.assetListIndex];
+                    itemTile.sprite = propsDefaultSprites.spritesCollection[item.assetListIndex];
                     mainTilemap.SetTile(cellPos, itemTile);
 
                     HandlePropGeneration(tileName, cellPos);
@@ -50,7 +50,7 @@ namespace WEditor.Scenario.Playable
                 itemTile.name = tileName;
                 if (tileName.Contains("door"))
                 {
-                    itemTile.sprite = doorSprites[item.assetListIndex];
+                    itemTile.sprite = doorSprites.spritesCollection[item.assetListIndex];
                     mainTilemap.SetTile(cellPos, itemTile);
 
                     AddDoorToList(cellPos, tileName);

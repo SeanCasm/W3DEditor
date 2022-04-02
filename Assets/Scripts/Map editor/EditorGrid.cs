@@ -16,7 +16,7 @@ namespace WEditor.Scenario.Editor
         [SerializeField] Transform editorCamera;
         [Header("Level load settings")]
         [SerializeField] GameObject firstScreen;
-        [SerializeField] Sprite[] wallSprites, doorSprites, propSprites, propTopSprites;
+        [SerializeField] WEditor.Game.Scriptables.ScenarioScriptable wall, door, props, propsTop;
         public bool isSpawnLocated { get; private set; }
         private Vector3Int currentWorldPos;
         private GameObject currentSpawn;
@@ -74,15 +74,15 @@ namespace WEditor.Scenario.Editor
                 tile.name = item.tileName;
                 if (item.tileName.Contains("wall"))
                 {
-                    tile.sprite = wallSprites[item.assetListIndex];
+                    tile.sprite = wall.spritesCollection[item.assetListIndex];
                 }
                 else if (item.tileName.Contains("prop"))
                 {
-                    tile.sprite = propSprites[item.assetListIndex];
+                    tile.sprite = props.spritesCollection[item.assetListIndex];
                 }
                 else if (item.tileName.Contains("door"))
                 {
-                    tile.sprite = doorSprites[item.assetListIndex];
+                    tile.sprite = door.spritesCollection[item.assetListIndex];
                 }
                 SetTile(cellPos, tile);
             });
@@ -103,10 +103,8 @@ namespace WEditor.Scenario.Editor
                 TextMessageHandler.instance.SetError("cc_le");
                 return;
             }
-
-            pointerPreview.size = new Vector3Int(width, height, 0);
-            mainTilemap.size = new Vector3Int(width, height, 0);
-            whiteSquare.size = new Vector3Int(width, height, 0);
+            Vector3Int size = new Vector3Int(width, height, 0);
+            whiteSquare.size = mainTilemap.size = pointerPreview.size = size;
 
             confinerCollider.size = new Vector3(mainTilemap.size.x, 100, mainTilemap.size.y);
             confinerCollider.transform.position = new Vector3(center.x, center.y + confinerCollider.size.y / 2, center.z);
@@ -115,7 +113,6 @@ namespace WEditor.Scenario.Editor
 
             whiteSquare.BoxFill(Vector3Int.zero, gridTile, 0, 0, width, height);
             DataHandler.LevelTileSize(width, height);
-            // print(DataHandler.levelTiles.Length);
             GameEvent.instance.EditorEnter();
         }
         public void EraseTile(Vector3 pos)
@@ -143,14 +140,25 @@ namespace WEditor.Scenario.Editor
                     {
                         mainTilemap.SetTile(cellPos, tile);
                     }
-                    else if (nameToLower.Contains("ground"))
+                    else
                     {
-                        mainTilemap.SetTile(cellPos, tile);
+                        HandleCollectibleLocation(cellPos, tile);
                     }
                 }
                 string[] index = nameToLower.Split('_');
                 DataHandler.SetLevelTiles(cellPos.x, cellPos.y, new TileData(int.Parse(index[index.Length - 1]), cellPos, nameToLower));
             }
+        }
+        private void HandleCollectibleLocation(Vector3Int cellPos, Tile tile)
+        {
+            bool hasTile = mainTilemap.HasTile(cellPos);
+            string tilePlacedName = hasTile ? mainTilemap.GetTile(cellPos).name : "n";
+            if (hasTile && tilePlacedName.Contains("door") || tilePlacedName.Contains("wall"))
+            {
+                TextMessageHandler.instance.SetError("ci_ll");
+                return;
+            }
+            mainTilemap.SetTile(cellPos, tile);
         }
         public void SetSpawnObject(Vector3 pos, GameObject spawnPrefab)
         {

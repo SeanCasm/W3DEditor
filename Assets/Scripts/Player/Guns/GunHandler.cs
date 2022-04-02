@@ -23,6 +23,10 @@ namespace WEditor.Game.Player.Guns
                 gun.onEmptyAmmo = TrySwapGun;
             });
         }
+        public void AddTo(int ammoID, int amount)
+        {
+            playerGuns[ammoID].Add(amount);
+        }
         public void OnFire(InputAction.CallbackContext context)
         {
             if (context.performed)

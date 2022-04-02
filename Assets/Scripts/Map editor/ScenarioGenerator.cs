@@ -29,11 +29,7 @@ namespace WEditor.Scenario.Editor
                         TileBase tile = mainTilemap.GetTile(pos);
                         string tileName = tile.name.ToLower();
 
-                        if (tileName.StartsWith("ground"))
-                        {
-                            mainTilemap.SetTile(pos, tile);
-                        }
-                        else if (tileName.StartsWith("door"))
+                        if (tileName.StartsWith("door"))
                         {
                             AddDoorToList(pos, tileName);
                         }
@@ -44,6 +40,14 @@ namespace WEditor.Scenario.Editor
                         else if (tileName.StartsWith("prop"))
                         {
                             HandlePropGeneration(tileName, pos);
+                        }
+                        else if (tileName.Contains("health"))
+                        {
+                            HandleHealthGeneration(tileName, pos);
+                        }
+                        else if (tileName.Contains("ammo"))
+                        {
+                            HandleAmmoGeneration(tileName, pos);
                         }
                     }
                 }

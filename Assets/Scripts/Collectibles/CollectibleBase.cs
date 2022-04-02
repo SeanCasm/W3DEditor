@@ -1,19 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using WEditor.Game.Scriptables;
 namespace WEditor.Game.Collectibles
 {
-    public abstract class CollectibleBase : MonoBehaviour
+    public class CollectibleBase : MonoBehaviour
     {
-        [SerializeField] protected int amount;
-        [SerializeField] AudioClip sound;
-        [SerializeField]
-        protected abstract void AddTo();
-        protected abstract void OnTriggerEnter(Collider other);
-    }
-    public enum CollectibleType
-    {
-        ammo, health, points
+        protected event System.Action OnPlayerTrigger;
+        protected int amount;
+        private SpriteRenderer spriteRenderer;
+        public CollectibleScriptable collectibleScriptable { get; set; }
+        private void Start()
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = collectibleScriptable.itemSprite;
+            amount = collectibleScriptable.amount;
+        }
+        private void Update()
+        {
+            transform.LookAt(PlayerGlobalReference.instance.position);
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (OnPlayerTrigger != null && other.CompareTag("Player"))
+            {
+                OnPlayerTrigger();
+                OnCollected();
+            }
+        }
+        private void OnCollected()
+        {
+            if (collectibleScriptable.collectSound != null)
+                AudioSource.PlayClipAtPoint(collectibleScriptable.collectSound, transform.position);
+
+            Destroy(gameObject);
+        }
     }
 }

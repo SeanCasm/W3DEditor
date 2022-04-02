@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using WEditor.Game.Scriptables;
+using WEditor.Game.Collectibles;
 
 namespace WEditor.Scenario
 {
@@ -11,16 +13,18 @@ namespace WEditor.Scenario
         [SerializeField] protected float xOffset, yOffset, zOffset;
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallGameObject;
-        [SerializeField] protected List<Sprite> wallTextures;
+        [SerializeField] protected ScenarioScriptable wallTextures;
         [SerializeField] protected Sprite wallFacingDoor;
         [Header("Door generation")]
-        [SerializeField] protected List<Sprite> doorSprites;
+        [SerializeField] protected ScenarioScriptable doorSprites;
         [SerializeField] protected GameObject doorPrefab;
         [SerializeField] protected float xDoorOffset1 = .5f, xDoorOffset2, zDoorOffset1 = 1, zDoorOffset2;
         [Header("Prop generation")]
         [SerializeField] protected GameObject propPrefab;
-        [SerializeField] protected List<Sprite> propsDefaultSprites, propsTopSprites;
+        [SerializeField] protected ScenarioScriptable propsDefaultSprites, propsTopSprites;
         [SerializeField] protected float propXOffset, propYOffset, propZOffset;
+        [Header("Collectible generation")]
+        [SerializeField] List<CollectibleScriptable> healthScriptables, ammoScriptables, scoreScriptables;
         protected List<Door> doorsLocation = new List<Door>();
         protected List<GameObject> objectsGenerated = new List<GameObject>();
         protected List<Wall> walls = new List<Wall>();
@@ -28,13 +32,62 @@ namespace WEditor.Scenario
         {
 
         }
+        protected void HandlePointsGeneration(string tileName, Vector3Int cellPos)
+        {
+            var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
+
+            Score score = itemGameObject.AddComponent<Score>();
+            score.collectibleScriptable = scoreScriptables[lastIndex];
+
+            SetItemPosition(itemGameObject, position);
+        }
+        private (GameObject, int, Vector3) GetItem(string tileName, Vector3Int cellPos)
+        {
+            Vector3 position = mainTilemap.CellToWorld(cellPos);
+            position = new Vector3(position.x + .5f, position.y, position.z + .5f);
+
+            GameObject itemGameObject = new GameObject(tileName);
+            itemGameObject.SetActive(false);
+            itemGameObject.AddComponent<SpriteRenderer>();
+            BoxCollider box = itemGameObject.AddComponent<BoxCollider>();
+            box.isTrigger = true;
+            objectsGenerated.Add(itemGameObject);
+
+            string[] split = tileName.Split('_');
+            int lastIndex = int.Parse(split[1].ToString());
+            return (itemGameObject, lastIndex, position);
+        }
+        private void SetItemPosition(GameObject itemGameObject, Vector3 position)
+        {
+            Instantiate(itemGameObject);
+            itemGameObject.transform.position = position;
+            itemGameObject.SetActive(true);
+        }
+        protected void HandleAmmoGeneration(string tileName, Vector3Int cellPos)
+        {
+            var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
+
+            Ammo ammo = itemGameObject.AddComponent<Ammo>();
+            ammo.collectibleScriptable = ammoScriptables[lastIndex];
+
+            SetItemPosition(itemGameObject, position);
+        }
+        protected void HandleHealthGeneration(string tileName, Vector3Int cellPos)
+        {
+            var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
+
+            Health health = itemGameObject.AddComponent<Health>();
+            health.collectibleScriptable = healthScriptables[lastIndex];
+
+            SetItemPosition(itemGameObject, position);
+        }
         protected void HandleWallGeneration(string tileName, Vector3Int pos)
         {
             //world position
             Vector3 position = mainTilemap.CellToWorld(pos);
 
-            int index = wallTextures.FindIndex(item => item.name.ToLower().StartsWith(tileName));
-            Sprite wallSprite = wallTextures[index];
+            int index = wallTextures.spritesCollection.FindIndex(item => item.name.ToLower().StartsWith(tileName));
+            Sprite wallSprite = wallTextures.spritesCollection[index];
 
             GameObject wallObject = Instantiate(wallGameObject);
 
@@ -105,8 +158,8 @@ namespace WEditor.Scenario
             {
                 if (mainTilemap.GetTile(door.position))
                 {
-                    int index = doorSprites.FindIndex(item => item.name.ToLower().StartsWith(door.name));
-                    Sprite doorSprite = doorSprites[index];
+                    int index = doorSprites.spritesCollection.FindIndex(item => item.name.ToLower().StartsWith(door.name));
+                    Sprite doorSprite = doorSprites.spritesCollection[index];
 
                     GameObject doorObject = Instantiate(doorPrefab);
                     doorObject.GetComponent<SpriteRenderer>().sprite = doorSprite;
@@ -135,11 +188,9 @@ namespace WEditor.Scenario
 
             SpriteRenderer spriteRenderer = propObject.GetComponentInChildren<SpriteRenderer>();
 
-            spriteRenderer.sprite = tileName.Contains("top")
-            ?
-            propsTopSprites.Find(sprite => sprite.name.ToLower() == tileName)
-            :
-            propsDefaultSprites.Find(sprite => sprite.name.ToLower() == tileName);
+            spriteRenderer.sprite = tileName.Contains("top") ?
+            propsTopSprites.spritesCollection.Find(sprite => sprite.name.ToLower() == tileName) :
+            propsDefaultSprites.spritesCollection.Find(sprite => sprite.name.ToLower() == tileName);
 
             //setup the collision for this prop
             if (tileName.EndsWith("c"))
@@ -149,15 +200,9 @@ namespace WEditor.Scenario
                 propRigid.constraints = RigidbodyConstraints.FreezeAll;
                 propObject.AddComponent<BoxCollider>();
             }
-
-            if (tileName.Contains("top"))
-            {
-                position = new Vector3(position.x + propXOffset, .5f, position.z + propZOffset);
-            }
-            else
-            {
-                position = new Vector3(position.x + propXOffset, position.y + propYOffset, position.z + propZOffset);
-            }
+            position = tileName.Contains("top") ?
+            new Vector3(position.x + propXOffset, .5f, position.z + propZOffset) :
+            new Vector3(position.x + propXOffset, position.y + propYOffset, position.z + propZOffset);
 
             //fix the tile center pivot
             propObject.transform.position = position;

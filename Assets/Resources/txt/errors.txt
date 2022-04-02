@@ -3,6 +3,7 @@ pp: A spawn point is required to change to preview.
 sp_pl: Spawn point cannot be located over a wall, prop or door.
 cc_ll: The command is not valid, try putting "Help" to show the complete command list.
 pp_ll: Props cannot be located over a wall or door.
+ci_ll: This item cannot be located over a wall or door.
 cc_zl: Map dimensions are required and cannot be zero or less.
 cc_le: Map width and heigth cannot be upper to 50.
 sl_ln: Set a level name before save.

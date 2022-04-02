@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WEditor.Game;
+using WEditor.Events;
 
 namespace WEditor.Game.Enemy
 {
     public class Health : HealthBase<float>
     {
+        [SerializeField] int score;
         public override void Take(float amount)
         {
             currentHealth -= amount;
@@ -18,7 +19,7 @@ namespace WEditor.Game.Enemy
         public override void OnDeath()
         {
             isDead = true;
-            // Drop...
+            GameEvent.instance.ScoreChanged(score);
         }
     }
 }
