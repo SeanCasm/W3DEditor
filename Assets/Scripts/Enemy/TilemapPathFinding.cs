@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +11,41 @@ namespace WEditor.Game.Enemy
     {
         [SerializeField] float checkUpdate;
         private Vector3Int currentPosition;
-        private PathPosition pathPosition;
         private bool completed;
+        private int checks = 0;
         private List<PathNode> openSet = new List<PathNode>();
         private List<PathNode> closedSet = new List<PathNode>();
+        public Vector3Int start { get; private set; }
+        public Vector3Int target { get; private set; }
+        PathNode[,] grid;
         public void Init(Vector3 startPosition)
         {
-            pathPosition = new PathPosition(
-                currentPosition = LevelGlobalReferences.instance.TilemapPosition(startPosition),
-                LevelGlobalReferences.instance.playerTilemapPosition
-            );
+            start = currentPosition = TilemapPathfindingLevel.instance.TilemapPosition(startPosition);
+            target = TilemapPathfindingLevel.instance.playerTilemapPosition;
 
-            CreateNodeGrid();
+            //CreateBinaryNodeGrid();
+            openSet.Add(grid[start.x, start.y]);
             HandlePath();
 
             StartCoroutine(nameof(UpdateChecks));
         }
-        private void CreateNodeGrid()
+        private void CreateBinaryNodeGrid()
         {
-            Tilemap levelTilemap = LevelGlobalReferences.instance.levelTilemap;
+            Tilemap levelTilemap = TilemapPathfindingLevel.instance.levelTilemap;
             int x = levelTilemap.size.x;
             int y = levelTilemap.size.y;
-            PathNode[,] grid = new PathNode[x, y];
+            grid = new PathNode[x, y];
             for (int i = 0; i < grid.GetLength(0); i++)
             {
                 for (int j = 0; j < grid.GetLength(1); j++)
                 {
+                    if (!TilemapPathfindingLevel.instance.HasValidTile(new Vector3Int(i, j, 0)))
+                        continue;
+
+
                     grid[i, j] = new PathNode(
-                        Mathf.Abs(i - pathPosition.start.x) + Mathf.Abs(j - i - pathPosition.start.y) * 10,
-                        Mathf.Abs(i - pathPosition.target.x) + Mathf.Abs(j - pathPosition.target.y),
+                        Mathf.Abs(i - start.x) + Mathf.Abs(j - start.y) * 10,
+                        Mathf.Abs(i - target.x) + Mathf.Abs(j - target.y),
                         new Vector3Int(i, j, 0)
                     );
                 }
@@ -52,31 +59,66 @@ namespace WEditor.Game.Enemy
         {
             while (!completed)
             {
-                int cellIndex = openSet.Min(node => node.f);
-                PathNode cell = openSet[cellIndex];
-                closedSet.Add(cell);
-
+                PathNode fLower = openSet.Min();
+                openSet.Remove(fLower);
+                closedSet.Add(fLower);
+                var neighboors = GetNeighbors(fLower);
 
             }
         }
-        private Vector3Int[] GetTileNeighboors(Vector3Int position)
+        private PathNode[] GetNeighbors(PathNode node)
         {
-            Tilemap levelTilemap = LevelGlobalReferences.instance.levelTilemap;
-            List<Vector3Int> cells = new List<Vector3Int>();
+            Tilemap levelTilemap = TilemapPathfindingLevel.instance.levelTilemap;
+            List<PathNode> cells = new List<PathNode>();
+            List<Vector3Int> neighbors = new List<Vector3Int>();
 
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    Vector3Int cellPos = new Vector3Int(x, y, 0);
-                    if (levelTilemap.HasTile(cellPos) && x != y)
-                    {
-                        cells.Add(cellPos);
-                    }
-                }
-            }
+            Vector3Int position = node.position;
+
+            var corners = GetCorners(position);
+            var lines = GetInlines(position);
+
+            List<Vector3Int> cornersWithoutWalls = Array.FindAll(corners, node => TilemapPathfindingLevel.instance.HasValidTile(node)).ToList();
+            List<Vector3Int> linesWithoutWalls = Array.FindAll(lines, node => TilemapPathfindingLevel.instance.HasValidTile(node)).ToList();
+
+            neighbors = cornersWithoutWalls.Concat(linesWithoutWalls).ToList();
+
+            CreatePathNodes(neighbors, cells);
 
             return cells.ToArray();
+        }
+        private void CreatePathNodes(List<Vector3Int> cellPositions, List<PathNode> nodes)
+        {
+            cellPositions.ForEach(node =>
+                        {
+                            int x = node.x;
+                            int y = node.y;
+                            PathNode neighborNode = new PathNode(
+                                Mathf.Abs(x - start.x) * 10 + Mathf.Abs(y - start.y) * 10,
+                                Mathf.Abs(x - target.x) * 10 + Mathf.Abs(y - target.y) * 10,
+                                node
+                            );
+                            nodes.Add(neighborNode);
+                        });
+        }
+        private Vector3Int[] GetInlines(Vector3Int value1)
+        {
+            Vector3Int[] lines = {
+                new Vector3Int(value1.x, value1.y + 1, 0),
+                new Vector3Int(value1.x, value1.y - 1, 0),
+                new Vector3Int(value1.x - 1, value1.y, 0),
+                new Vector3Int(value1.x + 1, value1.y, 0),
+            };
+            return lines;
+        }
+        private Vector3Int[] GetCorners(Vector3Int value1)
+        {
+            Vector3Int[] corners = {
+                new Vector3Int(value1.x - 1, value1.y + 1, 0),
+                new Vector3Int(value1.x + 1, value1.y + 1, 0),
+                new Vector3Int(value1.x - 1, value1.y - 1, 0),
+                new Vector3Int(value1.x + 1, value1.y - 1, 0),
+            };
+            return corners;
         }
         private void SelectNeighboors()
         {
@@ -84,27 +126,16 @@ namespace WEditor.Game.Enemy
         }
         IEnumerator UpdateChecks()
         {
-            while (!pathPosition.TargetChanged(LevelGlobalReferences.instance.playerTilemapPosition))
+            while (!TargetChanged(TilemapPathfindingLevel.instance.playerTilemapPosition))
             {
 
                 yield return new WaitForSeconds(checkUpdate);
             }
         }
+        private bool TargetChanged(Vector3Int position)
+        {
+            return TilemapPathfindingLevel.instance.ComparePositionAndPlayer(target);
+        }
     }
 
-    public struct PathPosition
-    {
-        public PathPosition(Vector3Int start, Vector3Int target)
-        {
-            this.start = start;
-            this.target = target;
-        }
-        public Vector3Int start { get; private set; }
-        public Vector3Int target { get; private set; }
-        public bool TargetChanged(Vector3Int position)
-        {
-            return LevelGlobalReferences.instance.ComparePositionAndPlayer(target);
-        }
-
-    }
 }

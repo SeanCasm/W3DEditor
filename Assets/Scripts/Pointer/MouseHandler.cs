@@ -13,59 +13,64 @@ namespace WEditor.Input
         public static MouseHandler instance;
         [SerializeField] Camera mainCamera;
         [SerializeField] GameObject itemPanel;
-        [SerializeField] Sprite eraserSprite;
-        [SerializeField] Sprite spawnSprite;
-        [SerializeField] GameObject spawnPrefab;
-        private SpriteRenderer cursor;
-        public bool isEraser { get; set; }//reference in editor
-        private bool isSpawn { get; set; }
+        [SerializeField] Sprite eraserSprite, spawnSprite, boldSprite;
+        [SerializeField] SpriteRenderer cursor;
+        public MouseType mouseType { get; set; }
         public Sprite cursorSprite { get => cursor.sprite; set => cursor.sprite = value; }
         private Tile tileRef;
         private Vector2 mousePosition;
+        private bool isSpawn { get => mouseType == MouseType.Spawn; }
         private Vector3 worldPosition;
         private void OnEnable()
         {
-            GameEvent.instance.onEditorEnter += OnInit;
+            MapEditorInput.instance.EnableAndSetCallbacks(this);
+            OnMouseEnabled();
+            GameEvent.instance.onEditorEnter += OnMouseEnabled;
             GameEvent.instance.onPreviewModeEnter += OnMouseDisabled;
-            GameEvent.instance.onPreviewModeExit += OnMouseEnabled;
             GameEvent.instance.onEditorExit += OnMouseDisabled;
+            GameEvent.instance.onPreviewModeExit += OnMouseEnabled;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onEditorEnter -= OnInit;
+            OnMouseDisabled();
             GameEvent.instance.onPreviewModeEnter -= OnMouseDisabled;
             GameEvent.instance.onPreviewModeExit -= OnMouseEnabled;
             GameEvent.instance.onEditorExit -= OnMouseDisabled;
+            GameEvent.instance.onEditorEnter -= OnMouseEnabled;
         }
         private void Start()
         {
-            if (!instance) instance = this;
-            else Destroy(this);
-
-            cursor = GetComponent<SpriteRenderer>();
-        }
-        private void OnInit()
-        {
-            MapEditorInput.instance.EnableAndSetCallbacks(this);
+            instance = this;
         }
 
         private void OnMouseEnabled()
         {
             cursor.enabled = true;
+            mouseType = MouseType.None;
             MapEditorInput.instance.ChangeInputActiveState(true);
         }
         private void OnMouseDisabled()
         {
             cursor.enabled = false;
+            cursorSprite = null;
+            tileRef = null;
+            mouseType = MouseType.None;
             MapEditorInput.instance.ChangeInputActiveState(false);
-
         }
         public void Button_SetSpawn()
         {
-            isSpawn = true;
+            mouseType = MouseType.Spawn;
             MapEditorInput.instance.ChangeInputOnInventory(true);
-            spawnSprite = spawnPrefab.GetComponent<SpriteRenderer>().sprite;
             cursorSprite = spawnSprite;
+        }
+        public void Button_SetEraser()
+        {
+            mouseType = MouseType.Eraser;
+            cursorSprite = eraserSprite;
+        }
+        public void Button_SetPen()
+        {
+            mouseType = MouseType.None;
         }
         private void Disable()
         {
@@ -73,7 +78,9 @@ namespace WEditor.Input
         }
         public void SetAsset(Sprite sprite, Tile tile)
         {
-            isSpawn = false;
+            if (isSpawn)
+                mouseType = MouseType.None;
+
             cursorSprite = sprite;
             tileRef = tile;
         }
@@ -92,17 +99,20 @@ namespace WEditor.Input
             {
                 if (isSpawn)
                 {
-                    EditorGrid.instance.SetSpawnObject(worldPosition, spawnPrefab);
+                    EditorGrid.instance.SetSpawnObject(worldPosition);
                     return;
                 }
-
-                if (!isEraser && tileRef != null)
+                if (tileRef != null)
                 {
-                    EditorGrid.instance.SetTile(worldPosition, tileRef);
-                }
-                else if (tileRef != null)
-                {
-                    EditorGrid.instance.EraseTile(worldPosition);
+                    switch (mouseType)
+                    {
+                        case MouseType.Eraser:
+                            EditorGrid.instance.EraseTile(worldPosition);
+                            break;
+                        case MouseType.None:
+                            EditorGrid.instance.SetTile(worldPosition, tileRef);
+                            break;
+                    }
                 }
             }
         }
@@ -119,9 +129,22 @@ namespace WEditor.Input
         {
             if (context.started)
             {
-                isEraser = !isEraser;
-                cursor.sprite = isEraser ? cursorSprite : null;
+                if (mouseType != MouseType.Eraser)
+                {
+                    mouseType = MouseType.Eraser;
+                    cursor.sprite = cursorSprite;
+                    tileRef = null;
+                }
+                else
+                {
+                    mouseType = MouseType.None;
+                    cursor.sprite = null;
+                }
             }
         }
+    }
+    public enum MouseType
+    {
+        Spawn, Bold, Eraser, None
     }
 }

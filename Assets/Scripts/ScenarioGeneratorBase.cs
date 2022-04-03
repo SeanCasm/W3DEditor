@@ -86,8 +86,7 @@ namespace WEditor.Scenario
             //world position
             Vector3 position = mainTilemap.CellToWorld(pos);
 
-            int index = wallTextures.spritesCollection.FindIndex(item => item.name.ToLower().StartsWith(tileName));
-            Sprite wallSprite = wallTextures.spritesCollection[index];
+            Sprite wallSprite = wallTextures.spritesCollection.Find(item => item.name.ToLower().StartsWith(tileName));
 
             GameObject wallObject = Instantiate(wallGameObject);
 
@@ -111,23 +110,20 @@ namespace WEditor.Scenario
                 Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);
                 Vector3Int bottomPos = new Vector3Int(cellPos.x, cellPos.y - 1, cellPos.z);
 
-                string[] childsToFind = new string[2] { "front", "back" };
-                SetWallSideface(topPos, bottomPos, childsToFind);
+                SetWallSideface(topPos, bottomPos, new string[2] { "front", "back" });
             }
             else
             {
                 Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
                 Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
 
-                string[] childsToFind = new string[2] { "right", "left" };
-                SetWallSideface(leftPos, rightPos, childsToFind);
+                SetWallSideface(leftPos, rightPos, new string[2] { "right", "left" });
             }
         }
         private void SetWallSideface(Vector3Int pos1, Vector3Int pos2, string[] transformChilds)
         {
-            Wall wall1 = walls.Find(wall => wall.position == pos1);
-            Wall wall2 = walls.Find(wall => wall.position == pos2);
-
+            Wall wall1 = walls.Find(wall => wall.position.x == pos1.x && wall.position.y == pos1.y);
+            Wall wall2 = walls.Find(wall => wall.position.x == pos2.x && wall.position.y == pos2.y);
             Transform side1 = wall1.objectReference.transform.Find(transformChilds[0]);
             Transform side2 = wall2.objectReference.transform.Find(transformChilds[1]);
 
@@ -139,15 +135,14 @@ namespace WEditor.Scenario
         {
             Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);
             Vector3Int bottomPos = new Vector3Int(cellPos.x, cellPos.y - 1, cellPos.z);
+            Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
+            Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
+
             if (mainTilemap.HasTile(topPos) && mainTilemap.HasTile(bottomPos))
             {
                 doorsLocation.Add(new Door(cellPos, true, tileName));
-                return;
             }
-
-            Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
-            Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
-            if (mainTilemap.HasTile(leftPos) && mainTilemap.HasTile(rightPos))
+            else if (mainTilemap.HasTile(leftPos) && mainTilemap.HasTile(rightPos))
             {
                 doorsLocation.Add(new Door(cellPos, false, tileName));
             }

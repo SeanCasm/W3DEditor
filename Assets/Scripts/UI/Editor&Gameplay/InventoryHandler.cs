@@ -24,7 +24,7 @@ namespace WEditor.UI
 
             if (enable)
             {
-                MouseHandler.instance.isEraser = false;
+                MouseHandler.instance.mouseType = MouseType.None;
                 EditorCameraInput.instance.ChangeActiveCameraInputs(false);
                 return;
             }

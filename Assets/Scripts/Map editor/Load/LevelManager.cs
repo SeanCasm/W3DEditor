@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using WEditor.Events;
 using UnityEngine.UI;
 using WEditor.Scenario.Editor;
 using System;
@@ -16,13 +15,11 @@ namespace WEditor.Scenario
         private Action load;
         private void OnEnable()
         {
-            GameEvent.instance.onSrollViewEnable += PutIntoContent;
-            GameEvent.instance.onSrollViewDisable += UnloadScrollViewContent;
+            PutIntoContent();
         }
         private void OnDisable()
         {
-            GameEvent.instance.onSrollViewEnable -= PutIntoContent;
-            GameEvent.instance.onSrollViewDisable -= UnloadScrollViewContent;
+            UnloadScrollViewContent();
         }
         private void PutIntoContent()
         {
@@ -48,11 +45,10 @@ namespace WEditor.Scenario
                     }
                     else
                     {
-                        GameEvent.instance.EditorEnter();
                         EditorGrid.instance.Load(newGamedata);
                     }
                 });
-                newLevel.transform.SetParent(scrollViewContent.transform);
+                newLevel.transform.SetParent(scrollViewContent.transform,false);
                 RectTransform rect = newLevel.GetComponent<RectTransform>();
                 rect.anchoredPosition = Vector2.zero;
             }

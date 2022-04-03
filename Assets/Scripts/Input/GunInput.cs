@@ -9,7 +9,7 @@ namespace WEditor
     {
         public static GunInput instance;
         private WInput wInput;
-        private void Start()
+        private void OnEnable()
         {
             instance = this;
             wInput = GameInput.instance.wInput;

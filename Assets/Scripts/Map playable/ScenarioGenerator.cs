@@ -9,16 +9,18 @@ namespace WEditor.Scenario.Playable
         public void InitGeneration(GameData levelData)
         {
             (int x, int y) size = levelData.levelSize;
+            List<(int, int, int, string)> doors = new List<(int, int, int, string)>();
+
             levelData.levelTiles.ForEach(item =>
             {
                 Tile itemTile = new Tile();
-                Vector3Int cellPos = new Vector3Int(item.xpos, item.ypos, 0);
-                string tileName = item.tileName.ToLower();
+                (int index, int x, int y, string tileName) = item;
+                Vector3Int cellPos = new Vector3Int(x, y, 0);
                 itemTile.name = tileName;
 
-                if (itemTile.name.Contains("top"))
+                if (tileName.Contains("top"))
                 {
-                    itemTile.sprite = propsTopSprites.spritesCollection[item.assetListIndex];
+                    itemTile.sprite = propsTopSprites.spritesCollection[index];
                     mainTilemap.SetTile(cellPos, itemTile);
 
                     HandlePropGeneration(tileName, cellPos);
@@ -26,35 +28,36 @@ namespace WEditor.Scenario.Playable
 
                 else if (tileName.Contains("wall"))
                 {
-                    itemTile.sprite = wallTextures.spritesCollection[item.assetListIndex];
+                    itemTile.sprite = wallTextures.spritesCollection[index];
                     mainTilemap.SetTile(cellPos, itemTile);
 
                     HandleWallGeneration(tileName, cellPos);
                 }
                 else if (tileName.Contains("prop"))
                 {
-                    itemTile.sprite = propsDefaultSprites.spritesCollection[item.assetListIndex];
+                    itemTile.sprite = propsDefaultSprites.spritesCollection[index];
                     mainTilemap.SetTile(cellPos, itemTile);
 
                     HandlePropGeneration(tileName, cellPos);
                 }
+                else if (tileName.Contains("door"))
+                {
+                    doors.Add(item);
+                }
 
             });
             //Doors needs to be located after all of the rest of tiles
-            //for issues with the door generation
-            levelData.levelTiles.ForEach(item =>
+            //to avoid fails on the generation
+            doors.ForEach(item =>
             {
                 Tile itemTile = new Tile();
-                Vector3Int cellPos = new Vector3Int(item.xpos, item.ypos, 0);
-                string tileName = item.tileName.ToLower();
-                itemTile.name = tileName;
-                if (tileName.Contains("door"))
-                {
-                    itemTile.sprite = doorSprites.spritesCollection[item.assetListIndex];
-                    mainTilemap.SetTile(cellPos, itemTile);
+                (int index, int x, int y, string tileName) = item;
+                Vector3Int cellPos = new Vector3Int(x, y, 0);
 
-                    AddDoorToList(cellPos, tileName);
-                }
+                itemTile.sprite = doorSprites.spritesCollection[index];
+                mainTilemap.SetTile(cellPos, itemTile);
+
+                AddDoorToList(cellPos, tileName);
             });
             HandleDoorsGeneration();
             PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;

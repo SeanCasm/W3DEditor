@@ -14,9 +14,10 @@ namespace WEditor.Scenario.Editor
         [SerializeField] ScenarioGenerator scenarioGenerator;
         [SerializeField] BoxCollider confinerCollider;
         [SerializeField] Transform editorCamera;
+        [SerializeField] GameObject spawnPrefab;
         [Header("Level load settings")]
-        [SerializeField] GameObject firstScreen;
-        [SerializeField] WEditor.Game.Scriptables.ScenarioScriptable wall, door, props, propsTop;
+        [SerializeField] GameObject loadScreen;
+        [SerializeField] WEditor.Game.Scriptables.ScenarioScriptable wall, door, props, propsTop, health, score, ammo;
         public bool isSpawnLocated { get; private set; }
         private Vector3Int currentWorldPos;
         private GameObject currentSpawn;
@@ -62,31 +63,57 @@ namespace WEditor.Scenario.Editor
         public void Load(GameData gameData)
         {
             DataHandler.LevelTileSize(gameData.levelSize.x, gameData.levelSize.y);
+            levelName = gameData.levelName;
+            List<(int, int, int, string)> doors = new List<(int, int, int, string)>();
 
             width = gameData.levelSize.x;
             height = gameData.levelSize.y;
 
-            spawnPosition = new Vector3(gameData.levelSpawn.x, 0, gameData.levelSpawn.z);
+            SetSpawnObject(new Vector3(gameData.levelSpawn.x, 0, gameData.levelSpawn.z));
+            InitLevel();
+
             gameData.levelTiles.ForEach(item =>
             {
-                Vector3Int cellPos = new Vector3Int(item.xpos, item.ypos, 0);
                 Tile tile = new Tile();
-                tile.name = item.tileName;
-                if (item.tileName.Contains("wall"))
+                (int index, int x, int y, string tileName) = item;
+                print(x);
+                print(y);
+                Vector3Int cellPos = new Vector3Int(x, y, 0);
+
+                tile.name = tileName;
+
+                if (tileName.Contains("wall"))
                 {
-                    tile.sprite = wall.spritesCollection[item.assetListIndex];
+                    tile.sprite = wall.spritesCollection[index];
+                    SetTile(cellPos, tile);
                 }
-                else if (item.tileName.Contains("prop"))
+                else if (tileName.Contains("prop"))
                 {
-                    tile.sprite = props.spritesCollection[item.assetListIndex];
+                    tile.sprite = props.spritesCollection[index];
+                    SetTile(cellPos, tile);
                 }
-                else if (item.tileName.Contains("door"))
+                else if (tileName.Contains("door"))
                 {
-                    tile.sprite = door.spritesCollection[item.assetListIndex];
+                    doors.Add(item);
                 }
+                else if (tileName.Contains("health"))
+                {
+                    tile.sprite = health.spritesCollection[index];
+                    SetTile(cellPos, tile);
+                }
+            });
+            doors.ForEach(item =>
+            {
+                Tile tile = new Tile();
+
+                (int index, int x, int y, string tileName) = item;
+                tile.name = tileName;
+                Vector3Int cellPos = new Vector3Int(x, y, 0);
+
+                tile.sprite = door.spritesCollection[index];
                 SetTile(cellPos, tile);
             });
-            firstScreen.SetActive(false);
+            loadScreen.SetActive(false);
         }
         public void Create()
         {
@@ -103,6 +130,10 @@ namespace WEditor.Scenario.Editor
                 TextMessageHandler.instance.SetError("cc_le");
                 return;
             }
+            InitLevel();
+        }
+        private void InitLevel()
+        {
             Vector3Int size = new Vector3Int(width, height, 0);
             whiteSquare.size = mainTilemap.size = pointerPreview.size = size;
 
@@ -120,33 +151,38 @@ namespace WEditor.Scenario.Editor
             Vector3Int cellPos = mainTilemap.WorldToCell(pos);
             mainTilemap.SetTile(cellPos, gridTile);
         }
+        public void SetTile(Vector3Int cellPos, Tile tile)
+        {
+            HandleSetTile(cellPos, tile);
+        }
         public void SetTile(Vector3 pos, Tile tile)
         {
             Vector3Int cellPos = mainTilemap.WorldToCell(pos);
+            HandleSetTile(cellPos, tile);
+        }
+        private void HandleSetTile(Vector3Int cellPos, Tile tile)
+        {
             if (IsTileInsideTilemap(cellPos))
             {
                 string nameToLower = tile.name.ToLower();
-                if (!nameToLower.Contains("hud"))
+                if (nameToLower.Contains("door"))
                 {
-                    if (nameToLower.Contains("door"))
-                    {
-                        HandleDoorLocation(cellPos, tile);
-                    }
-                    else if (nameToLower.Contains("prop"))
-                    {
-                        HandlePropLocation(cellPos, tile);
-                    }
-                    else if (nameToLower.Contains("wall"))
-                    {
-                        mainTilemap.SetTile(cellPos, tile);
-                    }
-                    else
-                    {
-                        HandleCollectibleLocation(cellPos, tile);
-                    }
+                    HandleDoorLocation(cellPos, tile);
+                }
+                else if (nameToLower.Contains("prop"))
+                {
+                    HandlePropLocation(cellPos, tile);
+                }
+                else if (nameToLower.Contains("wall"))
+                {
+                    mainTilemap.SetTile(cellPos, tile);
+                }
+                else
+                {
+                    HandleCollectibleLocation(cellPos, tile);
                 }
                 string[] index = nameToLower.Split('_');
-                DataHandler.SetLevelTiles(cellPos.x, cellPos.y, new TileData(int.Parse(index[index.Length - 1]), cellPos, nameToLower));
+                DataHandler.SetLevelTiles(cellPos.x, cellPos.y, new TileLevelData(int.Parse(index[index.Length - 1]), cellPos, nameToLower));
             }
         }
         private void HandleCollectibleLocation(Vector3Int cellPos, Tile tile)
@@ -160,7 +196,7 @@ namespace WEditor.Scenario.Editor
             }
             mainTilemap.SetTile(cellPos, tile);
         }
-        public void SetSpawnObject(Vector3 pos, GameObject spawnPrefab)
+        public void SetSpawnObject(Vector3 pos)
         {
             Vector3Int cellPos = mainTilemap.WorldToCell(pos);
             string nameToLower2 = mainTilemap.HasTile(cellPos) ? mainTilemap.GetTile(cellPos).name.ToLower() : "non";
@@ -182,8 +218,7 @@ namespace WEditor.Scenario.Editor
 
             pos = mainTilemap.CellToWorld(cellPos);
             //fix tile pivot
-            pos = new Vector3(pos.x + .5f, pos.y, pos.z + .5f);
-            currentSpawn = Instantiate(spawnPrefab, pos, Quaternion.Euler(90, 0, 0));
+            currentSpawn = Instantiate(spawnPrefab, pos.FixTilePivot(), Quaternion.Euler(90, 0, 0));
             isSpawnLocated = true;
         }
         private bool IsTileInsideTilemap(Vector3Int cellPos)
@@ -220,13 +255,6 @@ namespace WEditor.Scenario.Editor
             TileBase topTile = mainTilemap.GetTile(topPos);
             TileBase bottomTile = mainTilemap.GetTile(bottomPos);
 
-            if (topTile != null && bottomTile != null &&
-                 topTile.name.ToLower().StartsWith("wall") && bottomTile.name.ToLower().StartsWith("wall"))
-            {
-                mainTilemap.SetTile(cellPos, tile);
-                tilesAround = true;
-            }
-
             Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
             Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
 
@@ -234,8 +262,10 @@ namespace WEditor.Scenario.Editor
             TileBase leftTile = mainTilemap.GetTile(leftPos);
             TileBase rightTile = mainTilemap.GetTile(rightPos);
 
-            if (leftTile != null && rightTile != null &&
-                 leftTile.name.ToLower().StartsWith("wall") && rightTile.name.ToLower().StartsWith("wall"))
+            if ((topTile != null && bottomTile != null &&
+                 topTile.name.ToLower().StartsWith("wall") && bottomTile.name.ToLower().StartsWith("wall")) ||
+                 (leftTile != null && rightTile != null &&
+                 leftTile.name.ToLower().StartsWith("wall") && rightTile.name.ToLower().StartsWith("wall")))
             {
                 mainTilemap.SetTile(cellPos, tile);
                 tilesAround = true;
@@ -252,6 +282,7 @@ namespace WEditor.Scenario.Editor
             mainTilemap.ClearAllTiles();
             whiteSquare.ClearAllTiles();
             pointerPreview.ClearAllTiles();
+            Destroy(currentSpawn);
             isSpawnLocated = false;
             spawnPosition = Vector3.zero;
             levelName = "";
@@ -261,5 +292,18 @@ namespace WEditor.Scenario.Editor
             DataHandler.currentLevelPosition = spawnPosition;
             scenarioGenerator.InitGeneration();
         }
+    }
+    public struct TileLevelData
+    {
+        public TileLevelData(int assetListIndex, Vector3Int position, string tileName)
+        {
+            this.assetListIndex = assetListIndex;
+            this.position = position;
+            this.tileName = tileName;
+        }
+        public string tileName { get; private set; }
+        public int assetListIndex { get; private set; }
+        public Vector3Int position { get; private set; }
+
     }
 }

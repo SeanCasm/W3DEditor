@@ -20,6 +20,7 @@ namespace WEditor.Game.Player
         private void OnDisable()
         {
             Cursor.lockState = CursorLockMode.None;
+            PlayerControllerInput.instance.Disable();
             StopAllCoroutines();
         }
         private void OnEnable()
