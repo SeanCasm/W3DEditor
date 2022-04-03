@@ -16,11 +16,12 @@ namespace WEditor.Scenario.Editor
         [SerializeField] Transform editorCamera;
         [SerializeField] GameObject spawnPrefab;
         [Header("Level load settings")]
+        [SerializeField] TMPro.TMP_InputField levelNameInputField;
         [SerializeField] GameObject loadScreen;
         [SerializeField] WEditor.Game.Scriptables.ScenarioScriptable wall, door, props, propsTop, health, score, ammo;
         public bool isSpawnLocated { get; private set; }
         private Vector3Int currentWorldPos;
-        private GameObject currentSpawn;
+        public GameObject currentSpawn { get; set; }
         private Vector3 spawnPosition;
         private int width, height;
         public string levelName { get; set; } = "";
@@ -64,6 +65,7 @@ namespace WEditor.Scenario.Editor
         {
             DataHandler.LevelTileSize(gameData.levelSize.x, gameData.levelSize.y);
             levelName = gameData.levelName;
+            levelNameInputField.text = levelName;
             List<(int, int, int, string)> doors = new List<(int, int, int, string)>();
 
             width = gameData.levelSize.x;
@@ -76,10 +78,7 @@ namespace WEditor.Scenario.Editor
             {
                 Tile tile = new Tile();
                 (int index, int x, int y, string tileName) = item;
-                print(x);
-                print(y);
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
-
                 tile.name = tileName;
 
                 if (tileName.Contains("wall"))
@@ -105,7 +104,6 @@ namespace WEditor.Scenario.Editor
             doors.ForEach(item =>
             {
                 Tile tile = new Tile();
-
                 (int index, int x, int y, string tileName) = item;
                 tile.name = tileName;
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
@@ -114,6 +112,7 @@ namespace WEditor.Scenario.Editor
                 SetTile(cellPos, tile);
             });
             loadScreen.SetActive(false);
+
         }
         public void Create()
         {
@@ -282,6 +281,7 @@ namespace WEditor.Scenario.Editor
             mainTilemap.ClearAllTiles();
             whiteSquare.ClearAllTiles();
             pointerPreview.ClearAllTiles();
+            DataHandler.ClearLevelTiles();
             Destroy(currentSpawn);
             isSpawnLocated = false;
             spawnPosition = Vector3.zero;
@@ -290,6 +290,7 @@ namespace WEditor.Scenario.Editor
         public void InitGeneration()
         {
             DataHandler.currentLevelPosition = spawnPosition;
+            currentSpawn.SetActive(false);
             scenarioGenerator.InitGeneration();
         }
     }

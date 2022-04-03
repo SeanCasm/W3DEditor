@@ -2,6 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using WEditor.Input;
+using UnityEngine.UI;
+
 namespace WEditor.UI
 {
     public class TextMessageHandler : MonoBehaviour
@@ -11,6 +15,10 @@ namespace WEditor.UI
         [SerializeField] TMPro.TextMeshProUGUI errorMessage;
         [SerializeField] float messageTime;
         [SerializeField] string errorsPath, messagesPath;
+        [Header("Level save settings")]
+        [SerializeField] GameObject messagePopUp;
+        [SerializeField] Button accept, cancel;
+        [SerializeField] TextMeshProUGUI textMessage;
         private Dictionary<string, string> errors = new Dictionary<string, string>();
         private Dictionary<string, string> messages = new Dictionary<string, string>();
         private void Awake()
@@ -18,6 +26,27 @@ namespace WEditor.UI
             instance = this;
             ReadErrors();
             ReadMessages();
+        }
+        public void SetPopUpMessage(string id, string levelName, Action callback)
+        {
+            string message = messages[id].Replace('_'.ToString(), $"'{levelName}'");
+            messagePopUp.SetActive(true);
+
+            textMessage.text = message;
+            accept.onClick.AddListener(() =>
+            {
+                callback();
+                EditorCameraInput.instance.Enable();
+                messagePopUp.SetActive(false);
+
+            });
+            cancel.onClick.AddListener(() =>
+            {
+                EditorCameraInput.instance.Enable();
+                messagePopUp.SetActive(false);
+            });
+
+            EditorCameraInput.instance.Disable();
         }
         public void SetMessage(string id)
         {

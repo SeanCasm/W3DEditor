@@ -18,17 +18,19 @@ namespace WEditor.UI
             GameEvent.instance.onEditorInventoryActiveChanged -= OnInventaryActiveChanged;
         }
 
-        private void OnInventaryActiveChanged(bool enable)
+        private void OnInventaryActiveChanged()
         {
+            bool enable = !itemPanel.activeSelf;
             itemPanel.SetActive(enable);
 
             if (enable)
             {
-                MouseHandler.instance.mouseType = MouseType.None;
-                EditorCameraInput.instance.ChangeActiveCameraInputs(false);
+                EditorCameraInput.instance.Disable();
+                MapEditorInput.instance.OnInventoryEnable();
                 return;
             }
-            EditorCameraInput.instance.ChangeActiveCameraInputs(true);
+            MapEditorInput.instance.OnInventoryDisable();
+            EditorCameraInput.instance.Enable();
         }
     }
 }

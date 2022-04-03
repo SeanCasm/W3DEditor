@@ -12,6 +12,7 @@ namespace WEditor
         public List<(int assetListIndex, int xpos, int ypos, string tileName)> levelTiles { get; set; } = new List<(int assetListIndex, int xpos, int ypos, string tileName)>();
         public (int x, int y) levelSize;
         public string levelName;
+        public int levelID;
         public GameData(string levelName, Vector3Int levelSpawn, (int w, int h) size, TileLevelData[,] tileData)
         {
             this.levelName = levelName;

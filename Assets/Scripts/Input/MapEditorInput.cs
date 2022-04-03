@@ -21,23 +21,23 @@ namespace WEditor.Input
             wInput.MapEditor.Enable();
             wInput.MapEditor.SetCallbacks(callbacks);
         }
-        public void ChangeInputActiveState(bool enable)
+        public void Enable()
         {
-            if (enable) wInput.MapEditor.Enable();
-            else wInput.MapEditor.Disable();
+            wInput.MapEditor.Enable();
         }
-        public void ChangeInputOnInventory(bool enable)
+        public void Disable()
         {
-            if (enable)
-            {
-                wInput.MapEditor.Aim.Enable();
-                wInput.MapEditor.Click.Enable();
-            }
-            else
-            {
-                wInput.MapEditor.Aim.Disable();
-                wInput.MapEditor.Click.Disable();
-            }
+            wInput.MapEditor.Disable();
+        }
+        public void OnInventoryEnable()
+        {
+            wInput.MapEditor.Aim.Disable();
+            wInput.MapEditor.Click.Disable();
+        }
+        public void OnInventoryDisable()
+        {
+            wInput.MapEditor.Aim.Enable();
+            wInput.MapEditor.Click.Enable();
         }
     }
 }

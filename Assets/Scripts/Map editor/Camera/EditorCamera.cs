@@ -17,11 +17,11 @@ namespace WEditor.CameraUtils
         }
         private void OnEnable()
         {
-            EditorCameraInput.instance.ChangeActiveCameraInputs(true);
+            EditorCameraInput.instance.Enable();
         }
         private void OnDisable()
         {
-            EditorCameraInput.instance.ChangeActiveCameraInputs(false);
+            EditorCameraInput.instance.Disable();
         }
         public void OnZoom(InputAction.CallbackContext context)
         {

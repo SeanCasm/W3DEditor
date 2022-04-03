@@ -58,9 +58,7 @@ namespace WEditor.Game.Doors
             isOpen = true;
 
             yield return new WaitForSeconds(timeBeforeClose);
-            print("1");
             yield return new WaitWhile(() => playerAround || enemyAround);
-            print("2");
             isOpening = false;
             StartCoroutine(nameof(Close));
         }

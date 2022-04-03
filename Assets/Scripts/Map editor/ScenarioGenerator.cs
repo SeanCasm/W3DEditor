@@ -23,7 +23,6 @@ namespace WEditor.Scenario.Editor
                 for (int y = 0; y < mainTilemap.size.y; y++)
                 {
                     Vector3Int pos = new Vector3Int(x, y, 0);
-
                     if (mainTilemap.HasTile(pos))
                     {
                         TileBase tile = mainTilemap.GetTile(pos);
@@ -37,7 +36,7 @@ namespace WEditor.Scenario.Editor
                         {
                             HandleWallGeneration(tileName, pos);
                         }
-                        else if (tileName.StartsWith("prop"))
+                        else if (tileName.Contains("prop"))
                         {
                             HandlePropGeneration(tileName, pos);
                         }
@@ -59,6 +58,7 @@ namespace WEditor.Scenario.Editor
         {
             doorsLocation.Clear();
             walls.Clear();
+            EditorGrid.instance.currentSpawn.SetActive(true);
 
             objectsGenerated.ForEach(wall =>
             {

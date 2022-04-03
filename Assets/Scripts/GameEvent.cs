@@ -24,7 +24,7 @@ namespace WEditor.Events
         public event Action onSrollViewEnable, onSrollViewDisable;
         public event Action onPreviewModeEnter, onPreviewModeExit;
         public event Action onPlayModeEnter, onPlayModeExit;
-        public event Action<bool> onEditorInventoryActiveChanged;
+        public event Action onEditorInventoryActiveChanged;
         public event Action<int> onEditorInventorySelected;
         public event Action<int> onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
         public void EditorExit()
@@ -111,11 +111,11 @@ namespace WEditor.Events
                 onEditorInventorySelected(id);
             }
         }
-        public void EditorInventoryActiveChanged(bool enable)
+        public void EditorInventoryActiveChanged()
         {
             if (onEditorInventoryActiveChanged != null)
             {
-                onEditorInventoryActiveChanged(enable);
+                onEditorInventoryActiveChanged();
             }
         }
         public void PreviewModeEnter()

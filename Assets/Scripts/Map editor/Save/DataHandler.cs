@@ -13,6 +13,10 @@ namespace WEditor
         {
             levelTiles[dimension, dimension2] = data;
         }
+        public static void ClearLevelTiles()
+        {
+            levelTiles = new TileLevelData[0, 0];
+        }
         public static void LevelTileSize(int dimension, int dimension2)
         {
             levelTiles = new TileLevelData[dimension, dimension2];

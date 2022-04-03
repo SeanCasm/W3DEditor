@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 using WEditor.Scenario.Editor;
 using System;
+using WEditor.Events;
+
 namespace WEditor.Scenario
 {
     public class LevelManager : MonoBehaviour
@@ -12,14 +14,16 @@ namespace WEditor.Scenario
         [SerializeField] GameObject scrollViewContent;
         [SerializeField] GameObject levelPrefab;
         [SerializeField] Loader loadType;
-        private Action load;
+        private List<GameObject> levelsLoaded = new List<GameObject>();
         private void OnEnable()
         {
+            GameEvent.instance.onEditorExit += ReloadScrollViewContent;
             PutIntoContent();
         }
         private void OnDisable()
         {
             UnloadScrollViewContent();
+            GameEvent.instance.onEditorExit -= ReloadScrollViewContent;
         }
         private void PutIntoContent()
         {
@@ -46,20 +50,27 @@ namespace WEditor.Scenario
                     else
                     {
                         EditorGrid.instance.Load(newGamedata);
+                        UnloadScrollViewContent();
                     }
                 });
-                newLevel.transform.SetParent(scrollViewContent.transform,false);
+                levelsLoaded.Add(newLevel);
+                newLevel.transform.SetParent(scrollViewContent.transform, false);
                 RectTransform rect = newLevel.GetComponent<RectTransform>();
                 rect.anchoredPosition = Vector2.zero;
             }
         }
+        private void ReloadScrollViewContent()
+        {
+            UnloadScrollViewContent();
+            PutIntoContent();
+        }
         public void UnloadScrollViewContent()
         {
-            var childs = scrollViewContent.transform.GetComponentsInChildren<Transform>();
-            for (int i = 0; i < childs.Length; i++)
+            for (int i = 0; i < levelsLoaded.Count; i++)
             {
-                Destroy(childs[i]);
+                Destroy(levelsLoaded[i]);
             }
+            levelsLoaded.Clear();
         }
     }
     public enum Loader

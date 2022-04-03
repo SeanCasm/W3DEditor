@@ -17,19 +17,23 @@ namespace WEditor
             string path = persistentDataPath + $"{levelName}{tailPath}";
             if (File.Exists(path))
             {
-                TextMessageHandler.instance.SetError("ln_ep");
+                TextMessageHandler.instance.SetPopUpMessage("ss_ln", levelName, () => { save(); });
                 return;
             }
+            save();
 
-            string pathContainer = persistentDataPath + $"{tailPath2}";
+            void save()
+            {
+                string pathContainer = persistentDataPath + $"{tailPath2}";
 
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Create);
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream stream = new FileStream(path, FileMode.Create);
 
-            GameData data = new GameData(levelName, levelSpawn, size, DataHandler.levelTiles);
-            formatter.Serialize(stream, data);
-            stream.Close();
-            TextMessageHandler.instance.SetMessage("ss_cc");
+                GameData data = new GameData(levelName, levelSpawn, size, DataHandler.levelTiles);
+                formatter.Serialize(stream, data);
+                stream.Close();
+                TextMessageHandler.instance.SetMessage("ss_cc");
+            }
         }
         public static GameData[] LoadLocalLevels()
         {

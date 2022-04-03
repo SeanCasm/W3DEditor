@@ -42,18 +42,14 @@ namespace WEditor.Input
         {
             wInput.MapEditorCamera.Rotate.Enable();
         }
-        public void ChangeActiveCameraInputs(bool enable)
+        public void Enable()
         {
-            if (enable)
-            {
-                wInput.MapEditorCamera.Enable();
-                wInput.MapEditorCamera.Rotate.Disable();
-            }
-            else
-            {
-                wInput.MapEditorCamera.Disable();
-            }
+            wInput.MapEditorCamera.Enable();
+            wInput.MapEditorCamera.Rotate.Disable();
         }
-
+        public void Disable()
+        {
+            wInput.MapEditorCamera.Disable();
+        }
     }
 }
