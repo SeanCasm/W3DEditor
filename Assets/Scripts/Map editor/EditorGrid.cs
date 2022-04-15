@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using WEditor.UI;
 using WEditor.Events;
+using WEditor.Game.Scriptables;
 namespace WEditor.Scenario.Editor
 {
     public class EditorGrid : MonoBehaviour
@@ -18,7 +19,9 @@ namespace WEditor.Scenario.Editor
         [Header("Level load settings")]
         [SerializeField] TMPro.TMP_InputField levelNameInputField;
         [SerializeField] GameObject loadScreen;
-        [SerializeField] WEditor.Game.Scriptables.ScenarioScriptable wall, door, props, propsTop, health, score, ammo;
+        [SerializeField] ScenarioScriptable wall, door, props, propsTop, health, score, ammo;
+        [Header("Enemy scriptables")]
+        [SerializeField] List<EnemyScriptable> enemies;
         public bool isSpawnLocated { get; private set; }
         private Vector3Int currentWorldPos;
         public GameObject currentSpawn { get; set; }
@@ -100,6 +103,17 @@ namespace WEditor.Scenario.Editor
                     tile.sprite = health.spritesCollection[index];
                     SetTile(cellPos, tile);
                 }
+                else
+                {
+                    enemies.ForEach(item =>
+                    {
+                        if (tileName.Contains(item.enemyName))
+                        {
+                            tile.sprite = item.enemySprite;
+                            SetTile(cellPos, tile);
+                        }
+                    });
+                }
             });
             doors.ForEach(item =>
             {
@@ -176,9 +190,13 @@ namespace WEditor.Scenario.Editor
                 {
                     mainTilemap.SetTile(cellPos, tile);
                 }
-                else
+                else if (nameToLower.Contains("health") || nameToLower.Contains("ammo"))
                 {
                     HandleCollectibleLocation(cellPos, tile);
+                }
+                else
+                {
+                    mainTilemap.SetTile(cellPos, tile);
                 }
                 string[] index = nameToLower.Split('_');
                 DataHandler.SetLevelTiles(cellPos.x, cellPos.y, new TileLevelData(int.Parse(index[index.Length - 1]), cellPos, nameToLower));
@@ -247,19 +265,14 @@ namespace WEditor.Scenario.Editor
         {
             bool tilesAround = false;
             //Gets top and bottom tiles position in tilemap
-            Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);
-            Vector3Int bottomPos = new Vector3Int(cellPos.x, cellPos.y - 1, cellPos.z);
 
             //Checks top and bottom tiles
-            TileBase topTile = mainTilemap.GetTile(topPos);
-            TileBase bottomTile = mainTilemap.GetTile(bottomPos);
-
-            Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
-            Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
+            TileBase topTile = mainTilemap.GetTile(cellPos.GetTopTile());
+            TileBase bottomTile = mainTilemap.GetTile(cellPos.GetBottomTile());
 
             //Checks left and right tiles
-            TileBase leftTile = mainTilemap.GetTile(leftPos);
-            TileBase rightTile = mainTilemap.GetTile(rightPos);
+            TileBase leftTile = mainTilemap.GetTile(cellPos.GetLeftTile());
+            TileBase rightTile = mainTilemap.GetTile(cellPos.GetRightTile());
 
             if ((topTile != null && bottomTile != null &&
                  topTile.name.ToLower().StartsWith("wall") && bottomTile.name.ToLower().StartsWith("wall")) ||

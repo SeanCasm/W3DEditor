@@ -48,6 +48,10 @@ namespace WEditor.Scenario.Editor
                         {
                             HandleAmmoGeneration(tileName, pos);
                         }
+                        else if (tileName.StartsWith("guard") || tileName.StartsWith("ss"))
+                        {
+                            HandleEnemyGeneration(tileName, pos);
+                        }
                     }
                 }
             }

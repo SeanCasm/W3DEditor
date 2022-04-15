@@ -9,7 +9,8 @@ namespace WEditor.Game
     {
         void Update()
         {
-            transform.LookAt(PlayerGlobalReference.instance.position);
+            transform.LookAt(PlayerGlobalReference.instance.position,Vector3.up);
+            transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
         }
     }
 }

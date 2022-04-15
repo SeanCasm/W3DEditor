@@ -25,6 +25,9 @@ namespace WEditor.Scenario
         [SerializeField] protected float propXOffset, propYOffset, propZOffset;
         [Header("Collectible generation")]
         [SerializeField] List<CollectibleScriptable> healthScriptables, ammoScriptables, scoreScriptables;
+        [Header("Enemy generation")]
+        // [SerializeField] List<Sprite> guard, ss;
+        [SerializeField] GameObject guardPrefab, ssPrefab;
         protected List<Door> doorsLocation = new List<Door>();
         protected List<GameObject> objectsGenerated = new List<GameObject>();
         protected List<Wall> walls = new List<Wall>();
@@ -91,10 +94,7 @@ namespace WEditor.Scenario
             GameObject wallObject = Instantiate(wallGameObject);
 
             SpriteRenderer[] wallObjectSprites = wallObject.GetComponentsInChildren<SpriteRenderer>();
-            foreach (var item in wallObjectSprites)
-            {
-                item.sprite = wallSprite;
-            }
+            foreach (var item in wallObjectSprites) item.sprite = wallSprite;
             walls.Add(new Wall(pos, wallObject));
             //fix the tile center pivot
             position = new Vector3(position.x + xOffset, position.y + yOffset, position.z + zOffset);
@@ -102,23 +102,21 @@ namespace WEditor.Scenario
 
             objectsGenerated.Add(wallObject);
         }
+        protected void HandleEnemyGeneration(string tileName, Vector3Int pos)
+        {
+            Vector3 position = mainTilemap.CellToWorld(pos);
+            position = new Vector3(position.x + .5f, position.y, position.z + .5f);
+            GameObject enemy = tileName.StartsWith("guard") ? Instantiate(guardPrefab) : Instantiate(ssPrefab);
+            enemy.transform.position = position;
+            objectsGenerated.Add(enemy);
+        }
         private void SetWallFace(Door door)
         {
             Vector3Int cellPos = door.position;
             if (door.topBottomSide)
-            {
-                Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);
-                Vector3Int bottomPos = new Vector3Int(cellPos.x, cellPos.y - 1, cellPos.z);
-
-                SetWallSideface(topPos, bottomPos, new string[2] { "front", "back" });
-            }
+                SetWallSideface(cellPos.GetTopTile(), cellPos.GetBottomTile(), new string[2] { "front", "back" });
             else
-            {
-                Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
-                Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
-
-                SetWallSideface(leftPos, rightPos, new string[2] { "right", "left" });
-            }
+                SetWallSideface(cellPos.GetLeftTile(), cellPos.GetRightTile(), new string[2] { "right", "left" });
         }
         private void SetWallSideface(Vector3Int pos1, Vector3Int pos2, string[] transformChilds)
         {
@@ -133,19 +131,11 @@ namespace WEditor.Scenario
 
         protected void AddDoorToList(Vector3Int cellPos, string tileName)
         {
-            Vector3Int topPos = new Vector3Int(cellPos.x, cellPos.y + 1, cellPos.z);
-            Vector3Int bottomPos = new Vector3Int(cellPos.x, cellPos.y - 1, cellPos.z);
-            Vector3Int leftPos = new Vector3Int(cellPos.x - 1, cellPos.y, cellPos.z);
-            Vector3Int rightPos = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
 
-            if (mainTilemap.HasTile(topPos) && mainTilemap.HasTile(bottomPos))
-            {
+            if (mainTilemap.HasTile(cellPos.GetTopTile()) && mainTilemap.HasTile(cellPos.GetBottomTile()))
                 doorsLocation.Add(new Door(cellPos, true, tileName));
-            }
-            else if (mainTilemap.HasTile(leftPos) && mainTilemap.HasTile(rightPos))
-            {
+            else if (mainTilemap.HasTile(cellPos.GetLeftTile()) && mainTilemap.HasTile(cellPos.GetRightTile()))
                 doorsLocation.Add(new Door(cellPos, false, tileName));
-            }
         }
         protected void HandleDoorsGeneration()
         {
@@ -205,26 +195,26 @@ namespace WEditor.Scenario
             objectsGenerated.Add(propObject);
         }
     }
-    public struct Wall
+}
+public struct Wall
+{
+    public Wall(Vector3Int position, GameObject objectReference)
     {
-        public Wall(Vector3Int position, GameObject objectReference)
-        {
-            this.position = position;
-            this.objectReference = objectReference;
-        }
-        public Vector3Int position { get; private set; }
-        public GameObject objectReference { get; private set; }
+        this.position = position;
+        this.objectReference = objectReference;
     }
-    public struct Door
+    public Vector3Int position { get; private set; }
+    public GameObject objectReference { get; private set; }
+}
+public struct Door
+{
+    public Door(Vector3Int position, bool topBottomSide, string name)
     {
-        public Door(Vector3Int position, bool topBottomSide, string name)
-        {
-            this.position = position;
-            this.topBottomSide = topBottomSide;
-            this.name = name;
-        }
-        public Vector3Int position { get; private set; }
-        public bool topBottomSide { get; private set; }
-        public string name { get; private set; }
+        this.position = position;
+        this.topBottomSide = topBottomSide;
+        this.name = name;
     }
+    public Vector3Int position { get; private set; }
+    public bool topBottomSide { get; private set; }
+    public string name { get; private set; }
 }

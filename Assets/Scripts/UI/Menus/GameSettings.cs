@@ -5,6 +5,8 @@ namespace WEditor
 {
     public class GameSettings : MonoBehaviour
     {
-        
+        private void Start() {
+            Application.targetFrameRate = 60;
+        }
     }
 }

@@ -87,11 +87,10 @@ namespace WEditor.Game.Player.Guns
         }
         private new void ShootRay()
         {
-            Tuple<bool, RaycastHit> values = base.ShootRay();
-
-            if (values.Item1)
+            Tuple<bool, RaycastHit> hitInfo = base.ShootRay();
+            if (hitInfo.Item1)
             {
-                HealthBase<float> enemyHealth = values.Item2.collider.GetComponent<HealthBase<float>>();
+                HealthBase<float> enemyHealth = hitInfo.Item2.collider.GetComponent<HealthBase<float>>();
                 enemyHealth.Take(damage);
             }
         }

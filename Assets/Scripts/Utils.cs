@@ -13,5 +13,21 @@ namespace WEditor
         {
             return new Vector3(value1.x + .5f, value1.y, value1.z + .5f);
         }
+        public static Vector3Int GetTopTile(this Vector3Int cellPos)
+        {
+            return new Vector3Int(cellPos.x, cellPos.y + 1, 0);
+        }
+        public static Vector3Int GetBottomTile(this Vector3Int cellPos)
+        {
+            return new Vector3Int(cellPos.x, cellPos.y - 1, 0);
+        }
+        public static Vector3Int GetLeftTile(this Vector3Int cellPos)
+        {
+            return new Vector3Int(cellPos.x - 1, cellPos.y, 0);
+        }
+        public static Vector3Int GetRightTile(this Vector3Int cellPos)
+        {
+            return new Vector3Int(cellPos.x + 1, cellPos.y, 0);
+        }
     }
 }

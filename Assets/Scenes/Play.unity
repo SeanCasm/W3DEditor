@@ -1269,6 +1269,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca029c46ddb293b4ab85e719bb7142c2, type: 2}
   - {fileID: 11400000, guid: d5e74516e894bad4bb682a516116cf7a, type: 2}
   - {fileID: 11400000, guid: 8d413232de9a95d4792e83a016cb0011, type: 2}
+  guardPrefab: {fileID: 0}
+  ssPrefab: {fileID: 0}
 --- !u!114 &571158870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1341,7 +1343,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 571158866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2cc4caa26a704141a4f98f295406b4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c2b9cbeb6d41d242a1341e7612e4726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelTilemap: {fileID: 2008952556}
