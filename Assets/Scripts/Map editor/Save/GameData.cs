@@ -9,7 +9,7 @@ namespace WEditor
     public class GameData
     {
         public (int x, int z) levelSpawn;
-        public List<(int assetListIndex, int xpos, int ypos, string tileName)> levelTiles { get; set; } = new List<(int assetListIndex, int xpos, int ypos, string tileName)>();
+        public List<(int xpos, int ypos, string tileName)> levelTiles { get; set; } = new List<(int xpos, int ypos, string tileName)>();
         public (int x, int y) levelSize;
         public string levelName;
         public int levelID;
@@ -23,7 +23,7 @@ namespace WEditor
             {
                 if (item.tileName != null)
                 {
-                    levelTiles.Add((item.assetListIndex, item.position.x, item.position.y, item.tileName));
+                    levelTiles.Add((item.position.x, item.position.y, item.tileName));
                 }
             }
         }

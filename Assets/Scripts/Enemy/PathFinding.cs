@@ -12,12 +12,10 @@ namespace WEditor.Game.Enemy
 
         public void FindPath(Vector3 startPosition, Vector3 targetPosition)
         {
-
             List<Node> openSet = new List<Node>();
             HashSet<Node> closedSet = new HashSet<Node>();
 
             Grid.instance.CreateGrid();
-
             Node targetNode = Grid.instance.GetNodeFromGridPosition(targetPosition);
             Node startNode = Grid.instance.GetNodeFromGridPosition(startPosition);
             openSet.Add(startNode);
@@ -67,8 +65,8 @@ namespace WEditor.Game.Enemy
             int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 
             if (dstX > dstY)
-                return 14 * dstY + 10 * (dstX - dstY);
-            return 14 * dstX + 10 * (dstY - dstX);
+                return 10 * dstY + 10 * (dstX - dstY);
+            return 10 * dstX + 10 * (dstY - dstX);
         }
         private void RetracePath(Node startNode, Node targetNode)
         {

@@ -69,7 +69,7 @@ namespace WEditor.Scenario.Editor
             DataHandler.LevelTileSize(gameData.levelSize.x, gameData.levelSize.y);
             levelName = gameData.levelName;
             levelNameInputField.text = levelName;
-            List<(int, int, int, string)> doors = new List<(int, int, int, string)>();
+            List<(int, int, string)> doors = new List<(int, int, string)>();
 
             width = gameData.levelSize.x;
             height = gameData.levelSize.y;
@@ -80,18 +80,18 @@ namespace WEditor.Scenario.Editor
             gameData.levelTiles.ForEach(item =>
             {
                 Tile tile = new Tile();
-                (int index, int x, int y, string tileName) = item;
+                (int x, int y, string tileName) = item;
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
                 tile.name = tileName;
 
                 if (tileName.Contains("wall"))
                 {
-                    tile.sprite = wall.spritesCollection[index];
+                    tile.sprite = wall.GetSprite(tileName);
                     SetTile(cellPos, tile);
                 }
                 else if (tileName.Contains("prop"))
                 {
-                    tile.sprite = props.spritesCollection[index];
+                    tile.sprite = props.GetSprite(tileName);
                     SetTile(cellPos, tile);
                 }
                 else if (tileName.Contains("door"))
@@ -100,7 +100,7 @@ namespace WEditor.Scenario.Editor
                 }
                 else if (tileName.Contains("health"))
                 {
-                    tile.sprite = health.spritesCollection[index];
+                    tile.sprite = health.GetSprite(tileName);
                     SetTile(cellPos, tile);
                 }
                 else
@@ -118,11 +118,11 @@ namespace WEditor.Scenario.Editor
             doors.ForEach(item =>
             {
                 Tile tile = new Tile();
-                (int index, int x, int y, string tileName) = item;
+                (int x, int y, string tileName) = item;
                 tile.name = tileName;
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
 
-                tile.sprite = door.spritesCollection[index];
+                tile.sprite = door.GetSprite(tileName);
                 SetTile(cellPos, tile);
             });
             loadScreen.SetActive(false);
@@ -198,8 +198,7 @@ namespace WEditor.Scenario.Editor
                 {
                     mainTilemap.SetTile(cellPos, tile);
                 }
-                string[] index = nameToLower.Split('_');
-                DataHandler.SetLevelTiles(cellPos.x, cellPos.y, new TileLevelData(int.Parse(index[index.Length - 1]), cellPos, nameToLower));
+                DataHandler.SetLevelTiles(cellPos.x, cellPos.y, new TileLevelData(cellPos, nameToLower));
             }
         }
         private void HandleCollectibleLocation(Vector3Int cellPos, Tile tile)
@@ -309,14 +308,12 @@ namespace WEditor.Scenario.Editor
     }
     public struct TileLevelData
     {
-        public TileLevelData(int assetListIndex, Vector3Int position, string tileName)
+        public TileLevelData(Vector3Int position, string tileName)
         {
-            this.assetListIndex = assetListIndex;
             this.position = position;
             this.tileName = tileName;
         }
         public string tileName { get; private set; }
-        public int assetListIndex { get; private set; }
         public Vector3Int position { get; private set; }
 
     }

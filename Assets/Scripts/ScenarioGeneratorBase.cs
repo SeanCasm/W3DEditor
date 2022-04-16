@@ -13,20 +13,19 @@ namespace WEditor.Scenario
         [SerializeField] protected float xOffset, yOffset, zOffset;
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallGameObject;
-        [SerializeField] protected ScenarioScriptable wallTextures;
-        [SerializeField] protected Sprite wallFacingDoor;
+        [SerializeField] protected TextureScenarioScriptable wallScriptable;
+        [SerializeField] Texture wallFacingDoor;
         [Header("Door generation")]
-        [SerializeField] protected ScenarioScriptable doorSprites;
-        [SerializeField] protected GameObject doorPrefab;
+        [SerializeField] protected TextureScenarioScriptable doorScriptable;
+        [SerializeField] GameObject doorPrefab;
         [SerializeField] protected float xDoorOffset1 = .5f, xDoorOffset2, zDoorOffset1 = 1, zDoorOffset2;
         [Header("Prop generation")]
-        [SerializeField] protected GameObject propPrefab;
+        [SerializeField] GameObject propPrefab;
         [SerializeField] protected ScenarioScriptable propsDefaultSprites, propsTopSprites;
         [SerializeField] protected float propXOffset, propYOffset, propZOffset;
         [Header("Collectible generation")]
         [SerializeField] List<CollectibleScriptable> healthScriptables, ammoScriptables, scoreScriptables;
         [Header("Enemy generation")]
-        // [SerializeField] List<Sprite> guard, ss;
         [SerializeField] GameObject guardPrefab, ssPrefab;
         protected List<Door> doorsLocation = new List<Door>();
         protected List<GameObject> objectsGenerated = new List<GameObject>();
@@ -89,12 +88,13 @@ namespace WEditor.Scenario
             //world position
             Vector3 position = mainTilemap.CellToWorld(pos);
 
-            Sprite wallSprite = wallTextures.spritesCollection.Find(item => item.name.ToLower().StartsWith(tileName));
+            Texture2D wallTex = wallScriptable.GetTexture(tileName);
 
             GameObject wallObject = Instantiate(wallGameObject);
 
-            SpriteRenderer[] wallObjectSprites = wallObject.GetComponentsInChildren<SpriteRenderer>();
-            foreach (var item in wallObjectSprites) item.sprite = wallSprite;
+            MeshRenderer[] meshes = wallObject.GetComponentsInChildren<MeshRenderer>();
+            foreach (var item in meshes) item.material.mainTexture = wallTex;
+
             walls.Add(new Wall(pos, wallObject));
             //fix the tile center pivot
             position = new Vector3(position.x + xOffset, position.y + yOffset, position.z + zOffset);
@@ -124,9 +124,8 @@ namespace WEditor.Scenario
             Wall wall2 = walls.Find(wall => wall.position.x == pos2.x && wall.position.y == pos2.y);
             Transform side1 = wall1.objectReference.transform.Find(transformChilds[0]);
             Transform side2 = wall2.objectReference.transform.Find(transformChilds[1]);
-
-            side1.GetComponent<SpriteRenderer>().sprite = wallFacingDoor;
-            side2.GetComponent<SpriteRenderer>().sprite = wallFacingDoor;
+            side1.GetComponent<MeshRenderer>().material.mainTexture = wallFacingDoor;
+            side2.GetComponent<MeshRenderer>().material.mainTexture = wallFacingDoor;
         }
 
         protected void AddDoorToList(Vector3Int cellPos, string tileName)
@@ -143,11 +142,10 @@ namespace WEditor.Scenario
             {
                 if (mainTilemap.GetTile(door.position))
                 {
-                    int index = doorSprites.spritesCollection.FindIndex(item => item.name.ToLower().StartsWith(door.name));
-                    Sprite doorSprite = doorSprites.spritesCollection[index];
+                    Texture doorTex = doorScriptable.GetTexture(door.name);
 
                     GameObject doorObject = Instantiate(doorPrefab);
-                    doorObject.GetComponent<SpriteRenderer>().sprite = doorSprite;
+                    doorObject.GetComponent<SpriteRenderer>().material.mainTexture = doorTex;
                     Vector3 position = Vector3.zero;
                     if (door.topBottomSide)
                     {
@@ -174,8 +172,8 @@ namespace WEditor.Scenario
             SpriteRenderer spriteRenderer = propObject.GetComponentInChildren<SpriteRenderer>();
 
             spriteRenderer.sprite = tileName.Contains("top") ?
-            propsTopSprites.spritesCollection.Find(sprite => sprite.name.ToLower() == tileName) :
-            propsDefaultSprites.spritesCollection.Find(sprite => sprite.name.ToLower() == tileName);
+            propsTopSprites.GetSprite(tileName) :
+            propsDefaultSprites.GetSprite(tileName);
 
             //setup the collision for this prop
             if (tileName.EndsWith("c"))

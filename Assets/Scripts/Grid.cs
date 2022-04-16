@@ -17,6 +17,8 @@ namespace WEditor.Game
         }
         public void CreateGrid()
         {
+            if (grid != null) return;
+
             grid = new Node[levelTilemap.size.x, levelTilemap.size.y];
             for (int x = 0; x < levelTilemap.size.x; x++)
             {
@@ -29,16 +31,31 @@ namespace WEditor.Game
         public List<Node> GetNeighbours(Node node)
         {
             List<Node> neighbours = new List<Node>();
-            for (int x = node.gridX - 1; x < node.gridX + 1; x++)
-            {
-                for (int y = node.gridY - 1; y < node.gridY + 1; y++)
-                {
-                    if (x == node.gridX && y == node.gridY) continue;
+            int gridX = node.gridX;
+            int gridY = node.gridY;
 
-                    if (IsInsideGrid(x, y))
-                        if (grid[x, y].isWalkable) neighbours.Add(grid[x, y]);
-                }
-            }
+            if (IsInsideGrid(gridX - 1, gridY))
+                neighbours.Add(grid[gridX - 1, gridY]);
+
+            if (IsInsideGrid(gridX + 1, gridY))
+                neighbours.Add(grid[gridX + 1, gridY]);
+
+            if (IsInsideGrid(gridX, gridY - 1))
+                neighbours.Add(grid[gridX, gridY - 1]);
+                
+            if (IsInsideGrid(gridX, gridY + 1))
+                neighbours.Add(grid[gridX, gridY + 1]);
+
+            // for (int x = node.gridX - 1; x < node.gridX + 1; x++)
+            // {
+            //     for (int y = node.gridY - 1; y < node.gridY + 1; y++)
+            //     {
+            //         if (x == node.gridX && y == node.gridY) continue;
+
+            //         if (IsInsideGrid(x, y))
+            //             if (grid[x, y].isWalkable) neighbours.Add(grid[x, y]);
+            //     }
+            // }
             return neighbours;
         }
         private bool IsInsideGrid(int x, int y)

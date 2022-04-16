@@ -18,7 +18,7 @@ namespace WEditor.Game.Enemy
         private Vector3 playerPosition { get => PlayerGlobalReference.instance.position; }
         private Rigidbody rigid;
         private PathFinding pathfinding;
-        private EnemyBehaviour eBehaviour = EnemyBehaviour.Patrolling;
+        private MovementBehaviour eBehaviour = MovementBehaviour.Patrolling;
         public Vector3 spawnPoint { get; set; }
         void Start()
         {
@@ -40,11 +40,6 @@ namespace WEditor.Game.Enemy
             else
             {
                 PathBehaviour();
-                if (eBehaviour == EnemyBehaviour.FollowPlayer)
-                {
-                    pathfinding.FindPath(transform.position, playerPosition);
-                    MoveBetweenPath();
-                }
             }
         }
         private void PathBehaviour()
@@ -60,21 +55,21 @@ namespace WEditor.Game.Enemy
                     case "Ground":
                         break;
                     case "Player":
-                        Vector3 playerPosition = hit.collider.transform.position;
                         float playerDistance = Vector3.Distance(transform.position, playerPosition);
-
                         if (playerDistance <= distanceToAttack)
                         {
                             currentSpeed = 0;
                             rigid.velocity = Vector3.zero;
-                            eBehaviour = EnemyBehaviour.Attacking;
+                            eBehaviour = MovementBehaviour.Attacking;
                             transform.LookAt(playerPosition, Vector3.up);
                             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                         }
                         else if (playerDistance <= tileCheckDistance && playerDistance > distanceToAttack)
                         {
                             currentSpeed = speed;
-                            eBehaviour = EnemyBehaviour.FollowPlayer;
+                            eBehaviour = MovementBehaviour.FollowPlayer;
+                            pathfinding.FindPath(transform.position, playerPosition);
+                            MoveBetweenPath();
                         }
                         break;
                 }
@@ -82,7 +77,7 @@ namespace WEditor.Game.Enemy
         }
         void MoveBetweenPath()
         {
-            for (int i = 0; i < pathfinding.finalPath.Count - 1; i++)
+            for (int i = 0; i < pathfinding.finalPath.Count; i++)
             {
                 Vector3 currentTarget = pathfinding.finalPath[i].gridPosition;
                 transform.position = Vector3.MoveTowards(transform.position, currentTarget, currentSpeed * Time.deltaTime);
@@ -91,7 +86,7 @@ namespace WEditor.Game.Enemy
         public void OnDeath()
         {
             isDead = true;
-            eBehaviour = EnemyBehaviour.None;
+            eBehaviour = MovementBehaviour.None;
             animator.SetBool("isAttacking", false);
             animator.SetBool("idle", false);
             animator.SetBool("isWalking", false);
@@ -103,10 +98,10 @@ namespace WEditor.Game.Enemy
         {
             if (!isDead)
             {
-                animator.SetBool("isAttacking", eBehaviour == EnemyBehaviour.Attacking);
+                animator.SetBool("isAttacking", eBehaviour == MovementBehaviour.Attacking);
                 // animator.SetBool("idle", eBehaviour == EnemyBehaviour.Idle);
-                animator.SetBool("isWalking", eBehaviour == EnemyBehaviour.FollowPlayer);
-                animator.SetBool("isPatrolling", eBehaviour == EnemyBehaviour.Patrolling);
+                animator.SetBool("isWalking", eBehaviour == MovementBehaviour.FollowPlayer);
+                animator.SetBool("isPatrolling", eBehaviour == MovementBehaviour.Patrolling);
             }
         }
         private bool CompareTag(RaycastHit hit, string tagToCompare)
@@ -114,7 +109,7 @@ namespace WEditor.Game.Enemy
             return hit.collider.tag == tagToCompare;
         }
     }
-    public enum EnemyBehaviour
+    public enum MovementBehaviour
     {
         Idle, Patrolling, FollowPlayer, Attacking, None
     }

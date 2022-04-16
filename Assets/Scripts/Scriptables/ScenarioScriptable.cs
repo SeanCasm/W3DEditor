@@ -7,6 +7,11 @@ namespace WEditor.Game.Scriptables
     [CreateAssetMenu(fileName = "Scenario", menuName = "ScriptableObjects/Scenario")]
     public class ScenarioScriptable : ScriptableObject
     {
-        public List<Sprite> spritesCollection;
+        [SerializeField] List<Sprite> spritesCollection;
+        public Sprite GetSprite(string spriteName)
+        {
+            int index = int.Parse(spriteName.Split('_')[1]);
+            return spritesCollection[index];
+        }
     }
 }
