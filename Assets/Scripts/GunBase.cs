@@ -10,10 +10,18 @@ namespace WEditor.Game.Guns
         [SerializeField] protected float checkDistance;
         [SerializeField] protected LayerMask hitLayer;
         [SerializeField] protected float damage;
+        [SerializeField] AudioClip shootClip;
         protected Transform shootPoint;
+        private AudioSource audioSource;
         protected void Start()
         {
+            audioSource = GetComponent<AudioSource>();
+            audioSource.clip = shootClip;
             shootPoint = transform.GetChild(0);
+        }
+        public void PlayShootClip()
+        {
+            audioSource.Play();
         }
         public Tuple<bool, RaycastHit> ShootRay()
         {

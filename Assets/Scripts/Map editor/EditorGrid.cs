@@ -16,6 +16,7 @@ namespace WEditor.Scenario.Editor
         [SerializeField] BoxCollider confinerCollider;
         [SerializeField] Transform editorCamera;
         [SerializeField] GameObject spawnPrefab;
+        [SerializeField] Behaviour lightComponent;
         [Header("Level load settings")]
         [SerializeField] TMPro.TMP_InputField levelNameInputField;
         [SerializeField] GameObject loadScreen;
@@ -39,10 +40,14 @@ namespace WEditor.Scenario.Editor
         private void OnEnable()
         {
             GameEvent.instance.onEditorExit += Clear;
+            GameEvent.instance.onPreviewModeEnter += PreviewEnter;
+            GameEvent.instance.onPreviewModeExit += PreviewExit;
         }
         private void OnDisable()
         {
             GameEvent.instance.onEditorExit -= Clear;
+            GameEvent.instance.onPreviewModeEnter -= PreviewEnter;
+            GameEvent.instance.onPreviewModeExit -= PreviewExit;
         }
         public void Button_Save()
         {
@@ -149,7 +154,7 @@ namespace WEditor.Scenario.Editor
         {
             Vector3Int size = new Vector3Int(width, height, 0);
             whiteSquare.size = mainTilemap.size = pointerPreview.size = size;
-
+            Vector3 center = new Vector3(mainTilemap.size.x / 2, 0, mainTilemap.size.y / 2);
             confinerCollider.size = new Vector3(mainTilemap.size.x, 100, mainTilemap.size.y);
             confinerCollider.transform.position = new Vector3(center.x, center.y + confinerCollider.size.y / 2, center.z);
 
@@ -288,6 +293,18 @@ namespace WEditor.Scenario.Editor
                 return;
             }
         }
+        private void PreviewEnter()
+        {
+            lightComponent.enabled = true;
+            whiteSquare.gameObject.SetActive(false);
+            currentSpawn.SetActive(false);
+        }
+        private void PreviewExit()
+        {
+            lightComponent.enabled = false;
+            whiteSquare.gameObject.SetActive(true);
+            currentSpawn.SetActive(true);
+        }
         private void Clear()
         {
             mainTilemap.ClearAllTiles();
@@ -296,14 +313,14 @@ namespace WEditor.Scenario.Editor
             DataHandler.ClearLevelTiles();
             Destroy(currentSpawn);
             isSpawnLocated = false;
+            whiteSquare.gameObject.SetActive(true);
             spawnPosition = Vector3.zero;
             levelName = "";
         }
         public void InitGeneration()
         {
             DataHandler.currentLevelPosition = spawnPosition;
-            currentSpawn.SetActive(false);
-            scenarioGenerator.InitGeneration();
+            scenarioGenerator.InitGeneration(mainTilemap);
         }
     }
     public struct TileLevelData

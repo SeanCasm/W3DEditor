@@ -17,18 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 79ec314264c1e6c46a8bacd51003140f
   m_SerializeEntries:
-  - m_GUID: 2ee03a619e4f14847af1e7efd239e51b
-    m_Address: Assets/Prefabs/Ground.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: ba4dc97de7a2f2047bd2ff038925873b
-    m_Address: Assets/Prefabs/Submachine gun.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   - m_GUID: de3d9b422fdf2dd458c60f57c61d1c48
     m_Address: Assets/Prefabs/Level button.prefab
     m_ReadOnly: 0

@@ -12,59 +12,58 @@ namespace WEditor.Scenario.Playable
         public void InitGeneration(GameData levelData)
         {
             (int x, int y) size = levelData.levelSize;
-            List<(int, int, string)> doors = new List<(int, int, string)>();
+            base.InitGeneration(new Vector3Int(size.x, size.y, 0));
+            List<(Vector3Int, string)> doors = new List<(Vector3Int, string)>();
+            List<(string tileName, Vector3Int cellPos)> walls = new List<(string, Vector3Int)>();
 
             levelData.levelTiles.ForEach(item =>
-            {
-                Tile itemTile = new Tile();
-                (int x, int y, string tileName) = item;
-                Vector3Int cellPos = new Vector3Int(x, y, 0);
-                itemTile.name = tileName;
-
-                if (tileName.Contains("top"))
                 {
-                    itemTile.sprite = propsTopSprites.GetSprite(tileName);
-                    mainTilemap.SetTile(cellPos, itemTile);
+                    Tile itemTile = new Tile();
+                    (int x, int y, string tileName) = item;
+                    Vector3Int cellPos = new Vector3Int(x, y, 0);
+                    itemTile.name = tileName;
+                    mainGrid[x, y] = true;
+                    if (tileName.Contains("top"))
+                    {
+                        itemTile.sprite = propsTopSprites.GetSprite(tileName);
+                        HandlePropGeneration(tileName, cellPos);
+                    }
 
-                    HandlePropGeneration(tileName, cellPos);
+                    else if (tileName.Contains("wall"))
+                    {
+                        walls.Add((tileName, cellPos));
+                    }
+                    else if (tileName.Contains("prop"))
+                    {
+                        itemTile.sprite = propsDefaultSprites.GetSprite(tileName);
+                        HandlePropGeneration(tileName, cellPos);
+                    }
+                    else if (tileName.Contains("door"))
+                    {
+                        doors.Add((cellPos, tileName));
+                    }
                 }
-
-                else if (tileName.Contains("wall"))
-                {
-                    itemTile.sprite =  wallScenarioScriptable.GetSprite(tileName);
-                    mainTilemap.SetTile(cellPos, itemTile);
-
-                    HandleWallGeneration(tileName, cellPos);
-                }
-                else if (tileName.Contains("prop"))
-                {
-                    itemTile.sprite = propsDefaultSprites.GetSprite(tileName);
-                    mainTilemap.SetTile(cellPos, itemTile);
-
-                    HandlePropGeneration(tileName, cellPos);
-                }
-                else if (tileName.Contains("door"))
-                {
-                    doors.Add(item);
-                }
-
-            });
+            );
+            base.HandleWallGeneration(walls);
+            this.HandleDoorGeneration(doors);
+            PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;
+        }
+        private void HandleDoorGeneration(List<(Vector3Int, string)> doors)
+        {
             //Doors needs to be located after all of the rest of tiles
             //to avoid fails on the generation
             doors.ForEach(item =>
             {
                 Tile itemTile = new Tile();
-                (int x, int y, string tileName) = item;
-                Vector3Int cellPos = new Vector3Int(x, y, 0);
-                Texture2D doorTex = doorScriptable.GetTexture(tileName);
+                Vector3Int cellPos = item.Item1;
+                Texture2D doorTex = doorScriptable.GetTexture(item.Item2);
                 itemTile.sprite = Sprite.Create(doorTex, new Rect(0, 0, doorTex.width, doorTex.height), new Vector2(.5f, .5f));
-                mainTilemap.SetTile(cellPos, itemTile);
 
-                AddDoorToList(cellPos, tileName);
+                mainGrid[cellPos.x, cellPos.y] = true;
+
+                AddDoorToList(cellPos, item.Item2);
             });
-            HandleDoorsGeneration();
-            PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;
-            mainTilemap.gameObject.SetActive(false);
+            base.HandleDoorsGeneration();
         }
     }
 }

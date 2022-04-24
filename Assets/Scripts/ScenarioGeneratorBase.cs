@@ -4,21 +4,18 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using WEditor.Game.Scriptables;
 using WEditor.Game.Collectibles;
-
 namespace WEditor.Scenario
 {
     public class ScenarioGeneratorBase : MonoBehaviour
     {
-        [SerializeField] protected Tilemap mainTilemap;
-        [SerializeField] protected float xOffset, yOffset, zOffset;
+        [SerializeField] Material groundMaterial;
         [Header("Wall generation")]
-        [SerializeField] protected GameObject wallGameObject;
+        [SerializeField] protected GameObject wallPrefab;
         [SerializeField] protected TextureScenarioScriptable wallScriptable;
-        [SerializeField] Texture wallFacingDoor;
+        [SerializeField] GameObject wallFacingPrefab;
         [Header("Door generation")]
         [SerializeField] protected TextureScenarioScriptable doorScriptable;
         [SerializeField] GameObject doorPrefab;
-        [SerializeField] protected float xDoorOffset1 = .5f, xDoorOffset2, zDoorOffset1 = 1, zDoorOffset2;
         [Header("Prop generation")]
         [SerializeField] GameObject propPrefab;
         [SerializeField] protected ScenarioScriptable propsDefaultSprites, propsTopSprites;
@@ -27,12 +24,25 @@ namespace WEditor.Scenario
         [SerializeField] List<CollectibleScriptable> healthScriptables, ammoScriptables, scoreScriptables;
         [Header("Enemy generation")]
         [SerializeField] GameObject guardPrefab, ssPrefab;
-        protected List<Door> doorsLocation = new List<Door>();
         protected List<GameObject> objectsGenerated = new List<GameObject>();
-        protected List<Wall> walls = new List<Wall>();
-        public virtual void InitGeneration()
+        protected Wall[,] wallGrid;
+        protected Door[,] doorGrid;
+        protected bool[,] mainGrid;
+        protected GameObject groundPlane;
+        public void InitGeneration(Vector3Int size)
         {
-
+            int mapWidth = size.x;
+            int mapHeight = size.y;
+            mainGrid = new bool[mapWidth, mapHeight];
+            wallGrid = new Wall[mapWidth, mapHeight];
+            doorGrid = new Door[mapWidth, mapHeight];
+            groundPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            MeshRenderer planeMesh = groundPlane.GetComponent<MeshRenderer>();
+            planeMesh.material = groundMaterial;
+            float scaleX = mapWidth / .64f;
+            float sclaeZ = mapHeight / .64f;
+            groundPlane.transform.localScale = new Vector3(scaleX, 1, sclaeZ);
+            groundPlane.transform.position = new Vector3(mainGrid.GetLength(0) / 2, 0, mainGrid.GetLength(1) / 2);
         }
         protected void HandlePointsGeneration(string tileName, Vector3Int cellPos)
         {
@@ -43,9 +53,8 @@ namespace WEditor.Scenario
 
             SetItemPosition(itemGameObject, position);
         }
-        private (GameObject, int, Vector3) GetItem(string tileName, Vector3Int cellPos)
+        private (GameObject, int, Vector3) GetItem(string tileName, Vector3 position)
         {
-            Vector3 position = mainTilemap.CellToWorld(cellPos);
             position = new Vector3(position.x + .5f, position.y, position.z + .5f);
 
             GameObject itemGameObject = new GameObject(tileName);
@@ -55,8 +64,7 @@ namespace WEditor.Scenario
             box.isTrigger = true;
             objectsGenerated.Add(itemGameObject);
 
-            string[] split = tileName.Split('_');
-            int lastIndex = int.Parse(split[1].ToString());
+            int lastIndex = tileName.GetIndexFromAssetName();
             return (itemGameObject, lastIndex, position);
         }
         private void SetItemPosition(GameObject itemGameObject, Vector3 position)
@@ -83,90 +91,100 @@ namespace WEditor.Scenario
 
             SetItemPosition(itemGameObject, position);
         }
-        protected void HandleWallGeneration(string tileName, Vector3Int pos)
+        protected void HandleWallGeneration(List<(string tileName, Vector3Int cellPos)> walls)
         {
-            //world position
-            Vector3 position = mainTilemap.CellToWorld(pos);
-
-            Texture2D wallTex = wallScriptable.GetTexture(tileName);
-
-            GameObject wallObject = Instantiate(wallGameObject);
-
-            MeshRenderer[] meshes = wallObject.GetComponentsInChildren<MeshRenderer>();
-            foreach (var item in meshes) item.material.mainTexture = wallTex;
-
-            walls.Add(new Wall(pos, wallObject));
-            //fix the tile center pivot
-            position = new Vector3(position.x + xOffset, position.y + yOffset, position.z + zOffset);
-            wallObject.transform.position = position;
-
-            objectsGenerated.Add(wallObject);
+            foreach (var wall in walls)
+            {
+                Texture2D wallTex = wallScriptable.GetTexture(wall.tileName);
+                int x = wall.cellPos.x;
+                int y = wall.cellPos.y;
+                GameObject wallObject = Instantiate(wallPrefab);
+                wallObject.GetComponent<MeshRenderer>().material.mainTexture = wallTex;
+                wallGrid[x, y] = new Wall(wallObject);
+                //fix the tile center pivot
+                wallObject.transform.position = new Vector3(x, 0, y);
+                objectsGenerated.Add(wallObject);
+            }
         }
-        protected void HandleEnemyGeneration(string tileName, Vector3Int pos)
+        protected void HandleEnemyGeneration(string tileName, Vector3 position)
         {
-            Vector3 position = mainTilemap.CellToWorld(pos);
             position = new Vector3(position.x + .5f, position.y, position.z + .5f);
             GameObject enemy = tileName.StartsWith("guard") ? Instantiate(guardPrefab) : Instantiate(ssPrefab);
             enemy.transform.position = position;
             objectsGenerated.Add(enemy);
         }
-        private void SetWallFace(Door door)
-        {
-            Vector3Int cellPos = door.position;
-            if (door.topBottomSide)
-                SetWallSideface(cellPos.GetTopTile(), cellPos.GetBottomTile(), new string[2] { "front", "back" });
-            else
-                SetWallSideface(cellPos.GetLeftTile(), cellPos.GetRightTile(), new string[2] { "right", "left" });
-        }
-        private void SetWallSideface(Vector3Int pos1, Vector3Int pos2, string[] transformChilds)
-        {
-            Wall wall1 = walls.Find(wall => wall.position.x == pos1.x && wall.position.y == pos1.y);
-            Wall wall2 = walls.Find(wall => wall.position.x == pos2.x && wall.position.y == pos2.y);
-            Transform side1 = wall1.objectReference.transform.Find(transformChilds[0]);
-            Transform side2 = wall2.objectReference.transform.Find(transformChilds[1]);
-            side1.GetComponent<MeshRenderer>().material.mainTexture = wallFacingDoor;
-            side2.GetComponent<MeshRenderer>().material.mainTexture = wallFacingDoor;
-        }
+
 
         protected void AddDoorToList(Vector3Int cellPos, string tileName)
         {
+            int x = cellPos.x;
+            int y = cellPos.y;
 
-            if (mainTilemap.HasTile(cellPos.GetTopTile()) && mainTilemap.HasTile(cellPos.GetBottomTile()))
-                doorsLocation.Add(new Door(cellPos, true, tileName));
-            else if (mainTilemap.HasTile(cellPos.GetLeftTile()) && mainTilemap.HasTile(cellPos.GetRightTile()))
-                doorsLocation.Add(new Door(cellPos, false, tileName));
+            if (mainGrid[x, y + 1] && mainGrid[x, y - 1])
+            {
+                doorGrid[x, y] = new Door(
+                    true, tileName,
+                    new Vector2Int[] {
+                        new Vector2Int(x, y + 1),
+                        new Vector2Int(x, y - 1),
+                    }
+                );
+            }
+            else if (mainGrid[x - 1, y] && mainGrid[x + 1, y])
+            {
+                doorGrid[x, y] = new Door(
+                    false, tileName,
+                    new Vector2Int[] {
+                        new Vector2Int(x+1, y),
+                        new Vector2Int(x-1, y),
+                    }
+                );
+            }
         }
         protected void HandleDoorsGeneration()
         {
-            foreach (var door in doorsLocation)
+            for (int x = 0; x < doorGrid.GetLength(0); x++)
             {
-                if (mainTilemap.GetTile(door.position))
+                for (int y = 0; y < doorGrid.GetLength(1); y++)
                 {
+                    Door door = doorGrid[x, y];
+                    if (door == null || !mainGrid[x, y]) continue;
+
                     Texture doorTex = doorScriptable.GetTexture(door.name);
 
                     GameObject doorObject = Instantiate(doorPrefab);
-                    doorObject.GetComponent<SpriteRenderer>().material.mainTexture = doorTex;
+                    doorObject.GetComponent<MeshRenderer>().material.mainTexture = doorTex;
                     Vector3 position = Vector3.zero;
                     if (door.topBottomSide)
                     {
-                        position = new Vector3(door.position.x + xDoorOffset2, yOffset, door.position.y + zDoorOffset2);
+                        position = new Vector3(x + .5f, .5f, y + .5f);
                         doorObject.transform.eulerAngles = new Vector3(0, 90, 0);
+                        SetWallFace(door, new Vector3Int(x, y, 0));
                     }
                     else
                     {
-                        position = new Vector3(door.position.x + xDoorOffset1, yOffset, door.position.y + zDoorOffset1);
+                        position = new Vector3(x + .5f, .5f, y + .5f);
+                        SetWallFace(door, new Vector3Int(x, y, 0));
                     }
-                    SetWallFace(door);
                     doorObject.transform.position = position;
                     objectsGenerated.Add(doorObject);
                 }
             }
         }
-        protected void HandlePropGeneration(string tileName, Vector3Int pos)
+        private void SetWallFace(Door door, Vector3Int position)
+        {
+            int x = position.x;
+            int y = position.y;
+
+            GameObject wallF = Instantiate(wallFacingPrefab);
+            wallF.transform.position = new Vector3(position.x + .5f, .5f, position.y + .5f);
+            objectsGenerated.Add(wallF);
+            if (door.topBottomSide)
+                wallF.transform.eulerAngles = new Vector3(0, 90, 0);
+        }
+        protected void HandlePropGeneration(string tileName, Vector3 position)
         {
             //world position
-            Vector3 position = mainTilemap.CellToWorld(pos);
-
             GameObject propObject = Instantiate(propPrefab);
 
             SpriteRenderer spriteRenderer = propObject.GetComponentInChildren<SpriteRenderer>();
@@ -196,23 +214,9 @@ namespace WEditor.Scenario
 }
 public struct Wall
 {
-    public Wall(Vector3Int position, GameObject objectReference)
+    public Wall(GameObject objectReference)
     {
-        this.position = position;
         this.objectReference = objectReference;
     }
-    public Vector3Int position { get; private set; }
     public GameObject objectReference { get; private set; }
-}
-public struct Door
-{
-    public Door(Vector3Int position, bool topBottomSide, string name)
-    {
-        this.position = position;
-        this.topBottomSide = topBottomSide;
-        this.name = name;
-    }
-    public Vector3Int position { get; private set; }
-    public bool topBottomSide { get; private set; }
-    public string name { get; private set; }
 }

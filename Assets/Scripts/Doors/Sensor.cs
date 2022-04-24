@@ -1,32 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace WEditor.Game.Doors
+namespace WEditor.Game
 {
     public class Sensor : MonoBehaviour
     {
         [SerializeField] float slideTime;
         [SerializeField] float timeBeforeClose;
+        [SerializeField] AudioClip doorClip;
         // [SerializeField] LayerMask playerLayer, enemyLayer;
-        private bool isOpen = false;
         private bool playerAround = false;
         private bool enemyAround = false;
-        private bool isOpening = false, isClosing;
+        private AudioSource audioSource;
+        private State doorState = State.Close;
+        private void Start()
+        {
+            audioSource = GetComponent<AudioSource>();
+            audioSource.clip = doorClip;
+        }
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
                 playerAround = true;
-                if (!isOpening && !isClosing)
+                if (doorState == State.Close)
                 {
+                    audioSource.Play();
                     StartCoroutine(nameof(Open));
                 }
             }
             else if (other.CompareTag("Enemy"))
             {
                 enemyAround = true;
-                if (!isOpening && !isClosing)
+                if (doorState == State.Close)
                 {
+                    audioSource.Play();
                     StartCoroutine(nameof(Open));
                 }
             }
@@ -45,7 +53,7 @@ namespace WEditor.Game.Doors
 
         IEnumerator Open()
         {
-            isOpening = true;
+            doorState = State.Opening;
             float time = 0;
             float direction = 1;
             float speed = direction / slideTime;
@@ -55,16 +63,16 @@ namespace WEditor.Game.Doors
                 time += Time.deltaTime;
                 yield return null;
             }
-            isOpen = true;
+            doorState = State.Open;
 
             yield return new WaitForSeconds(timeBeforeClose);
             yield return new WaitWhile(() => playerAround || enemyAround);
-            isOpening = false;
             StartCoroutine(nameof(Close));
         }
         IEnumerator Close()
         {
-            isClosing = true;
+            audioSource.Play();
+            doorState = State.Closing;
             float time = 0;
             float direction = -1;
             float speed = direction / slideTime;
@@ -74,7 +82,11 @@ namespace WEditor.Game.Doors
                 time += Time.deltaTime;
                 yield return null;
             }
-            isClosing = isOpen = false;
+            doorState = State.Close;
         }
+    }
+    public enum State
+    {
+        Close, Closing, Open, Opening
     }
 }

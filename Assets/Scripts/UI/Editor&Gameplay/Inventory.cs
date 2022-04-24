@@ -5,29 +5,30 @@ using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using WEditor.Events;
 using WEditor.Input;
+using WEditor.Game.Scriptables;
 namespace WEditor.UI
 {
     public class Inventory : MonoBehaviour
     {
         [SerializeField] GameObject itemGroup;
-        [SerializeField] Sprite[] assets;
+        [SerializeField] ScenarioScriptable spriteAssets;
         [SerializeField] int id;
         private List<GameObject> contentRef = new List<GameObject>();
         private bool isInScrollView;
         private void Start()
         {
-            foreach (var sprite in assets)
+            foreach (var sprite in spriteAssets.SpritesCollection)
             {
-                GameObject asset = new GameObject();
-                Image assetImage = asset.AddComponent<Image>();
-                Button button = asset.AddComponent<Button>();
+                GameObject assetObject = new GameObject();
+                Image assetImage = assetObject.AddComponent<Image>();
+                Button button = assetObject.AddComponent<Button>();
                 assetImage.sprite = sprite;
                 button.onClick.AddListener(() => { SetItemSpriteToMousePointer(sprite); });
 
-                contentRef.Add(asset);
-                asset.SetActive(false);
+                contentRef.Add(assetObject);
+                assetObject.SetActive(false);
 
-                Instantiate(asset);
+                Instantiate(assetObject);
             }
         }
         private void OnEnable()
