@@ -111,6 +111,7 @@ namespace WEditor.Scenario
                 GameObject fence = Instantiate(wallPrefab);
                 fence.transform.position = position;
                 fences.Add(fence.GetComponent<MeshFilter>());
+                objectsGenerated.Add(fence);
             }
             MeshCombiner.instance.CombineMeshes(fences);
         }

@@ -7,6 +7,7 @@ namespace WEditor
     {
         [SerializeField] GameObject targetCombiner;
         public static MeshCombiner instance;
+        List<GameObject> multipleTargetsCombiner = new List<GameObject>();
         private void Start()
         {
             instance = this;
@@ -14,10 +15,15 @@ namespace WEditor
         public void DisableTargetCombiner()
         {
             targetCombiner.SetActive(false);
+            foreach (var item in multipleTargetsCombiner)
+            {
+                print(item.name);
+                Destroy(item);
+            }
+            multipleTargetsCombiner = new List<GameObject>();
         }
         public void CombineMultipleMeshes(Dictionary<string, List<GameObject>> meshFilters)
         {
-            print(meshFilters.Count);
             foreach (var item in meshFilters)
             {
                 CombineInstance[] combine = new CombineInstance[item.Value.Count];
@@ -37,7 +43,7 @@ namespace WEditor
                 mFilter.mesh = new Mesh();
                 mFilter.mesh.CombineMeshes(combine);
                 multipleMesh.AddComponent<MeshCollider>();
-                Instantiate(multipleMesh);
+                multipleTargetsCombiner.Add(multipleMesh);
                 multipleMesh.transform.position = Vector3.zero;
             }
         }
