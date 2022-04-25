@@ -12,7 +12,7 @@ namespace WEditor.Game
         private bool playerAround = false;
         private bool enemyAround = false;
         private AudioSource audioSource;
-        private State doorState = State.Close;
+        public State doorState { get; private set; } = State.Close;
         private void Start()
         {
             audioSource = GetComponent<AudioSource>();

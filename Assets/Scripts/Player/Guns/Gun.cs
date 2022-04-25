@@ -33,6 +33,10 @@ namespace WEditor.Game.Player.Guns
             onGunStoppedFire = null;
             onEmptyAmmo = null;
         }
+        public void RefullAmmo()
+        {
+            currentAmmo = maxAmmo;
+        }
         public void FireCanceled()
         {
             isHolding = false;

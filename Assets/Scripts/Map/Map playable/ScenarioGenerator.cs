@@ -18,30 +18,10 @@ namespace WEditor.Scenario.Playable
 
             levelData.levelTiles.ForEach(item =>
                 {
-                    Tile itemTile = new Tile();
                     (int x, int y, string tileName) = item;
                     Vector3Int cellPos = new Vector3Int(x, y, 0);
-                    itemTile.name = tileName;
                     mainGrid[x, y] = true;
-                    if (tileName.Contains("top"))
-                    {
-                        itemTile.sprite = propsTopSprites.GetSprite(tileName);
-                        HandlePropGeneration(tileName, cellPos);
-                    }
-
-                    else if (tileName.Contains("wall"))
-                    {
-                        walls.Add((tileName, cellPos));
-                    }
-                    else if (tileName.Contains("prop"))
-                    {
-                        itemTile.sprite = propsDefaultSprites.GetSprite(tileName);
-                        HandlePropGeneration(tileName, cellPos);
-                    }
-                    else if (tileName.Contains("door"))
-                    {
-                        doors.Add((cellPos, tileName));
-                    }
+                    base.HandleTilesLocation(tileName, cellPos, doors, walls);
                 }
             );
             base.HandleWallGeneration(walls);

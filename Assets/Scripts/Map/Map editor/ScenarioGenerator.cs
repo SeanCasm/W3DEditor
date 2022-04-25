@@ -33,31 +33,7 @@ namespace WEditor.Scenario.Editor
                         mainGrid[x, y] = true;
                         TileBase tile = mainTilemap.GetTile(pos);
                         string tileName = tile.name.ToLower();
-                        if (tileName.StartsWith("door"))
-                        {
-                            doors.Add((pos, tileName));
-                        }
-                        else
-                        if (tileName.StartsWith("wall"))
-                        {
-                            walls.Add((tileName, pos));
-                        }
-                        else if (tileName.Contains("prop"))
-                        {
-                            HandlePropGeneration(tileName, position);
-                        }
-                        else if (tileName.Contains("health"))
-                        {
-                            HandleHealthGeneration(tileName, pos);
-                        }
-                        else if (tileName.Contains("ammo"))
-                        {
-                            HandleAmmoGeneration(tileName, pos);
-                        }
-                        else if (tileName.StartsWith("guard") || tileName.StartsWith("ss"))
-                        {
-                            HandleEnemyGeneration(tileName, mainTilemap.CellToWorld(pos));
-                        }
+                        base.HandleTilesLocation(tileName, pos, doors, walls);
                     }
                 }
             }
@@ -81,8 +57,9 @@ namespace WEditor.Scenario.Editor
             });
             base.HandleDoorsGeneration();
         }
-        private void OnPreviewModeExit()
+        private new void OnPreviewModeExit()
         {
+            base.OnPreviewModeExit();
             doorGrid = new Door[0, 0];
             wallGrid = new Wall[0, 0];
             EditorGrid.instance.currentSpawn.SetActive(true);

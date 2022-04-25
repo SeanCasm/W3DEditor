@@ -7,10 +7,10 @@ TextureImporter:
     second: Health_0
   - first:
       213: 5407656843090688360
-    second: Health_1
+    second: Health_2
   - first:
       213: -5731162285055332302
-    second: Health_1
+    second: Health_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -119,8 +119,8 @@ TextureImporter:
         y: 0
         width: 16
         height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -133,15 +133,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Health_2
+      name: Health_1
       rect:
         serializedVersion: 2
         x: 22
         y: 0
         width: 35
         height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -154,15 +154,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Health_1
+      name: Health_2
       rect:
         serializedVersion: 2
         x: 63
         y: 0
         width: 31
         height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

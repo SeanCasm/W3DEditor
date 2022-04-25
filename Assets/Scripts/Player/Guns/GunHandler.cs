@@ -23,6 +23,16 @@ namespace WEditor.Game.Player.Guns
                 gun.onEmptyAmmo = TrySwapGun;
             });
         }
+        private void OnDisable()
+        {
+            playerGuns.ForEach(gun =>
+            {
+                gun.gameObject.SetActive(false);
+                gun.RefullAmmo();
+            });
+            gunIndex = 0;
+            playerGuns[0].gameObject.SetActive(true);
+        }
         public void AddTo(int ammoID, int amount)
         {
             playerGuns[ammoID].Add(amount);

@@ -7,13 +7,12 @@ namespace WEditor.Game.Enemy
     public class EnemyAI : MonoBehaviour
     {
         [Header("Player detection")]
-        [SerializeField] LayerMask playerLayer;
-        [SerializeField] float tileCheckDistance = .64f, distanceToAttack;
+        // [SerializeField] LayerMask playerLayer;
         [SerializeField] float speed;
+        [SerializeField] float tileCheckDistance = .64f, distanceToAttack;
         private Animator animator;
-        private float distanceToPlayer { get => Vector3.Distance(transform.position, PlayerGlobalReference.instance.position); }
         private float currentSpeed;
-        private bool isDead;
+        private bool isDead, isInvisible;
         private Vector3 directionToPlayer { get => (PlayerGlobalReference.instance.position - transform.position).normalized; }
         private Vector3 playerPosition { get => PlayerGlobalReference.instance.position; }
         private Rigidbody rigid;
@@ -25,53 +24,67 @@ namespace WEditor.Game.Enemy
             currentSpeed = speed;
             rigid = GetComponent<Rigidbody>();
             animator = GetComponentInChildren<Animator>();
-            // position = spawnPoint;
+            // transform.position = spawnPoint;
             pathfinding = GetComponent<PathFinding>();
-
         }
 
         void Update()
         {
             if (isDead)
             {
-                transform.LookAt(playerPosition, Vector3.up);
-                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                if (!isInvisible)
+                {
+                    transform.LookAt(playerPosition, Vector3.up);
+                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                }
             }
             else
             {
-                PathBehaviour();
+                if (eBehaviour != MovementBehaviour.WaitingDoor)
+                {
+                    PathBehaviour();
+                }
             }
         }
         private void PathBehaviour()
         {
-            RaycastHit[] raycastHit = Physics.RaycastAll(transform.position, directionToPlayer, tileCheckDistance, playerLayer);
-            Debug.DrawRay(transform.position, directionToPlayer * tileCheckDistance, Color.red);
-            Debug.DrawRay(transform.position, directionToPlayer * distanceToAttack, Color.black);
-
-            foreach (var hit in raycastHit)
+            RaycastHit[] raycastHit = Physics.RaycastAll(transform.position, directionToPlayer, tileCheckDistance);
+            if (raycastHit[0].collider.tag == "Ground")
             {
-                switch (hit.collider.tag)
+                Debug.DrawRay(transform.position, directionToPlayer * tileCheckDistance, Color.red);
+
+                if (raycastHit[0].transform.gameObject.name.Contains("door"))
                 {
-                    case "Ground":
-                        break;
-                    case "Player":
-                        float playerDistance = Vector3.Distance(transform.position, playerPosition);
-                        if (playerDistance <= distanceToAttack)
-                        {
-                            currentSpeed = 0;
-                            rigid.velocity = Vector3.zero;
-                            eBehaviour = MovementBehaviour.Attacking;
-                            transform.LookAt(playerPosition, Vector3.up);
-                            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                        }
-                        else if (playerDistance <= tileCheckDistance && playerDistance > distanceToAttack)
-                        {
-                            currentSpeed = speed;
-                            eBehaviour = MovementBehaviour.FollowPlayer;
-                            pathfinding.FindPath(transform.position, playerPosition);
-                            MoveBetweenPath();
-                        }
-                        break;
+                    Sensor doorSensor = raycastHit[0].collider.GetComponent<Sensor>();
+                    if (doorSensor.doorState != State.Open)
+                    {
+                        eBehaviour = MovementBehaviour.WaitingDoor;
+                    }
+                }
+                else
+                {
+                    eBehaviour = MovementBehaviour.Patrolling;
+                }
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, directionToPlayer * distanceToAttack, Color.black);
+
+                float playerDistance = Vector3.Distance(transform.position, playerPosition);
+                if (playerDistance <= distanceToAttack)
+                {
+                    currentSpeed = 0;
+                    rigid.velocity = Vector3.zero;
+                    eBehaviour = MovementBehaviour.Attacking;
+                    transform.LookAt(playerPosition, Vector3.up);
+                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                }
+                else if (playerDistance <= tileCheckDistance && playerDistance > distanceToAttack)
+                {
+                    currentSpeed = speed;
+                    eBehaviour = MovementBehaviour.FollowPlayer;
+                    pathfinding.FindPath(transform.position, playerPosition);
+                    MoveBetweenPath();
                 }
             }
         }
@@ -104,13 +117,17 @@ namespace WEditor.Game.Enemy
                 animator.SetBool("isPatrolling", eBehaviour == MovementBehaviour.Patrolling);
             }
         }
-        private bool CompareTag(RaycastHit hit, string tagToCompare)
+        private void OnBecameVisible()
         {
-            return hit.collider.tag == tagToCompare;
+            isInvisible = false;
+        }
+        private void OnBecameInvisible()
+        {
+            isInvisible = true;
         }
     }
     public enum MovementBehaviour
     {
-        Idle, Patrolling, FollowPlayer, Attacking, None
+        Idle, WaitingDoor, Patrolling, FollowPlayer, Attacking, None
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using WEditor.Game.Scriptables;
 using WEditor.Game.Collectibles;
 namespace WEditor.Scenario
@@ -29,6 +28,41 @@ namespace WEditor.Scenario
         protected Door[,] doorGrid;
         protected bool[,] mainGrid;
         protected GameObject groundPlane;
+        protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<(Vector3Int, string)> doors, List<(string tileName, Vector3Int cellPos)> walls)
+        {
+            if (tileName.Contains("top"))
+            {
+                HandlePropGeneration(tileName, cellPos);
+            }
+            else if (tileName.Contains("wall"))
+            {
+                walls.Add((tileName, cellPos));
+            }
+            else if (tileName.Contains("prop"))
+            {
+                HandlePropGeneration(tileName, cellPos);
+            }
+            else if (tileName.Contains("door"))
+            {
+                doors.Add((cellPos, tileName));
+            }
+            else if (tileName.Contains("health"))
+            {
+                HandleHealthGeneration(tileName, cellPos);
+            }
+            else if (tileName.Contains("ammo"))
+            {
+                HandleAmmoGeneration(tileName, cellPos);
+            }
+            else if (tileName.StartsWith("guard") || tileName.StartsWith("ss"))
+            {
+                HandleEnemyGeneration(tileName, new Vector3(cellPos.x, 0, cellPos.y));
+            }
+            else if (tileName.StartsWith("score"))
+            {
+                HandleScoreGeneration(tileName, cellPos);
+            }
+        }
         public void InitGeneration(Vector3Int size)
         {
             int mapWidth = size.x;
@@ -43,19 +77,56 @@ namespace WEditor.Scenario
             float sclaeZ = mapHeight / .64f;
             groundPlane.transform.localScale = new Vector3(scaleX, 1, sclaeZ);
             groundPlane.transform.position = new Vector3(mainGrid.GetLength(0) / 2, 0, mainGrid.GetLength(1) / 2);
+
+            CreateScenarioLimiter();
         }
-        protected void HandlePointsGeneration(string tileName, Vector3Int cellPos)
+        private void CreateScenarioLimiter()
+        {
+            float mapWidth = mainGrid.GetLength(0);
+            float mapHeight = mainGrid.GetLength(1);
+            List<MeshFilter> fences = new List<MeshFilter>();
+            //bottom-right to top-left
+            for (float y = 0; y < mapHeight; y += 1)
+            {
+                CreateFence(new Vector3(-1, 0, y));
+            }
+            //top-left to top-right
+            for (float x = 0; x < mapWidth; x += 1)
+            {
+                CreateFence(new Vector3(x, 0, mapHeight));
+            }
+            //top-right to bottom-right
+            for (float y = mapHeight - 1; y >= 0; y -= 1)
+            {
+                CreateFence(new Vector3(mapWidth, 0, y));
+            }
+            //bottom-right to bottom-left
+            for (float x = mapWidth - 1; x >= 0; x -= 1)
+            {
+                CreateFence(new Vector3(x, 0, -1));
+            }
+
+            void CreateFence(Vector3 position)
+            {
+                GameObject fence = Instantiate(wallPrefab);
+                fence.transform.position = position;
+                fences.Add(fence.GetComponent<MeshFilter>());
+            }
+            MeshCombiner.instance.CombineMeshes(fences);
+        }
+        protected void HandleScoreGeneration(string tileName, Vector3Int cellPos)
         {
             var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
 
             Score score = itemGameObject.AddComponent<Score>();
-            score.collectibleScriptable = scoreScriptables[lastIndex];
+            score.CollectibleScriptable = scoreScriptables[lastIndex];
 
             SetItemPosition(itemGameObject, position);
         }
-        private (GameObject, int, Vector3) GetItem(string tileName, Vector3 position)
+        private (GameObject, int, Vector3) GetItem(string tileName, Vector3Int pos)
         {
-            position = new Vector3(position.x + .5f, position.y, position.z + .5f);
+            Vector3 position = new Vector3(pos.x, 0, pos.y);
+            position = new Vector3(position.x + .5f, 0, position.z + .5f);
 
             GameObject itemGameObject = new GameObject(tileName);
             itemGameObject.SetActive(false);
@@ -78,7 +149,7 @@ namespace WEditor.Scenario
             var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
 
             Ammo ammo = itemGameObject.AddComponent<Ammo>();
-            ammo.collectibleScriptable = ammoScriptables[lastIndex];
+            ammo.CollectibleScriptable = ammoScriptables[lastIndex];
 
             SetItemPosition(itemGameObject, position);
         }
@@ -87,24 +158,38 @@ namespace WEditor.Scenario
             var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
 
             Health health = itemGameObject.AddComponent<Health>();
-            health.collectibleScriptable = healthScriptables[lastIndex];
+            health.CollectibleScriptable = healthScriptables[lastIndex];
 
             SetItemPosition(itemGameObject, position);
         }
         protected void HandleWallGeneration(List<(string tileName, Vector3Int cellPos)> walls)
         {
+            Dictionary<string, List<GameObject>> wallsToFilter = new Dictionary<string, List<GameObject>>();
             foreach (var wall in walls)
             {
-                Texture2D wallTex = wallScriptable.GetTexture(wall.tileName);
+                string tileName = wall.tileName;
+                Texture2D wallTex = wallScriptable.GetTexture(tileName);
                 int x = wall.cellPos.x;
                 int y = wall.cellPos.y;
                 GameObject wallObject = Instantiate(wallPrefab);
+                if (wallsToFilter.ContainsKey(tileName))
+                {
+                    var wallsFiltered = wallsToFilter[tileName];
+                    wallsFiltered.Add(wallObject);
+                }
+                else
+                {
+                    List<GameObject> l = new List<GameObject>(new GameObject[] { wallObject });
+                    wallsToFilter.Add(tileName, l);
+                }
                 wallObject.GetComponent<MeshRenderer>().material.mainTexture = wallTex;
                 wallGrid[x, y] = new Wall(wallObject);
                 //fix the tile center pivot
                 wallObject.transform.position = new Vector3(x, 0, y);
                 objectsGenerated.Add(wallObject);
             }
+
+            MeshCombiner.instance.CombineMultipleMeshes(wallsToFilter);
         }
         protected void HandleEnemyGeneration(string tileName, Vector3 position)
         {
@@ -209,6 +294,10 @@ namespace WEditor.Scenario
             propObject.transform.position = position;
 
             objectsGenerated.Add(propObject);
+        }
+        protected void OnPreviewModeExit()
+        {
+            MeshCombiner.instance.DisableTargetCombiner();
         }
     }
 }
