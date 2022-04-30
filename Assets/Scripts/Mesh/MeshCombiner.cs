@@ -37,6 +37,8 @@ namespace WEditor
                     i++;
                 }
                 GameObject multipleMesh = new GameObject("mmesh");
+                multipleMesh.layer = 6;
+                multipleMesh.tag = "Ground";
                 MeshRenderer mMesh = multipleMesh.AddComponent<MeshRenderer>();
                 mMesh.material = material;
                 MeshFilter mFilter = multipleMesh.AddComponent<MeshFilter>();

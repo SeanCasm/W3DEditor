@@ -43,6 +43,7 @@ namespace WEditor.Scenario
                     DataHandler.currentLevelName = levelName;
                     (int x, int z) levelSpawn = newGamedata.levelSpawn;
                     DataHandler.currentLevelPosition = new Vector3(levelSpawn.x, .5f, levelSpawn.z);
+                    GameEditorEvent.instance.OnEditorEnter();
                     if (loadType == Loader.LoadPlay)
                     {
                         SceneHandler.instance.LoadPlayScene(newGamedata);

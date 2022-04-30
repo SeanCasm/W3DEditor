@@ -7,89 +7,109 @@ namespace WEditor.Game.Enemy
     public class EnemyAI : MonoBehaviour
     {
         [Header("Player detection")]
-        // [SerializeField] LayerMask playerLayer;
         [SerializeField] float speed;
         [SerializeField] float tileCheckDistance = .64f, distanceToAttack;
         private Animator animator;
         private float currentSpeed;
         private bool isDead, isInvisible;
-        private Vector3 directionToPlayer { get => (PlayerGlobalReference.instance.position - transform.position).normalized; }
+        private Vector3 directionToPlayer { get => (PlayerGlobalReference.instance.position - localCenter).normalized; }
         private Vector3 playerPosition { get => PlayerGlobalReference.instance.position; }
+        private Vector3 localCenter { get => spriteRenderer.bounds.center; }
         private Rigidbody rigid;
+        private SpriteRenderer spriteRenderer;
         private PathFinding pathfinding;
+        private SpriteLook spriteLook;
+        int groundLayer = 6;
+        int playerLayer = 7;
+
         private MovementBehaviour eBehaviour = MovementBehaviour.Patrolling;
-        public Vector3 spawnPoint { get; set; }
         void Start()
         {
             currentSpeed = speed;
+            spriteLook = GetComponent<SpriteLook>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             rigid = GetComponent<Rigidbody>();
             animator = GetComponentInChildren<Animator>();
-            // transform.position = spawnPoint;
             pathfinding = GetComponent<PathFinding>();
         }
 
         void Update()
         {
-            if (isDead)
+
+            if (!isDead)
             {
-                if (!isInvisible)
+                CheckBehaviour();
+                switch (eBehaviour)
                 {
-                    transform.LookAt(playerPosition, Vector3.up);
-                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                    case MovementBehaviour.FollowPlayer:
+                        currentSpeed = speed;
+                        MoveBetweenPath();
+                        break;
+                    case MovementBehaviour.Attacking:
+                        currentSpeed = 0;
+                        rigid.velocity = Vector3.zero;
+                        // FollowCamera();
+                        break;
                 }
             }
-            else
+            else FollowCamera();
+        }
+        private void CheckBehaviour()
+        {
+            int layerMaskCombined = (1 << groundLayer) | (1 << playerLayer);
+
+            RaycastHit[] raycastHit = Physics.RaycastAll(localCenter, directionToPlayer,
+            Vector3.Distance(localCenter, playerPosition), layerMaskCombined);
+
+            // Debug.DrawRay(localCenter, directionToPlayer * Vector3.Distance(localCenter, playerPosition), Color.cyan);
+            switch (raycastHit[0].collider.tag)
             {
-                if (eBehaviour != MovementBehaviour.WaitingDoor)
-                {
-                    PathBehaviour();
-                }
+                case "Ground":
+                    Debug.DrawRay(localCenter, directionToPlayer * tileCheckDistance, Color.red);
+
+                    if (raycastHit[0].transform.gameObject.name.Contains("door"))
+                    {
+                        Sensor doorSensor = raycastHit[0].collider.GetComponent<Sensor>();
+                        if (doorSensor.doorState != State.Open)
+                        {
+                            eBehaviour = MovementBehaviour.WaitingDoor;
+                        }
+                    }
+                    else
+                    {
+                        eBehaviour = MovementBehaviour.Patrolling;
+                    }
+                    break;
+                case "Player":
+                    float playerDistance = Vector3.Distance(localCenter, playerPosition);
+                    Debug.DrawRay(localCenter, directionToPlayer * playerDistance, Color.green);
+                    if (playerDistance <= distanceToAttack)
+                    {
+                        eBehaviour = MovementBehaviour.Attacking;
+                    }
+                    else
+                    if (playerDistance <= tileCheckDistance && playerDistance > distanceToAttack)
+                    {
+                        eBehaviour = MovementBehaviour.FollowPlayer;
+                    }
+                    break;
             }
         }
-        private void PathBehaviour()
+        private void HandleSpriteLook()
         {
-            RaycastHit[] raycastHit = Physics.RaycastAll(transform.position, directionToPlayer, tileCheckDistance);
-            if (raycastHit[0].collider.tag == "Ground")
+            
+        }
+        private void FollowCamera()
+        {
+            if (!isInvisible)
             {
-                Debug.DrawRay(transform.position, directionToPlayer * tileCheckDistance, Color.red);
-
-                if (raycastHit[0].transform.gameObject.name.Contains("door"))
-                {
-                    Sensor doorSensor = raycastHit[0].collider.GetComponent<Sensor>();
-                    if (doorSensor.doorState != State.Open)
-                    {
-                        eBehaviour = MovementBehaviour.WaitingDoor;
-                    }
-                }
-                else
-                {
-                    eBehaviour = MovementBehaviour.Patrolling;
-                }
-            }
-            else
-            {
-                Debug.DrawRay(transform.position, directionToPlayer * distanceToAttack, Color.black);
-
-                float playerDistance = Vector3.Distance(transform.position, playerPosition);
-                if (playerDistance <= distanceToAttack)
-                {
-                    currentSpeed = 0;
-                    rigid.velocity = Vector3.zero;
-                    eBehaviour = MovementBehaviour.Attacking;
-                    transform.LookAt(playerPosition, Vector3.up);
-                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                }
-                else if (playerDistance <= tileCheckDistance && playerDistance > distanceToAttack)
-                {
-                    currentSpeed = speed;
-                    eBehaviour = MovementBehaviour.FollowPlayer;
-                    pathfinding.FindPath(transform.position, playerPosition);
-                    MoveBetweenPath();
-                }
+                transform.LookAt(playerPosition, Vector3.up);
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
             }
         }
         void MoveBetweenPath()
         {
+            pathfinding.FindPath(transform.position, playerPosition);
             for (int i = 0; i < pathfinding.finalPath.Count; i++)
             {
                 Vector3 currentTarget = pathfinding.finalPath[i].gridPosition;

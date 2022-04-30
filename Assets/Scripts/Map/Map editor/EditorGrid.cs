@@ -11,7 +11,7 @@ namespace WEditor.Scenario.Editor
     {
         public static EditorGrid instance;
         [SerializeField] Tilemap mainTilemap, pointerPreview, whiteSquare;
-        [SerializeField] Tile gridTile, helperTile;
+        [SerializeField] Sprite gridSprite, helperSprite, eraserSprite;
         [SerializeField] ScenarioGenerator scenarioGenerator;
         [SerializeField] BoxCollider confinerCollider;
         [SerializeField] Transform editorCamera;
@@ -160,14 +160,14 @@ namespace WEditor.Scenario.Editor
 
             editorCamera.position = new Vector3(center.x, editorCamera.position.y, center.z);
 
-            whiteSquare.BoxFill(Vector3Int.zero, gridTile, 0, 0, width, height);
+            whiteSquare.BoxFill(Vector3Int.zero, CreateTile(gridSprite), 0, 0, width, height);
             DataHandler.LevelTileSize(width, height);
             GameEvent.instance.EditorEnter();
         }
         public void EraseTile(Vector3 pos)
         {
             Vector3Int cellPos = mainTilemap.WorldToCell(pos);
-            mainTilemap.SetTile(cellPos, gridTile);
+            mainTilemap.SetTile(cellPos, null);
         }
         public void SetTile(Vector3Int cellPos, Tile tile)
         {
@@ -246,16 +246,33 @@ namespace WEditor.Scenario.Editor
         {
             return cellPos.x >= 0 && cellPos.x < width && cellPos.y >= 0 && cellPos.y < height;
         }
+        public void SetEraserTileOnAim(Vector3 pos)
+        {
+            Vector3Int cellPos = pointerPreview.WorldToCell(pos);
+            if (IsTileInsideTilemap(cellPos))
+            {
+                pointerPreview.SetTile(currentWorldPos, CreateTile(gridSprite));
+                pointerPreview.SetTile(cellPos, CreateTile(eraserSprite));
+                currentWorldPos = cellPos;
+            }
+        }
         public void SetPreviewTileOnAim(Vector3 pos)
         {
             Vector3Int cellPos = pointerPreview.WorldToCell(pos);
             if (IsTileInsideTilemap(cellPos))
             {
-                pointerPreview.SetTile(currentWorldPos, gridTile);
-                pointerPreview.SetTile(cellPos, helperTile);
+                pointerPreview.SetTile(currentWorldPos, CreateTile(gridSprite));
+                pointerPreview.SetTile(cellPos, CreateTile(helperSprite));
                 currentWorldPos = cellPos;
             }
         }
+        private Tile CreateTile(Sprite sprite)
+        {
+            Tile tile = new Tile();
+            tile.sprite = sprite;
+            return tile;
+        }
+
         private void HandlePropLocation(Vector3Int cellPos, Tile tile)
         {
             if (mainTilemap.HasTile(cellPos))

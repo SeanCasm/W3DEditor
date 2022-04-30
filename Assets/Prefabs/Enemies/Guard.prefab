@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3178500545422978875}
   - component: {fileID: 8806480587987456441}
   - component: {fileID: 1355500185958379807}
+  - component: {fileID: 3949645228221898099}
   m_Layer: 8
   m_Name: Guard
   m_TagString: Enemy
@@ -48,12 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54010e7d5be88bd428a9a27355cd8349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
+  speed: 0.4
   tileCheckDistance: 4
-  distanceToAttack: 2
-  speed: 1
+  distanceToAttack: 1
 --- !u!114 &952185697298849953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +109,28 @@ MonoBehaviour:
   maxHealth: 15
   score: 100
   spriteRenderer: {fileID: 7822311282783936479}
+--- !u!114 &3949645228221898099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2342706216233829273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67388d1e22fccdb40b8159a6114496c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingSpritesFrontLeft:
+  - {fileID: -6815513450890391225, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
+  - {fileID: 6561676747374736519, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
+  - {fileID: -5381039104689448797, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
+  - {fileID: -655122620814754946, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
+  walkingSpritesFrontRight:
+  - {fileID: -5138339988056334515, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
+  - {fileID: -2404668892193936260, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
+  - {fileID: 4257719705413324003, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
+  - {fileID: 5684332678144762097, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
 --- !u!1 &5658520618132202023
 GameObject:
   m_ObjectHideFlags: 0

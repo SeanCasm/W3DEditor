@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using WEditor.Scenario.Editor;
 using WEditor.Events;
+using UnityEngine.UI;
 using static WInput;
 namespace WEditor.Input
 {
@@ -13,8 +14,12 @@ namespace WEditor.Input
         public static MouseHandler instance;
         [SerializeField] Camera mainCamera;
         [SerializeField] GameObject itemPanel, mouseObject;
-        [SerializeField] Sprite eraserSprite, spawnSprite, boldSprite;
+        [SerializeField] Sprite eraserSprite, spawnSprite, boldSprite, penSprite;
         [SerializeField] SpriteRenderer cursor;
+
+        [Header("Item selected settings")]
+        [SerializeField] GameObject container;
+        [SerializeField] Image splashImage;
         public MouseType mouseType { get; set; }
         public Sprite cursorSprite { get => cursor.sprite; set => cursor.sprite = value; }
         private Tile tileRef;
@@ -52,27 +57,35 @@ namespace WEditor.Input
             cursorSprite = null;
             tileRef = null;
             mouseType = MouseType.Pen;
+            container.SetActive(false);
             MapEditorInput.instance.Disable();
         }
         public void Button_SetSpawn()
         {
             mouseType = MouseType.Spawn;
-            GameEvent.instance.EditorInventoryActiveChanged();
+            //GameEvent.instance.EditorInventoryActiveChanged();
             cursorSprite = spawnSprite;
+            tileRef = null;
         }
         public void Button_SetEraser()
         {
             mouseType = MouseType.Eraser;
+            //GameEvent.instance.EditorInventoryActiveChanged();
+            container.SetActive(false);
             cursorSprite = eraserSprite;
+            tileRef = null;
         }
         public void Button_SetPen()
         {
             mouseType = MouseType.Pen;
-            cursorSprite = tileRef.sprite;
+            cursorSprite = penSprite;
         }
         public void SetAsset(Sprite sprite, Tile tile)
         {
-            cursorSprite = sprite;
+            mouseType = MouseType.Pen;
+            cursorSprite = penSprite;
+            container.SetActive(true);
+            splashImage.sprite = sprite;
             tileRef = tile;
         }
         public void OnAim(InputAction.CallbackContext context)
@@ -81,7 +94,10 @@ namespace WEditor.Input
             worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, mainCamera.nearClipPlane * mainCamera.transform.position.y));
             worldPosition = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
             mouseObject.transform.position = worldPosition;
-            EditorGrid.instance.SetPreviewTileOnAim(worldPosition);
+            if (mouseType == MouseType.Eraser)
+                EditorGrid.instance.SetEraserTileOnAim(worldPosition);
+            else
+                EditorGrid.instance.SetPreviewTileOnAim(worldPosition);
         }
 
         public void OnClick(InputAction.CallbackContext context)
@@ -93,17 +109,14 @@ namespace WEditor.Input
                     EditorGrid.instance.SetSpawnObject(worldPosition);
                     return;
                 }
-                if (tileRef != null)
+                switch (mouseType)
                 {
-                    switch (mouseType)
-                    {
-                        case MouseType.Eraser:
-                            EditorGrid.instance.EraseTile(worldPosition);
-                            break;
-                        case MouseType.Pen:
-                            EditorGrid.instance.SetTile(worldPosition, tileRef);
-                            break;
-                    }
+                    case MouseType.Eraser:
+                        EditorGrid.instance.EraseTile(worldPosition);
+                        break;
+                    case MouseType.Pen:
+                        EditorGrid.instance.SetTile(worldPosition, tileRef);
+                        break;
                 }
             }
         }
@@ -112,7 +125,6 @@ namespace WEditor.Input
             if (context.started)
             {
                 GameEvent.instance.EditorInventoryActiveChanged();
-
             }
         }
 
