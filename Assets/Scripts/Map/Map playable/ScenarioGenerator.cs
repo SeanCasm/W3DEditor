@@ -16,14 +16,22 @@ namespace WEditor.Scenario.Playable
             List<(Vector3Int, string)> doors = new List<(Vector3Int, string)>();
             List<(string tileName, Vector3Int cellPos)> walls = new List<(string, Vector3Int)>();
 
-            levelData.levelTiles.ForEach(item =>
+            DataHandler.GridSize(size.x, size.y);
+
+            for (int x = 0; x < size.x; x++)
+            {
+                for (int y = 0; y < size.y; y++)
                 {
-                    (int x, int y, string tileName) = item;
+                    if (levelData.levelTiles[x, y] == null)
+                        continue;
+                    string tileName = levelData.levelTiles[x, y];
                     Vector3Int cellPos = new Vector3Int(x, y, 0);
                     mainGrid[x, y] = true;
                     base.HandleTilesLocation(tileName, cellPos, doors, walls);
+                    DataHandler.SetGrid(x, y, new EditorGridLevelData(cellPos, tileName));
                 }
-            );
+            }
+
             base.HandleWallGeneration(walls);
             this.HandleDoorGeneration(doors);
             PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;

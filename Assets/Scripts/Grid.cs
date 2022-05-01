@@ -7,7 +7,6 @@ namespace WEditor.Game
     public class Grid : MonoBehaviour
     {
         public static Grid instance;
-        public Tilemap levelTilemap;
         private Vector2Int levelSize { get => DataHandler.levelSize; }
         public const float levelTileSize = .64f;
         Node[,] grid;
@@ -62,13 +61,10 @@ namespace WEditor.Game
         }
         private bool IsWalkable(int x, int y)
         {
-            Vector3Int cellPos = new Vector3Int(x, y, 0);
-            string tileName = "";
-            if (levelTilemap.HasTile(cellPos))
-                tileName = levelTilemap.GetTile(cellPos).name.ToLower();
-
-            if (tileName == "")
+            if (DataHandler.grid[x, y] == null)
                 return true;
+
+            string tileName = DataHandler.grid[x, y].tileName.ToLower();
 
             if (!tileName.Contains("wall") && !tileName.Contains("prop"))
                 return true;

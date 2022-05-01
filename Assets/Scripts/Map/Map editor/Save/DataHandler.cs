@@ -1,26 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WEditor.Scenario.Editor;
 namespace WEditor
 {
     public static class DataHandler
     {
-        public static TileLevelData[,] levelTiles { get; private set; }
+        public static EditorGridLevelData[,] grid { get; private set; }
         public static Vector3 currentLevelPosition { get; set; }
         public static string currentLevelName { get; set; }
-        public static Vector2Int levelSize { get => new Vector2Int(levelTiles.GetLength(0), levelTiles.GetLength(1)); }
-        public static void SetLevelTiles(int dimension, int dimension2, TileLevelData data)
+        public static Vector2Int levelSize { get => new Vector2Int(grid.GetLength(0), grid.GetLength(1)); }
+        public static void SetGrid(int dimension, int dimension2, EditorGridLevelData data)
         {
-            levelTiles[dimension, dimension2] = data;
+            grid[dimension, dimension2] = data;
         }
-        public static void ClearLevelTiles()
+        public static void ClearGrid()
         {
-            levelTiles = new TileLevelData[0, 0];
+            grid = new EditorGridLevelData[0, 0];
         }
-        public static void LevelTileSize(int dimension, int dimension2)
+        public static void GridSize(int dimension, int dimension2)
         {
-            levelTiles = new TileLevelData[dimension, dimension2];
+            grid = new EditorGridLevelData[dimension, dimension2];
         }
+    }
+    public class EditorGridLevelData
+    {
+        public EditorGridLevelData(Vector3Int position, string tileName)
+        {
+            this.position = position;
+            this.tileName = tileName;
+        }
+        public string tileName { get; private set; }
+        public Vector3Int position { get; private set; }
     }
 }

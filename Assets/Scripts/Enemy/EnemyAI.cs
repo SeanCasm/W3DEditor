@@ -40,7 +40,6 @@ namespace WEditor.Game.Enemy
             if (!isDead)
             {
                 angle = Vector3.SignedAngle(playerDirection, transform.forward, Vector3.up);
-                print(angle);
                 CheckBehaviour();
                 switch (eBehaviour)
                 {

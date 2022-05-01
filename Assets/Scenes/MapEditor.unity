@@ -6682,7 +6682,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3340425, y: 1}
+    m_SensorSize: {x: 1.3348416, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -9225,6 +9225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundMaterial: {fileID: 2100000, guid: 494cf8a200ac8cb4285004385748c23e, type: 2}
+  meshCombiner: {fileID: 222197012}
   wallPrefab: {fileID: 6664535523619635540, guid: 8c639ba0f5f64b449a9fc468262f652f, type: 3}
   wallScriptable: {fileID: 11400000, guid: 0ccb6c13d8af2db4a9e54858da5ca202, type: 2}
   wallFacingPrefab: {fileID: 6369901486800087869, guid: 411b26ac1a8d47b4488936af535c8941, type: 3}
@@ -9350,7 +9351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2b9cbeb6d41d242a1341e7612e4726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelTilemap: {fileID: 754025810}
 --- !u!114 &1358627119
 MonoBehaviour:
   m_ObjectHideFlags: 0

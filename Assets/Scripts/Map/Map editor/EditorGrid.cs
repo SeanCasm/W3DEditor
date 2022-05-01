@@ -69,55 +69,61 @@ namespace WEditor.Scenario.Editor
         }
         public void Load(GameData gameData)
         {
-            DataHandler.LevelTileSize(gameData.levelSize.x, gameData.levelSize.y);
+            width = gameData.levelSize.x;
+            height = gameData.levelSize.y;
+
+            DataHandler.GridSize(width, height);
             levelName = gameData.levelName;
             levelNameInputField.text = levelName;
             List<(int, int, string)> doors = new List<(int, int, string)>();
 
-            width = gameData.levelSize.x;
-            height = gameData.levelSize.y;
 
             SetSpawnObject(new Vector3(gameData.levelSpawn.x, 0, gameData.levelSpawn.z));
             InitLevel();
-
-            gameData.levelTiles.ForEach(item =>
+            for (int x = 0; x < width; x++)
             {
-                Tile tile = new Tile();
-                (int x, int y, string tileName) = item;
-                Vector3Int cellPos = new Vector3Int(x, y, 0);
-                tile.name = tileName;
+                for (int y = 0; y < height; y++)
+                {
+                    if (gameData.levelTiles[x, y] == null)
+                        continue;
 
-                if (tileName.Contains("wall"))
-                {
-                    tile.sprite = wall.GetSprite(tileName);
-                    SetTile(cellPos, tile);
-                }
-                else if (tileName.Contains("prop"))
-                {
-                    tile.sprite = props.GetSprite(tileName);
-                    SetTile(cellPos, tile);
-                }
-                else if (tileName.Contains("door"))
-                {
-                    doors.Add(item);
-                }
-                else if (tileName.Contains("health"))
-                {
-                    tile.sprite = health.GetSprite(tileName);
-                    SetTile(cellPos, tile);
-                }
-                else
-                {
-                    enemies.ForEach(item =>
+                    Tile tile = new Tile();
+                    Vector3Int cellPos = new Vector3Int(x, y, 0);
+                    tile.name = gameData.levelTiles[x, y];
+
+                    if (tile.name.Contains("wall"))
                     {
-                        if (tileName.Contains(item.enemyName))
+                        tile.sprite = wall.GetSprite(tile.name);
+                        SetTile(cellPos, tile);
+                    }
+                    else if (tile.name.Contains("prop"))
+                    {
+                        tile.sprite = props.GetSprite(tile.name);
+                        SetTile(cellPos, tile);
+                    }
+                    else if (tile.name.Contains("door"))
+                    {
+                        doors.Add((x, y, tile.name));
+                    }
+                    else if (tile.name.Contains("health"))
+                    {
+                        tile.sprite = health.GetSprite(tile.name);
+                        SetTile(cellPos, tile);
+                    }
+                    else
+                    {
+                        enemies.ForEach(item =>
                         {
-                            tile.sprite = item.enemySprite;
-                            SetTile(cellPos, tile);
-                        }
-                    });
+                            if (tile.name.Contains(item.enemyName))
+                            {
+                                tile.sprite = item.enemySprite;
+                                SetTile(cellPos, tile);
+                            }
+                        });
+                    }
                 }
-            });
+            }
+
             doors.ForEach(item =>
             {
                 Tile tile = new Tile();
@@ -159,7 +165,7 @@ namespace WEditor.Scenario.Editor
             editorCamera.position = new Vector3(center.x, editorCamera.position.y, center.z);
 
             whiteSquare.BoxFill(Vector3Int.zero, CreateTile(gridSprite), 0, 0, width, height);
-            DataHandler.LevelTileSize(width, height);
+            DataHandler.GridSize(width, height);
             GameEvent.instance.EditorEnter();
         }
         public void EraseTile(Vector3 pos)
@@ -201,7 +207,7 @@ namespace WEditor.Scenario.Editor
                 {
                     mainTilemap.SetTile(cellPos, tile);
                 }
-                DataHandler.SetLevelTiles(cellPos.x, cellPos.y, new TileLevelData(cellPos, nameToLower));
+                DataHandler.SetGrid(cellPos.x, cellPos.y, new EditorGridLevelData(cellPos, nameToLower));
             }
         }
         private void HandleCollectibleLocation(Vector3Int cellPos, Tile tile)
@@ -325,7 +331,7 @@ namespace WEditor.Scenario.Editor
             mainTilemap.ClearAllTiles();
             whiteSquare.ClearAllTiles();
             pointerPreview.ClearAllTiles();
-            DataHandler.ClearLevelTiles();
+            DataHandler.ClearGrid();
             Destroy(currentSpawn);
             isSpawnLocated = false;
             whiteSquare.gameObject.SetActive(true);
@@ -337,16 +343,5 @@ namespace WEditor.Scenario.Editor
             DataHandler.currentLevelPosition = spawnPosition;
             scenarioGenerator.InitGeneration(mainTilemap);
         }
-    }
-    public struct TileLevelData
-    {
-        public TileLevelData(Vector3Int position, string tileName)
-        {
-            this.position = position;
-            this.tileName = tileName;
-        }
-        public string tileName { get; private set; }
-        public Vector3Int position { get; private set; }
-
     }
 }

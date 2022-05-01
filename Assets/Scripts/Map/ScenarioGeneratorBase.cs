@@ -8,6 +8,7 @@ namespace WEditor.Scenario
     public class ScenarioGeneratorBase : MonoBehaviour
     {
         [SerializeField] Material groundMaterial;
+        [SerializeField] MeshCombiner meshCombiner;
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallPrefab;
         [SerializeField] protected TextureScenarioScriptable wallScriptable;
@@ -113,7 +114,7 @@ namespace WEditor.Scenario
                 fences.Add(fence.GetComponent<MeshFilter>());
                 objectsGenerated.Add(fence);
             }
-            MeshCombiner.instance.CombineMeshes(fences);
+            meshCombiner.CombineMeshes(fences);
         }
         protected void HandleScoreGeneration(string tileName, Vector3Int cellPos)
         {
@@ -190,7 +191,7 @@ namespace WEditor.Scenario
                 objectsGenerated.Add(wallObject);
             }
 
-            MeshCombiner.instance.CombineMultipleMeshes(wallsToFilter);
+            meshCombiner.CombineMultipleMeshes(wallsToFilter);
         }
         protected void HandleEnemyGeneration(string tileName, Vector3 position)
         {
@@ -298,7 +299,7 @@ namespace WEditor.Scenario
         }
         protected void OnPreviewModeExit()
         {
-            MeshCombiner.instance.DisableTargetCombiner();
+            meshCombiner.DisableTargetCombiner();
         }
     }
 }

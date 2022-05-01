@@ -29,7 +29,7 @@ namespace WEditor
                 BinaryFormatter formatter = new BinaryFormatter();
                 FileStream stream = new FileStream(path, FileMode.Create);
 
-                GameData data = new GameData(levelName, levelSpawn, size, DataHandler.levelTiles);
+                GameData data = new GameData(levelName, levelSpawn, size, DataHandler.grid);
                 formatter.Serialize(stream, data);
                 stream.Close();
                 TextMessageHandler.instance.SetMessage("ss_cc");

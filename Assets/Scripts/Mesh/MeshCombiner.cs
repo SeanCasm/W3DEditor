@@ -6,18 +6,12 @@ namespace WEditor
     public class MeshCombiner : MonoBehaviour
     {
         [SerializeField] GameObject targetCombiner;
-        public static MeshCombiner instance;
         List<GameObject> multipleTargetsCombiner = new List<GameObject>();
-        private void Start()
-        {
-            instance = this;
-        }
         public void DisableTargetCombiner()
         {
             targetCombiner.SetActive(false);
             foreach (var item in multipleTargetsCombiner)
             {
-                print(item.name);
                 Destroy(item);
             }
             multipleTargetsCombiner = new List<GameObject>();

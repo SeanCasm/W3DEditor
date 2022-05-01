@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WEditor.Scenario.Editor;
 
 namespace WEditor
 {
@@ -9,21 +8,23 @@ namespace WEditor
     public class GameData
     {
         public (int x, int z) levelSpawn;
-        public List<(int xpos, int ypos, string tileName)> levelTiles { get; set; } = new List<(int xpos, int ypos, string tileName)>();
+        public string[,] levelTiles { get; private set; }
         public (int x, int y) levelSize;
         public string levelName;
         public int levelID;
-        public GameData(string levelName, Vector3Int levelSpawn, (int w, int h) size, TileLevelData[,] tileData)
+        public GameData(string levelName, Vector3Int levelSpawn, (int w, int h) size, EditorGridLevelData[,] tileData)
         {
             this.levelName = levelName;
             this.levelSpawn.x = levelSpawn.x;
             this.levelSpawn.z = levelSpawn.y;
             this.levelSize = size;
+            levelTiles = new string[size.w, size.h];
             foreach (var item in tileData)
             {
                 if (item.tileName != null)
                 {
-                    levelTiles.Add((item.position.x, item.position.y, item.tileName));
+                    Debug.Log(item);
+                    levelTiles[item.position.x, item.position.y] = item.tileName;
                 }
             }
         }
