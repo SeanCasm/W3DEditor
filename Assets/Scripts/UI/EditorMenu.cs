@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Events;
 using TMPro;
-using WEditor.Scenario.Editor;
 using UnityEngine.Events;
 
 namespace WEditor.UI
@@ -11,7 +10,10 @@ namespace WEditor.UI
     public class EditorMenu : MonoBehaviour
     {
         [SerializeField] TMP_InputField width, height;
-        [SerializeField] UnityEvent onBack;
+        public void Button_LoadMapEditorFromCreate()
+        {
+            SceneHandler.instance.Button_LoadEditorFromCreateOption(int.Parse(width.text), int.Parse(height.text));
+        }
         public void Button_LoadLevels()
         {
             GameEvent.instance.SrollViewEnable();
@@ -24,6 +26,10 @@ namespace WEditor.UI
         {
             SceneHandler.instance.LoadMain();
         }
+        public void Button_BackToPreEditor()
+        {
+            GameEvent.instance.EditorExit();
+        }
         public void Button_BackFromCreate()
         {
             height.text = "";
@@ -32,7 +38,7 @@ namespace WEditor.UI
         public void Button_BackFromEditor()
         {
             GameEvent.instance.EditorExit();
-            onBack.Invoke();
+            SceneHandler.instance.LoadPreMapEditor();
         }
     }
 }

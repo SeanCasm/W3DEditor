@@ -22,7 +22,7 @@ namespace WEditor.Scenario
         }
         private void OnDisable()
         {
-            UnloadScrollViewContent();
+            levelsLoaded.Clear();
             GameEvent.instance.onEditorExit -= ReloadScrollViewContent;
         }
         private void PutIntoContent()
@@ -43,15 +43,16 @@ namespace WEditor.Scenario
                     DataHandler.currentLevelName = levelName;
                     (int x, int z) levelSpawn = newGamedata.levelSpawn;
                     DataHandler.currentLevelPosition = new Vector3(levelSpawn.x, .5f, levelSpawn.z);
-                    GameEditorEvent.instance.OnEditorEnter();
-                    if (loadType == Loader.LoadPlay)
+                    SceneHandler.instance.LoadEditorFromLoadOption(newGamedata);
+                    // GameEditorEvent.instance.OnEditorEnter();
+                    if (loadType == Loader.Play)
                     {
                         SceneHandler.instance.LoadPlayScene(newGamedata);
                     }
                     else
                     {
-                        EditorGrid.instance.Load(newGamedata);
-                        UnloadScrollViewContent();
+                        SceneHandler.instance.LoadEditorFromLoadOption(newGamedata);
+                        levelsLoaded.Clear();
                     }
                 });
                 levelsLoaded.Add(newLevel);
@@ -62,20 +63,12 @@ namespace WEditor.Scenario
         }
         private void ReloadScrollViewContent()
         {
-            UnloadScrollViewContent();
-            PutIntoContent();
-        }
-        public void UnloadScrollViewContent()
-        {
-            for (int i = 0; i < levelsLoaded.Count; i++)
-            {
-                Destroy(levelsLoaded[i]);
-            }
             levelsLoaded.Clear();
+            PutIntoContent();
         }
     }
     public enum Loader
     {
-        LoadPlay, LoadEditor
+        Play, Editor
     }
 }

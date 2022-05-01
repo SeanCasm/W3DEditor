@@ -13,6 +13,10 @@ namespace WEditor.UI
             mainMenu.SetActive(false);
             levelSelectorMenu.SetActive(true);
         }
+        public void Button_LoadPreEditor()
+        {
+            SceneHandler.instance.LoadPreMapEditor();
+        }
         public void BackFromScrollView()
         {
             mainMenu.SetActive(true);

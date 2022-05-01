@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54010e7d5be88bd428a9a27355cd8349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.4
+  speed: 0.186
   tileCheckDistance: 4
   distanceToAttack: 1
 --- !u!114 &952185697298849953
@@ -131,6 +131,9 @@ MonoBehaviour:
   - {fileID: -2404668892193936260, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
   - {fileID: 4257719705413324003, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
   - {fileID: 5684332678144762097, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
+  walkingSpritesBackLeft: []
+  walkingSpritesBackRight: []
+  walkingSpritesBack: []
 --- !u!1 &5658520618132202023
 GameObject:
   m_ObjectHideFlags: 0

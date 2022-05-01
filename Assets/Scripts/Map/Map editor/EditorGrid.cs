@@ -29,8 +29,6 @@ namespace WEditor.Scenario.Editor
         private Vector3 spawnPosition;
         private int width, height;
         public string levelName { get; set; } = "";
-        public string widthString { get; set; }
-        public string heightString { get; set; }
         public Vector3 center { get => new Vector3((float)width / 2, 0, (float)height / 2); }
         private void Start()
         {
@@ -133,10 +131,10 @@ namespace WEditor.Scenario.Editor
             loadScreen.SetActive(false);
 
         }
-        public void Create()
+        public void Create(int width, int height)
         {
-            width = int.Parse(widthString);
-            height = int.Parse(heightString);
+            this.width = width;
+            this.height = height;
 
             if (width <= 0 || height <= 0)
             {

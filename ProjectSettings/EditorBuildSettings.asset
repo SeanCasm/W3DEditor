@@ -9,10 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: dcba6b1cfd39b24418f70f86e276fe5a
   - enabled: 1
-    path: Assets/Scenes/MapEditor.unity
+    path: Assets/Scenes/Pre-MapEditor.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Play.unity
     guid: 011098a02dfdeee4abe720fdf97c37b9
+  - enabled: 1
+    path: Assets/Scenes/MapEditor.unity
+    guid: 84fdabbab193c6c4c871d3caaababa70
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c4febe0dc71482149b9fca5cfb8bf366, type: 2}

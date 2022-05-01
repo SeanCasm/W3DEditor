@@ -12,7 +12,7 @@ namespace WEditor.Game.Enemy
         private Animator animator;
         private float currentSpeed;
         private bool isDead, isInvisible;
-        private Vector3 directionToPlayer { get => (PlayerGlobalReference.instance.position - localCenter).normalized; }
+        private Vector3 playerDirection { get => (PlayerGlobalReference.instance.position - localCenter).normalized; }
         private Vector3 playerPosition { get => PlayerGlobalReference.instance.position; }
         private Vector3 localCenter { get => spriteRenderer.bounds.center; }
         private Rigidbody rigid;
@@ -21,6 +21,7 @@ namespace WEditor.Game.Enemy
         private SpriteLook spriteLook;
         int groundLayer = 6;
         int playerLayer = 7;
+        private float angle;
 
         private MovementBehaviour eBehaviour = MovementBehaviour.Patrolling;
         void Start()
@@ -38,17 +39,20 @@ namespace WEditor.Game.Enemy
 
             if (!isDead)
             {
+                angle = Vector3.SignedAngle(playerDirection, transform.forward, Vector3.up);
+                print(angle);
                 CheckBehaviour();
                 switch (eBehaviour)
                 {
                     case MovementBehaviour.FollowPlayer:
                         currentSpeed = speed;
+                        spriteRenderer.transform.eulerAngles = Vector3.zero;
                         MoveBetweenPath();
                         break;
                     case MovementBehaviour.Attacking:
                         currentSpeed = 0;
                         rigid.velocity = Vector3.zero;
-                        // FollowCamera();
+                        FollowCamera();
                         break;
                 }
             }
@@ -58,14 +62,14 @@ namespace WEditor.Game.Enemy
         {
             int layerMaskCombined = (1 << groundLayer) | (1 << playerLayer);
 
-            RaycastHit[] raycastHit = Physics.RaycastAll(localCenter, directionToPlayer,
+            RaycastHit[] raycastHit = Physics.RaycastAll(localCenter, playerDirection,
             Vector3.Distance(localCenter, playerPosition), layerMaskCombined);
 
             // Debug.DrawRay(localCenter, directionToPlayer * Vector3.Distance(localCenter, playerPosition), Color.cyan);
             switch (raycastHit[0].collider.tag)
             {
                 case "Ground":
-                    Debug.DrawRay(localCenter, directionToPlayer * tileCheckDistance, Color.red);
+                    Debug.DrawRay(localCenter, playerDirection * tileCheckDistance, Color.red);
 
                     if (raycastHit[0].transform.gameObject.name.Contains("door"))
                     {
@@ -82,7 +86,7 @@ namespace WEditor.Game.Enemy
                     break;
                 case "Player":
                     float playerDistance = Vector3.Distance(localCenter, playerPosition);
-                    Debug.DrawRay(localCenter, directionToPlayer * playerDistance, Color.green);
+                    Debug.DrawRay(localCenter, playerDirection * playerDistance, Color.green);
                     if (playerDistance <= distanceToAttack)
                     {
                         eBehaviour = MovementBehaviour.Attacking;
@@ -97,14 +101,14 @@ namespace WEditor.Game.Enemy
         }
         private void HandleSpriteLook()
         {
-            
+
         }
         private void FollowCamera()
         {
             if (!isInvisible)
             {
-                transform.LookAt(playerPosition, Vector3.up);
-                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                spriteRenderer.transform.LookAt(playerPosition, Vector3.up);
+                spriteRenderer.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
             }
         }
         void MoveBetweenPath()
@@ -131,6 +135,9 @@ namespace WEditor.Game.Enemy
         {
             if (!isDead)
             {
+                if (eBehaviour == MovementBehaviour.FollowPlayer)
+                    spriteLook.SwapSpriteWhenFollowingPlayer(angle, animator, spriteRenderer);
+
                 animator.SetBool("isAttacking", eBehaviour == MovementBehaviour.Attacking);
                 // animator.SetBool("idle", eBehaviour == EnemyBehaviour.Idle);
                 animator.SetBool("isWalking", eBehaviour == MovementBehaviour.FollowPlayer);
