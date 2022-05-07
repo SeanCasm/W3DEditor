@@ -32,8 +32,7 @@ namespace WEditor.Scenario.Editor
                     {
                         mainGrid[x, y] = true;
                         TileBase tile = mainTilemap.GetTile(pos);
-                        string tileName = tile.name.ToLower();
-                        base.HandleTilesLocation(tileName, pos, doors, walls);
+                        base.HandleTilesLocation(tile.name, pos, doors, walls);
                     }
                 }
             }

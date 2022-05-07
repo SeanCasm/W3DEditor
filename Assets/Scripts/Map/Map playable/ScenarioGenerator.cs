@@ -17,7 +17,6 @@ namespace WEditor.Scenario.Playable
             List<(string tileName, Vector3Int cellPos)> walls = new List<(string, Vector3Int)>();
 
             DataHandler.GridSize(size.x, size.y);
-
             for (int x = 0; x < size.x; x++)
             {
                 for (int y = 0; y < size.y; y++)

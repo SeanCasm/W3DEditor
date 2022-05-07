@@ -21,9 +21,9 @@ namespace WEditor
             levelTiles = new string[size.w, size.h];
             foreach (var item in tileData)
             {
-                if (item.tileName != null)
+                if (item != null)
                 {
-                    Debug.Log(item);
+                    Debug.Log(item.tileName);
                     levelTiles[item.position.x, item.position.y] = item.tileName;
                 }
             }

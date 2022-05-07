@@ -19,7 +19,6 @@ namespace WEditor.Scenario
         [Header("Prop generation")]
         [SerializeField] GameObject propPrefab;
         [SerializeField] protected ScenarioScriptable propsDefaultSprites, propsTopSprites;
-        [SerializeField] protected float propXOffset, propYOffset, propZOffset;
         [Header("Collectible generation")]
         [SerializeField] List<CollectibleScriptable> healthScriptables, ammoScriptables, scoreScriptables;
         [Header("Enemy generation")]
@@ -31,35 +30,36 @@ namespace WEditor.Scenario
         protected GameObject groundPlane;
         protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<(Vector3Int, string)> doors, List<(string tileName, Vector3Int cellPos)> walls)
         {
+            Vector3 position = new Vector3(cellPos.x, 0, cellPos.y);
             if (tileName.Contains("top"))
             {
-                HandlePropGeneration(tileName, cellPos);
+                HandlePropGeneration(tileName, position);
             }
-            else if (tileName.Contains("wall"))
+            else if (tileName.Contains("Wall"))
             {
                 walls.Add((tileName, cellPos));
             }
-            else if (tileName.Contains("prop"))
+            else if (tileName.Contains("Prop"))
             {
-                HandlePropGeneration(tileName, cellPos);
+                HandlePropGeneration(tileName, position);
             }
-            else if (tileName.Contains("door"))
+            else if (tileName.Contains("Door"))
             {
                 doors.Add((cellPos, tileName));
             }
-            else if (tileName.Contains("health"))
+            else if (tileName.Contains("Health"))
             {
                 HandleHealthGeneration(tileName, cellPos);
             }
-            else if (tileName.Contains("ammo"))
+            else if (tileName.Contains("Ammo"))
             {
                 HandleAmmoGeneration(tileName, cellPos);
             }
-            else if (tileName.StartsWith("guard") || tileName.StartsWith("ss"))
+            else if (tileName.StartsWith("Guard") || tileName.StartsWith("SS"))
             {
-                HandleEnemyGeneration(tileName, new Vector3(cellPos.x, 0, cellPos.y));
+                HandleEnemyGeneration(tileName, position);
             }
-            else if (tileName.StartsWith("score"))
+            else if (tileName.StartsWith("Score"))
             {
                 HandleScoreGeneration(tileName, cellPos);
             }
@@ -196,7 +196,7 @@ namespace WEditor.Scenario
         protected void HandleEnemyGeneration(string tileName, Vector3 position)
         {
             position = new Vector3(position.x + .5f, position.y, position.z + .5f);
-            GameObject enemy = tileName.StartsWith("guard") ? Instantiate(guardPrefab) : Instantiate(ssPrefab);
+            GameObject enemy = tileName.StartsWith("Guard") ? Instantiate(guardPrefab) : Instantiate(ssPrefab);
             enemy.transform.position = position;
             objectsGenerated.Add(enemy);
         }
@@ -276,9 +276,6 @@ namespace WEditor.Scenario
 
             SpriteRenderer spriteRenderer = propObject.GetComponentInChildren<SpriteRenderer>();
 
-            spriteRenderer.sprite = tileName.Contains("top") ?
-            propsTopSprites.GetSprite(tileName) :
-            propsDefaultSprites.GetSprite(tileName);
 
             //setup the collision for this prop
             if (tileName.EndsWith("c"))
@@ -288,9 +285,16 @@ namespace WEditor.Scenario
                 propRigid.constraints = RigidbodyConstraints.FreezeAll;
                 propObject.AddComponent<BoxCollider>();
             }
-            position = tileName.Contains("top") ?
-            new Vector3(position.x + propXOffset, .5f, position.z + propZOffset) :
-            new Vector3(position.x + propXOffset, position.y + propYOffset, position.z + propZOffset);
+            if (tileName.Contains("top"))
+            {
+                spriteRenderer.sprite = propsTopSprites.GetSprite(tileName);
+                position = new Vector3(position.x + .5f, 1 - spriteRenderer.sprite.bounds.max.y, position.z + .5f);
+            }
+            else
+            {
+                spriteRenderer.sprite = propsDefaultSprites.GetSprite(tileName);
+                position = new Vector3(position.x + .5f, spriteRenderer.sprite.bounds.max.y, position.z + .5f);
+            }
 
             //fix the tile center pivot
             propObject.transform.position = position;

@@ -9207,8 +9207,8 @@ MonoBehaviour:
   props: {fileID: 11400000, guid: 7c844186d540d4147b11d9f4f564e6e2, type: 2}
   propsTop: {fileID: 11400000, guid: 657d8e0d17373fc44a9ac2597bc913b9, type: 2}
   health: {fileID: 11400000, guid: 9f36e99471a47184bb3e41cd310b91ff, type: 2}
-  score: {fileID: 0}
-  ammo: {fileID: 0}
+  score: {fileID: 11400000, guid: 62d4e101c294b3b4087d3e4ca1904686, type: 2}
+  ammo: {fileID: 11400000, guid: 80885fc6944f5c7478a5ae407f39cf63, type: 2}
   enemies:
   - {fileID: 11400000, guid: e1d2328b361a7144bac1595c101b116f, type: 2}
   - {fileID: 11400000, guid: c26fb1301cdc9c645a2cd6320bb6a659, type: 2}

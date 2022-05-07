@@ -7,13 +7,13 @@ TextureImporter:
     second: c-Props-top_0
   - first:
       213: 2855734495882653383
-    second: c-Props-top_3
+    second: c-Props-top_1
   - first:
       213: 8430051116552450063
-    second: c-Props-top_4
+    second: c-Props-top_2
   - first:
       213: -2062634973810387478
-    second: Props-top_5
+    second: Props-top_3
   - first:
       213: -8719159019531532211
     second: Props-top_6
@@ -22,16 +22,16 @@ TextureImporter:
     second: Props-top_7
   - first:
       213: 7648073941143849908
-    second: Props-top_8
+    second: Props-top_5
   - first:
       213: 5014545771349230519
-    second: c-Props-top_9
+    second: c-Props-top_7
   - first:
       213: 4175932663735230419
-    second: Props-top_10
+    second: Props-top_4
   - first:
       213: -1858612739325374522
-    second: Props-top_11
+    second: Props-top_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -109,7 +109,7 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -121,7 +121,7 @@ TextureImporter:
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -140,8 +140,8 @@ TextureImporter:
         y: 16
         width: 61
         height: 64
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -154,15 +154,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c-Props-top_3
+      name: c-Props-top_1
       rect:
         serializedVersion: 2
         x: 80
         y: 16
         width: 31
         height: 64
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -175,15 +175,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c-Props-top_4
+      name: c-Props-top_2
       rect:
         serializedVersion: 2
         x: 122
         y: 16
         width: 30
         height: 64
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -196,15 +196,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-top_5
+      name: Props-top_3
       rect:
         serializedVersion: 2
         x: 163
         y: 56
         width: 51
         height: 24
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -217,15 +217,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-top_8
+      name: Props-top_5
       rect:
         serializedVersion: 2
         x: 225
         y: 52
         width: 61
         height: 28
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -238,15 +238,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c-Props-top_9
+      name: c-Props-top_7
       rect:
         serializedVersion: 2
         x: 297
         y: 16
         width: 23
         height: 64
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -259,15 +259,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-top_10
+      name: Props-top_4
       rect:
         serializedVersion: 2
         x: 179
         y: 20
         width: 26
         height: 19
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -280,15 +280,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-top_11
+      name: Props-top_6
       rect:
         serializedVersion: 2
         x: 246
         y: 29
         width: 19
         height: 10
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
