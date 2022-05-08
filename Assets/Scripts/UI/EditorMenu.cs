@@ -16,11 +16,11 @@ namespace WEditor.UI
         }
         public void Button_LoadLevels()
         {
-            GameEvent.instance.SrollViewEnable();
+            EditorEvent.instance.SrollViewEnable();
         }
         public void BackFromScrollView()
         {
-            GameEvent.instance.SrollViewDisable();
+            EditorEvent.instance.SrollViewDisable();
         }
         public void Button_BackToMainMenu()
         {
@@ -28,7 +28,7 @@ namespace WEditor.UI
         }
         public void Button_BackToPreEditor()
         {
-            GameEvent.instance.EditorExit();
+            EditorEvent.instance.EditorExit();
         }
         public void Button_BackFromCreate()
         {
@@ -37,7 +37,7 @@ namespace WEditor.UI
         }
         public void Button_BackFromEditor()
         {
-            GameEvent.instance.EditorExit();
+            EditorEvent.instance.EditorExit();
             SceneHandler.instance.LoadPreMapEditor();
         }
     }

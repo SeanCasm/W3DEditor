@@ -29,6 +29,10 @@ namespace WEditor.Scenario.Editor
         private Vector3 spawnPosition;
         private int width, height;
         public string levelName { get; set; } = "";
+        private bool HasTile(Vector3Int cellPos)
+        {
+            return mainTilemap.HasTile(cellPos);
+        }
         public Vector3 center { get => new Vector3((float)width / 2, 0, (float)height / 2); }
         private void Start()
         {
@@ -37,15 +41,15 @@ namespace WEditor.Scenario.Editor
         }
         private void OnEnable()
         {
-            GameEvent.instance.onEditorExit += Clear;
-            GameEvent.instance.onPreviewModeEnter += PreviewEnter;
-            GameEvent.instance.onPreviewModeExit += PreviewExit;
+            EditorEvent.instance.onEditorExit += Clear;
+            EditorEvent.instance.onPreviewModeEnter += PreviewEnter;
+            EditorEvent.instance.onPreviewModeExit += PreviewExit;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onEditorExit -= Clear;
-            GameEvent.instance.onPreviewModeEnter -= PreviewEnter;
-            GameEvent.instance.onPreviewModeExit -= PreviewExit;
+            EditorEvent.instance.onEditorExit -= Clear;
+            EditorEvent.instance.onPreviewModeEnter -= PreviewEnter;
+            EditorEvent.instance.onPreviewModeExit -= PreviewExit;
         }
         public void Button_Save()
         {
@@ -72,7 +76,7 @@ namespace WEditor.Scenario.Editor
             width = gameData.levelSize.x;
             height = gameData.levelSize.y;
 
-            DataHandler.GridSize(width, height);
+            DataHandler.GridSize(new Vector3Int(width, height, 0));
             levelName = gameData.levelName;
             levelNameInputField.text = levelName;
             List<(int, int, string)> doors = new List<(int, int, string)>();
@@ -170,14 +174,32 @@ namespace WEditor.Scenario.Editor
             editorCamera.position = new Vector3(center.x, editorCamera.position.y, center.z);
 
             whiteSquare.BoxFill(Vector3Int.zero, CreateTile(gridSprite), 0, 0, width, height);
-            DataHandler.GridSize(width, height);
-            GameEvent.instance.EditorEnter();
+            DataHandler.GridSize(new Vector3Int(width, height, 0));
+            EditorEvent.instance.EditorEnter();
         }
         public void EraseTile(Vector3 pos)
         {
             Vector3Int cellPos = mainTilemap.WorldToCell(pos);
-            DataHandler.SetGrid(cellPos.x, cellPos.y, null);
+            DataHandler.SetGrid(cellPos, null);
+            TileBase tileToErase = mainTilemap.GetTile(cellPos);
+            if (tileToErase.name.Contains("Wall"))
+            {
+                EraseDoorTile(cellPos.GetLeft());
+                EraseDoorTile(cellPos.GetRight());
+                EraseDoorTile(cellPos.GetBottom());
+                EraseDoorTile(cellPos.GetTop());
+            }
             mainTilemap.SetTile(cellPos, null);
+
+            void EraseDoorTile(Vector3Int cellPos)
+            {
+                if (HasTile(cellPos) && mainTilemap.GetTile(cellPos).name.Contains("Door"))
+                {
+                    mainTilemap.SetTile(cellPos, null);
+                    DataHandler.SetGrid(cellPos, null);
+                    return;
+                }
+            }
         }
         public void SetTile(Vector3Int cellPos, Tile tile)
         {
@@ -212,12 +234,12 @@ namespace WEditor.Scenario.Editor
                 {
                     mainTilemap.SetTile(cellPos, tile);
                 }
-                DataHandler.SetGrid(cellPos.x, cellPos.y, new EditorGridLevelData(cellPos, tile.name));
+                DataHandler.SetGrid(cellPos, new EditorGridLevelData(cellPos, tile.name));
             }
         }
         private void HandleCollectibleLocation(Vector3Int cellPos, Tile tile)
         {
-            bool hasTile = mainTilemap.HasTile(cellPos);
+            bool hasTile = HasTile(cellPos);
             string tilePlacedName = hasTile ? mainTilemap.GetTile(cellPos).name : "n";
             if (hasTile && tilePlacedName.Contains("Door") || tilePlacedName.Contains("Wall"))
             {
@@ -229,7 +251,7 @@ namespace WEditor.Scenario.Editor
         public void SetSpawnObject(Vector3 pos)
         {
             Vector3Int cellPos = mainTilemap.WorldToCell(pos);
-            string tileName = mainTilemap.HasTile(cellPos) ? mainTilemap.GetTile(cellPos).name : "non";
+            string tileName = HasTile(cellPos) ? mainTilemap.GetTile(cellPos).name : "non";
             //spawn point
             if (tileName != "non")
             {
@@ -284,7 +306,7 @@ namespace WEditor.Scenario.Editor
 
         private void HandlePropLocation(Vector3Int cellPos, Tile tile)
         {
-            if (mainTilemap.HasTile(cellPos))
+            if (HasTile(cellPos) && (tile.name.Contains("Wall") || tile.name.Contains("Door")))
             {
                 TextMessageHandler.instance.SetError("pp_ll");
                 return;
@@ -297,12 +319,12 @@ namespace WEditor.Scenario.Editor
             //Gets top and bottom tiles position in tilemap
 
             //Checks top and bottom tiles
-            TileBase topTile = mainTilemap.GetTile(cellPos.GetTopTile());
-            TileBase bottomTile = mainTilemap.GetTile(cellPos.GetBottomTile());
+            TileBase topTile = mainTilemap.GetTile(cellPos.GetTop());
+            TileBase bottomTile = mainTilemap.GetTile(cellPos.GetBottom());
 
             //Checks left and right tiles
-            TileBase leftTile = mainTilemap.GetTile(cellPos.GetLeftTile());
-            TileBase rightTile = mainTilemap.GetTile(cellPos.GetRightTile());
+            TileBase leftTile = mainTilemap.GetTile(cellPos.GetLeft());
+            TileBase rightTile = mainTilemap.GetTile(cellPos.GetRight());
 
             if ((topTile != null && bottomTile != null &&
                  topTile.name.StartsWith("Wall") && bottomTile.name.StartsWith("Wall")) ||

@@ -11,11 +11,11 @@ namespace WEditor.UI
         [SerializeField] GameObject itemPanel;
         private void OnEnable()
         {
-            GameEvent.instance.onEditorInventoryActiveChanged += OnInventaryActiveChanged;
+            EditorEvent.instance.onEditorInventoryActiveChanged += OnInventaryActiveChanged;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onEditorInventoryActiveChanged -= OnInventaryActiveChanged;
+            EditorEvent.instance.onEditorInventoryActiveChanged -= OnInventaryActiveChanged;
         }
 
         private void OnInventaryActiveChanged()

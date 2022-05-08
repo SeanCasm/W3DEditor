@@ -22,13 +22,13 @@ namespace WEditor.UI
             changeActiveState.Invoke(false);
             previewUI.SetActive(true);
             editorPanel.SetActive(false);
-            GameEvent.instance.PreviewModeEnter();
+            EditorEvent.instance.PreviewModeEnter();
         }
         public void OnEdit()
         {
             changeActiveState.Invoke(true);
             previewUI.SetActive(false);
-            GameEvent.instance.PreviewModeExit();
+            EditorEvent.instance.PreviewModeExit();
         }
     }
 }

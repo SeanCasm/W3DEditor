@@ -34,10 +34,10 @@ namespace WEditor.Game
 
             Vector3Int cellPos = new Vector3Int(node.gridX, node.gridY, 0);
 
-            Vector3Int topTile = cellPos.GetTopTile();
-            Vector3Int bottomTile = cellPos.GetBottomTile();
-            Vector3Int rightTile = cellPos.GetRightTile();
-            Vector3Int leftTile = cellPos.GetLeftTile();
+            Vector3Int topTile = cellPos.GetTop();
+            Vector3Int bottomTile = cellPos.GetBottom();
+            Vector3Int rightTile = cellPos.GetRight();
+            Vector3Int leftTile = cellPos.GetLeft();
 
             if (IsInsideGrid(topTile))
                 neighbours.Add(grid[topTile.x, topTile.y]);

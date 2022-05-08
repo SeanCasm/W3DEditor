@@ -51,7 +51,7 @@ public class SceneHandler : MonoBehaviour
     {
         WEditor.Scenario.Playable.ScenarioGenerator scenarioGenerator = GameObject.FindObjectOfType<WEditor.Scenario.Playable.ScenarioGenerator>();
         scenarioGenerator.InitGeneration(gameData);
-        GameEvent.instance.PlayModeEnter();
+        EditorEvent.instance.PlayModeEnter();
     }
     private void EditorLoadCompleteCreate(AsyncOperation op)
     {

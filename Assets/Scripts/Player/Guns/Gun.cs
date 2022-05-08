@@ -25,7 +25,7 @@ namespace WEditor.Game.Player.Guns
         }
         private void OnEnable()
         {
-            GameEvent.instance.AmmoChanged(currentAmmo);
+            GameplayEvent.instance.AmmoChanged(currentAmmo);
         }
         private void OnDisable()
         {
@@ -75,7 +75,7 @@ namespace WEditor.Game.Player.Guns
             if (currentAmmo == 0) return;
 
             currentAmmo--;
-            GameEvent.instance.AmmoChanged(currentAmmo);
+            GameplayEvent.instance.AmmoChanged(currentAmmo);
             ShootRay();
             isShooting = true;
             animator.SetTrigger("Shoot");

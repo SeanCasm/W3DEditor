@@ -36,7 +36,7 @@ namespace WEditor.Game.Enemy
             enemyAI.OnDeath();
             isDead = true;
             healthBox.enabled = false;
-            GameEvent.instance.ScoreChanged(score);
+            GameplayEvent.instance.ScoreChanged(score);
             enabled = false;
         }
     }

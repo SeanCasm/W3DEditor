@@ -18,9 +18,9 @@ namespace WEditor.Game.Player
             currentHealth = maxHealth;
             currentLives = initialLives;
 
-            GameEvent.instance.ArmourhChanged(currentArmour);
-            GameEvent.instance.HealthChanged(currentHealth);
-            GameEvent.instance.LivesChanged(currentLives);
+            GameplayEvent.instance.ArmourhChanged(currentArmour);
+            GameplayEvent.instance.HealthChanged(currentHealth);
+            GameplayEvent.instance.LivesChanged(currentLives);
         }
         public void Add(int amount)
         {
@@ -33,7 +33,7 @@ namespace WEditor.Game.Player
             if (currentHealth > maxHealth) currentHealth = maxHealth;
 
 
-            GameEvent.instance.HealthChanged(currentHealth);
+            GameplayEvent.instance.HealthChanged(currentHealth);
         }
         public void AddArmour(int amount)
         {
@@ -44,7 +44,7 @@ namespace WEditor.Game.Player
 
             currentArmour += amount;
             if (currentArmour > maxArmour) currentArmour = maxArmour;
-            GameEvent.instance.ArmourhChanged(currentArmour);
+            GameplayEvent.instance.ArmourhChanged(currentArmour);
         }
         public override void Take(int amount)
         {
@@ -52,7 +52,7 @@ namespace WEditor.Game.Player
 
             currentHealth -= amount;
             if (currentHealth < 0) currentHealth = 0;
-            GameEvent.instance.HealthChanged(currentHealth);
+            GameplayEvent.instance.HealthChanged(currentHealth);
 
             if (currentHealth <= 0)
             {

@@ -9,17 +9,17 @@ namespace WEditor
         public static Vector3 currentLevelPosition { get; set; }
         public static string currentLevelName { get; set; }
         public static Vector2Int levelSize { get => new Vector2Int(grid.GetLength(0), grid.GetLength(1)); }
-        public static void SetGrid(int dimension, int dimension2, EditorGridLevelData data)
+        public static void SetGrid(Vector3Int dimension, EditorGridLevelData data)
         {
-            grid[dimension, dimension2] = data;
+            grid[dimension.x, dimension.y] = data;
         }
         public static void ClearGrid()
         {
             grid = new EditorGridLevelData[0, 0];
         }
-        public static void GridSize(int dimension, int dimension2)
+        public static void GridSize(Vector3Int dimension)
         {
-            grid = new EditorGridLevelData[dimension, dimension2];
+            grid = new EditorGridLevelData[dimension.x, dimension.y];
         }
     }
     public class EditorGridLevelData

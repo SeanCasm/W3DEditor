@@ -12,17 +12,17 @@ namespace WEditor.Game.UI
 
         private void OnEnable()
         {
-            GameEvent.instance.onAmmoChanged += OnAmmoChanged;
-            GameEvent.instance.onScoreChanged += OnScoreChanged;
-            GameEvent.instance.onLivesChanged += OnLivesChanged;
-            GameEvent.instance.onHealthChanged += OnHealthChanged;
+            GameplayEvent.instance.onAmmoChanged += OnAmmoChanged;
+            GameplayEvent.instance.onScoreChanged += OnScoreChanged;
+            GameplayEvent.instance.onLivesChanged += OnLivesChanged;
+            GameplayEvent.instance.onHealthChanged += OnHealthChanged;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onAmmoChanged -= OnAmmoChanged;
-            GameEvent.instance.onScoreChanged -= OnScoreChanged;
-            GameEvent.instance.onLivesChanged -= OnLivesChanged;
-            GameEvent.instance.onHealthChanged -= OnHealthChanged;
+            GameplayEvent.instance.onAmmoChanged -= OnAmmoChanged;
+            GameplayEvent.instance.onScoreChanged -= OnScoreChanged;
+            GameplayEvent.instance.onLivesChanged -= OnLivesChanged;
+            GameplayEvent.instance.onHealthChanged -= OnHealthChanged;
         }
         private void OnAmmoChanged(int amount)
         {

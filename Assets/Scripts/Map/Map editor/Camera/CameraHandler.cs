@@ -11,13 +11,13 @@ namespace WEditor.CameraUtils
         [SerializeField] GameObject player;
         private void OnEnable()
         {
-            GameEvent.instance.onPreviewModeEnter += OnPreviewModeEnter;
-            GameEvent.instance.onPreviewModeExit += OnPreviewModeExit;
+            EditorEvent.instance.onPreviewModeEnter += OnPreviewModeEnter;
+            EditorEvent.instance.onPreviewModeExit += OnPreviewModeExit;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onPreviewModeEnter -= OnPreviewModeEnter;
-            GameEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
+            EditorEvent.instance.onPreviewModeEnter -= OnPreviewModeEnter;
+            EditorEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
         }
         private void OnPreviewModeEnter()
         {

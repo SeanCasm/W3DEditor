@@ -9,7 +9,7 @@ namespace WEditor.UI
         [SerializeField] GameObject mainMenu, levelSelectorMenu;
         public void Button_PlayLevels()
         {
-            GameEvent.instance.SrollViewEnable();
+            EditorEvent.instance.SrollViewEnable();
             mainMenu.SetActive(false);
             levelSelectorMenu.SetActive(true);
         }
@@ -21,7 +21,7 @@ namespace WEditor.UI
         {
             mainMenu.SetActive(true);
             levelSelectorMenu.SetActive(false);
-            GameEvent.instance.SrollViewDisable();
+            EditorEvent.instance.SrollViewDisable();
         }
         public void Button_Exit()
         {

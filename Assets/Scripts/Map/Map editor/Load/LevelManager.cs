@@ -17,13 +17,13 @@ namespace WEditor.Scenario
         private List<GameObject> levelsLoaded = new List<GameObject>();
         private void OnEnable()
         {
-            GameEvent.instance.onEditorExit += ReloadScrollViewContent;
+            EditorEvent.instance.onEditorExit += ReloadScrollViewContent;
             PutIntoContent();
         }
         private void OnDisable()
         {
             levelsLoaded.Clear();
-            GameEvent.instance.onEditorExit -= ReloadScrollViewContent;
+            EditorEvent.instance.onEditorExit -= ReloadScrollViewContent;
         }
         private void PutIntoContent()
         {

@@ -14,17 +14,17 @@ namespace WEditor.UI
         private ActualMenu menuEnable = ActualMenu.None;
         private void OnEnable()
         {
-            GameEvent.instance.onPreviewModeEnter += EnableInput;
-            GameEvent.instance.onPreviewModeExit += DisableInput;
-            GameEvent.instance.onPlayModeEnter += EnableInput;
-            GameEvent.instance.onPlayModeExit += DisableInput;
+            EditorEvent.instance.onPreviewModeEnter += EnableInput;
+            EditorEvent.instance.onPreviewModeExit += DisableInput;
+            EditorEvent.instance.onPlayModeEnter += EnableInput;
+            EditorEvent.instance.onPlayModeExit += DisableInput;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onPreviewModeEnter -= EnableInput;
-            GameEvent.instance.onPreviewModeExit -= DisableInput;
-            GameEvent.instance.onPlayModeEnter -= EnableInput;
-            GameEvent.instance.onPlayModeExit -= DisableInput;
+            EditorEvent.instance.onPreviewModeEnter -= EnableInput;
+            EditorEvent.instance.onPreviewModeExit -= DisableInput;
+            EditorEvent.instance.onPlayModeEnter -= EnableInput;
+            EditorEvent.instance.onPlayModeExit -= DisableInput;
         }
         private void EnableInput()
         {
@@ -78,12 +78,12 @@ namespace WEditor.UI
         public void Button_Exit()
         {
             pauseUI.SetActive(false);
-            GameEvent.instance.PreviewModeExit();
+            EditorEvent.instance.PreviewModeExit();
             Time.timeScale = 1;
         }
         public void Button_ExitPlayMode()
         {
-            GameEvent.instance.PlayModeExit();
+            EditorEvent.instance.PlayModeExit();
             SceneHandler.instance.LoadMain();
             Time.timeScale = 1;
         }

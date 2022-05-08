@@ -10,11 +10,11 @@ namespace WEditor.Scenario.Editor
     {
         private void OnEnable()
         {
-            GameEvent.instance.onPreviewModeExit += OnPreviewModeExit;
+            EditorEvent.instance.onPreviewModeExit += OnPreviewModeExit;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
+            EditorEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
         }
         public void InitGeneration(Tilemap mainTilemap)
         {

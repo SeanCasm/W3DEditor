@@ -17,7 +17,7 @@ namespace WEditor.Game.Collectibles
         }
         private void PlayerEnter()
         {
-            GameEvent.instance.ScoreChanged(amount);
+            GameplayEvent.instance.ScoreChanged(amount);
         }
     }
 }

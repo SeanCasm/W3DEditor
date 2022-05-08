@@ -28,17 +28,17 @@ namespace WEditor.Input
         private Vector3 worldPosition;
         private void OnEnable()
         {
-            GameEvent.instance.onEditorEnter += OnMouseEnabled;
-            GameEvent.instance.onPreviewModeEnter += OnMouseDisabled;
-            GameEvent.instance.onEditorExit += OnMouseDisabled;
-            GameEvent.instance.onPreviewModeExit += OnMouseEnabled;
+            EditorEvent.instance.onEditorEnter += OnMouseEnabled;
+            EditorEvent.instance.onPreviewModeEnter += OnMouseDisabled;
+            EditorEvent.instance.onEditorExit += OnMouseDisabled;
+            EditorEvent.instance.onPreviewModeExit += OnMouseEnabled;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onPreviewModeEnter -= OnMouseDisabled;
-            GameEvent.instance.onPreviewModeExit -= OnMouseEnabled;
-            GameEvent.instance.onEditorExit -= OnMouseDisabled;
-            GameEvent.instance.onEditorEnter -= OnMouseEnabled;
+            EditorEvent.instance.onPreviewModeEnter -= OnMouseDisabled;
+            EditorEvent.instance.onPreviewModeExit -= OnMouseEnabled;
+            EditorEvent.instance.onEditorExit -= OnMouseDisabled;
+            EditorEvent.instance.onEditorEnter -= OnMouseEnabled;
         }
         private void Start()
         {
@@ -124,7 +124,7 @@ namespace WEditor.Input
         {
             if (context.started)
             {
-                GameEvent.instance.EditorInventoryActiveChanged();
+                EditorEvent.instance.EditorInventoryActiveChanged();
             }
         }
 

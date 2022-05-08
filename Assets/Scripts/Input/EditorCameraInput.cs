@@ -11,13 +11,13 @@ namespace WEditor.Input
         private WInput wInput;
         private void OnEnable()
         {
-            GameEvent.instance.onPreviewModeEnter += OnPreviewMode;
-            GameEvent.instance.onPreviewModeExit += OnEditorMode;
+            EditorEvent.instance.onPreviewModeEnter += OnPreviewMode;
+            EditorEvent.instance.onPreviewModeExit += OnEditorMode;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onPreviewModeEnter -= OnPreviewMode;
-            GameEvent.instance.onPreviewModeExit -= OnEditorMode;
+            EditorEvent.instance.onPreviewModeEnter -= OnPreviewMode;
+            EditorEvent.instance.onPreviewModeExit -= OnEditorMode;
         }
         private void Start()
         {

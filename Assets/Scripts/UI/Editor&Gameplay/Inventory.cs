@@ -33,15 +33,15 @@ namespace WEditor.UI
         }
         private void OnEnable()
         {
-            GameEvent.instance.onEditorInventorySelected += OnSelected;
+            EditorEvent.instance.onEditorInventorySelected += OnSelected;
         }
         private void OnDisable()
         {
-            GameEvent.instance.onEditorInventorySelected -= OnSelected;
+            EditorEvent.instance.onEditorInventorySelected -= OnSelected;
         }
         public void Button_OnSelectedItem()
         {
-            GameEvent.instance.EditorInventorySelected(id);
+            EditorEvent.instance.EditorInventorySelected(id);
         }
         public void SetItemSpriteToMousePointer(Sprite sprite)
         {

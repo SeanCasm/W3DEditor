@@ -5,10 +5,10 @@ using System;
 
 namespace WEditor.Events
 {
-    public class GameEvent : MonoBehaviour
+    public class EditorEvent : MonoBehaviour
     {
-        public static GameEvent instance;
-        private void Awake()
+        public static EditorEvent instance;
+        private void OnEnable()
         {
             if (instance == null)
             {
@@ -26,7 +26,6 @@ namespace WEditor.Events
         public event Action onPlayModeEnter, onPlayModeExit;
         public event Action onEditorInventoryActiveChanged;
         public event Action<int> onEditorInventorySelected;
-        public event Action<int> onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
         public void EditorExit()
         {
             if (onEditorExit != null)
@@ -69,41 +68,7 @@ namespace WEditor.Events
                 onEditorEnter();
             }
         }
-        public void HealthChanged(int amount)
-        {
-            if (onHealthChanged != null)
-            {
-                onHealthChanged(amount);
-            }
-        }
-        public void ArmourhChanged(int amount)
-        {
-            if (onArmourhChanged != null)
-            {
-                onArmourhChanged(amount);
-            }
-        }
-        public void LivesChanged(int amount)
-        {
-            if (onLivesChanged != null)
-            {
-                onLivesChanged(amount);
-            }
-        }
-        public void AmmoChanged(int amount)
-        {
-            if (onAmmoChanged != null)
-            {
-                onAmmoChanged(amount);
-            }
-        }
-        public void ScoreChanged(int amount)
-        {
-            if (onScoreChanged != null)
-            {
-                onScoreChanged(amount);
-            }
-        }
+       
         public void EditorInventorySelected(int id)
         {
             if (onEditorInventorySelected != null)

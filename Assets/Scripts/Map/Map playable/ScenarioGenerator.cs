@@ -16,7 +16,7 @@ namespace WEditor.Scenario.Playable
             List<(Vector3Int, string)> doors = new List<(Vector3Int, string)>();
             List<(string tileName, Vector3Int cellPos)> walls = new List<(string, Vector3Int)>();
 
-            DataHandler.GridSize(size.x, size.y);
+            DataHandler.GridSize(new Vector3Int(size.x, size.y, 0));
             for (int x = 0; x < size.x; x++)
             {
                 for (int y = 0; y < size.y; y++)
@@ -27,7 +27,7 @@ namespace WEditor.Scenario.Playable
                     Vector3Int cellPos = new Vector3Int(x, y, 0);
                     mainGrid[x, y] = true;
                     base.HandleTilesLocation(tileName, cellPos, doors, walls);
-                    DataHandler.SetGrid(x, y, new EditorGridLevelData(cellPos, tileName));
+                    DataHandler.SetGrid(new Vector3Int(x, y, 0), new EditorGridLevelData(cellPos, tileName));
                 }
             }
 

@@ -10,7 +10,7 @@ namespace WEditor.Game.Player
         public int totalScore { get; private set; }
         private void OnEnable()
         {
-            GameEvent.instance.onScoreChanged += Add;
+            GameplayEvent.instance.onScoreChanged += Add;
         }
         public void Add(int amount)
         {
