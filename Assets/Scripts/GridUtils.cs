@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-
-namespace WEditor
+namespace WEditor.Utils
 {
-    public static class Utils
+    public static class GridUtils
     {
-
         public static Vector3 FixTilePivot(this Vector3 value1)
         {
             return new Vector3(value1.x + .5f, value1.y, value1.z + .5f);
@@ -28,9 +25,13 @@ namespace WEditor
         {
             return new Vector3Int(cellPos.x + 1, cellPos.y, 0);
         }
-        public static int GetIndexFromAssetName(this string assetName)
+        public static Vector3Int SwapZToY(this Vector3Int cellPos)
         {
-            return int.Parse(assetName.Split('_')[1].ToString());
+            return new Vector3Int(cellPos.x, cellPos.z, cellPos.y);
+        }
+        public static Vector3Int ZEqualZero(this Vector3Int cellPos)
+        {
+            return new Vector3Int(cellPos.x, cellPos.z, 0);
         }
     }
 }

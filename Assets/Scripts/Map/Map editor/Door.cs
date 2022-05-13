@@ -11,8 +11,10 @@ namespace WEditor.Scenario
             this.name = name;
             this.walls = walls;
         }
+        public Door() { }
+        public Vector3Int position;
         public Vector2Int[] walls { get; set; }
         public bool topBottomSide { get; private set; }
-        public string name { get; private set; }
+        public string name;
     }
 }

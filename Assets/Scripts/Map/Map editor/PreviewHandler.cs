@@ -15,7 +15,7 @@ namespace WEditor.UI
         {
             if (!EditorGrid.instance.isSpawnLocated)
             {
-                TextMessageHandler.instance.SetError("pp");
+                MessageHandler.instance.SetError("level_spawn_r");
                 return;
             }
             EditorGrid.instance.InitGeneration();

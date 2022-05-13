@@ -11,19 +11,20 @@ namespace WEditor
         public string[,] levelTiles { get; private set; }
         public (int x, int y) levelSize;
         public string levelName;
+        public string difficultTier = "";
         public int levelID;
-        public GameData(string levelName, Vector3Int levelSpawn, (int w, int h) size, EditorGridLevelData[,] tileData)
+        public GameData()
         {
-            this.levelName = levelName;
-            this.levelSpawn.x = levelSpawn.x;
-            this.levelSpawn.z = levelSpawn.y;
-            this.levelSize = size;
-            levelTiles = new string[size.w, size.h];
-            foreach (var item in tileData)
+            this.levelName = DataHandler.currentLevelName;
+            this.levelSpawn.x = DataHandler.spawnPosition.x;
+            this.levelSpawn.z = DataHandler.spawnPosition.z;
+            this.levelSize.x = DataHandler.levelSize.x;
+            this.levelSize.y = DataHandler.levelSize.y;
+            this.levelTiles = new string[levelSize.x, levelSize.y];
+            foreach (var item in DataHandler.grid)
             {
                 if (item != null)
                 {
-                    Debug.Log(item.tileName);
                     levelTiles[item.position.x, item.position.y] = item.tileName;
                 }
             }

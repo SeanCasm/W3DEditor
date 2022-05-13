@@ -8,7 +8,9 @@ namespace WEditor
         public static EditorGridLevelData[,] grid { get; private set; }
         public static Vector3 currentLevelPosition { get; set; }
         public static string currentLevelName { get; set; }
+        public static DifficultyTier difficultyTier = DifficultyTier.Easy;
         public static Vector2Int levelSize { get => new Vector2Int(grid.GetLength(0), grid.GetLength(1)); }
+        public static Vector3Int spawnPosition;
         public static void SetGrid(Vector3Int dimension, EditorGridLevelData data)
         {
             grid[dimension.x, dimension.y] = data;

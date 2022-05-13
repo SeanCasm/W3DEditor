@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Game.Scriptables;
 using WEditor.Game.Collectibles;
+using WEditor.Utils;
+
 namespace WEditor.Scenario
 {
     public class ScenarioGeneratorBase : MonoBehaviour
@@ -28,7 +30,7 @@ namespace WEditor.Scenario
         protected Door[,] doorGrid;
         protected bool[,] mainGrid;
         protected GameObject groundPlane;
-        protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<(Vector3Int, string)> doors, List<(string tileName, Vector3Int cellPos)> walls)
+        protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<Door> doors, List<Wall> walls)
         {
             Vector3 position = new Vector3(cellPos.x, 0, cellPos.y);
             if (tileName.Contains("top"))
@@ -37,7 +39,7 @@ namespace WEditor.Scenario
             }
             else if (tileName.Contains("Wall"))
             {
-                walls.Add((tileName, cellPos));
+                walls.Add(new Wall(tileName, cellPos));
             }
             else if (tileName.Contains("Prop"))
             {
@@ -45,7 +47,7 @@ namespace WEditor.Scenario
             }
             else if (tileName.Contains("Door"))
             {
-                doors.Add((cellPos, tileName));
+                doors.Add(new Door { name = tileName, position = cellPos });
             }
             else if (tileName.Contains("Health"))
             {
@@ -55,7 +57,7 @@ namespace WEditor.Scenario
             {
                 HandleAmmoGeneration(tileName, cellPos);
             }
-            else if (tileName.StartsWith("Guard") || tileName.StartsWith("SS"))
+            else if (tileName.StartsWith("guard") || tileName.StartsWith("ss"))
             {
                 HandleEnemyGeneration(tileName, position);
             }
@@ -164,15 +166,15 @@ namespace WEditor.Scenario
 
             SetItemPosition(itemGameObject, position);
         }
-        protected void HandleWallGeneration(List<(string tileName, Vector3Int cellPos)> walls)
+        protected void HandleWallGeneration(List<Wall> walls)
         {
             Dictionary<string, List<GameObject>> wallsToFilter = new Dictionary<string, List<GameObject>>();
             foreach (var wall in walls)
             {
-                string tileName = wall.tileName;
+                string tileName = wall.wallName;
                 Texture2D wallTex = wallScriptable.GetTexture(tileName);
-                int x = wall.cellPos.x;
-                int y = wall.cellPos.y;
+                int x = wall.position.x;
+                int y = wall.position.y;
                 GameObject wallObject = Instantiate(wallPrefab);
                 if (wallsToFilter.ContainsKey(tileName))
                 {
@@ -185,7 +187,7 @@ namespace WEditor.Scenario
                     wallsToFilter.Add(tileName, l);
                 }
                 wallObject.GetComponent<MeshRenderer>().material.mainTexture = wallTex;
-                wallGrid[x, y] = new Wall(wallObject);
+                wallGrid[x, y] = new Wall(tileName, wall.position);
                 //fix the tile center pivot
                 wallObject.transform.position = new Vector3(x, 0, y);
                 objectsGenerated.Add(wallObject);
@@ -196,21 +198,21 @@ namespace WEditor.Scenario
         protected void HandleEnemyGeneration(string tileName, Vector3 position)
         {
             position = new Vector3(position.x + .5f, position.y, position.z + .5f);
-            GameObject enemy = tileName.StartsWith("Guard") ? Instantiate(guardPrefab) : Instantiate(ssPrefab);
+            GameObject enemy = tileName.StartsWith("guard") ? Instantiate(guardPrefab) : Instantiate(ssPrefab);
             enemy.transform.position = position;
             objectsGenerated.Add(enemy);
         }
 
 
-        protected void AddDoorToList(Vector3Int cellPos, string tileName)
+        protected void AddDoorToList(Door door)
         {
-            int x = cellPos.x;
-            int y = cellPos.y;
+            int x = door.position.x;
+            int y = door.position.y;
 
             if (mainGrid[x, y + 1] && mainGrid[x, y - 1])
             {
                 doorGrid[x, y] = new Door(
-                    true, tileName,
+                    true, door.name,
                     new Vector2Int[] {
                         new Vector2Int(x, y + 1),
                         new Vector2Int(x, y - 1),
@@ -220,7 +222,7 @@ namespace WEditor.Scenario
             else if (mainGrid[x - 1, y] && mainGrid[x + 1, y])
             {
                 doorGrid[x, y] = new Door(
-                    false, tileName,
+                    false, door.name,
                     new Vector2Int[] {
                         new Vector2Int(x+1, y),
                         new Vector2Int(x-1, y),
@@ -278,7 +280,7 @@ namespace WEditor.Scenario
 
 
             //setup the collision for this prop
-            if (tileName.EndsWith("c"))
+            if (!tileName.StartsWith("n"))
             {
                 Rigidbody propRigid = propObject.AddComponent<Rigidbody>();
                 propRigid.useGravity = false;
@@ -306,12 +308,4 @@ namespace WEditor.Scenario
             meshCombiner.DisableTargetCombiner();
         }
     }
-}
-public struct Wall
-{
-    public Wall(GameObject objectReference)
-    {
-        this.objectReference = objectReference;
-    }
-    public GameObject objectReference { get; private set; }
 }

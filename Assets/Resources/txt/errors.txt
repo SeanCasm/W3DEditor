@@ -1,12 +1,12 @@
-dg_ge: A door needs to have walls around, left-right or top-bottom.
-pp: A spawn point is required to change to preview.
-sp_pl: Spawn point cannot be located over a wall, prop or door.
-cc_ll: The command is not valid, try putting "Help" to show the complete command list.
-pp_ll: Props cannot be located over a wall or door.
-ci_ll: This item cannot be located over a wall or door.
-cc_zl: Map dimensions are required and cannot be zero or less.
-cc_le: Map width and heigth cannot be upper to 50.
-sl_ln: Set a level name before save.
-sl_ic: The underscore '_' is not allowed to use in the level name. 
-sl_sp: Spawn point is required.
-ln_ep: A level with the same name was found.
+editor_command: The command is not valid, try putting "Help" to show the complete command list.
+grid_door: A door require to have walls around, left-right or top-bottom.
+grid_prop_l: Props cannot be located over a wall or door.
+grid_item_l: This item cannot be located over a wall or door.
+grid_wd: Max walls around a door cannot be upper than 2.  
+level_size_l: Map dimensions are required and cannot be zero or less.
+level_size_u: Map width and heigth cannot be upper to 50.
+level_name: Level name required.
+level_name_uc: The underscore '_' is not allowed to use in the level name. 
+level_found: A level with the same name was found.
+level_spawn_l: Spawn point cannot be located over a wall, prop or door.
+level_spawn_r: Spawn point required.

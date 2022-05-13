@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Game.Player;
+using WEditor.Utils;
+
 namespace WEditor.Game.Enemy
 {
     public class EnemyAI : MonoBehaviour
@@ -11,17 +13,20 @@ namespace WEditor.Game.Enemy
         [SerializeField] float tileCheckDistance = .64f, distanceToAttack;
         private Animator animator;
         private float currentSpeed;
-        private bool isDead, isInvisible;
+        private bool isDead, isVisible;
         private Vector3 playerDirection { get => (PlayerGlobalReference.instance.position - localCenter).normalized; }
         private Vector3 playerPosition { get => PlayerGlobalReference.instance.position; }
         private Vector3 localCenter { get => spriteRenderer.bounds.center; }
+        private Vector3Int positionGrid { get => Vector3Int.FloorToInt(transform.position).SwapZToY(); }
         private Rigidbody rigid;
         private SpriteRenderer spriteRenderer;
         private PathFinding pathfinding;
         private SpriteLook spriteLook;
         int groundLayer = 6;
         int playerLayer = 7;
+        bool isPatrolling;
         private float angle;
+        private List<Vector3Int> movements = new List<Vector3Int>();
 
         private MovementBehaviour eBehaviour = MovementBehaviour.Patrolling;
         void Start()
@@ -32,30 +37,60 @@ namespace WEditor.Game.Enemy
             rigid = GetComponent<Rigidbody>();
             animator = GetComponentInChildren<Animator>();
             pathfinding = GetComponent<PathFinding>();
+            GenerateMovementPattern();
         }
 
         void Update()
         {
-
             if (!isDead)
             {
                 angle = Vector3.SignedAngle(playerDirection, transform.forward, Vector3.up);
                 CheckBehaviour();
                 switch (eBehaviour)
                 {
-                    case MovementBehaviour.FollowPlayer:
+                    case MovementBehaviour.FollowingPlayer:
                         currentSpeed = speed;
                         spriteRenderer.transform.eulerAngles = Vector3.zero;
-                        MoveBetweenPath();
+                        MoveBetweenPath(playerPosition);
+                        isPatrolling = false;
                         break;
                     case MovementBehaviour.Attacking:
                         currentSpeed = 0;
                         rigid.velocity = Vector3.zero;
-                        FollowCamera();
+                        FollowCamera(playerPosition);
+                        isPatrolling = false;
+                        break;
+                    case MovementBehaviour.Patrolling:
+                        currentSpeed = speed;
+                        if (!isPatrolling) StartCoroutine(nameof(PatrollingMovement));
+                        isPatrolling = true;
                         break;
                 }
             }
-            else FollowCamera();
+            else FollowCamera(playerPosition);
+        }
+        public void FollowCamera(Vector3 playerPosition)
+        {
+            if (isVisible)
+            {
+                spriteRenderer.transform.LookAt(playerPosition, Vector3.up);
+                spriteRenderer.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            }
+        }
+        private void GenerateMovementPattern()
+        {
+            Vector3Int transformInt = Vector3Int.FloorToInt(transform.position);
+            print(transformInt);
+            for (int i = 0; i < 5; i++)
+            {
+                Vector3Int move = new Vector3Int(
+                    Random.Range(transformInt.x - 2, transformInt.x + 3),
+                    Random.Range(transformInt.z - 2, transformInt.z + 3),
+                    0
+                );
+                print(move);
+                movements.Add(move);
+            }
         }
         private void CheckBehaviour()
         {
@@ -93,29 +128,43 @@ namespace WEditor.Game.Enemy
                     else
                     if (playerDistance <= tileCheckDistance && playerDistance > distanceToAttack)
                     {
-                        eBehaviour = MovementBehaviour.FollowPlayer;
+                        eBehaviour = MovementBehaviour.FollowingPlayer;
                     }
                     break;
             }
         }
-        private void HandleSpriteLook()
+        IEnumerator PatrollingMovement()
         {
-
-        }
-        private void FollowCamera()
-        {
-            if (!isInvisible)
+            int j = 0;
+            while (eBehaviour == MovementBehaviour.Patrolling)
             {
-                spriteRenderer.transform.LookAt(playerPosition, Vector3.up);
-                spriteRenderer.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                var target = movements[j];
+                pathfinding.FindPath(transform.position, new Vector3(target.x, target.y, 0));
+                for (int i = 0; i < pathfinding.finalPath.Count; i++)
+                {
+                    Vector3Int currentTarget = Vector3Int.FloorToInt(pathfinding.finalPath[i].gridPosition);
+                    Vector3Int positionGrid = Vector3Int.FloorToInt(transform.position).SwapZToY().ZEqualZero();
+                    while (Vector3Int.FloorToInt(currentTarget) != positionGrid)
+                    {
+                        transform.position = Vector3.MoveTowards(
+                            transform.position,
+                            new Vector3(currentTarget.x, transform.position.y, currentTarget.y),
+                            currentSpeed * Time.deltaTime
+                        );
+                        print(target);
+                        yield return null;
+                    }
+                }
+                j++;
+                if (j >= 5) j = 0;
             }
         }
-        void MoveBetweenPath()
+        void MoveBetweenPath(Vector3 target)
         {
-            pathfinding.FindPath(transform.position, playerPosition);
+            pathfinding.FindPath(transform.position, target);
             for (int i = 0; i < pathfinding.finalPath.Count; i++)
             {
-                Vector3 currentTarget = pathfinding.finalPath[i].gridPosition;
+                Vector3 currentTarget = pathfinding.finalPath[i].gridPositionCenter;
                 transform.position = Vector3.MoveTowards(transform.position, currentTarget, currentSpeed * Time.deltaTime);
             }
         }
@@ -134,26 +183,26 @@ namespace WEditor.Game.Enemy
         {
             if (!isDead)
             {
-                if (eBehaviour == MovementBehaviour.FollowPlayer)
-                    spriteLook.SwapSpriteWhenFollowingPlayer(angle, animator, spriteRenderer);
+                if (eBehaviour == MovementBehaviour.Attacking || eBehaviour == MovementBehaviour.FollowingPlayer)
+                    spriteLook.SwapSpriteWhenFollowingPlayer(angle, animator, isVisible);
 
                 animator.SetBool("isAttacking", eBehaviour == MovementBehaviour.Attacking);
-                // animator.SetBool("idle", eBehaviour == EnemyBehaviour.Idle);
-                animator.SetBool("isWalking", eBehaviour == MovementBehaviour.FollowPlayer);
+                animator.SetBool("idle", eBehaviour == MovementBehaviour.Idle);
+                animator.SetBool("isWalking", eBehaviour == MovementBehaviour.FollowingPlayer);
                 animator.SetBool("isPatrolling", eBehaviour == MovementBehaviour.Patrolling);
             }
         }
         private void OnBecameVisible()
         {
-            isInvisible = false;
+            isVisible = true;
         }
         private void OnBecameInvisible()
         {
-            isInvisible = true;
+            isVisible = false;
         }
     }
     public enum MovementBehaviour
     {
-        Idle, WaitingDoor, Patrolling, FollowPlayer, Attacking, None
+        Idle, WaitingDoor, Patrolling, FollowingPlayer, Attacking, None
     }
 }

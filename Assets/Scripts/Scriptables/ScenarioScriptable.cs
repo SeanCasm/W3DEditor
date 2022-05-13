@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Utils;
 
 namespace WEditor.Game.Scriptables
 {
@@ -13,6 +14,11 @@ namespace WEditor.Game.Scriptables
         {
             int index = spriteName.GetIndexFromAssetName();
             return spritesCollection[index];
+        }
+        public bool HasSprite(string spriteName)
+        {
+            int index = spriteName.GetIndexFromAssetName();
+            return spritesCollection[index] != null;
         }
     }
 }

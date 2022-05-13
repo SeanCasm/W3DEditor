@@ -1,2 +1,2 @@
-ss_cc: Save complete!
-ss_ln: The level _ currently exists on your files, replace it?
+save: Save complete!
+level_exist: The level _ currently exists on your files, replace it?

@@ -13,8 +13,8 @@ namespace WEditor.Scenario.Playable
         {
             (int x, int y) size = levelData.levelSize;
             base.InitGeneration(new Vector3Int(size.x, size.y, 0));
-            List<(Vector3Int, string)> doors = new List<(Vector3Int, string)>();
-            List<(string tileName, Vector3Int cellPos)> walls = new List<(string, Vector3Int)>();
+            List<Door> doors = new List<Door>();
+            List<Wall> walls = new List<Wall>();
 
             DataHandler.GridSize(new Vector3Int(size.x, size.y, 0));
             for (int x = 0; x < size.x; x++)
@@ -35,20 +35,20 @@ namespace WEditor.Scenario.Playable
             this.HandleDoorGeneration(doors);
             PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;
         }
-        private void HandleDoorGeneration(List<(Vector3Int, string)> doors)
+        private void HandleDoorGeneration(List<Door> doors)
         {
             //Doors needs to be located after all of the rest of tiles
             //to avoid fails on the generation
             doors.ForEach(item =>
             {
-                Tile itemTile = new Tile();
-                Vector3Int cellPos = item.Item1;
-                Texture2D doorTex = doorScriptable.GetTexture(item.Item2);
+                Tile itemTile = ScriptableObject.CreateInstance("Tile") as Tile;
+                Vector3Int cellPos = item.position;
+                Texture2D doorTex = doorScriptable.GetTexture(item.name);
                 itemTile.sprite = Sprite.Create(doorTex, new Rect(0, 0, doorTex.width, doorTex.height), new Vector2(.5f, .5f));
 
                 mainGrid[cellPos.x, cellPos.y] = true;
 
-                AddDoorToList(cellPos, item.Item2);
+                AddDoorToList(item);
             });
             base.HandleDoorsGeneration();
         }

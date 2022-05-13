@@ -6,6 +6,7 @@ namespace WEditor.Game.Collectibles
     public class Ammo : CollectibleBase
     {
         [SerializeField] int ammoID;
+        public static int ammoDevalue = 0;
         private void OnEnable()
         {
             base.OnPlayerTrigger += PlayerEnter;
@@ -16,7 +17,7 @@ namespace WEditor.Game.Collectibles
         }
         private void PlayerEnter()
         {
-            PlayerGlobalReference.instance.gunHandler.AddTo(ammoID, amount);
+            PlayerGlobalReference.instance.gunHandler.AddTo(ammoID, amount * (ammoDevalue / 100));
         }
     }
 }

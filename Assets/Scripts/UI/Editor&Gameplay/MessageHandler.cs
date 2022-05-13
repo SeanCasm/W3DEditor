@@ -8,9 +8,9 @@ using UnityEngine.UI;
 
 namespace WEditor.UI
 {
-    public class TextMessageHandler : MonoBehaviour
+    public class MessageHandler : MonoBehaviour
     {
-        public static TextMessageHandler instance;
+        public static MessageHandler instance;
         [SerializeField] GameObject errorPanel;
         [SerializeField] TMPro.TextMeshProUGUI errorMessage;
         [SerializeField] float messageTime;

@@ -42,7 +42,7 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
 
         if (method == null)
         {
-            TextMessageHandler.instance.SetError("cc_ll");
+            MessageHandler.instance.SetError("editor_command");
             return;
         }
         if (method.GetParameters().Length > 0)

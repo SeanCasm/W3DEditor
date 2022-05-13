@@ -4,34 +4,34 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 6351895444050832505
-    second: c-Props-top_0
+    second: Props-top_0
   - first:
       213: 2855734495882653383
-    second: c-Props-top_1
+    second: Props-top_1
   - first:
       213: 8430051116552450063
-    second: c-Props-top_2
+    second: Props-top_2
   - first:
       213: -2062634973810387478
-    second: Props-top_3
+    second: n-Props-top_3
   - first:
       213: -8719159019531532211
-    second: Props-top_6
+    second: n-Props-top_6
   - first:
       213: 2243477216217227865
     second: Props-top_7
   - first:
       213: 7648073941143849908
-    second: Props-top_5
+    second: n-Props-top_5
   - first:
       213: 5014545771349230519
-    second: c-Props-top_7
+    second: Props-top_7
   - first:
       213: 4175932663735230419
-    second: Props-top_4
+    second: n-Props-top_4
   - first:
       213: -1858612739325374522
-    second: Props-top_6
+    second: n-Props-top_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -133,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: c-Props-top_0
+      name: Props-top_0
       rect:
         serializedVersion: 2
         x: 0
@@ -154,7 +154,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c-Props-top_1
+      name: Props-top_1
       rect:
         serializedVersion: 2
         x: 80
@@ -175,7 +175,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c-Props-top_2
+      name: Props-top_2
       rect:
         serializedVersion: 2
         x: 122
@@ -196,7 +196,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-top_3
+      name: n-Props-top_3
       rect:
         serializedVersion: 2
         x: 163
@@ -217,7 +217,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-top_5
+      name: n-Props-top_5
       rect:
         serializedVersion: 2
         x: 225
@@ -238,7 +238,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c-Props-top_7
+      name: Props-top_7
       rect:
         serializedVersion: 2
         x: 297
@@ -259,7 +259,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-top_4
+      name: n-Props-top_4
       rect:
         serializedVersion: 2
         x: 179
@@ -280,7 +280,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-top_6
+      name: n-Props-top_6
       rect:
         serializedVersion: 2
         x: 246

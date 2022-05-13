@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 using WEditor.UI;
 using WEditor.Events;
 using WEditor.Game.Scriptables;
+using WEditor.Utils;
 namespace WEditor.Scenario.Editor
 {
     public class EditorGrid : MonoBehaviour
@@ -55,21 +56,21 @@ namespace WEditor.Scenario.Editor
         {
             if (levelName.Length == 0)
             {
-                TextMessageHandler.instance.SetError("sl_ln");
+                MessageHandler.instance.SetError("level_name");
                 return;
             }
             else if (levelName.Contains("_"))
             {
-                TextMessageHandler.instance.SetError("sl_ic");
+                MessageHandler.instance.SetError("level_name_uc");
                 return;
             }
             else if (!isSpawnLocated)
             {
-                TextMessageHandler.instance.SetError("sl_sp");
+                MessageHandler.instance.SetError("level_spawn_r");
                 return;
             }
-
-            SaveData.SaveToLocal(levelName, mainTilemap.WorldToCell(spawnPosition), (width, height));
+            DataHandler.currentLevelName = levelName;
+            SaveData.SaveToLocal();
         }
         public void Load(GameData gameData)
         {
@@ -91,7 +92,7 @@ namespace WEditor.Scenario.Editor
                     if (gameData.levelTiles[x, y] == null)
                         continue;
 
-                    Tile tile = new Tile();
+                    Tile tile = ScriptableObject.CreateInstance("Tile") as Tile;
                     Vector3Int cellPos = new Vector3Int(x, y, 0);
                     tile.name = gameData.levelTiles[x, y];
 
@@ -135,7 +136,7 @@ namespace WEditor.Scenario.Editor
 
             doors.ForEach(item =>
             {
-                Tile tile = new Tile();
+                Tile tile = ScriptableObject.CreateInstance("Tile") as Tile;
                 (int x, int y, string tileName) = item;
                 tile.name = tileName;
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
@@ -153,12 +154,12 @@ namespace WEditor.Scenario.Editor
 
             if (width <= 0 || height <= 0)
             {
-                TextMessageHandler.instance.SetError("cc_zl");
+                MessageHandler.instance.SetError("level_size_l");
                 return;
             }
             else if (width > 50 || height > 50)
             {
-                TextMessageHandler.instance.SetError("cc_le");
+                MessageHandler.instance.SetError("level_size_u");
                 return;
             }
             InitLevel();
@@ -243,7 +244,7 @@ namespace WEditor.Scenario.Editor
             string tilePlacedName = hasTile ? mainTilemap.GetTile(cellPos).name : "n";
             if (hasTile && tilePlacedName.Contains("Door") || tilePlacedName.Contains("Wall"))
             {
-                TextMessageHandler.instance.SetError("ci_ll");
+                MessageHandler.instance.SetError("grid_prop_l");
                 return;
             }
             mainTilemap.SetTile(cellPos, tile);
@@ -255,7 +256,7 @@ namespace WEditor.Scenario.Editor
             //spawn point
             if (tileName != "non")
             {
-                TextMessageHandler.instance.SetError("sp_pl");
+                MessageHandler.instance.SetError("level_spawn_l");
                 return;
             }
             else if (!IsTileInsideTilemap(cellPos))
@@ -272,6 +273,7 @@ namespace WEditor.Scenario.Editor
             //fix tile pivot
             currentSpawn = Instantiate(spawnPrefab, pos.FixTilePivot(), Quaternion.Euler(90, 0, 0));
             isSpawnLocated = true;
+            DataHandler.spawnPosition = Vector3Int.FloorToInt(spawnPosition);
         }
         private bool IsTileInsideTilemap(Vector3Int cellPos)
         {
@@ -299,7 +301,7 @@ namespace WEditor.Scenario.Editor
         }
         private Tile CreateTile(Sprite sprite)
         {
-            Tile tile = new Tile();
+            Tile tile = ScriptableObject.CreateInstance("Tile") as Tile;
             tile.sprite = sprite;
             return tile;
         }
@@ -308,7 +310,7 @@ namespace WEditor.Scenario.Editor
         {
             if (HasTile(cellPos) && (tile.name.Contains("Wall") || tile.name.Contains("Door")))
             {
-                TextMessageHandler.instance.SetError("pp_ll");
+                MessageHandler.instance.SetError("grid_prop_l");
                 return;
             }
             mainTilemap.SetTile(cellPos, tile);
@@ -337,7 +339,7 @@ namespace WEditor.Scenario.Editor
 
             if (!tilesAround)
             {
-                TextMessageHandler.instance.SetError("dg_ge");
+                MessageHandler.instance.SetError("grid_door");
                 return;
             }
         }

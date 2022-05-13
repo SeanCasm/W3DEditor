@@ -9,7 +9,8 @@ public class Node
     public int fCost { get => hCost + gCost; }
     public int gridX { get; set; }
     public int gridY { get; set; }
-    public Vector3 gridPosition { get => new Vector3(gridX + .5f, 0, gridY + .5f); }
+    public Vector3 gridPositionCenter { get => new Vector3(gridX + .5f, 0, gridY + .5f); }
+    public Vector3Int gridPosition { get => new Vector3Int(gridX, gridY, 0); }
     public bool isWalkable { get; set; }
     public Node parent { get; set; }
     public Node(int x, int y, bool walkable)

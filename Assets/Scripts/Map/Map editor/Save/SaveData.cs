@@ -12,12 +12,12 @@ namespace WEditor
         private static string tailPath2 = ".wEditor.paths";
         private static string persistentDataPath = Application.persistentDataPath + "/";
 
-        public static void SaveToLocal(string levelName, Vector3Int levelSpawn, (int w, int h) size)
+        public static void SaveToLocal()
         {
-            string path = persistentDataPath + $"{levelName}{tailPath}";
+            string path = persistentDataPath + $"{DataHandler.currentLevelName}{tailPath}";
             if (File.Exists(path))
             {
-                TextMessageHandler.instance.SetPopUpMessage("ss_ln", levelName, () => { save(); });
+                MessageHandler.instance.SetPopUpMessage("level_exist", DataHandler.currentLevelName, () => { save(); });
                 return;
             }
             save();
@@ -29,10 +29,10 @@ namespace WEditor
                 BinaryFormatter formatter = new BinaryFormatter();
                 FileStream stream = new FileStream(path, FileMode.Create);
 
-                GameData data = new GameData(levelName, levelSpawn, size, DataHandler.grid);
+                GameData data = new GameData();
                 formatter.Serialize(stream, data);
                 stream.Close();
-                TextMessageHandler.instance.SetMessage("ss_cc");
+                MessageHandler.instance.SetMessage("save");
             }
         }
         public static GameData[] LoadLocalLevels()

@@ -10,12 +10,13 @@ namespace WEditor.Game.Enemy
         [SerializeField] int score;
         [SerializeField] SpriteRenderer spriteRenderer;
         private EnemyAI enemyAI;
+        public static float healthMultiplier = 1;
         private Collider healthBox;
         private void Start()
         {
             enemyAI = GetComponentInParent<EnemyAI>();
             healthBox = GetComponent<Collider>();
-            currentHealth = maxHealth;
+            currentHealth = maxHealth * healthMultiplier;
         }
         public override void Take(float amount)
         {

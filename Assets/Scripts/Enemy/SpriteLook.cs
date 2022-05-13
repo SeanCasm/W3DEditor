@@ -5,28 +5,51 @@ namespace WEditor.Game.Enemy
 {
     public class SpriteLook : MonoBehaviour
     {
+        [SerializeField] List<Sprite> walkingSpritesFront, walkingSpritesBack;
         [SerializeField] List<Sprite> walkingSpritesFrontLeft, walkingSpritesFrontRight;
-        [SerializeField] List<Sprite> walkingSpritesBackLeft, walkingSpritesBackRight, walkingSpritesBack;
-
-        public void SwapSpriteWhenFollowingPlayer(float angle, Animator animator, SpriteRenderer spriteRenderer)
+        [SerializeField] List<Sprite> walkingSpritesLeft, walkingSpritesRight;
+        [SerializeField] List<Sprite> walkingSpritesFrontAngleLeft, walkingSpritesFrontAngleRight;
+        [SerializeField] List<Sprite> walkingSpritesBackAngleLeft, walkingSpritesBackAngleRight;
+        [SerializeField] SpriteRenderer spriteRenderer;
+        public void SwapSpriteWhenFollowingPlayer(float angle, Animator animator, bool isVisible)
         {
+            if (!isVisible) return;
             float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1;
-            int index = GetIndex(angle);
-
-            switch (index)
-            {
-                case 0:
-                    CheckCurrentSprite(time, true, spriteRenderer);
-                    break;
-                case 3:
-                    CheckCurrentSprite(time, false, spriteRenderer);
-                    break;
-
-            }
+            SetDirection(time, angle);
+            FollowCamera();
         }
-        private void CheckCurrentSprite(float animTime, bool frontLeft, SpriteRenderer spriteRenderer)
+        public void FollowCamera()
         {
-            List<Sprite> currentSpriteList = frontLeft ? walkingSpritesFrontLeft : walkingSpritesFrontRight;
+            spriteRenderer.transform.LookAt(PlayerGlobalReference.instance.position, Vector3.up);
+            spriteRenderer.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
+        private void SetDirection(float animTime, float angle)
+        {
+            List<Sprite> currentSpriteList = new List<Sprite>();
+            // print(angle);
+            //front
+            if (angle > 90 && angle < 135)
+                currentSpriteList = walkingSpritesFrontAngleLeft;
+            if (angle > 135 && angle < 180)
+                currentSpriteList = walkingSpritesFront;
+            if (angle > -180 && angle < -135)
+                currentSpriteList = walkingSpritesFront;
+            if (angle > -135 && angle < -90)
+                currentSpriteList = walkingSpritesFrontAngleRight;
+
+            //back
+
+            // if (angle < 90 && angle > 45)
+            //     currentSpriteList = walkingSpritesBackAngleLeft;
+            // if (angle < 45 && angle > 0)
+            //     currentSpriteList = walkingSpritesBack;
+            // if (angle > -180 && angle < -135)
+            //     currentSpriteList = walkingSpritesBack;
+            // if (angle > -135 && angle < -90)
+            //     currentSpriteList = walkingSpritesBackAngleRight;
+
+
+
             if (animTime >= 0 && animTime < .25f)
                 spriteRenderer.sprite = currentSpriteList[0];
             else if (animTime >= .25f && animTime < .75f)
@@ -35,23 +58,6 @@ namespace WEditor.Game.Enemy
                 spriteRenderer.sprite = currentSpriteList[2];
             else if (animTime >= 1)
                 spriteRenderer.sprite = currentSpriteList[3];
-        }
-        private int GetIndex(float angle)
-        {
-            //front
-            if (angle > 90 && angle < 135)
-                return 0;
-            if (angle > 135 && angle < 180)
-                return 1;
-            if (angle > -180 && angle < -135)
-                return 2;
-            if (angle > -135 && angle < -90)
-                return 3;
-
-            return 0;
-
-            //back
-
 
         }
     }

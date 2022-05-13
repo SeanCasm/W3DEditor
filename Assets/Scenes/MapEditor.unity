@@ -865,7 +865,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -878,7 +878,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -4103,7 +4103,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -18, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &508859902
 MonoBehaviour:
@@ -6682,7 +6682,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3348416, y: 1}
+    m_SensorSize: {x: 1.3325791, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -7042,7 +7042,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.2}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7318,9 +7318,8 @@ GameObject:
   - component: {fileID: 1021073314}
   - component: {fileID: 1021073313}
   - component: {fileID: 1021073312}
-  - component: {fileID: 1021073311}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: DifficultyTier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7348,51 +7347,6 @@ RectTransform:
   m_AnchoredPosition: {x: 411.915, y: -15}
   m_SizeDelta: {x: 132.3, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1021073311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1021073309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
-          m_MethodName: DisableInputsForInventoryOpened
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: WEditor.MapEditorInput, Assembly-CSharp
-          m_MethodName: EnableInputsForInventoryClosed
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &1021073312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7445,15 +7399,25 @@ MonoBehaviour:
     m_Options:
     - m_Text: Easy
       m_Image: {fileID: -5124573995240318185, guid: dc3ef0c76696a81498a72f03b75ade2c, type: 3}
-    - m_Text: Normal
+    - m_Text: Medium
       m_Image: {fileID: -8209816685581196245, guid: dc3ef0c76696a81498a72f03b75ade2c, type: 3}
     - m_Text: Hard
       m_Image: {fileID: -4391948775746548293, guid: dc3ef0c76696a81498a72f03b75ade2c, type: 3}
-    - m_Text: Very Hard
-      m_Image: {fileID: 774001662030828127, guid: dc3ef0c76696a81498a72f03b75ade2c, type: 3}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1358627116}
+        m_TargetAssemblyTypeName: WEditor.Scenario.Editor.LevelConfiguration, Assembly-CSharp
+        m_MethodName: Dropdown_SelectDifficult
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1021073313
 MonoBehaviour:
@@ -7889,7 +7853,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -433.76077}
+  m_AnchoredPosition: {x: 60, y: -434.2547}
   m_SizeDelta: {x: 64, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1080706090
@@ -9170,6 +9134,7 @@ GameObject:
   - component: {fileID: 1358627119}
   - component: {fileID: 1358627115}
   - component: {fileID: 1358627117}
+  - component: {fileID: 1358627116}
   m_Layer: 0
   m_Name: '[HANDLERS]'
   m_TagString: Untagged
@@ -9189,6 +9154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad75737adb12a0429ed3750ac1916f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelConfiguration: {fileID: 0}
   mainTilemap: {fileID: 754025810}
   pointerPreview: {fileID: 140018299}
   whiteSquare: {fileID: 1743705750}
@@ -9248,7 +9214,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d5e74516e894bad4bb682a516116cf7a, type: 2}
   - {fileID: 11400000, guid: 8d413232de9a95d4792e83a016cb0011, type: 2}
   guardPrefab: {fileID: 2342706216233829273, guid: 9b5373b980281c54987761d2cff5e53a, type: 3}
-  ssPrefab: {fileID: 0}
+  ssPrefab: {fileID: 2342706216233829273, guid: 95f6c539c339d9c4ea4c88787354f87c, type: 3}
 --- !u!114 &1358627114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9336,6 +9302,20 @@ MonoBehaviour:
   cursor: {fileID: 566516509}
   container: {fileID: 1556837526}
   splashImage: {fileID: 2058519631}
+--- !u!114 &1358627116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358627111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581774771348f424ebd64023ded44108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropdown: {fileID: 1021073312}
+  difficultyMode: 0
 --- !u!114 &1358627117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9370,12 +9350,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1358627111}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a9b5c72ce95974a8bf1c2bd36b0ea8, type: 3}
+  m_Script: {fileID: 11500000, guid: 6bea43d59bc40ee47b6963e25dbb73d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   errorPanel: {fileID: 1892786071}
   errorMessage: {fileID: 467479556}
-  messageTime: 5
+  messageTime: 3.5
   errorsPath: Assets/Resources/txt/errors.txt
   messagesPath: Assets/Resources/txt/messages.txt
   messagePopUp: {fileID: 1819472101}
@@ -11723,7 +11703,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -165.92026}
+  m_AnchoredPosition: {x: 60, y: -166.0849}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1776961794
@@ -12480,7 +12460,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 908329895}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.2
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
