@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace WEditor.Game.Guns
 {
-    public class GunBase : MonoBehaviour
+    public class GunBase<T> : MonoBehaviour
     {
         [SerializeField] protected float checkDistance;
         [SerializeField] protected LayerMask hitLayer;
-        [SerializeField] protected float damage;
+        [SerializeField] protected T damage;
         [SerializeField] AudioClip shootClip;
         protected Transform shootPoint;
         private AudioSource audioSource;
@@ -23,14 +23,14 @@ namespace WEditor.Game.Guns
         {
             audioSource.Play();
         }
-        public Tuple<bool, RaycastHit> ShootRay()
+        public (bool, RaycastHit) ShootRay()
         {
-            RaycastHit raycastHit;
+            RaycastHit raycastHit = new RaycastHit();
             Ray ray = new Ray(shootPoint.position, transform.root.forward);
 
             bool hit = Physics.Raycast(ray, out raycastHit, checkDistance, hitLayer);
             Debug.DrawLine(shootPoint.position, transform.root.forward * checkDistance, Color.green, 1000);
-            return Tuple.Create(hit, raycastHit);
+            return (hit, raycastHit);
         }
     }
 }

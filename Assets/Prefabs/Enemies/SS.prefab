@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 4730020814266752803}
   - component: {fileID: 6356737716436997437}
   - component: {fileID: 7822311282783936479}
+  - component: {fileID: 1679722633491594686}
   m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
@@ -316,3 +317,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1679722633491594686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5658520618132202023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb8bd03626fa71f46a44b1498ff0b5b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkDistance: 15
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  damage: 18
+  shootClip: {fileID: 0}
+  failChance: 12

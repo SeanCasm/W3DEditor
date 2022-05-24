@@ -7,7 +7,7 @@ using WEditor.Game.Guns;
 
 namespace WEditor.Game.Player.Guns
 {
-    public class Gun : GunBase
+    public class Gun : GunBase<float>
     {
         [SerializeField] protected int maxAmmo;
         protected int currentAmmo;
@@ -91,7 +91,7 @@ namespace WEditor.Game.Player.Guns
         }
         private new void ShootRay()
         {
-            Tuple<bool, RaycastHit> hitInfo = base.ShootRay();
+            (bool, RaycastHit) hitInfo = base.ShootRay();
             if (hitInfo.Item1)
             {
                 HealthBase<float> enemyHealth = hitInfo.Item2.collider.GetComponent<HealthBase<float>>();

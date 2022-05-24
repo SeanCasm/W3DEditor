@@ -1,0 +1,6 @@
+Buttons:
+    1st: FFED5D
+    2st: FFFFFF
+
+Background:
+    primary: 3C1416

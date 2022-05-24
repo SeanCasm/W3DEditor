@@ -17,7 +17,6 @@ namespace WEditor.Game.Enemy
         private Vector3 playerDirection { get => (PlayerGlobalReference.instance.position - localCenter).normalized; }
         private Vector3 playerPosition { get => PlayerGlobalReference.instance.position; }
         private Vector3 localCenter { get => spriteRenderer.bounds.center; }
-        private Vector3Int positionGrid { get => Vector3Int.FloorToInt(transform.position).SwapZToY(); }
         private Rigidbody rigid;
         private SpriteRenderer spriteRenderer;
         private PathFinding pathfinding;
@@ -51,6 +50,7 @@ namespace WEditor.Game.Enemy
                     case MovementBehaviour.FollowingPlayer:
                         currentSpeed = speed;
                         spriteRenderer.transform.eulerAngles = Vector3.zero;
+                        FollowCamera(playerPosition);
                         MoveBetweenPath(playerPosition);
                         isPatrolling = false;
                         break;
@@ -80,7 +80,6 @@ namespace WEditor.Game.Enemy
         private void GenerateMovementPattern()
         {
             Vector3Int transformInt = Vector3Int.FloorToInt(transform.position);
-            print(transformInt);
             for (int i = 0; i < 5; i++)
             {
                 Vector3Int move = new Vector3Int(
@@ -88,7 +87,6 @@ namespace WEditor.Game.Enemy
                     Random.Range(transformInt.z - 2, transformInt.z + 3),
                     0
                 );
-                print(move);
                 movements.Add(move);
             }
         }
@@ -183,8 +181,8 @@ namespace WEditor.Game.Enemy
         {
             if (!isDead)
             {
-                if (eBehaviour == MovementBehaviour.Attacking || eBehaviour == MovementBehaviour.FollowingPlayer)
-                    spriteLook.SwapSpriteWhenFollowingPlayer(angle, animator, isVisible);
+                // if (eBehaviour == MovementBehaviour.Attacking || eBehaviour == MovementBehaviour.FollowingPlayer)
+                //     spriteLook.SwapSpriteWhenFollowingPlayer(angle, animator, isVisible);
 
                 animator.SetBool("isAttacking", eBehaviour == MovementBehaviour.Attacking);
                 animator.SetBool("idle", eBehaviour == MovementBehaviour.Idle);

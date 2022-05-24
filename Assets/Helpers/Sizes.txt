@@ -1,0 +1,3 @@
+Fonts:
+    title = 24
+    subtitle = 18

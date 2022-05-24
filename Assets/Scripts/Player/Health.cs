@@ -49,20 +49,30 @@ namespace WEditor.Game.Player
         public override void Take(int amount)
         {
             if (isImmortal) return;
-
+            WEditor.UI.PlayerDamage.instance.StartAnimation();
             currentHealth -= amount;
             if (currentHealth < 0) currentHealth = 0;
             GameplayEvent.instance.HealthChanged(currentHealth);
 
-            if (currentHealth <= 0)
+            if (currentHealth <= 0 && currentLives <= 0)
             {
                 OnDeath();
+                return;
+            }
+            else if (currentHealth <= 0 && currentLives > 0)
+            {
+                currentLives--;
+                currentHealth = maxHealth;
+                currentArmour = maxArmour;
+                GameplayEvent.instance.HealthChanged(currentHealth);
+                GameplayEvent.instance.ArmourhChanged(currentArmour);
             }
         }
 
         public override void OnDeath()
         {
-            //death screen
+            Time.timeScale = 0;
+            WEditor.UI.DeathMenu.instance.Enable();
         }
     }
 }

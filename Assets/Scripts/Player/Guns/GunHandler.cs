@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using static WInput;
 using UnityEngine.InputSystem;
-using WEditor.Events;
 
 namespace WEditor.Game.Player.Guns
 {
@@ -32,6 +31,10 @@ namespace WEditor.Game.Player.Guns
             });
             gunIndex = 0;
             playerGuns[0].gameObject.SetActive(true);
+        }
+        public void RefullPistolAmmo()
+        {
+            playerGuns[0].RefullAmmo();
         }
         public void AddTo(int ammoID, int amount)
         {
