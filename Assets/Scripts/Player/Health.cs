@@ -66,6 +66,8 @@ namespace WEditor.Game.Player
                 currentArmour = maxArmour;
                 GameplayEvent.instance.HealthChanged(currentHealth);
                 GameplayEvent.instance.ArmourhChanged(currentArmour);
+                GameplayEvent.instance.LivesChanged(currentLives);
+                StatusBehaviour.instance.Respawn();
             }
         }
 
@@ -76,4 +78,3 @@ namespace WEditor.Game.Player
         }
     }
 }
-

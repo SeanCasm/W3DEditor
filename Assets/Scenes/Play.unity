@@ -770,7 +770,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 352353680}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 571158877}
+        m_TargetAssemblyTypeName: WEditor.UI.DeathMenu, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &352353680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1463,7 +1475,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8d413232de9a95d4792e83a016cb0011, type: 2}
   guardPrefab: {fileID: 2342706216233829273, guid: 9b5373b980281c54987761d2cff5e53a, type: 3}
   ssPrefab: {fileID: 0}
-  wallScenarioScriptable: {fileID: 11400000, guid: 3027a7fb4ae9112478926de6d0328190, type: 2}
 --- !u!114 &571158870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4295,7 +4306,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1477320078}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 571158877}
+        m_TargetAssemblyTypeName: WEditor.UI.DeathMenu, Assembly-CSharp
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1477320078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4481,6 +4504,7 @@ GameObject:
   - component: {fileID: 1540030953}
   - component: {fileID: 1540030952}
   - component: {fileID: 1540030957}
+  - component: {fileID: 1540030958}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -4576,6 +4600,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29b58b16b2b1f149a038620d7e173d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1540030958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540030951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21117cc3b1ac6a243a04f7e0a23c68eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunHandler: {fileID: 1736282408}
+  gameMode: 0
 --- !u!1001 &1585846337
 PrefabInstance:
   m_ObjectHideFlags: 0

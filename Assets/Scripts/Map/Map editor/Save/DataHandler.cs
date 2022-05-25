@@ -5,6 +5,7 @@ namespace WEditor
 {
     public static class DataHandler
     {
+        public static object tileMap;
         public static EditorGridLevelData[,] grid { get; private set; }
         public static Vector3 currentLevelPosition { get; set; }
         public static string currentLevelName { get; set; }

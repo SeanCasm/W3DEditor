@@ -16,10 +16,11 @@ namespace WEditor.Scenario.Editor
         {
             EditorEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
         }
-        public void InitGeneration(Tilemap mainTilemap)
+        public override void InitGeneration()
         {
+            Tilemap mainTilemap = DataHandler.tileMap as Tilemap;
             Vector3Int size = mainTilemap.size;
-            base.InitGeneration(size);
+            base.InitGeneration();
             List<Door> doors = new List<Door>();
             List<Wall> walls = new List<Wall>();
             for (int x = 0; x < size.x; x++)
@@ -47,7 +48,7 @@ namespace WEditor.Scenario.Editor
             doors.ForEach(item =>
             {
                 Tile itemTile = ScriptableObject.CreateInstance("Tile") as Tile;
-                Texture2D doorTex = doorScriptable.GetTexture(item.name);
+                Texture2D doorTex = doorScriptable.GetTexture(item.tileName);
                 itemTile.sprite = Sprite.Create(doorTex, new Rect(0, 0, doorTex.width, doorTex.height), new Vector2(.5f, .5f));
 
                 mainGrid[item.position.x, item.position.y] = true;

@@ -13,7 +13,7 @@ namespace WEditor.Scenario
     {
         [SerializeField] GameObject scrollViewContent;
         [SerializeField] GameObject levelPrefab;
-        [SerializeField] Loader loadType;
+        [SerializeField] GameMode loadType;
         private List<GameObject> levelsLoaded = new List<GameObject>();
         private void OnEnable()
         {
@@ -43,7 +43,7 @@ namespace WEditor.Scenario
                     DataHandler.currentLevelName = levelName;
                     (int x, int z) levelSpawn = newGamedata.levelSpawn;
                     DataHandler.currentLevelPosition = new Vector3(levelSpawn.x, .5f, levelSpawn.z);
-                    if (loadType == Loader.Play)
+                    if (loadType == GameMode.Play)
                     {
                         SceneHandler.instance.LoadPlayScene(newGamedata);
                     }
@@ -65,7 +65,7 @@ namespace WEditor.Scenario
             PutIntoContent();
         }
     }
-    public enum Loader
+    public enum GameMode
     {
         Play, Editor
     }

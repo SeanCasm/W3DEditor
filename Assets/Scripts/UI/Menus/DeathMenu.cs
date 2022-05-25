@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Game.Player;
 
 namespace WEditor.UI
 {
@@ -31,6 +32,7 @@ namespace WEditor.UI
         public void Reset()
         {
             Time.timeScale = 1;
+            StatusBehaviour.instance.Respawn();
         }
         private void OnDisable()
         {

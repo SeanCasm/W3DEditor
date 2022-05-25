@@ -175,6 +175,7 @@ namespace WEditor.Game.Enemy
             animator.SetBool("isWalking", false);
             animator.SetBool("isPatrolling", false);
             animator.SetTrigger("death");
+            rigid.velocity = Vector3.zero;
             Destroy(rigid);
         }
         private void LateUpdate()

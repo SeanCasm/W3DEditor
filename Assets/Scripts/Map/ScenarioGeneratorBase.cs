@@ -9,6 +9,7 @@ namespace WEditor.Scenario
 {
     public class ScenarioGeneratorBase : MonoBehaviour
     {
+        public static ScenarioGeneratorBase instance;
         [SerializeField] Material groundMaterial;
         [SerializeField] MeshCombiner meshCombiner;
         [Header("Wall generation")]
@@ -30,6 +31,10 @@ namespace WEditor.Scenario
         protected Door[,] doorGrid;
         protected bool[,] mainGrid;
         protected GameObject groundPlane;
+        private void Start()
+        {
+            instance = this;
+        }
         protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<Door> doors, List<Wall> walls)
         {
             Vector3 position = new Vector3(cellPos.x, 0, cellPos.y);
@@ -47,7 +52,7 @@ namespace WEditor.Scenario
             }
             else if (tileName.Contains("Door"))
             {
-                doors.Add(new Door { name = tileName, position = cellPos });
+                doors.Add(new Door { tileName = tileName, position = cellPos });
             }
             else if (tileName.Contains("Health"))
             {
@@ -66,10 +71,15 @@ namespace WEditor.Scenario
                 HandleScoreGeneration(tileName, cellPos);
             }
         }
-        public void InitGeneration(Vector3Int size)
+        public void ResetLevel()
         {
-            int mapWidth = size.x;
-            int mapHeight = size.y;
+            objectsGenerated.ForEach(item => Destroy(item));
+            InitGeneration();
+        }
+        public virtual void InitGeneration()
+        {
+            int mapWidth = DataHandler.levelSize.x;
+            int mapHeight = DataHandler.levelSize.y;
             mainGrid = new bool[mapWidth, mapHeight];
             wallGrid = new Wall[mapWidth, mapHeight];
             doorGrid = new Door[mapWidth, mapHeight];
@@ -171,7 +181,7 @@ namespace WEditor.Scenario
             Dictionary<string, List<GameObject>> wallsToFilter = new Dictionary<string, List<GameObject>>();
             foreach (var wall in walls)
             {
-                string tileName = wall.wallName;
+                string tileName = wall.tileName;
                 Texture2D wallTex = wallScriptable.GetTexture(tileName);
                 int x = wall.position.x;
                 int y = wall.position.y;
@@ -212,7 +222,7 @@ namespace WEditor.Scenario
             if (mainGrid[x, y + 1] && mainGrid[x, y - 1])
             {
                 doorGrid[x, y] = new Door(
-                    true, door.name,
+                    true, door.tileName,
                     new Vector2Int[] {
                         new Vector2Int(x, y + 1),
                         new Vector2Int(x, y - 1),
@@ -222,7 +232,7 @@ namespace WEditor.Scenario
             else if (mainGrid[x - 1, y] && mainGrid[x + 1, y])
             {
                 doorGrid[x, y] = new Door(
-                    false, door.name,
+                    false, door.tileName,
                     new Vector2Int[] {
                         new Vector2Int(x+1, y),
                         new Vector2Int(x-1, y),
@@ -239,7 +249,7 @@ namespace WEditor.Scenario
                     Door door = doorGrid[x, y];
                     if (door == null || !mainGrid[x, y]) continue;
 
-                    Texture doorTex = doorScriptable.GetTexture(door.name);
+                    Texture doorTex = doorScriptable.GetTexture(door.tileName);
 
                     GameObject doorObject = Instantiate(doorPrefab);
                     doorObject.GetComponent<MeshRenderer>().material.mainTexture = doorTex;

@@ -17,7 +17,7 @@ namespace WEditor.Game.Guns
         {
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = shootClip;
-            shootPoint = transform.GetChild(0);
+            shootPoint = transform?.GetChild(0);
         }
         public void PlayShootClip()
         {

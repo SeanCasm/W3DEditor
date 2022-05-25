@@ -8,11 +8,10 @@ namespace WEditor.Scenario.Playable
 {
     public class ScenarioGenerator : ScenarioGeneratorBase
     {
-        [SerializeField] ScenarioScriptable wallScenarioScriptable;
         public void InitGeneration(GameData levelData)
         {
             (int x, int y) size = levelData.levelSize;
-            base.InitGeneration(new Vector3Int(size.x, size.y, 0));
+            base.InitGeneration();
             List<Door> doors = new List<Door>();
             List<Wall> walls = new List<Wall>();
 
@@ -43,7 +42,7 @@ namespace WEditor.Scenario.Playable
             {
                 Tile itemTile = ScriptableObject.CreateInstance("Tile") as Tile;
                 Vector3Int cellPos = item.position;
-                Texture2D doorTex = doorScriptable.GetTexture(item.name);
+                Texture2D doorTex = doorScriptable.GetTexture(item.tileName);
                 itemTile.sprite = Sprite.Create(doorTex, new Rect(0, 0, doorTex.width, doorTex.height), new Vector2(.5f, .5f));
 
                 mainGrid[cellPos.x, cellPos.y] = true;

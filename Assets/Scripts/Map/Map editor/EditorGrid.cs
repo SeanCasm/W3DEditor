@@ -17,7 +17,6 @@ namespace WEditor.Scenario.Editor
         [SerializeField] BoxCollider confinerCollider;
         [SerializeField] Transform editorCamera;
         [SerializeField] GameObject spawnPrefab;
-        [SerializeField] Behaviour lightComponent;
         [Header("Level load settings")]
         [SerializeField] TMPro.TMP_InputField levelNameInputField;
         [SerializeField] GameObject loadScreen;
@@ -345,13 +344,11 @@ namespace WEditor.Scenario.Editor
         }
         private void PreviewEnter()
         {
-            lightComponent.enabled = true;
             whiteSquare.gameObject.SetActive(false);
             currentSpawn.SetActive(false);
         }
         private void PreviewExit()
         {
-            lightComponent.enabled = false;
             whiteSquare.gameObject.SetActive(true);
             currentSpawn.SetActive(true);
         }
@@ -370,7 +367,8 @@ namespace WEditor.Scenario.Editor
         public void InitGeneration()
         {
             DataHandler.currentLevelPosition = spawnPosition;
-            scenarioGenerator.InitGeneration(mainTilemap);
+            DataHandler.tileMap = mainTilemap;
+            scenarioGenerator.InitGeneration();
         }
     }
 }

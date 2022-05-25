@@ -4,14 +4,10 @@ using UnityEngine;
 
 namespace WEditor.Scenario
 {
-    public class Wall
+    public class Wall : LevelBase
     {
-        public string wallName;
-        public Vector3Int position;
-        public Wall(string wallName, Vector3Int position)
+        public Wall(string wallName, Vector3Int position) : base(wallName, position)
         {
-            this.position = position;
-            this.wallName = wallName;
         }
     }
 }
