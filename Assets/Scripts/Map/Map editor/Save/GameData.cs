@@ -11,6 +11,7 @@ namespace WEditor
         public string[,] levelTiles { get; private set; }
         public (int x, int y) levelSize;
         public string levelName;
+        public int[] levelGuns;
         public string difficultTier = "";
         public int levelID;
         public GameData()
@@ -21,6 +22,7 @@ namespace WEditor
             this.levelSize.x = DataHandler.levelSize.x;
             this.levelSize.y = DataHandler.levelSize.y;
             this.levelTiles = new string[levelSize.x, levelSize.y];
+            this.levelGuns = DataHandler.levelGuns;
             foreach (var item in DataHandler.grid)
             {
                 if (item != null)

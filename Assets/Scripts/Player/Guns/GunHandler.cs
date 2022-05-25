@@ -76,15 +76,16 @@ namespace WEditor.Game.Player.Guns
         {
             int actualIndex = gunIndex;
             gunIndex++;
-
-            if (gunIndex >= playerGunsCount)
-                gunIndex = 0;
-
-            while (gunIndex != actualIndex && !currentGun.hasAmmo)
+            if (gunIndex >= playerGunsCount) gunIndex = 0;
+            while (gunIndex != actualIndex)
             {
-                if (gunIndex == playerGunsCount)
+                if (gunIndex >= playerGunsCount)
                     gunIndex = -1;
 
+                if (currentGun.hasAmmo)
+                {
+                    break;
+                }
                 gunIndex++;
             }
             if (!currentGun.gameObject.activeSelf)

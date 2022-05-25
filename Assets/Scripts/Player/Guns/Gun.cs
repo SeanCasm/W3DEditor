@@ -76,17 +76,16 @@ namespace WEditor.Game.Player.Guns
         }
         public void Fire()
         {
-            if (currentAmmo == 0)
-            {
-                onEmptyAmmo();
-                return;
-            }
-
             currentAmmo--;
             GameplayEvent.instance.AmmoChanged(currentAmmo);
             ShootRay();
             isShooting = true;
             animator.SetTrigger("Shoot");
+            if (currentAmmo == 0)
+            {
+                onEmptyAmmo();
+                return;
+            }
         }
         public void AnimationEvent_StopShooting()
         {

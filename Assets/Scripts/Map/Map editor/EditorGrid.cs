@@ -77,6 +77,8 @@ namespace WEditor.Scenario.Editor
             height = gameData.levelSize.y;
 
             DataHandler.GridSize(new Vector3Int(width, height, 0));
+            DataHandler.levelGuns = gameData.levelGuns;
+            
             levelName = gameData.levelName;
             levelNameInputField.text = levelName;
             List<(int, int, string)> doors = new List<(int, int, string)>();

@@ -4,6 +4,7 @@ using UnityEngine;
 using WEditor.Game.Scriptables;
 using WEditor.Game.Collectibles;
 using WEditor.Utils;
+using WEditor.Game.Player.Guns;
 
 namespace WEditor.Scenario
 {
@@ -12,6 +13,7 @@ namespace WEditor.Scenario
         public static ScenarioGeneratorBase instance;
         [SerializeField] Material groundMaterial;
         [SerializeField] MeshCombiner meshCombiner;
+        [SerializeField] GunHandler gunHandler;
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallPrefab;
         [SerializeField] protected TextureScenarioScriptable wallScriptable;
@@ -80,6 +82,7 @@ namespace WEditor.Scenario
         {
             int mapWidth = DataHandler.levelSize.x;
             int mapHeight = DataHandler.levelSize.y;
+            gunHandler.initialAvailableGuns = DataHandler.levelGuns;
             mainGrid = new bool[mapWidth, mapHeight];
             wallGrid = new Wall[mapWidth, mapHeight];
             doorGrid = new Door[mapWidth, mapHeight];

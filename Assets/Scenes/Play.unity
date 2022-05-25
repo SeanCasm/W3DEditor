@@ -1452,6 +1452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundMaterial: {fileID: 2100000, guid: 494cf8a200ac8cb4285004385748c23e, type: 2}
   meshCombiner: {fileID: 571158876}
+  gunHandler: {fileID: 1736282408}
   wallPrefab: {fileID: 6664535523619635540, guid: 8c639ba0f5f64b449a9fc468262f652f, type: 3}
   wallScriptable: {fileID: 11400000, guid: 0ccb6c13d8af2db4a9e54858da5ca202, type: 2}
   wallFacingPrefab: {fileID: 6369901486800087869, guid: 411b26ac1a8d47b4488936af535c8941, type: 3}

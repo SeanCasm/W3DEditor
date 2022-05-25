@@ -18,7 +18,7 @@ namespace WEditor.Scenario.Editor
         public DifficultyTier difficultyMode = DifficultyTier.Easy;
         private void OnEnable()
         {
-            gunHandler.initialAvailableGuns = new int[] { 0, 1, 2, 3 };
+            gunHandler.initialAvailableGuns = DataHandler.levelGuns;
         }
         public void Dropdown_SelectDifficult()
         {
@@ -30,25 +30,27 @@ namespace WEditor.Scenario.Editor
         public void Dropdown_SelectGuns()
         {
             string guns = gunsDropdown.options[gunsDropdown.value].text;
-            print(guns);
+            int[] gunIndexes = new int[] { };
             switch (guns)
             {
                 case "Knife":
-                    gunHandler.initialAvailableGuns = new int[] { 0 };
+                    gunIndexes = new int[] { 0 };
                     break;
                 case "Pistol":
-                    gunHandler.initialAvailableGuns = new int[] { 1 };
+                    gunIndexes = new int[] { 1 };
                     break;
                 case "Machinegun":
-                    gunHandler.initialAvailableGuns = new int[] { 2 };
+                    gunIndexes = new int[] { 2 };
                     break;
                 case "Heavy Machinegun":
-                    gunHandler.initialAvailableGuns = new int[] { 3 };
+                    gunIndexes = new int[] { 3 };
                     break;
                 case "All":
-                    gunHandler.initialAvailableGuns = new int[] { 0, 1, 2, 3 };
+                    gunIndexes = new int[] { 0, 1, 2, 3 };
                     break;
             }
+            gunHandler.initialAvailableGuns = gunIndexes;
+            DataHandler.levelGuns = gunIndexes;
         }
     }
 }

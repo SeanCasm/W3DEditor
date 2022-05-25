@@ -7223,9 +7223,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1358627111}
         m_TargetAssemblyTypeName: WEditor.UI.EditorMenu, Assembly-CSharp
-        m_MethodName: Button_BackFromEditor
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11955,6 +11955,7 @@ GameObject:
   - component: {fileID: 1358627115}
   - component: {fileID: 1358627117}
   - component: {fileID: 1358627116}
+  - component: {fileID: 1358627118}
   m_Layer: 0
   m_Name: '[HANDLERS]'
   m_TagString: Untagged
@@ -12010,6 +12011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundMaterial: {fileID: 2100000, guid: 494cf8a200ac8cb4285004385748c23e, type: 2}
   meshCombiner: {fileID: 222197012}
+  gunHandler: {fileID: 1699516025}
   wallPrefab: {fileID: 6664535523619635540, guid: 8c639ba0f5f64b449a9fc468262f652f, type: 3}
   wallScriptable: {fileID: 11400000, guid: 0ccb6c13d8af2db4a9e54858da5ca202, type: 2}
   wallFacingPrefab: {fileID: 6369901486800087869, guid: 411b26ac1a8d47b4488936af535c8941, type: 3}
@@ -12146,6 +12148,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c2b9cbeb6d41d242a1341e7612e4726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1358627118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358627111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c446d18a51c1546b18166f91673130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1358627119
