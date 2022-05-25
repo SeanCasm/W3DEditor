@@ -9,33 +9,41 @@ namespace WEditor.Game.Player.Guns
 {
     public class GunHandler : MonoBehaviour, IGunActions
     {
-        [SerializeField] List<Gun> playerGuns;
+        [SerializeField] Gun[] playerGuns;
         public Gun currentGun { get => playerGuns[gunIndex]; }
-        private int playerGunsCount { get => playerGuns.Count; }
+        public int[] initialAvailableGuns { get; set; }
+        private int playerGunsCount { get => playerGuns.Length; }
         int gunIndex = 0;
         private void OnEnable()
         {
             GunInput.instance.EnableAndSetCallbacks(this);
-            playerGuns[0].Init(true);
-            playerGuns.ForEach(gun =>
+            foreach (int i in initialAvailableGuns)
             {
-                gun.onEmptyAmmo = TrySwapGun;
-            });
+                playerGuns[i].RefullAmmo();
+                playerGuns[i].onEmptyAmmo = TrySwapGun;
+            }
+            gunIndex = initialAvailableGuns[0];
+            playerGuns[gunIndex].Init(true);
         }
         private void OnDisable()
         {
-            playerGuns.ForEach(gun =>
+            foreach (Gun g in playerGuns)
             {
-                gun.gameObject.SetActive(false);
-                gun.RefullAmmo();
-            });
-            gunIndex = 0;
-            playerGuns[0].gameObject.SetActive(true);
+                g.Init(false);
+                g.ResetAmmo();
+            }
         }
-        public void RefullPistolAmmo()
+        public void RefullDefaultAmmo()
         {
+            //knife
             playerGuns[0].RefullAmmo();
+
+            // pistol
+            gunIndex = 1;
+            currentGun.Init(true);
+            currentGun.RefullAmmo();
         }
+
         public void AddTo(int ammoID, int amount)
         {
             playerGuns[ammoID].Add(amount);
@@ -66,19 +74,24 @@ namespace WEditor.Game.Player.Guns
 
         private void SwapToGunWithAmmo()
         {
-            do
+            int actualIndex = gunIndex;
+            gunIndex++;
+
+            if (gunIndex >= playerGunsCount)
+                gunIndex = 0;
+
+            while (gunIndex != actualIndex && !currentGun.hasAmmo)
             {
-                currentGun.Init(false);
-                gunIndex++;
-
                 if (gunIndex == playerGunsCount)
-                {
-                    gunIndex = 0;
-                }
+                    gunIndex = -1;
 
+                gunIndex++;
+            }
+            if (!currentGun.gameObject.activeSelf)
+            {
+                playerGuns[actualIndex].Init(false);
                 currentGun.Init(true);
-
-            } while (!currentGun.hasAmmo);
+            }
         }
     }
 }

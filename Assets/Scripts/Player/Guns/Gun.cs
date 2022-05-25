@@ -37,6 +37,10 @@ namespace WEditor.Game.Player.Guns
         {
             currentAmmo = maxAmmo;
         }
+        public void ResetAmmo()
+        {
+            currentAmmo = 0;
+        }
         public void FireCanceled()
         {
             isHolding = false;
@@ -72,7 +76,11 @@ namespace WEditor.Game.Player.Guns
         }
         public void Fire()
         {
-            if (currentAmmo == 0) return;
+            if (currentAmmo == 0)
+            {
+                onEmptyAmmo();
+                return;
+            }
 
             currentAmmo--;
             GameplayEvent.instance.AmmoChanged(currentAmmo);

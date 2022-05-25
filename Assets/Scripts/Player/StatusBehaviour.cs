@@ -19,7 +19,7 @@ namespace WEditor.Game.Player
         {
             Vector3Int pos = DataHandler.spawnPosition;
             PlayerGlobalReference.instance.position = new Vector3(pos.x, pos.y, pos.z);
-            gunHandler.RefullPistolAmmo();
+            gunHandler.RefullDefaultAmmo();
             if (gameMode == GameMode.Editor)
             {
                 WEditor.Scenario.Editor.ScenarioGenerator.instance.ResetLevel();
