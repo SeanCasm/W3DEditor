@@ -245,10 +245,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -258,11 +260,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -287,6 +289,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -469,7 +472,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3fc360fdc9d38f180800000000000000
-      internalID: -9081440904626684685
+      internalID: -4197169231007067282
       vertices: []
       indices: 
       edges: []
@@ -700,7 +703,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3f6d04876c7e8f610800000000000000
-      internalID: 1655327702665713395
+      internalID: -4472486981833177569
       vertices: []
       indices: 
       edges: []
@@ -847,7 +850,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 84140074a7fee5e00800000000000000
-      internalID: 1035528272798040392
+      internalID: -3970418813033641800
       vertices: []
       indices: 
       edges: []
@@ -946,9 +949,38 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Props-ground_28: 5213076278592611701
+      n-Props-ground_14: 7976169764869853600
+      Props-ground_18: -4472486981833177569
+      Props-ground_19: -5455477410663678676
+      Props-ground_24: -3970418813033641800
+      Props-ground_25: 2123621605584113555
+      n-Props-ground_23: -5436150461686541722
+      Props-ground_1: 36012303475202014
+      Props-ground_2: -6911432918116183810
+      Props-ground_20: -8147017676272858122
+      Props-ground_26: 3472596551057296228
+      Props-ground_3: -2705096294079751049
+      Props-ground_5: -460545996900633221
+      Props-ground_6: -8887604033860581042
+      Props-ground_21: 3981013974423328882
+      Props-ground_17: -7117337260615649712
+      Props-ground_27: 2361005792718310285
+      Props-ground_4: -4197169231007067282
+      Props-ground_10: 328161933773483051
+      Props-ground_8: 1141784691194670118
+      Props-ground_15: 8998252298625942366
+      n-Props-ground_11: -4244331222995797883
+      Props-ground_13: -6302493081123231480
+      Props-ground_0: -2783149428158673734
+      Props-ground_29: 5770861953326352530
+      Props-ground_7: 5108982493105579552
+      n-Props-ground_12: -8930862557644683688
+      Props-ground_16: 6774447355312217728
+      Props-ground_22: -2563659307945080486
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

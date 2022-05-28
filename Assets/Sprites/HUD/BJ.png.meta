@@ -200,10 +200,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -213,11 +215,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -242,6 +244,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1552,9 +1555,69 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      BJ_58: 313838105620244779
+      BJ_11: -1037779177493204795
+      BJ_24: 8593409037910713064
+      BJ_37: 2545791579635379978
+      BJ_33: 2430361459839447280
+      BJ_18: 4656148046902922972
+      BJ_9: 446609123307785939
+      BJ_57: -6574926750776876226
+      BJ_48: -6830042623073216981
+      BJ_47: 8548432832406761309
+      BJ_1: -3388777143799989639
+      BJ_31: 2595704809277155855
+      BJ_50: -6814337079469421030
+      BJ_27: 2873098327613650130
+      BJ_32: -6095994515277393496
+      BJ_52: 1776112525153304915
+      BJ_25: 5625286809936745332
+      BJ_43: -7423664910110539795
+      BJ_19: 4825064838832354272
+      BJ_56: -8475978453317468727
+      BJ_38: 8181601916462477979
+      BJ_54: 4810385907152454457
+      BJ_34: -5786276167264692938
+      BJ_49: 205018315052630758
+      BJ_14: 8224605751689701013
+      BJ_29: -7245153421427350341
+      BJ_39: 8231059526918812820
+      BJ_6: 3808357586191764215
+      BJ_15: -825480551957178830
+      BJ_7: 3845247422100921213
+      BJ_42: 4462957779125147405
+      BJ_45: 2568516119247146018
+      BJ_46: 790842492217081662
+      BJ_13: -1040676048922601117
+      BJ_8: 6749383954060683527
+      BJ_20: -8507851875776036374
+      BJ_10: 3530588914017491336
+      BJ_26: 756723314202688756
+      BJ_23: -6577848236542403586
+      BJ_2: 1353749263412624613
+      BJ_16: 6237423696754952206
+      BJ_22: 8830942913230259844
+      BJ_44: 6531449624534793546
+      BJ_0: -2591581526303277055
+      BJ_17: -6482449464012748567
+      BJ_30: 5558256263550790145
+      BJ_55: 2762112862587727131
+      BJ_12: 3104364369867017682
+      BJ_3: 6744134278537739506
+      BJ_41: 6643151000964945356
+      BJ_36: -8401642912975056675
+      BJ_21: -2829783636598137715
+      BJ_40: 693438505163364510
+      BJ_5: 766633157035379351
+      BJ_53: 6712344303254466225
+      BJ_59: 827006482056867425
+      BJ_28: -6315790676345425339
+      BJ_35: 9115431541714440731
+      BJ_51: 3310201544730026667
+      BJ_4: -8890705675396973905
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

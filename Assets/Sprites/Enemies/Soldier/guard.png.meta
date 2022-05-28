@@ -170,10 +170,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -183,11 +185,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -212,6 +214,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1312,9 +1315,59 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      guard_35: 3334102443080805661
+      guard_33: -655122620814754946
+      guard_48: -6216991224590115838
+      guard_18: -5426064798758636520
+      guard_21: -6687411361784145963
+      guard_39: 5684332678144762097
+      guard_27: -452650979341978074
+      guard_29: -7311361273329567327
+      guard_11: 1288389041190039405
+      guard_43: 1225776153380119110
+      guard_25: -5381039104689448797
+      guard_7: 5333932012358281286
+      guard_5: -846891349781450667
+      guard_49: 7493708030047391912
+      guard_22: 4162573845163369854
+      guard_13: -9215942613279108191
+      guard_42: -818753287909990675
+      guard_36: 1520681498836267889
+      guard_32: 8076800385591603161
+      guard_2: -9191970194228111346
+      guard_0: 8426817888908902439
+      guard_44: -1156690779020452156
+      guard_30: -4225238052235625265
+      guard_14: -7055331182149901989
+      guard_40: -4161190868053118419
+      guard_4: -9149248715622306189
+      guard_19: 6972253306760808524
+      guard_8: 5541098106653048961
+      guard_15: -5138339988056334515
+      guard_16: -2313040160306938791
+      guard_26: -6122685455097214709
+      guard_31: 4257719705413324003
+      guard_28: -6982489846896139499
+      guard_12: -7288734126126170296
+      guard_34: -1666772490344094095
+      guard_38: 8896866039582222577
+      guard_47: -8811518412660657748
+      guard_10: 1966852067890781161
+      guard_20: -1842150429714099701
+      guard_6: -6968396128803751677
+      guard_1: -6557464283307180578
+      guard_9: -6815513450890391225
+      guard_41: -2120217274926639651
+      guard_45: 364776823598691420
+      guard_3: 4089389326833356611
+      guard_46: 3388719064848507470
+      guard_37: -4654155649555464062
+      guard_24: -2045028667093737437
+      guard_17: 6561676747374736519
+      guard_23: -2404668892193936260
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

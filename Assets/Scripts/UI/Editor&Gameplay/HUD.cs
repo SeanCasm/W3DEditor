@@ -5,7 +5,7 @@ using TMPro;
 using WEditor.Events;
 namespace WEditor.Game.UI
 {
-    public class InGameUI : MonoBehaviour
+    public class HUD : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI lives, ammo, score, health;
         [SerializeField] Animator playerStatusUIAnimator;

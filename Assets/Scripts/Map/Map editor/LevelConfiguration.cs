@@ -12,14 +12,9 @@ namespace WEditor.Scenario.Editor
 {
     public class LevelConfiguration : MonoBehaviour
     {
-        [SerializeField] GunHandler gunHandler;
         [SerializeField] TMP_Dropdown dropdown;
         [SerializeField] TMP_Dropdown gunsDropdown;
         public DifficultyTier difficultyMode = DifficultyTier.Easy;
-        private void OnEnable()
-        {
-            gunHandler.initialAvailableGuns = DataHandler.levelGuns;
-        }
         public void Dropdown_SelectDifficult()
         {
             string difficultTier = dropdown.options[dropdown.value].text;
@@ -49,7 +44,6 @@ namespace WEditor.Scenario.Editor
                     gunIndexes = new int[] { 0, 1, 2, 3 };
                     break;
             }
-            gunHandler.initialAvailableGuns = gunIndexes;
             DataHandler.levelGuns = gunIndexes;
         }
     }

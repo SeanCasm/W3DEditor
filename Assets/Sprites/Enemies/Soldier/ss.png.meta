@@ -167,10 +167,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -180,11 +182,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -209,6 +211,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1288,9 +1291,58 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      ss_6: 2470817105211149339
+      ss_15: -5926763567789315423
+      ss_21: 1184876833774729670
+      ss_13: -1756046209140045205
+      ss_37: -8101730033667220302
+      ss_43: 3385118915401604592
+      ss_0: 3431852193575524028
+      ss_42: -6519729876090347905
+      ss_18: -8211916119081848804
+      ss_33: -4727613867564890478
+      ss_40: -6505763703902811590
+      ss_4: -267664176863464010
+      ss_9: 3215077004954549164
+      ss_38: 5422478306213604271
+      ss_20: 5096284641935034453
+      ss_24: 1202942879056565001
+      ss_17: 7692983801909069959
+      ss_26: 7472088350234754007
+      ss_32: 292058876188806268
+      ss_12: -1667959677911088978
+      ss_35: 7333542182345985406
+      ss_36: -9013584167519992294
+      ss_47: -1139880827542089412
+      ss_8: 173759981200710308
+      ss_7: -899250537556061513
+      ss_2: -6794494625124419292
+      ss_28: 1570945551617646048
+      ss_3: -8992248595540138817
+      ss_48: -5319884272396393603
+      ss_11: 1387730010309263008
+      ss_14: -6296147520491060179
+      ss_45: -7337321260023777160
+      ss_22: 4944970442472597722
+      ss_19: 8829311418800533581
+      ss_44: 5059715047787158895
+      ss_25: -8780731455938573488
+      ss_39: -1924626141098088714
+      ss_27: 3220340636762653630
+      ss_34: -3409960291431221692
+      ss_46: -7948845948276278232
+      ss_10: -8964260261745915387
+      ss_23: 7765078989258267509
+      ss_30: -4197792041633329305
+      ss_29: 3632518167947453702
+      ss_5: 8359537322968307978
+      ss_16: 3760444705221581576
+      ss_41: 4644122463739743399
+      ss_31: -7127379321707118998
+      ss_1: -7828257641814632783
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -41,6 +41,7 @@ namespace WEditor.Scenario
                 buttonLevel.onClick.AddListener(() =>
                 {
                     DataHandler.currentLevelName = levelName;
+                    DataHandler.levelGuns = newGamedata.levelGuns;
                     (int x, int z) levelSpawn = newGamedata.levelSpawn;
                     DataHandler.currentLevelPosition = new Vector3(levelSpawn.x, .5f, levelSpawn.z);
                     if (loadType == GameMode.Play)

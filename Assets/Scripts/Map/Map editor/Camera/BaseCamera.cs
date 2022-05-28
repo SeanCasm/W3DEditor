@@ -14,11 +14,13 @@ namespace WEditor.CameraUtils
         [SerializeField] float yInitialPosition;
         protected CinemachineVirtualCamera virtualCam;
         protected Vector3 pointViewCenter;
+        public static float currentSpeed { get; set; }
         protected void Start()
         {
+            currentSpeed = PlayerPrefs.HasKey("camSpeed") ? PlayerPrefs.GetFloat("camSpeed") : speed;
             pointViewCenter = EditorGrid.instance.center;
             virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
-            transform.position = new Vector3(pointViewCenter.x,yInitialPosition, pointViewCenter.y);
+            transform.position = new Vector3(pointViewCenter.x, yInitialPosition, pointViewCenter.y);
         }
     }
 }

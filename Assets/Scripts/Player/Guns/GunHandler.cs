@@ -16,6 +16,8 @@ namespace WEditor.Game.Player.Guns
         int gunIndex = 0;
         private void OnEnable()
         {
+            initialAvailableGuns = DataHandler.levelGuns;
+            print(initialAvailableGuns.Length);
             GunInput.instance.EnableAndSetCallbacks(this);
             foreach (int i in initialAvailableGuns)
             {

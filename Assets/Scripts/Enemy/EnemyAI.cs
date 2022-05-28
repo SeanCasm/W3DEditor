@@ -20,7 +20,6 @@ namespace WEditor.Game.Enemy
         private Rigidbody rigid;
         private SpriteRenderer spriteRenderer;
         private PathFinding pathfinding;
-        private SpriteLook spriteLook;
         int groundLayer = 6;
         int playerLayer = 7;
         bool isPatrolling;
@@ -31,7 +30,6 @@ namespace WEditor.Game.Enemy
         void Start()
         {
             currentSpeed = speed;
-            spriteLook = GetComponent<SpriteLook>();
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             rigid = GetComponent<Rigidbody>();
             animator = GetComponentInChildren<Animator>();

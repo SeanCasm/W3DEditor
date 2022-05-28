@@ -164,10 +164,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -178,10 +180,10 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: 1
-    mipBias: -100
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -206,6 +208,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1264,9 +1267,57 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Walls_11: 5543624403135206190
+      Walls_0: -3218248262026354849
+      Walls_24: -5193340887496955132
+      Walls_46: -2231796659318992047
+      Walls_4: 7317334631700292629
+      Walls_14: 7395272119062106114
+      Walls_44: -3263782162111027657
+      Walls_31: -643172208032534154
+      Walls_32: -491892292970094369
+      Walls_39: -8983355188133807576
+      Walls_20: 6604079355047751301
+      Walls_36: -8180312117611356127
+      Walls_21: 2824267220578268457
+      Walls_15: 2701988108291960151
+      Walls_8: 6511404109149442792
+      Walls_16: -4308146535040859911
+      Walls_42: 1212105713752014848
+      Walls_34: 9213593953539519693
+      Walls_5: 2420863537438956345
+      Walls_6: -14520863135872570
+      Walls_45: 3993399513889448215
+      Walls_12: -5057847913604664284
+      Walls_43: -271373585295990251
+      Walls_7: -7366180687131401920
+      Walls_2: -5675400335168754034
+      Walls_41: 4889977613275258645
+      Walls_19: 6483640522714763778
+      Walls_29: 5492600701444731969
+      Walls_23: 3216449091635127271
+      Walls_17: -6070888740825547048
+      Walls_26: 7537763300006889871
+      Walls_33: 1941415962404985185
+      Walls_10: -5130587114860513547
+      Walls_3: 8296322472478124191
+      Walls_9: 5198676504368207085
+      Walls_25: -3212353542367796538
+      Walls_35: 1862701594974666337
+      Walls_1: 2551541108661590903
+      Walls_37: -6585648727418676836
+      Walls_22: 2667545021949077527
+      Walls_13: -6662830832694087935
+      Walls_27: 7483125020187367666
+      Walls_28: 5347629774267791116
+      Walls_40: 8951720658237195102
+      Walls_38: -629472245607452477
+      Walls_47: 271821559693655694
+      Walls_18: -8504653284088915959
+      Walls_30: -5436255929890761385
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

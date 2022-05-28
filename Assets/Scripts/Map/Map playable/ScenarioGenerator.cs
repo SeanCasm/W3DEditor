@@ -10,11 +10,10 @@ namespace WEditor.Scenario.Playable
         public void InitGeneration(GameData levelData)
         {
             (int x, int y) size = levelData.levelSize;
+            DataHandler.GridSize(new Vector3Int(size.x, size.y, 0));
             base.InitGeneration();
             List<Door> doors = new List<Door>();
             List<Wall> walls = new List<Wall>();
-
-            DataHandler.GridSize(new Vector3Int(size.x, size.y, 0));
             for (int x = 0; x < size.x; x++)
             {
                 for (int y = 0; y < size.y; y++)

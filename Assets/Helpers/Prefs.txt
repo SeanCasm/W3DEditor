@@ -1,0 +1,5 @@
+aim = aim sensibility
+camSpeed = editor camera movement speed
+helperTileColor = the color of the helper tile in editor
+fx = sound effects volume.
+music = music volume

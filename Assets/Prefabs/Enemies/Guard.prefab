@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3178500545422978875}
   - component: {fileID: 8806480587987456441}
   - component: {fileID: 1355500185958379807}
-  - component: {fileID: 3949645228221898099}
   - component: {fileID: 6686163483271014676}
   m_Layer: 8
   m_Name: Guard
@@ -33,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4730020814266752803}
   m_Father: {fileID: 0}
@@ -109,57 +109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 15
   score: 100
-  spriteRenderer: {fileID: 7822311282783936479}
---- !u!114 &3949645228221898099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2342706216233829273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67388d1e22fccdb40b8159a6114496c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingSpritesFront: []
-  walkingSpritesBack:
-  - {fileID: -7288734126126170296, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -1842150429714099701, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -6982489846896139499, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 1520681498836267889, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  walkingSpritesFrontLeft:
-  - {fileID: -6815513450890391225, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 6561676747374736519, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -5381039104689448797, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -655122620814754946, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  walkingSpritesFrontRight:
-  - {fileID: -5138339988056334515, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -2404668892193936260, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 4257719705413324003, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 5684332678144762097, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  walkingSpritesLeft:
-  - {fileID: 1966852067890781161, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -5426064798758636520, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -6122685455097214709, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -1666772490344094095, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  walkingSpritesRight:
-  - {fileID: -7055331182149901989, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 4162573845163369854, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -4225238052235625265, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 8896866039582222577, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  walkingSpritesFrontAngleLeft:
-  - {fileID: -6815513450890391225, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 6561676747374736519, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -5381039104689448797, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -655122620814754946, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  walkingSpritesFrontAngleRight:
-  - {fileID: -5138339988056334515, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: -2404668892193936260, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 4257719705413324003, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  - {fileID: 5684332678144762097, guid: 8c970f580b90c0440add4764bbeafa73, type: 3}
-  walkingSpritesBackAngleLeft: []
-  walkingSpritesBackAngleRight: []
   spriteRenderer: {fileID: 7822311282783936479}
 --- !u!212 &6686163483271014676
 SpriteRenderer:
@@ -243,13 +192,14 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2342706216233829276}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6356737716436997437
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -262,6 +212,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

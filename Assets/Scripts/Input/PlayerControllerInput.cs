@@ -19,6 +19,14 @@ namespace WEditor
             Enable();
             wInput.Player.SetCallbacks(callbacks);
         }
+        public void DisableMouseAim()
+        {
+            wInput.Player.Rotatemouse.Disable();
+        }
+        public void EnableMouseAim()
+        {
+            wInput.Player.Rotatemouse.Disable();
+        }
         public void Enable()
         {
             wInput.Player.Enable();

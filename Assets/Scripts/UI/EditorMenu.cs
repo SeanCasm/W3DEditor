@@ -29,6 +29,7 @@ namespace WEditor.UI
         public void Button_BackToPreEditor()
         {
             EditorEvent.instance.EditorExit();
+            SceneHandler.instance.LoadPreMapEditor();
         }
         public void Button_BackFromCreate()
         {

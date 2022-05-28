@@ -52,8 +52,8 @@ namespace WEditor.CameraUtils
         {
             while (move != Vector2.zero)
             {
-                transform.Translate(Vector3.forward * move.y * speed * Time.deltaTime);
-                transform.Translate(Vector3.right * move.x * speed * Time.deltaTime);
+                transform.Translate(Vector3.forward * move.y * currentSpeed * Time.deltaTime);
+                transform.Translate(Vector3.right * move.x * currentSpeed * Time.deltaTime);
                 yield return null;
             }
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static WInput;
 using WEditor.Game.Player.Guns;
-using WEditor.Events;
 namespace WEditor.Game.Player
 {
 
@@ -12,7 +11,9 @@ namespace WEditor.Game.Player
     {
         [Header("Movement")]
         [SerializeField] float speed, sprintSpeed;
+        [Range(0, 5)]
         [SerializeField] float rotationSpeed;
+        public static float currentRotationSpeed;
         private Rigidbody rigid;
         private GunHandler gunHandler;
         private bool isMovingMouse;
@@ -25,14 +26,13 @@ namespace WEditor.Game.Player
         }
         private void OnEnable()
         {
+            currentRotationSpeed = PlayerPrefs.HasKey("aim") ? PlayerPrefs.GetFloat("aim") : rotationSpeed;
             Cursor.lockState = CursorLockMode.Locked;
             rigid = GetComponent<Rigidbody>();
             gunHandler = GetComponentInChildren<GunHandler>();
             PlayerControllerInput.instance.EnableAndSetCallbacks(this);
             currentSpeed = speed;
         }
-
-
         public void OnMovement(InputAction.CallbackContext context)
         {
             Vector2 move = context.ReadValue<Vector2>();
@@ -81,7 +81,7 @@ namespace WEditor.Game.Player
         {
             while (axis != 0)
             {
-                transform.Rotate(Vector3.up, axis * rotationSpeed, Space.World);
+                transform.Rotate(Vector3.up, axis * currentRotationSpeed, Space.World);
                 yield return null;
             }
         }

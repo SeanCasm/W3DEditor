@@ -80,10 +80,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -93,11 +95,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -122,6 +124,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -592,9 +595,29 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      guns_16: 5357073759092374524
+      guns_18: 3496009811187771651
+      guns_1: -7349882584872989000
+      guns_11: -8589672695694742468
+      guns_15: -5021927378985479291
+      guns_0: 7362661061344524757
+      guns_7: -8087828725690429378
+      guns_17: -2077410496073520643
+      guns_19: 5196048043118583838
+      guns_5: -8012370926812475621
+      guns_10: -7903565074922245131
+      guns_4: -2395591618090941519
+      guns_6: 994329863909854400
+      guns_8: -1169459152763573295
+      guns_14: 3274887400127796914
+      guns_2: -3476979527478288156
+      guns_13: -8441434538785342538
+      guns_12: 1425588968670551369
+      guns_9: -3906556932855703639
+      guns_3: -9170448629031416532
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

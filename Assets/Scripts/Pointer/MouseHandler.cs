@@ -23,7 +23,7 @@ namespace WEditor.Input
         public MouseType mouseType { get; set; }
         public Sprite cursorSprite { get => cursor.sprite; set => cursor.sprite = value; }
         private Tile tileRef;
-        private Vector2 mousePosition;
+        public Vector2 mousePosition { get; private set; }
         private bool isSpawn { get => mouseType == MouseType.Spawn; }
         private Vector3 worldPosition;
         private void OnEnable()
