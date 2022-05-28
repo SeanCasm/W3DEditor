@@ -5,11 +5,13 @@ using TMPro;
 using WEditor.Events;
 namespace WEditor.Game.UI
 {
+    /// <summary>
+    /// A class that handle with the HUD in editor mode and play mode.
+    /// </summary>
     public class HUD : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI lives, ammo, score, health;
         [SerializeField] Animator playerStatusUIAnimator;
-
         private void OnEnable()
         {
             GameplayEvent.instance.onAmmoChanged += OnAmmoChanged;
@@ -37,7 +39,8 @@ namespace WEditor.Game.UI
         }
         private void OnScoreChanged(int amount)
         {
-            score.text = "Score <br>" + amount;
+            int currentScore = int.Parse(score.text.Split(" ")[1]) + amount;
+            score.text = "Score\n " + currentScore;
         }
         private void OnHealthChanged(int amount)
         {

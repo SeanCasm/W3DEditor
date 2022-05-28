@@ -3411,7 +3411,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Score
+  m_text: "Score \n0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a058da38dc3e12046b215b3dfa10327e, type: 2}
   m_sharedMaterial: {fileID: 2985958180745567178, guid: a058da38dc3e12046b215b3dfa10327e, type: 2}
@@ -7023,11 +7023,11 @@ GameObject:
   - component: {fileID: 765820651}
   - component: {fileID: 765820647}
   - component: {fileID: 765820649}
-  - component: {fileID: 765820648}
   - component: {fileID: 765820645}
   - component: {fileID: 765820652}
   - component: {fileID: 765820653}
   - component: {fileID: 765820654}
+  - component: {fileID: 765820655}
   m_Layer: 0
   m_Name: '[MENUS]'
   m_TagString: Untagged
@@ -7066,23 +7066,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseUI: {fileID: 1780769361}
   settingsMenu: {fileID: 0}
---- !u!114 &765820648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 765820644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37c12f444cad98e4ca2dbcdb5b8b0a18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lives: {fileID: 122204996}
-  ammo: {fileID: 372691972}
-  score: {fileID: 363692832}
-  health: {fileID: 1688062026}
-  playerStatusUIAnimator: {fileID: 2005075287}
 --- !u!114 &765820649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7172,6 +7155,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &765820655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765820644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c12f444cad98e4ca2dbcdb5b8b0a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: {fileID: 122204996}
+  ammo: {fileID: 372691972}
+  score: {fileID: 363692832}
+  health: {fileID: 1688062026}
+  playerStatusUIAnimator: {fileID: 2005075287}
 --- !u!1 &787860656
 GameObject:
   m_ObjectHideFlags: 0

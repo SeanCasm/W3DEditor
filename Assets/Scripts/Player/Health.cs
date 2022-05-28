@@ -12,7 +12,7 @@ namespace WEditor.Game.Player
         private int currentArmour, currentLives;
         public bool isImmortal { get; set; }
         public bool isFullHealth { get => currentHealth == maxHealth; }
-        private void Start()
+        private void OnEnable()
         {
             currentArmour = maxArmour;
             currentHealth = maxHealth;

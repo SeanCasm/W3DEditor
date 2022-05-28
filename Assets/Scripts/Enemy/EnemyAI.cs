@@ -147,7 +147,6 @@ namespace WEditor.Game.Enemy
                             new Vector3(currentTarget.x, transform.position.y, currentTarget.y),
                             currentSpeed * Time.deltaTime
                         );
-                        print(target);
                         yield return null;
                     }
                 }

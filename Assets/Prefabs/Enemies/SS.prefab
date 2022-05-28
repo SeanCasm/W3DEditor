@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a720515491cc87949b037549b1cae916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 35
   score: 500
   spriteRenderer: {fileID: 7822311282783936479}
 --- !u!212 &6686163483271014676
@@ -286,4 +286,4 @@ MonoBehaviour:
     m_Bits: 128
   damage: 18
   shootClip: {fileID: 0}
-  failChance: 12
+  failChance: 8
