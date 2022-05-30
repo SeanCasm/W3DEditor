@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using WEditor.Events;
+using UnityEngine.UI;
+
 namespace WEditor.Game.UI
 {
     /// <summary>
@@ -12,19 +14,35 @@ namespace WEditor.Game.UI
     {
         [SerializeField] TextMeshProUGUI lives, ammo, score, health;
         [SerializeField] Animator playerStatusUIAnimator;
+        [SerializeField] Image goldenKey, platinumKey;
         private void OnEnable()
         {
+            EditorEvent.instance.onPreviewModeExit += OnPreviewModeExit;
             GameplayEvent.instance.onAmmoChanged += OnAmmoChanged;
             GameplayEvent.instance.onScoreChanged += OnScoreChanged;
             GameplayEvent.instance.onLivesChanged += OnLivesChanged;
             GameplayEvent.instance.onHealthChanged += OnHealthChanged;
+            GameplayEvent.instance.onKeyPickedUp += OnKeyPickedUp;
         }
         private void OnDisable()
         {
+            EditorEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
             GameplayEvent.instance.onAmmoChanged -= OnAmmoChanged;
             GameplayEvent.instance.onScoreChanged -= OnScoreChanged;
             GameplayEvent.instance.onLivesChanged -= OnLivesChanged;
             GameplayEvent.instance.onHealthChanged -= OnHealthChanged;
+            GameplayEvent.instance.onKeyPickedUp -= OnKeyPickedUp;
+        }
+        private void OnPreviewModeExit()
+        {
+            goldenKey.color = platinumKey.color = Color.black;
+        }
+        private void OnKeyPickedUp(int key)
+        {
+            if (key == 0)
+                goldenKey.color = Color.white;
+            else
+                platinumKey.color = Color.white;
         }
         private void OnAmmoChanged(string amount)
         {
@@ -35,7 +53,6 @@ namespace WEditor.Game.UI
             lives.text = "Lives <br>" + amount;
             int healthTier = amount / 16;
             playerStatusUIAnimator.SetInteger("hurtTier", healthTier);
-
         }
         private void OnScoreChanged(int amount)
         {

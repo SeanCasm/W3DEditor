@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1de27c5a79518148b397bc893010092, type: 3}
   m_Name: score_1
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: -7569662823521131118, guid: ee1439c2b925d0e4d95cc7b423cc1145, type: 3}
+  itemSprite: {fileID: 1832198784, guid: d7046e3c6b417f04db722345bb395d10, type: 3}
   amount: 1500
   collectSound: {fileID: 8300000, guid: 5ad64964e58d5f949aeb5218cdcea867, type: 3}

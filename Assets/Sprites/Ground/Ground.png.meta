@@ -1,0 +1,1170 @@
+fileFormatVersion: 2
+guid: d7046e3c6b417f04db722345bb395d10
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Ground_n_0
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 601
+        width: 47
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d0f0baaaabff8346bb0a90afb41171c
+      internalID: -333495403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_1
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 601
+        width: 41
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e75e8533c21692045bfe80e95e3d2fca
+      internalID: 195934062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_2
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 601
+        width: 53
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36460f018899ae14d907d4409f50ac13
+      internalID: 1248207551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_3
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 536
+        width: 37
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f2c94d447a72d847bdccb0100443be2
+      internalID: -1506433231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_n_4
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 536
+        width: 62
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd5b64fc92d18aa47b689025013a83aa
+      internalID: -125464021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_5
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 536
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad17f852513994a469b4e65be7202a69
+      internalID: -1911287273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_health_6
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 536
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1214b8ada7a77448ae1739b292fb26f
+      internalID: -1759433880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_7
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 536
+        width: 46
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 377e8e9b7544e0b46906925ebec46b93
+      internalID: -976284299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_8
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 471
+        width: 42
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86266d96d5e8a7f4aa7e7ce60133129c
+      internalID: 73763439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_9
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 471
+        width: 40
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce1973977ea74b14cbdb72d76be55417
+      internalID: -813354191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_10
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 471
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d164df8869d56b4db39c0caff8d246c
+      internalID: 1371032178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_11
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 471
+        width: 38
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c86af867af53a994a9c316980413aa8a
+      internalID: 2140802020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_12
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 471
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 178e3581d5b379c41b75baf10eb9e907
+      internalID: 45310845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_13
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 406
+        width: 52
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ce4b2426a05a454e9d12817d0284796
+      internalID: -1547887696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_n_14
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 406
+        width: 62
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df196275cc50a7046851bc195d6cd624
+      internalID: -1048620290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_n_15
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 408
+        width: 61
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e256992a8c18af489ad4a4c032eb4ae
+      internalID: 366332930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_16
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 406
+        width: 46
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60fd02907cb4b154898c38af81e6454b
+      internalID: -1715088239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_17
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 406
+        width: 30
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ef697ee1401655418da4aebf2b09479
+      internalID: -1181821514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_18
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 341
+        width: 31
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3c1c9bd7b277284985e4d5ee4260811
+      internalID: -1438389859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_19
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 341
+        width: 60
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77ce79ea95404b3438b753d95c51835d
+      internalID: -1615388592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_key_20
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 342
+        width: 27
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd5383d7fafc62040a60c505a85f5c42
+      internalID: -1846249684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_key_21
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 342
+        width: 25
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 771563a274b31a342b6498a649b4751a
+      internalID: 829996674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_22
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 341
+        width: 47
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a38c5c33ecc901f40802caa764ac4365
+      internalID: 710876506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_23
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 277
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bf3c2187edd1a54bb4d80e2f3815cdb
+      internalID: 355296787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_health_24
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 276
+        width: 31
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b501c92fb44c6414a84014fb7f53bd83
+      internalID: -157576319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_health_25
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 276
+        width: 35
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87cad7bc882979e45b73f6e2b4d7e7d0
+      internalID: -650728854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_ammo_26
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 277
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07400ac288b14334594caa877a021711
+      internalID: -800984114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_gun_27
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 276
+        width: 45
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da56d36763ab6664189f5818c68eb633
+      internalID: 369993382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_gun_28
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 211
+        width: 58
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3f2083a8de077049b6190735f278e7d
+      internalID: 1134014635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_score_29
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 211
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e75e122a24ebc374e8db580024f0bd92
+      internalID: 1683316944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_score_30
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 212
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 490b4f14b393a5a439ee2d540a81f899
+      internalID: 1832198784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_score_31
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 211
+        width: 29
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83f42a8ab1453d143a10f8c92e8cbf01
+      internalID: -957758186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_score_32
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 211
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e56dbe53cbedb8d43a6658ffb1b3cf3a
+      internalID: 1092728774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_live_33
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 146
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02279a5c6e06d6f49ab680d35a806a9f
+      internalID: -2029103906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_34
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 146
+        width: 62
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 901fed9416993794196e8458ebbbc735
+      internalID: -220796625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_35
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 146
+        width: 46
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74a694d29efe0f54a81117f809668570
+      internalID: -360067504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_36
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 146
+        width: 54
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d655575aeed4f74096aee02bee3df3c
+      internalID: -2124277937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_37
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 146
+        width: 54
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3598cd1234dc4642a4a7726159b036c
+      internalID: -1244753762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_n_38
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 81
+        width: 62
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8551049f5c194d24db8d72ec7654aa00
+      internalID: 221186611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_39
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 81
+        width: 38
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8caafda319adf4e4ebec1c7fb2ac3a4a
+      internalID: 2115027252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_41
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 82
+        width: 61
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b92212ad8be70f4d84d4a7d39ce646e
+      internalID: 1747400074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_42
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 81
+        width: 56
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4f38913d648e12429e9843b7865a83e
+      internalID: 1022261562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_43
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 16
+        width: 62
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10028079bdf18f942986887a58f81cf7
+      internalID: -1038832423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_n_44
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 16
+        width: 60
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3336ace0e3e090c4aae581680b081bcb
+      internalID: 1344386563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_45
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 16
+        width: 38
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33bf2bb254bf3444ebcadb071ba8ec43
+      internalID: -1065018571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_46
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 16
+        width: 57
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26261411d1fdfbb408a3bca997c87101
+      internalID: -1213348986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_n_47
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 16
+        width: 61
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 781fc0735e7979d4d8e1a0c4bfc28ac1
+      internalID: -505536684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 288f3b1522ff77749a885b47a4432b58
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Ground_n_38: 221186611
+      Ground_39: 2115027252
+      Ground_1: 195934062
+      Ground_10: 1371032178
+      Ground_16: -1715088239
+      Ground_9: -813354191
+      Ground_13: -1547887696
+      Ground_23: 355296787
+      Ground_40: 1075387245
+      Ground_n_47: -505536684
+      Ground_18: -1438389859
+      Ground_36: -2124277937
+      Ground_11: 2140802020
+      Ground_5: -1911287273
+      Ground_n_15: 366332930
+      Ground_n_44: 1344386563
+      Ground_41: 1747400074
+      Ground_n_14: -1048620290
+      Ground_45: -1065018571
+      Ground_17: -1181821514
+      Ground_35: -360067504
+      Ground_42: 1022261562
+      Ground_34: -220796625
+      Ground_health_25: -650728854
+      Ground_22: 710876506
+      Ground_7: -976284299
+      Ground_37: -1244753762
+      Ground_12: 45310845
+      Ground_gun_28: 1134014635
+      Ground_ammo_26: -800984114
+      Ground_health_24: -157576319
+      Ground_3: -1506433231
+      Ground_score_32: 1092728774
+      Ground_score_30: 1832198784
+      Ground_key_20: -1846249684
+      Ground_8: 73763439
+      Ground_43: -1038832423
+      Ground_46: -1213348986
+      Ground_live_33: -2029103906
+      Ground_score_31: -957758186
+      Ground_2: 1248207551
+      Ground_19: -1615388592
+      Ground_n_4: -125464021
+      Ground_n_0: -333495403
+      Ground_gun_27: 369993382
+      Ground_health_6: -1759433880
+      Ground_score_29: 1683316944
+      Ground_key_21: 829996674
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

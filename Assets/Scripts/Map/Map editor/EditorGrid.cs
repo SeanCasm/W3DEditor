@@ -20,7 +20,7 @@ namespace WEditor.Scenario.Editor
         [Header("Level load settings")]
         [SerializeField] TMPro.TMP_InputField levelNameInputField;
         [SerializeField] GameObject loadScreen;
-        [SerializeField] ScenarioScriptable wall, door, props, propsTop, health, score, ammo;
+        [SerializeField] ScenarioScriptable wall, door, props;
         [Header("Enemy scriptables")]
         [SerializeField] List<EnemyScriptable> enemies;
         public bool isSpawnLocated { get; private set; }
@@ -78,7 +78,7 @@ namespace WEditor.Scenario.Editor
 
             DataHandler.GridSize(new Vector3Int(width, height, 0));
             DataHandler.levelGuns = gameData.levelGuns;
-            
+
             levelName = gameData.levelName;
             levelNameInputField.text = levelName;
             List<(int, int, string)> doors = new List<(int, int, string)>();
@@ -102,24 +102,14 @@ namespace WEditor.Scenario.Editor
                         tile.sprite = wall.GetSprite(tile.name);
                         SetTile(cellPos, tile);
                     }
-                    else if (tile.name.Contains("Prop"))
+                    else if (tile.name.Contains("Ground"))
                     {
-                        tile.sprite = tile.name.Contains("top") ? propsTop.GetSprite(tile.name) : props.GetSprite(tile.name);
+                        tile.sprite = props.GetSprite(tile.name);
                         SetTile(cellPos, tile);
                     }
                     else if (tile.name.Contains("Door"))
                     {
                         doors.Add((x, y, tile.name));
-                    }
-                    else if (tile.name.Contains("Health"))
-                    {
-                        tile.sprite = health.GetSprite(tile.name);
-                        SetTile(cellPos, tile);
-                    }
-                    else if (tile.name.Contains("Score"))
-                    {
-                        tile.sprite = score.GetSprite(tile.name);
-                        SetTile(cellPos, tile);
                     }
                     else
                     {
@@ -220,17 +210,16 @@ namespace WEditor.Scenario.Editor
                 {
                     HandleDoorLocation(cellPos, tile);
                 }
-                else if (tile.name.Contains("Prop"))
+                else if (tile.name.StartsWith("Ground"))
                 {
-                    HandlePropLocation(cellPos, tile);
-                }
-                else if (tile.name.Contains("Wall"))
-                {
-                    mainTilemap.SetTile(cellPos, tile);
-                }
-                else if (tile.name.Contains("Health") || tile.name.Contains("Ammo"))
-                {
-                    HandleCollectibleLocation(cellPos, tile);
+                    if (tile.name.Contains("health") || tile.name.Contains("ammo") || tile.name.Contains("score"))
+                    {
+                        HandleCollectibleLocation(cellPos, tile);
+                    }
+                    else
+                    {
+                        HandlePropLocation(cellPos, tile);
+                    }
                 }
                 else
                 {
@@ -316,6 +305,7 @@ namespace WEditor.Scenario.Editor
             }
             mainTilemap.SetTile(cellPos, tile);
         }
+
         private void HandleDoorLocation(Vector3Int cellPos, Tile tile)
         {
             bool tilesAround = false;

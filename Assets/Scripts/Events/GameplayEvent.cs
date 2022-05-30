@@ -8,12 +8,22 @@ namespace WEditor.Events
     public class GameplayEvent : MonoBehaviour
     {
         public static GameplayEvent instance;
+        public event Action<int> onKeyPickedUp;
         public event Action<string> onAmmoChanged;
         public event Action<int> onLivesChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
 
         private void OnEnable()
         {
             instance = this;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key">0: golden, 1: platinum</param>
+        public void KeyPickedUp(int key)
+        {
+            if (onKeyPickedUp != null)
+                onKeyPickedUp(key);
         }
         public void HealthChanged(int amount)
         {

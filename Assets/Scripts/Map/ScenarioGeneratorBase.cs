@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Game.Scriptables;
 using WEditor.Game.Collectibles;
-using WEditor.Utils;
 
 namespace WEditor.Scenario
 {
@@ -13,8 +12,8 @@ namespace WEditor.Scenario
         [SerializeField] Material groundMaterial;
         [SerializeField] MeshCombiner meshCombiner;
         [Header("Items generation")]
-        [SerializeField] GameObject scorePrefab;
-        [SerializeField] GameObject ammoPrefab, healthPrefab;
+        [SerializeField] GameObject scorePrefab, keyPrefab;
+        [SerializeField] GameObject ammoPrefab, healthPrefab, gunPrefab;
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallPrefab;
         [SerializeField] protected TextureScenarioScriptable wallScriptable;
@@ -24,9 +23,11 @@ namespace WEditor.Scenario
         [SerializeField] GameObject doorPrefab;
         [Header("Prop generation")]
         [SerializeField] GameObject propPrefab;
-        [SerializeField] protected ScenarioScriptable propsDefaultSprites, propsTopSprites;
+        [SerializeField] protected ScenarioScriptable propsDefaultSprites;
         [Header("Collectible generation")]
-        [SerializeField] List<CollectibleScriptable> healthScriptables, ammoScriptables, scoreScriptables;
+        [SerializeField] List<CollectibleScriptable> keyScriptables;
+        [SerializeField] List<CollectibleScriptable> healthScriptables, ammoScriptables;
+        [SerializeField] List<CollectibleScriptable> scoreScriptables, gunScriptables;
         [Header("Enemy generation")]
         [SerializeField] GameObject guardPrefab, ssPrefab;
         protected List<GameObject> objectsGenerated = new List<GameObject>();
@@ -41,37 +42,32 @@ namespace WEditor.Scenario
         protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<Door> doors, List<Wall> walls)
         {
             Vector3 position = new Vector3(cellPos.x, 0, cellPos.y);
-            if (tileName.Contains("top"))
-            {
-                HandlePropGeneration(tileName, position);
-            }
-            else if (tileName.Contains("Wall"))
+            if (tileName.Contains("Wall"))
             {
                 walls.Add(new Wall(tileName, cellPos));
             }
-            else if (tileName.Contains("Prop"))
+            else if (tileName.StartsWith("Ground"))
             {
-                HandlePropGeneration(tileName, position);
+                if (tileName.Contains("health"))
+                    HandleHealthGeneration(tileName, cellPos);
+                else if (tileName.Contains("ammo"))
+                    HandleAmmoGeneration(tileName, cellPos);
+                else if (tileName.Contains("score"))
+                    HandleScoreGeneration(tileName, cellPos);
+                else if (tileName.Contains("key"))
+                    HandleKeyGeneration(tileName, cellPos);
+                else if (tileName.Contains("gun"))
+                    HandleGunGeneration(tileName, cellPos);
+                else
+                    HandlePropGeneration(tileName, position);
             }
             else if (tileName.Contains("Door"))
             {
                 doors.Add(new Door { tileName = tileName, position = cellPos });
             }
-            else if (tileName.Contains("Health"))
-            {
-                HandleHealthGeneration(tileName, cellPos);
-            }
-            else if (tileName.Contains("Ammo"))
-            {
-                HandleAmmoGeneration(tileName, cellPos);
-            }
             else if (tileName.StartsWith("guard") || tileName.StartsWith("ss"))
             {
                 HandleEnemyGeneration(tileName, position);
-            }
-            else if (tileName.StartsWith("Score"))
-            {
-                HandleScoreGeneration(tileName, cellPos);
             }
         }
         public void ResetLevel()
@@ -131,48 +127,60 @@ namespace WEditor.Scenario
             }
             meshCombiner.CombineMeshes(fences);
         }
+        protected void HandleKeyGeneration(string tileName, Vector3Int cellPos)
+        {
+            GameObject keyObject = Instantiate(keyPrefab);
+            Key key = keyObject.GetComponent<Key>();
+            key.CollectibleScriptable = keyScriptables.Find(x => x.spriteName == tileName);
+            key.keyType = key.CollectibleScriptable.name.Contains("Golden") ? KeyType.Golden : KeyType.Platinum;
+            Vector3 position = GetWorldPosition(key.getSprite, cellPos);
+            SetItemPosition(keyObject, position);
+        }
+        protected void HandleGunGeneration(string tileName, Vector3Int cellPos)
+        {
+            GameObject gunObject = Instantiate(gunPrefab);
+            Gun gun = gunObject.GetComponent<Gun>();
+            int index = gunScriptables.FindIndex(x => x.spriteName == tileName);
+            gun.CollectibleScriptable = gunScriptables[index];
+            gun.gunIndex = index+2;
+            Vector3 position = GetWorldPosition(gun.getSprite, cellPos);
+            SetItemPosition(gunObject, position);
+        }
         protected void HandleScoreGeneration(string tileName, Vector3Int cellPos)
         {
-            var (lastIndex, position) = GetItem(tileName, cellPos);
             GameObject scoreObject = Instantiate(scorePrefab);
-            objectsGenerated.Add(scoreObject);
 
             Score score = scoreObject.GetComponent<Score>();
-            score.CollectibleScriptable = scoreScriptables[lastIndex];
+            score.CollectibleScriptable = scoreScriptables.Find(x => x.spriteName == tileName);
 
+            Vector3 position = GetWorldPosition(score.getSprite, cellPos);
             SetItemPosition(scoreObject, position);
         }
-        private (int, Vector3) GetItem(string tileName, Vector3Int pos)
+        private Vector3 GetWorldPosition(Sprite tileSprite, Vector3Int pos)
         {
-            Vector3 position = new Vector3(pos.x, 0, pos.y);
-            position = new Vector3(position.x + .5f, 0, position.z + .5f);
-
-            int lastIndex = tileName.GetIndexFromAssetName();
-            return (lastIndex, position);
+            float newY = tileSprite.bounds.max.y;
+            return new Vector3(pos.x + .5f, newY, pos.y + .5f);
         }
         private void SetItemPosition(GameObject itemGameObject, Vector3 position)
         {
-            Instantiate(itemGameObject);
             itemGameObject.transform.position = position;
             itemGameObject.SetActive(true);
+            objectsGenerated.Add(itemGameObject);
         }
         protected void HandleAmmoGeneration(string tileName, Vector3Int cellPos)
         {
-            var (lastIndex, position) = GetItem(tileName, cellPos);
             GameObject ammoObject = Instantiate(ammoPrefab);
-            objectsGenerated.Add(ammoObject);
             Ammo ammo = ammoObject.GetComponent<Ammo>();
-            ammo.CollectibleScriptable = ammoScriptables[lastIndex];
-            ammo.ammoID = lastIndex;
+            ammo.CollectibleScriptable = ammoScriptables[Random.Range(0, ammoScriptables.Count)];
+            Vector3 position = GetWorldPosition(ammo.getSprite, cellPos);
             SetItemPosition(ammoObject, position);
         }
         protected void HandleHealthGeneration(string tileName, Vector3Int cellPos)
         {
-            var (lastIndex, position) = GetItem(tileName, cellPos);
             GameObject healthObject = Instantiate(healthPrefab);
-            objectsGenerated.Add(healthObject);
             Health health = healthObject.GetComponent<Health>();
-            health.CollectibleScriptable = healthScriptables[lastIndex];
+            health.CollectibleScriptable = healthScriptables.Find(x => x.spriteName == tileName);
+            Vector3 position = GetWorldPosition(health.getSprite, cellPos);
 
             SetItemPosition(healthObject, position);
         }
@@ -290,23 +298,15 @@ namespace WEditor.Scenario
 
 
             //setup the collision for this prop
-            if (!tileName.StartsWith("n"))
+            if (!tileName.Contains("_n"))
             {
                 Rigidbody propRigid = propObject.AddComponent<Rigidbody>();
                 propRigid.useGravity = false;
                 propRigid.constraints = RigidbodyConstraints.FreezeAll;
                 propObject.AddComponent<BoxCollider>();
             }
-            if (tileName.Contains("top"))
-            {
-                spriteRenderer.sprite = propsTopSprites.GetSprite(tileName);
-                position = new Vector3(position.x + .5f, 1 - spriteRenderer.sprite.bounds.max.y, position.z + .5f);
-            }
-            else
-            {
-                spriteRenderer.sprite = propsDefaultSprites.GetSprite(tileName);
-                position = new Vector3(position.x + .5f, spriteRenderer.sprite.bounds.max.y, position.z + .5f);
-            }
+            spriteRenderer.sprite = propsDefaultSprites.GetSprite(tileName);
+            position = new Vector3(position.x + .5f, .5f, position.z + .5f);
 
             //fix the tile center pivot
             propObject.transform.position = position;

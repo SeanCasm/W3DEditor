@@ -27,10 +27,23 @@ namespace WEditor.Game.Collectibles
                 amount = collectibleScriptable.amount;
             }
         }
+        public Sprite getSprite { get => spriteRenderer.sprite; }
+        private void OnEnable()
+        {
+            OnPlayerTrigger += OnPlayerEnter;
+        }
+        private void OnDisable()
+        {
+            OnPlayerTrigger -= OnPlayerEnter;
+        }
         private void Update()
         {
             transform.LookAt(PlayerGlobalReference.instance.position, Vector3.up);
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
+        protected virtual bool OnPlayerEnter()
+        {
+            return true;
         }
         private void OnTriggerEnter(Collider other)
         {

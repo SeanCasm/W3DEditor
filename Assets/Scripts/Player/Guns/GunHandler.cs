@@ -43,9 +43,10 @@ namespace WEditor.Game.Player
             currentGun.RefullAmmo();
         }
 
-        public void AddTo(int amount)
+        public void AddTo(int amount) => currentGun.Add(amount);
+        public void AddGun(int index)
         {
-            currentGun.Add(amount);
+            playerGuns[index].RefullAmmo();
         }
         public void OnFire(InputAction.CallbackContext context)
         {

@@ -7,9 +7,8 @@ namespace WEditor.Game.Scriptables
     public class CollectibleScriptable : ScriptableObject
     {
         public Sprite itemSprite;
+        public string spriteName { get => itemSprite.name; }
         public int amount;
         public AudioClip collectSound;
     }
 }
-
-

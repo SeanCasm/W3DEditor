@@ -9,15 +9,7 @@ namespace WEditor.Game.Collectibles
     {
         public int ammoID { get; set; }
         public static int ammoDevalue = 0;
-        private void OnEnable()
-        {
-            base.OnPlayerTrigger += PlayerEnter;
-        }
-        private void OnDisable()
-        {
-            base.OnPlayerTrigger -= PlayerEnter;
-        }
-        private bool PlayerEnter()
+        protected override bool OnPlayerEnter()
         {
             GunHandler gunHandler = PlayerGlobalReference.instance.gunHandler;
             if (gunHandler.currentGun is Firearm && !(gunHandler.currentGun as Firearm).ifFullOf)

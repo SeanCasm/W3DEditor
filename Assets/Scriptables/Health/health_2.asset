@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1de27c5a79518148b397bc893010092, type: 3}
   m_Name: health_2
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: -5731162285055332302, guid: c4f82913ebd81bd478b64764af06d64d, type: 3}
+  itemSprite: {fileID: -650728854, guid: d7046e3c6b417f04db722345bb395d10, type: 3}
   amount: 25
   collectSound: {fileID: 8300000, guid: c426963098557fa4aad3553f7d61ff0c, type: 3}

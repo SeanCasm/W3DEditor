@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1de27c5a79518148b397bc893010092, type: 3}
   m_Name: ammo_1
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: -4254059877319897387, guid: ddca769d732e9bc46b6aeaeb07706b51, type: 3}
+  itemSprite: {fileID: -800984114, guid: d7046e3c6b417f04db722345bb395d10, type: 3}
   amount: 10
   collectSound: {fileID: 0}

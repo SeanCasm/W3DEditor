@@ -7,15 +7,8 @@ namespace WEditor.Game.Collectibles
 {
     public class Score : CollectibleBase
     {
-        private void OnEnable()
-        {
-            base.OnPlayerTrigger += PlayerEnter;
-        }
-        private void OnDisable()
-        {
-            base.OnPlayerTrigger -= PlayerEnter;
-        }
-        private bool PlayerEnter()
+
+        protected override bool OnPlayerEnter()
         {
             GameplayEvent.instance.ScoreChanged(amount);
             return true;

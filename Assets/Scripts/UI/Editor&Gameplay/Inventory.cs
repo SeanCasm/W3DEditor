@@ -45,7 +45,7 @@ namespace WEditor.UI
         }
         public void SetItemSpriteToMousePointer(Sprite sprite)
         {
-            Tile itemTile = new Tile();
+            Tile itemTile = ScriptableObject.CreateInstance("Tile") as Tile;
             itemTile.name = sprite.name;
             itemTile.sprite = sprite;
             MouseHandler.instance.SetAsset(sprite, itemTile);
