@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static WInput;
-using WEditor.Game.Player.Guns;
 namespace WEditor.Game.Player
 {
 

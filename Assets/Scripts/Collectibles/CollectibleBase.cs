@@ -6,7 +6,10 @@ namespace WEditor.Game.Collectibles
 {
     public class CollectibleBase : MonoBehaviour
     {
-        protected event System.Action OnPlayerTrigger;
+        /// <summary>
+        /// Boolean defines if the current action happens without problems
+        /// </summary>
+        protected event System.Func<bool> OnPlayerTrigger;
         protected int amount;
         private SpriteRenderer spriteRenderer;
         private CollectibleScriptable collectibleScriptable;
@@ -33,8 +36,9 @@ namespace WEditor.Game.Collectibles
         {
             if (OnPlayerTrigger != null && other.CompareTag("Player"))
             {
-                OnPlayerTrigger();
-                OnCollected();
+                bool triggered = OnPlayerTrigger();
+                if (triggered)
+                    OnCollected();
             }
         }
         private void OnCollected()

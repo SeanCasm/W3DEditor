@@ -15,9 +15,10 @@ namespace WEditor.Game.Collectibles
         {
             base.OnPlayerTrigger -= PlayerEnter;
         }
-        private void PlayerEnter()
+        private bool PlayerEnter()
         {
             GameplayEvent.instance.ScoreChanged(amount);
+            return true;
         }
     }
 }

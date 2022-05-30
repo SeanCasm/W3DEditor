@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using static WInput;
 using UnityEngine.InputSystem;
-
-namespace WEditor.Game.Player.Guns
+namespace WEditor.Game.Player
 {
     public class GunHandler : MonoBehaviour, IGunActions
     {
@@ -17,7 +15,6 @@ namespace WEditor.Game.Player.Guns
         private void OnEnable()
         {
             initialAvailableGuns = DataHandler.levelGuns;
-            print(initialAvailableGuns.Length);
             GunInput.instance.EnableAndSetCallbacks(this);
             foreach (int i in initialAvailableGuns)
             {
@@ -46,9 +43,9 @@ namespace WEditor.Game.Player.Guns
             currentGun.RefullAmmo();
         }
 
-        public void AddTo(int ammoID, int amount)
+        public void AddTo(int amount)
         {
-            playerGuns[ammoID].Add(amount);
+            currentGun.Add(amount);
         }
         public void OnFire(InputAction.CallbackContext context)
         {
@@ -84,7 +81,8 @@ namespace WEditor.Game.Player.Guns
                 if (gunIndex >= playerGunsCount)
                     gunIndex = -1;
 
-                if (currentGun.hasAmmo)
+                if ((currentGun is Firearm && (currentGun as Firearm).hasAmmo) ||
+                    currentGun is Knife)
                 {
                     break;
                 }

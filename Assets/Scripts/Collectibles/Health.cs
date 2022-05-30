@@ -13,9 +13,15 @@ namespace WEditor.Game.Collectibles
         {
             base.OnPlayerTrigger -= OnPlayerEnter;
         }
-        private void OnPlayerEnter()
+        private bool OnPlayerEnter()
         {
-            PlayerGlobalReference.instance.playerHealth.Add(amount);
+            WEditor.Game.Player.Health pHealth = PlayerGlobalReference.instance.playerHealth;
+            if (!pHealth.ifFullOf)
+            {
+                pHealth.Add(amount);
+                return true;
+            }
+            return false;
         }
     }
 }

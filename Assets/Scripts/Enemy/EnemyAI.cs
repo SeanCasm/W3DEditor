@@ -9,6 +9,7 @@ namespace WEditor.Game.Enemy
     public class EnemyAI : MonoBehaviour
     {
         [Header("Player detection")]
+        [SerializeField] AudioClip alertedClip;
         [SerializeField] float speed;
         [SerializeField] float tileCheckDistance = .64f, distanceToAttack;
         private Animator animator;
@@ -22,7 +23,7 @@ namespace WEditor.Game.Enemy
         private PathFinding pathfinding;
         int groundLayer = 6;
         int playerLayer = 7;
-        bool isPatrolling;
+        bool isPatrolling, isAlerted;
         private float angle;
         private List<Vector3Int> movements = new List<Vector3Int>();
 
@@ -59,6 +60,7 @@ namespace WEditor.Game.Enemy
                         isPatrolling = false;
                         break;
                     case MovementBehaviour.Patrolling:
+                        isAlerted = false;
                         currentSpeed = speed;
                         if (!isPatrolling) StartCoroutine(nameof(PatrollingMovement));
                         isPatrolling = true;
@@ -115,6 +117,11 @@ namespace WEditor.Game.Enemy
                     }
                     break;
                 case "Player":
+                    if (!isAlerted)
+                    {
+                        AudioSource.PlayClipAtPoint(alertedClip, transform.position);
+                        isAlerted = true;
+                    }
                     float playerDistance = Vector3.Distance(localCenter, playerPosition);
                     Debug.DrawRay(localCenter, playerDirection * playerDistance, Color.green);
                     if (playerDistance <= distanceToAttack)
@@ -173,6 +180,7 @@ namespace WEditor.Game.Enemy
             animator.SetBool("isPatrolling", false);
             animator.SetTrigger("death");
             rigid.velocity = Vector3.zero;
+            StopAllCoroutines();
             Destroy(rigid);
         }
         private void LateUpdate()

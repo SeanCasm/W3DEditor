@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WEditor.Game.Guns;
 
-namespace WEditor.Game.Enemy.Guns
+namespace WEditor.Game.Enemy
 {
     public class Gun : GunBase<int>
     {

@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 using WEditor;
 using static WInput;
 using WEditor.Game.Player;
-using WEditor.Game.Player.Guns;
 using WEditor.UI;
 using TMPro;
 public class CommandConsole : MonoBehaviour, ICommandConsoleActions

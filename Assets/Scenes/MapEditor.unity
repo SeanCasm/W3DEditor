@@ -1520,14 +1520,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knife
       objectReference: {fileID: 0}
-    - target: {fileID: 1486107571606022768, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2474667039125096684, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 5827763642006895853, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1572,10 +1564,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7965421879515568500, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
-      propertyPath: hitLayer.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
@@ -1584,15 +1572,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5827763642006895853, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
   m_PrefabInstance: {fileID: 167286506}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &167286508 stripped
+--- !u!114 &167286509 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7965421879515568500, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
+  m_CorrespondingSourceObject: {fileID: 167286509, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
   m_PrefabInstance: {fileID: 167286506}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bdb872be974c524590d0efb2a4aa932, type: 3}
+  m_Script: {fileID: 11500000, guid: aa669742d6dcb734aa18c18d14002c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &167418148
@@ -10610,6 +10598,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundMaterial: {fileID: 2100000, guid: 494cf8a200ac8cb4285004385748c23e, type: 2}
   meshCombiner: {fileID: 222197012}
+  scorePrefab: {fileID: 8137097100968022013, guid: 251a7b0b7c3eb694e96cf37b458e724d, type: 3}
+  ammoPrefab: {fileID: 8137097100968022013, guid: 3262a8fd4400d2f4aaec64329471fe93, type: 3}
+  healthPrefab: {fileID: 8137097100968022013, guid: bd61917eb07a40d4cbbf76dccdec16ba, type: 3}
   wallPrefab: {fileID: 6664535523619635540, guid: 8c639ba0f5f64b449a9fc468262f652f, type: 3}
   wallScriptable: {fileID: 11400000, guid: 0ccb6c13d8af2db4a9e54858da5ca202, type: 2}
   wallFacingPrefab: {fileID: 6369901486800087869, guid: 411b26ac1a8d47b4488936af535c8941, type: 3}
@@ -11466,6 +11457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  deathClip: []
   maxArmour: 100
   initialLives: 3
 --- !u!114 &1506622866
@@ -13321,7 +13313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGuns:
-  - {fileID: 167286508}
+  - {fileID: 167286509}
   - {fileID: 598973336}
   - {fileID: 562003107}
   - {fileID: 167418149}

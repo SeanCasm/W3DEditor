@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Game.Player;
+
 namespace WEditor.Game.Collectibles
 {
     public class Ammo : CollectibleBase
     {
-        [SerializeField] int ammoID;
+        public int ammoID { get; set; }
         public static int ammoDevalue = 0;
         private void OnEnable()
         {
@@ -15,9 +17,15 @@ namespace WEditor.Game.Collectibles
         {
             base.OnPlayerTrigger -= PlayerEnter;
         }
-        private void PlayerEnter()
+        private bool PlayerEnter()
         {
-            PlayerGlobalReference.instance.gunHandler.AddTo(ammoID, amount * (ammoDevalue / 100));
+            GunHandler gunHandler = PlayerGlobalReference.instance.gunHandler;
+            if (gunHandler.currentGun is Firearm && !(gunHandler.currentGun as Firearm).ifFullOf)
+            {
+                gunHandler.AddTo(amount * (ammoDevalue / 100));
+                return true;
+            }
+            return false;
         }
     }
 }

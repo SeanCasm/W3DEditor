@@ -7,7 +7,7 @@ namespace WEditor.Game
     {
         [SerializeField] float slideTime;
         [SerializeField] float timeBeforeClose;
-        [SerializeField] AudioClip doorClip;
+        [SerializeField] AudioClip openClip, closeClip;
         // [SerializeField] LayerMask playerLayer, enemyLayer;
         private bool playerAround = false;
         private bool enemyAround = false;
@@ -16,7 +16,6 @@ namespace WEditor.Game
         private void Start()
         {
             audioSource = GetComponent<AudioSource>();
-            audioSource.clip = doorClip;
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -25,6 +24,7 @@ namespace WEditor.Game
                 playerAround = true;
                 if (doorState == State.Close)
                 {
+                    audioSource.clip = openClip;
                     audioSource.Play();
                     StartCoroutine(nameof(Open));
                 }
@@ -71,7 +71,6 @@ namespace WEditor.Game
         }
         IEnumerator Close()
         {
-            audioSource.Play();
             doorState = State.Closing;
             float time = 0;
             float direction = -1;
@@ -82,6 +81,8 @@ namespace WEditor.Game
                 time += Time.deltaTime;
                 yield return null;
             }
+            audioSource.clip = closeClip;
+            audioSource.Play();
             doorState = State.Close;
         }
     }

@@ -8,7 +8,8 @@ namespace WEditor.Events
     public class GameplayEvent : MonoBehaviour
     {
         public static GameplayEvent instance;
-        public event Action<int> onLivesChanged, onAmmoChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
+        public event Action<string> onAmmoChanged;
+        public event Action<int> onLivesChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
 
         private void OnEnable()
         {
@@ -35,7 +36,7 @@ namespace WEditor.Events
                 onLivesChanged(amount);
             }
         }
-        public void AmmoChanged(int amount)
+        public void AmmoChanged(string amount)
         {
             if (onAmmoChanged != null)
             {

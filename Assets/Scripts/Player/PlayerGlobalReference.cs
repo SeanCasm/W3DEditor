@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Game.Player;
-using WEditor.Game.Player.Guns;
 namespace WEditor
 {
     public class PlayerGlobalReference : MonoBehaviour

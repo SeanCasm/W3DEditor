@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2898446523871056373}
   m_RootOrder: 1
@@ -72,6 +73,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2898446523871056373}
   m_RootOrder: 0
@@ -158,6 +160,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 948607889006899802}
   - {fileID: 6871487023877765795}
@@ -178,7 +181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slideTime: 1.75
   timeBeforeClose: 3
-  doorClip: {fileID: 8300000, guid: fb983973aeae05447b06a4d28aa454a3, type: 3}
+  openClip: {fileID: 8300000, guid: a2287707542226440b7e2a3080472f40, type: 3}
+  closeClip: {fileID: 8300000, guid: a0ea49cb9416fc946b9cc668edd7a817, type: 3}
 --- !u!54 &7866732403445028942
 Rigidbody:
   m_ObjectHideFlags: 0

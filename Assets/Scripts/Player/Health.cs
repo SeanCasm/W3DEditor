@@ -5,13 +5,17 @@ using WEditor.Events;
 
 namespace WEditor.Game.Player
 {
-    public class Health : HealthBase<int>
+    public class Health : HealthBase<int>, IFullable
     {
         [SerializeField] int maxArmour;
         [SerializeField] int initialLives;
         private int currentArmour, currentLives;
         public bool isImmortal { get; set; }
-        public bool isFullHealth { get => currentHealth == maxHealth; }
+        /// <summary>
+        /// Cheks if the current amount of health is equal to the max amount of health
+        /// </summary>
+        public bool ifFullOf => currentHealth == maxHealth;
+
         private void OnEnable()
         {
             currentArmour = maxArmour;
@@ -22,11 +26,11 @@ namespace WEditor.Game.Player
             GameplayEvent.instance.HealthChanged(currentHealth);
             GameplayEvent.instance.LivesChanged(currentLives);
         }
-        public void Add(int amount)
+        public bool Add(int amount)
         {
             if (currentHealth >= maxHealth)
             {
-                return;
+                return false;
             }
 
             currentHealth += amount;
@@ -34,6 +38,7 @@ namespace WEditor.Game.Player
 
 
             GameplayEvent.instance.HealthChanged(currentHealth);
+            return true;
         }
         public void AddArmour(int amount)
         {

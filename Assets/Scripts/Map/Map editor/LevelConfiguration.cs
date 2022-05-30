@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Game;
 using TMPro;
-using UnityEngine.UI;
-using WEditor.UI;
-using WEditor.Game.Player.Guns;
 
 namespace WEditor.Scenario.Editor
 {

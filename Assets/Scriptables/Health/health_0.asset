@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSprite: {fileID: -8630923909508717717, guid: c4f82913ebd81bd478b64764af06d64d, type: 3}
   amount: 5
-  collectSound: {fileID: 0}
+  collectSound: {fileID: 8300000, guid: c426963098557fa4aad3553f7d61ff0c, type: 3}

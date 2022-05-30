@@ -26,7 +26,7 @@ namespace WEditor.Game.UI
             GameplayEvent.instance.onLivesChanged -= OnLivesChanged;
             GameplayEvent.instance.onHealthChanged -= OnHealthChanged;
         }
-        private void OnAmmoChanged(int amount)
+        private void OnAmmoChanged(string amount)
         {
             ammo.text = "Ammo <br>" + amount;
         }

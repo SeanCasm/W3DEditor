@@ -1224,6 +1224,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundMaterial: {fileID: 2100000, guid: 494cf8a200ac8cb4285004385748c23e, type: 2}
   meshCombiner: {fileID: 571158876}
+  scorePrefab: {fileID: 8137097100968022013, guid: 251a7b0b7c3eb694e96cf37b458e724d, type: 3}
+  ammoPrefab: {fileID: 8137097100968022013, guid: 3262a8fd4400d2f4aaec64329471fe93, type: 3}
+  healthPrefab: {fileID: 8137097100968022013, guid: bd61917eb07a40d4cbbf76dccdec16ba, type: 3}
   wallPrefab: {fileID: 6664535523619635540, guid: 8c639ba0f5f64b449a9fc468262f652f, type: 3}
   wallScriptable: {fileID: 11400000, guid: 0ccb6c13d8af2db4a9e54858da5ca202, type: 2}
   wallFacingPrefab: {fileID: 6369901486800087869, guid: 411b26ac1a8d47b4488936af535c8941, type: 3}
@@ -1527,7 +1530,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Score
+  m_text: "Score \n0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a058da38dc3e12046b215b3dfa10327e, type: 2}
   m_sharedMaterial: {fileID: 2985958180745567178, guid: a058da38dc3e12046b215b3dfa10327e, type: 2}
@@ -2863,13 +2866,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1269255815 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7965421879515568500, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
+  m_CorrespondingSourceObject: {fileID: 167286509, guid: d124dde36c3f581449ba97c8d96c9911, type: 3}
   m_PrefabInstance: {fileID: 1269255813}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bdb872be974c524590d0efb2a4aa932, type: 3}
+  m_Script: {fileID: 11500000, guid: aa669742d6dcb734aa18c18d14002c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1339957039
@@ -3690,6 +3693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  deathClip: []
   maxArmour: 100
   initialLives: 3
 --- !u!114 &1540030953

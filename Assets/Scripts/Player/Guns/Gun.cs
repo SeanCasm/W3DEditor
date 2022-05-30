@@ -2,20 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WEditor.Events;
-using WEditor.Game.Guns;
-
-namespace WEditor.Game.Player.Guns
+using WEditor.Game;
+namespace WEditor.Game.Player
 {
     public class Gun : GunBase<float>
     {
-        [SerializeField] protected int maxAmmo;
-        protected int currentAmmo;
-        public bool hasAmmo { get => currentAmmo > 0; }
-        private bool isInitialized;
+        protected Animator animator;
         public bool isShooting { get; private set; }
         protected bool isHolding;
-        protected Animator animator;
+        protected bool isInitialized;
         public Action onGunStoppedFire;
         public Action onEmptyAmmo;
         private new void Start()
@@ -23,24 +18,7 @@ namespace WEditor.Game.Player.Guns
             base.Start();
             animator = GetComponent<Animator>();
         }
-        private void OnEnable()
-        {
-            GameplayEvent.instance.AmmoChanged(currentAmmo);
-        }
-        private void OnDisable()
-        {
-            StopAllCoroutines();
-            onGunStoppedFire = null;
-            onEmptyAmmo = null;
-        }
-        public void RefullAmmo()
-        {
-            currentAmmo = maxAmmo;
-        }
-        public void ResetAmmo()
-        {
-            currentAmmo = 0;
-        }
+        private void LateUpdate() => animator.SetBool("isShooting", isShooting);
         public void FireCanceled()
         {
             isHolding = false;
@@ -51,21 +29,6 @@ namespace WEditor.Game.Player.Guns
             isHolding = true;
             StartCoroutine(nameof(QueueShooting));
         }
-        public void Init(bool enable)
-        {
-            if (!isInitialized)
-            {
-                currentAmmo = maxAmmo;
-                isInitialized = true;
-            }
-
-            gameObject.SetActive(enable);
-        }
-
-        private void LateUpdate()
-        {
-            animator.SetBool("isShooting", isShooting);
-        }
         private IEnumerator QueueShooting()
         {
             while (isHolding)
@@ -74,29 +37,18 @@ namespace WEditor.Game.Player.Guns
                 yield return new WaitForSeconds(.5f);
             }
         }
-        public void Fire()
+        public virtual void Init(bool enable)
         {
-            currentAmmo--;
-            GameplayEvent.instance.AmmoChanged(currentAmmo);
-            ShootRay();
-            isShooting = true;
-            animator.SetTrigger("Shoot");
-            if (currentAmmo == 0)
-            {
-                onEmptyAmmo();
-                return;
-            }
+            gameObject.SetActive(enable);
         }
-        public void AnimationEvent_StopShooting()
+        public virtual void RefullAmmo() { }
+        public virtual void ResetAmmo() { }
+        public virtual void Add(int amount){}
+        public virtual void AnimationEvent_StopShooting()
         {
             if (!isHolding) isShooting = false;
-
-            if (onGunStoppedFire != null)
-            {
-                onGunStoppedFire();
-            }
         }
-        private new void ShootRay()
+        protected new void ShootRay()
         {
             (bool, RaycastHit) hitInfo = base.ShootRay();
             if (hitInfo.Item1)
@@ -105,11 +57,10 @@ namespace WEditor.Game.Player.Guns
                 enemyHealth.Take(damage);
             }
         }
-
-        public void Add(int amount)
+        public virtual void Fire()
         {
-            currentAmmo += amount;
-            currentAmmo = currentAmmo >= maxAmmo ? maxAmmo : currentAmmo;
+            isShooting = true;
+            animator.SetTrigger("Shoot");
         }
     }
 }

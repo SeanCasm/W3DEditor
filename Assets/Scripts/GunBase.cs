@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WEditor.Game.Guns
+namespace WEditor.Game
 {
     public class GunBase<T> : MonoBehaviour
     {

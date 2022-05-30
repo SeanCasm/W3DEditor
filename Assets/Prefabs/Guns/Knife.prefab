@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5827763642006895853}
   - component: {fileID: 4431762507189190319}
   - component: {fileID: 8732941147181798803}
-  - component: {fileID: 7965421879515568500}
   - component: {fileID: 5242212037437766975}
-  m_Layer: 0
+  - component: {fileID: 167286509}
+  m_Layer: 7
   m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7275994732242754415}
   m_Father: {fileID: 0}
@@ -89,7 +90,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &8732941147181798803
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,29 +103,11 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7965421879515568500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1486107571606022768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bdb872be974c524590d0efb2a4aa932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkDistance: 0.2
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  damage: 6
-  shootClip: {fileID: 8300000, guid: 61939fa284e760a48b47b3aef8b77be5, type: 3}
-  maxAmmo: 9999
 --- !u!82 &5242212037437766975
 AudioSource:
   m_ObjectHideFlags: 0
@@ -221,6 +204,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &167286509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486107571606022768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa669742d6dcb734aa18c18d14002c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkDistance: 0.4
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  damage: 6
+  shootClip: {fileID: 8300000, guid: 5655adda6d8833048a6e30f6d58bf52c, type: 3}
 --- !u!1 &2474667039125096684
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7275994732242754415}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: shootpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,6 +248,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5827763642006895853}
   m_RootOrder: 0

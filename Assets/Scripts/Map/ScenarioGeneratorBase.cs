@@ -4,7 +4,6 @@ using UnityEngine;
 using WEditor.Game.Scriptables;
 using WEditor.Game.Collectibles;
 using WEditor.Utils;
-using WEditor.Game.Player.Guns;
 
 namespace WEditor.Scenario
 {
@@ -13,6 +12,9 @@ namespace WEditor.Scenario
         public static ScenarioGeneratorBase instance;
         [SerializeField] Material groundMaterial;
         [SerializeField] MeshCombiner meshCombiner;
+        [Header("Items generation")]
+        [SerializeField] GameObject scorePrefab;
+        [SerializeField] GameObject ammoPrefab, healthPrefab;
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallPrefab;
         [SerializeField] protected TextureScenarioScriptable wallScriptable;
@@ -131,27 +133,22 @@ namespace WEditor.Scenario
         }
         protected void HandleScoreGeneration(string tileName, Vector3Int cellPos)
         {
-            var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
+            var (lastIndex, position) = GetItem(tileName, cellPos);
+            GameObject scoreObject = Instantiate(scorePrefab);
+            objectsGenerated.Add(scoreObject);
 
-            Score score = itemGameObject.AddComponent<Score>();
+            Score score = scoreObject.GetComponent<Score>();
             score.CollectibleScriptable = scoreScriptables[lastIndex];
 
-            SetItemPosition(itemGameObject, position);
+            SetItemPosition(scoreObject, position);
         }
-        private (GameObject, int, Vector3) GetItem(string tileName, Vector3Int pos)
+        private (int, Vector3) GetItem(string tileName, Vector3Int pos)
         {
             Vector3 position = new Vector3(pos.x, 0, pos.y);
             position = new Vector3(position.x + .5f, 0, position.z + .5f);
 
-            GameObject itemGameObject = new GameObject(tileName);
-            itemGameObject.SetActive(false);
-            itemGameObject.AddComponent<SpriteRenderer>();
-            BoxCollider box = itemGameObject.AddComponent<BoxCollider>();
-            box.isTrigger = true;
-            objectsGenerated.Add(itemGameObject);
-
             int lastIndex = tileName.GetIndexFromAssetName();
-            return (itemGameObject, lastIndex, position);
+            return (lastIndex, position);
         }
         private void SetItemPosition(GameObject itemGameObject, Vector3 position)
         {
@@ -161,21 +158,23 @@ namespace WEditor.Scenario
         }
         protected void HandleAmmoGeneration(string tileName, Vector3Int cellPos)
         {
-            var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
-
-            Ammo ammo = itemGameObject.AddComponent<Ammo>();
+            var (lastIndex, position) = GetItem(tileName, cellPos);
+            GameObject ammoObject = Instantiate(ammoPrefab);
+            objectsGenerated.Add(ammoObject);
+            Ammo ammo = ammoObject.GetComponent<Ammo>();
             ammo.CollectibleScriptable = ammoScriptables[lastIndex];
-
-            SetItemPosition(itemGameObject, position);
+            ammo.ammoID = lastIndex;
+            SetItemPosition(ammoObject, position);
         }
         protected void HandleHealthGeneration(string tileName, Vector3Int cellPos)
         {
-            var (itemGameObject, lastIndex, position) = GetItem(tileName, cellPos);
-
-            Health health = itemGameObject.AddComponent<Health>();
+            var (lastIndex, position) = GetItem(tileName, cellPos);
+            GameObject healthObject = Instantiate(healthPrefab);
+            objectsGenerated.Add(healthObject);
+            Health health = healthObject.GetComponent<Health>();
             health.CollectibleScriptable = healthScriptables[lastIndex];
 
-            SetItemPosition(itemGameObject, position);
+            SetItemPosition(healthObject, position);
         }
         protected void HandleWallGeneration(List<Wall> walls)
         {

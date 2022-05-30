@@ -9,11 +9,13 @@ namespace WEditor.Game.Enemy
     {
         [SerializeField] int score;
         [SerializeField] SpriteRenderer spriteRenderer;
+        private AudioSource audioSource;
         private EnemyAI enemyAI;
         public static float healthMultiplier = 1;
         private Collider healthBox;
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             enemyAI = GetComponentInParent<EnemyAI>();
             healthBox = GetComponent<Collider>();
             currentHealth = maxHealth * healthMultiplier;
@@ -39,6 +41,8 @@ namespace WEditor.Game.Enemy
             healthBox.enabled = false;
             GameplayEvent.instance.ScoreChanged(score);
             enabled = false;
+            audioSource.clip = deathClip[Random.Range(0, deathClip.Length)];
+            audioSource.Play();
         }
     }
 }
