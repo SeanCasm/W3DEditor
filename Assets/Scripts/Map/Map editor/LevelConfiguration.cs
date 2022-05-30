@@ -29,13 +29,13 @@ namespace WEditor.Scenario.Editor
                     gunIndexes = new int[] { 0 };
                     break;
                 case "Pistol":
-                    gunIndexes = new int[] { 1 };
+                    gunIndexes = new int[] { 0, 1 };
                     break;
                 case "Machinegun":
-                    gunIndexes = new int[] { 2 };
+                    gunIndexes = new int[] { 0, 2 };
                     break;
                 case "Heavy Machinegun":
-                    gunIndexes = new int[] { 3 };
+                    gunIndexes = new int[] { 0, 3 };
                     break;
                 case "All":
                     gunIndexes = new int[] { 0, 1, 2, 3 };

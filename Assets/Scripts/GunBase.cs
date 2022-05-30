@@ -17,7 +17,9 @@ namespace WEditor.Game
         {
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = shootClip;
-            shootPoint = transform?.GetChild(0);
+            // checks if is a player gun
+            if (hitLayer.value == 256)
+                shootPoint = transform.GetChild(0);
         }
         public void PlayShootClip()
         {

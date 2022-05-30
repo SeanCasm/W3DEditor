@@ -74,19 +74,15 @@ namespace WEditor.Game.Player
         private void SwapToGunWithAmmo()
         {
             int actualIndex = gunIndex;
-            gunIndex++;
-            if (gunIndex >= playerGunsCount) gunIndex = 0;
-            while (gunIndex != actualIndex)
+            while (true)
             {
-                if (gunIndex >= playerGunsCount)
-                    gunIndex = -1;
-
+                gunIndex++;
+                if (gunIndex >= playerGunsCount) gunIndex = 0;
                 if ((currentGun is Firearm && (currentGun as Firearm).hasAmmo) ||
                     currentGun is Knife)
                 {
                     break;
                 }
-                gunIndex++;
             }
             if (!currentGun.gameObject.activeSelf)
             {

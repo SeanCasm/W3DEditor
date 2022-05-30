@@ -175,7 +175,7 @@ namespace WEditor.Game.Enemy
             isDead = true;
             eBehaviour = MovementBehaviour.None;
             animator.SetBool("isAttacking", false);
-            animator.SetBool("idle", false);
+            // animator.SetBool("idle", false);
             animator.SetBool("isWalking", false);
             animator.SetBool("isPatrolling", false);
             animator.SetTrigger("death");
@@ -191,7 +191,7 @@ namespace WEditor.Game.Enemy
                 //     spriteLook.SwapSpriteWhenFollowingPlayer(angle, animator, isVisible);
 
                 animator.SetBool("isAttacking", eBehaviour == MovementBehaviour.Attacking);
-                animator.SetBool("idle", eBehaviour == MovementBehaviour.Idle);
+                // animator.SetBool("idle", eBehaviour == MovementBehaviour.Idle);
                 animator.SetBool("isWalking", eBehaviour == MovementBehaviour.FollowingPlayer);
                 animator.SetBool("isPatrolling", eBehaviour == MovementBehaviour.Patrolling);
             }

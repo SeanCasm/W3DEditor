@@ -385,5 +385,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 18
-  shootClip: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: 09261a84dbb920348950f806f11a8985, type: 3}
   failChance: 8
