@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Events;
+
 namespace WEditor.Game
 {
     public class Sensor : MonoBehaviour
@@ -8,26 +10,38 @@ namespace WEditor.Game
         [SerializeField] float slideTime;
         [SerializeField] float timeBeforeClose;
         [SerializeField] AudioClip openClip, closeClip;
-        // [SerializeField] LayerMask playerLayer, enemyLayer;
         private bool playerAround = false;
         private bool enemyAround = false;
         private AudioSource audioSource;
+        public float timeToClose { get => timeBeforeClose; set => timeBeforeClose = value; }
         public State doorState { get; private set; } = State.Close;
         private void Start()
         {
             audioSource = GetComponent<AudioSource>();
+        }
+        private void OnEnable()
+        {
+            GameplayEvent.instance.onInteracted += OnInteracted;
+        }
+        private void OnDisable()
+        {
+            GameplayEvent.instance.onInteracted -= OnInteracted;
+        }
+        private void OnInteracted()
+        {
+            if (doorState == State.Close && playerAround)
+            {
+                doorState = State.Opening;
+                audioSource.clip = openClip;
+                audioSource.Play();
+                StartCoroutine(nameof(Open));
+            }
         }
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
                 playerAround = true;
-                if (doorState == State.Close)
-                {
-                    audioSource.clip = openClip;
-                    audioSource.Play();
-                    StartCoroutine(nameof(Open));
-                }
             }
             else if (other.CompareTag("Enemy"))
             {
@@ -53,7 +67,6 @@ namespace WEditor.Game
 
         IEnumerator Open()
         {
-            doorState = State.Opening;
             float time = 0;
             float direction = 1;
             float speed = direction / slideTime;
@@ -67,7 +80,9 @@ namespace WEditor.Game
 
             yield return new WaitForSeconds(timeBeforeClose);
             yield return new WaitWhile(() => playerAround || enemyAround);
-            StartCoroutine(nameof(Close));
+
+            if (timeBeforeClose > 0)
+                StartCoroutine(nameof(Close));
         }
         IEnumerator Close()
         {

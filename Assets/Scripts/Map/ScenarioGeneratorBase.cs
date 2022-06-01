@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Game.Scriptables;
 using WEditor.Game.Collectibles;
+using WEditor.Game;
 
 namespace WEditor.Scenario
 {
@@ -17,10 +18,10 @@ namespace WEditor.Scenario
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallPrefab;
         [SerializeField] protected TextureScenarioScriptable wallScriptable;
-        [SerializeField] GameObject wallFacingPrefab;
         [Header("Door generation")]
         [SerializeField] protected TextureScenarioScriptable doorScriptable;
         [SerializeField] GameObject doorPrefab;
+        [SerializeField] GameObject elevatorPrefab;
         [Header("Prop generation")]
         [SerializeField] GameObject propPrefab;
         [SerializeField] protected ScenarioScriptable propsDefaultSprites;
@@ -142,7 +143,7 @@ namespace WEditor.Scenario
             Gun gun = gunObject.GetComponent<Gun>();
             int index = gunScriptables.FindIndex(x => x.spriteName == tileName);
             gun.CollectibleScriptable = gunScriptables[index];
-            gun.gunIndex = index+2;
+            gun.gunIndex = index + 2;
             Vector3 position = GetWorldPosition(gun.getSprite, cellPos);
             SetItemPosition(gunObject, position);
         }
@@ -196,7 +197,7 @@ namespace WEditor.Scenario
                 GameObject wallObject = Instantiate(wallPrefab);
                 if (wallsToFilter.ContainsKey(tileName))
                 {
-                    var wallsFiltered = wallsToFilter[tileName];
+                    List<GameObject> wallsFiltered = wallsToFilter[tileName];
                     wallsFiltered.Add(wallObject);
                 }
                 else
@@ -220,8 +221,6 @@ namespace WEditor.Scenario
             enemy.transform.position = position;
             objectsGenerated.Add(enemy);
         }
-
-
         protected void AddDoorToList(Door door)
         {
             int x = door.position.x;
@@ -255,47 +254,26 @@ namespace WEditor.Scenario
                 for (int y = 0; y < doorGrid.GetLength(1); y++)
                 {
                     Door door = doorGrid[x, y];
+                    GameObject doorObject = new GameObject("door");
+
                     if (door == null || !mainGrid[x, y]) continue;
 
-                    Texture doorTex = doorScriptable.GetTexture(door.tileName);
+                    doorObject = Instantiate(doorPrefab, new Vector3(x + .5f, .5f, y + .5f), Quaternion.identity, null);
 
-                    GameObject doorObject = Instantiate(doorPrefab);
-                    doorObject.GetComponent<MeshRenderer>().material.mainTexture = doorTex;
-                    Vector3 position = Vector3.zero;
                     if (door.topBottomSide)
-                    {
-                        position = new Vector3(x + .5f, .5f, y + .5f);
                         doorObject.transform.eulerAngles = new Vector3(0, 90, 0);
-                        SetWallFace(door, new Vector3Int(x, y, 0));
-                    }
-                    else
-                    {
-                        position = new Vector3(x + .5f, .5f, y + .5f);
-                        SetWallFace(door, new Vector3Int(x, y, 0));
-                    }
-                    doorObject.transform.position = position;
+
                     objectsGenerated.Add(doorObject);
                 }
             }
         }
-        private void SetWallFace(Door door, Vector3Int position)
-        {
-            int x = position.x;
-            int y = position.y;
 
-            GameObject wallF = Instantiate(wallFacingPrefab);
-            wallF.transform.position = new Vector3(position.x + .5f, .5f, position.y + .5f);
-            objectsGenerated.Add(wallF);
-            if (door.topBottomSide)
-                wallF.transform.eulerAngles = new Vector3(0, 90, 0);
-        }
         protected void HandlePropGeneration(string tileName, Vector3 position)
         {
             //world position
             GameObject propObject = Instantiate(propPrefab);
 
             SpriteRenderer spriteRenderer = propObject.GetComponentInChildren<SpriteRenderer>();
-
 
             //setup the collision for this prop
             if (!tileName.Contains("_n"))

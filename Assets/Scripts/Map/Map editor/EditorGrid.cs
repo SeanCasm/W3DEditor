@@ -6,17 +6,20 @@ using WEditor.UI;
 using WEditor.Events;
 using WEditor.Game.Scriptables;
 using WEditor.Utils;
+using WEditor.Input;
+
 namespace WEditor.Scenario.Editor
 {
     public class EditorGrid : MonoBehaviour
     {
         public static EditorGrid instance;
+        [SerializeField] ElevatorGeneration elevatorGeneration;
         [SerializeField] Tilemap mainTilemap, pointerPreview, whiteSquare;
         [SerializeField] Sprite gridSprite, helperSprite, eraserSprite;
         [SerializeField] ScenarioGenerator scenarioGenerator;
         [SerializeField] BoxCollider confinerCollider;
         [SerializeField] Transform editorCamera;
-        [SerializeField] GameObject spawnPrefab;
+        [SerializeField] GameObject spawnPrefab, elevatorPanel;
         [Header("Level load settings")]
         [SerializeField] TMPro.TMP_InputField levelNameInputField;
         [SerializeField] GameObject loadScreen;
@@ -29,11 +32,8 @@ namespace WEditor.Scenario.Editor
         private Vector3 spawnPosition;
         private int width, height;
         public string levelName { get; set; } = "";
-        private bool HasTile(Vector3Int cellPos)
-        {
-            return mainTilemap.HasTile(cellPos);
-        }
-        public Vector3 center { get => new Vector3((float)width / 2, 0, (float)height / 2); }
+        private bool HasTile(Vector3Int cellPos) => mainTilemap.HasTile(cellPos);
+        public Vector3 center => new Vector3((float)width / 2, 0, (float)height / 2);
         private void Start()
         {
             if (!instance) instance = this;
@@ -169,6 +169,7 @@ namespace WEditor.Scenario.Editor
             DataHandler.GridSize(new Vector3Int(width, height, 0));
             EditorEvent.instance.EditorEnter();
         }
+
         public void EraseTile(Vector3 pos)
         {
             Vector3Int cellPos = mainTilemap.WorldToCell(pos);
@@ -206,9 +207,16 @@ namespace WEditor.Scenario.Editor
         {
             if (IsTileInsideTilemap(cellPos) && tile != null)
             {
-                if (tile.name.Contains("Door"))
+                if (tile.name.StartsWith("Door"))
                 {
-                    HandleDoorLocation(cellPos, tile);
+                    if (tile.name.Contains("_end"))
+                    {
+                        HandleElevatorLocation(cellPos, tile);
+                    }
+                    else
+                    {
+                        HandleDoorLocation(cellPos, tile);
+                    }
                 }
                 else if (tile.name.StartsWith("Ground"))
                 {
@@ -265,10 +273,7 @@ namespace WEditor.Scenario.Editor
             isSpawnLocated = true;
             DataHandler.spawnPosition = Vector3Int.FloorToInt(spawnPosition);
         }
-        private bool IsTileInsideTilemap(Vector3Int cellPos)
-        {
-            return cellPos.x >= 0 && cellPos.x < width && cellPos.y >= 0 && cellPos.y < height;
-        }
+        private bool IsTileInsideTilemap(Vector3Int cellPos) => (cellPos.x >= 0 && cellPos.x < width && cellPos.y >= 0 && cellPos.y < height);
         public void SetEraserTileOnAim(Vector3 pos)
         {
             Vector3Int cellPos = pointerPreview.WorldToCell(pos);
@@ -306,33 +311,35 @@ namespace WEditor.Scenario.Editor
             mainTilemap.SetTile(cellPos, tile);
         }
 
-        private void HandleDoorLocation(Vector3Int cellPos, Tile tile)
+        private void HandleElevatorLocation(Vector3Int cellPos, Tile tile)
         {
-            bool tilesAround = false;
-            //Gets top and bottom tiles position in tilemap
+            bool doorPlaced = HandleDoorLocation(cellPos, tile);
 
-            //Checks top and bottom tiles
-            TileBase topTile = mainTilemap.GetTile(cellPos.GetTop());
-            TileBase bottomTile = mainTilemap.GetTile(cellPos.GetBottom());
+            if (doorPlaced)
+                MessageHandler.instance.SetMessage("level_elv");
 
-            //Checks left and right tiles
-            TileBase leftTile = mainTilemap.GetTile(cellPos.GetLeft());
-            TileBase rightTile = mainTilemap.GetTile(cellPos.GetRight());
+            EditorEvent.instance.ElevatorEditing();
+            elevatorGeneration.cellPos = cellPos;
+            elevatorGeneration.elevatorPanel = elevatorPanel;
+            elevatorGeneration.mainTilemap = mainTilemap;
+            elevatorPanel.SetActive(true);
+        }
 
-            if ((topTile != null && bottomTile != null &&
-                 topTile.name.StartsWith("Wall") && bottomTile.name.StartsWith("Wall")) ||
-                 (leftTile != null && rightTile != null &&
-                 leftTile.name.StartsWith("Wall") && rightTile.name.StartsWith("Wall")))
+        private bool HandleDoorLocation(Vector3Int cellPos, Tile tile)
+        {
+            bool tilePlaced = false;
+
+            if ((DataHandler.CheckForWall(cellPos.GetTop()) && DataHandler.CheckForWall(cellPos.GetBottom())) ||
+                (DataHandler.CheckForWall(cellPos.GetRight()) && DataHandler.CheckForWall(cellPos.GetLeft())))
             {
                 mainTilemap.SetTile(cellPos, tile);
-                tilesAround = true;
+                tilePlaced = true;
             }
 
-            if (!tilesAround)
-            {
+            if (!tilePlaced)
                 MessageHandler.instance.SetError("grid_door");
-                return;
-            }
+
+            return tilePlaced;
         }
         private void PreviewEnter()
         {

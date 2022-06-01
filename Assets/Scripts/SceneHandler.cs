@@ -11,6 +11,8 @@ public class SceneHandler : MonoBehaviour
     public static SceneHandler instance;
     private GameData gameData;
     int width, height;
+    public bool isEditorScene => SceneManager.GetActiveScene().buildIndex == 3 ? true : false;
+    public bool isPreEditorScene => SceneManager.GetActiveScene().buildIndex == 1 ? true : false;
     private void Start()
     {
         if (instance == null)
@@ -34,14 +36,9 @@ public class SceneHandler : MonoBehaviour
         this.gameData = gameData;
         SceneManager.LoadSceneAsync(3).completed += EditorLoadCompleteLoad;
     }
-    public void LoadPreMapEditor()
-    {
-        SceneManager.LoadSceneAsync(1);
-    }
-    public void LoadMain()
-    {
-        SceneManager.LoadSceneAsync(0);
-    }
+    public void LoadPreMapEditor() => SceneManager.LoadSceneAsync(1);
+    public void LoadEndGameScene() => SceneManager.LoadSceneAsync(4);
+    public void LoadMain() => SceneManager.LoadSceneAsync(0);
     public void LoadPlayScene(GameData gameData)
     {
         this.gameData = gameData;

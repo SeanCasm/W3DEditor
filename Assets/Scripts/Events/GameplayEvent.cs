@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using WEditor.Game.Player;
+
 namespace WEditor.Events
 {
     public class GameplayEvent : MonoBehaviour
@@ -10,11 +12,30 @@ namespace WEditor.Events
         public static GameplayEvent instance;
         public event Action<int> onKeyPickedUp;
         public event Action<string> onAmmoChanged;
+        public event Action<InfoStatsUIText> onLevelCompeted;
+        public event Action onTeasuresChanged, onKillsChanged;
         public event Action<int> onLivesChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
-
-        private void OnEnable()
+        public event Action onInteracted;
+        private void OnEnable() => instance = this;
+        public void LevelCompeted(InfoStatsUIText levelStats)
         {
-            instance = this;
+            if (onLevelCompeted != null)
+                onLevelCompeted(levelStats);
+        }
+        public void Interacted()
+        {
+            if (onInteracted != null)
+                onInteracted();
+        }
+        public void TeasuresChanged()
+        {
+            if (onTeasuresChanged != null)
+                onTeasuresChanged();
+        }
+        public void KillsChanged()
+        {
+            if (onKillsChanged != null)
+                onKillsChanged();
         }
         /// <summary>
         /// 

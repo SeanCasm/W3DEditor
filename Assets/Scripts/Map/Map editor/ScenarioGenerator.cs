@@ -47,10 +47,6 @@ namespace WEditor.Scenario.Editor
             //to avoid fails on the generation
             doors.ForEach(item =>
             {
-                Tile itemTile = ScriptableObject.CreateInstance("Tile") as Tile;
-                Texture2D doorTex = doorScriptable.GetTexture(item.tileName);
-                itemTile.sprite = Sprite.Create(doorTex, new Rect(0, 0, doorTex.width, doorTex.height), new Vector2(.5f, .5f));
-
                 mainGrid[item.position.x, item.position.y] = true;
 
                 AddDoorToList(item);

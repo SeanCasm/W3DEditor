@@ -26,6 +26,17 @@ namespace WEditor.Events
         public event Action onPlayModeEnter, onPlayModeExit;
         public event Action onEditorInventoryActiveChanged;
         public event Action<int> onEditorInventorySelected;
+        public event Action onElevatorEditing, onElevatorEditingExit;
+        public void ElevatorEditingExit()
+        {
+            if (onElevatorEditingExit != null)
+                onElevatorEditingExit();
+        }
+        public void ElevatorEditing()
+        {
+            if (onElevatorEditing != null)
+                onElevatorEditing();
+        }
         public void EditorExit()
         {
             if (onEditorExit != null)
@@ -68,7 +79,7 @@ namespace WEditor.Events
                 onEditorEnter();
             }
         }
-       
+
         public void EditorInventorySelected(int id)
         {
             if (onEditorInventorySelected != null)

@@ -191,7 +191,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollViewContent: {fileID: 212275338}
   levelPrefab: {fileID: 4126118970363580434, guid: de3d9b422fdf2dd458c60f57c61d1c48, type: 3}
-  loadType: 0
 --- !u!4 &131575024
 Transform:
   m_ObjectHideFlags: 0

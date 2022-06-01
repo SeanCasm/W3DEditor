@@ -13,6 +13,13 @@ namespace WEditor
         public static Vector2Int levelSize { get => new Vector2Int(grid.GetLength(0), grid.GetLength(1)); }
         public static Vector3Int spawnPosition;
         public static int[] levelGuns = new int[] { 0, 1, 2, 3 }; //default value
+        public static bool CheckForWall(Vector3Int position)
+        {
+            EditorGridLevelData eg = grid[position.x, position.y];
+            if (eg != null)
+                return eg.tileName.Contains("Wall");
+            return false;
+        }
         public static void SetGrid(Vector3Int dimension, EditorGridLevelData data)
         {
             grid[dimension.x, dimension.y] = data;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using WEditor.Events;
 using static WInput;
 namespace WEditor.Game.Player
 {
@@ -111,6 +112,14 @@ namespace WEditor.Game.Player
             if (context.started)
             {
                 gunHandler.TrySwapGun();
+            }
+        }
+
+        public void OnInteraction(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                GameplayEvent.instance.Interacted();
             }
         }
     }

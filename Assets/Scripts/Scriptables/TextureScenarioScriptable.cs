@@ -7,7 +7,7 @@ namespace WEditor.Game.Scriptables
     [CreateAssetMenu(fileName = "TextureScenario", menuName = "ScriptableObjects/Texture")]
     public class TextureScenarioScriptable : ScriptableObject
     {
-        [SerializeField] Texture2D[] allTextures;
+        [SerializeField] List<Texture2D> allTextures;
         
         public Texture2D GetTexture(string textureName)
         {

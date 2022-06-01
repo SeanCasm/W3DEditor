@@ -10,7 +10,7 @@ namespace WEditor
         public void DisableTargetCombiner()
         {
             targetCombiner.SetActive(false);
-            foreach (var item in multipleTargetsCombiner)
+            foreach (GameObject item in multipleTargetsCombiner)
             {
                 Destroy(item);
             }
@@ -22,7 +22,7 @@ namespace WEditor
             {
                 CombineInstance[] combine = new CombineInstance[item.Value.Count];
                 int i = 0;
-                var material = item.Value[0].GetComponent<MeshRenderer>().material;
+                Material material = item.Value[0].GetComponent<MeshRenderer>().material;
                 while (i < item.Value.Count)
                 {
                     combine[i].mesh = item.Value[i].GetComponent<MeshFilter>().sharedMesh;
@@ -30,18 +30,22 @@ namespace WEditor
                     item.Value[i].gameObject.SetActive(false);
                     i++;
                 }
-                GameObject multipleMesh = new GameObject("mmesh");
-                multipleMesh.layer = 6;
-                multipleMesh.tag = "Ground";
-                MeshRenderer mMesh = multipleMesh.AddComponent<MeshRenderer>();
-                mMesh.material = material;
-                MeshFilter mFilter = multipleMesh.AddComponent<MeshFilter>();
-                mFilter.mesh = new Mesh();
-                mFilter.mesh.CombineMeshes(combine);
-                multipleMesh.AddComponent<MeshCollider>();
-                multipleTargetsCombiner.Add(multipleMesh);
-                multipleMesh.transform.position = Vector3.zero;
+                CreateMeshObject(material, combine);
             }
+        }
+        private void CreateMeshObject(Material material, CombineInstance[] combine)
+        {
+            GameObject multipleMesh = new GameObject("mmesh");
+            multipleMesh.layer = 6;
+            multipleMesh.tag = "Ground";
+            MeshRenderer mMesh = multipleMesh.AddComponent<MeshRenderer>();
+            mMesh.material = material;
+            MeshFilter mFilter = multipleMesh.AddComponent<MeshFilter>();
+            mFilter.mesh = new Mesh();
+            mFilter.mesh.CombineMeshes(combine);
+            multipleMesh.AddComponent<MeshCollider>();
+            multipleTargetsCombiner.Add(multipleMesh);
+            multipleMesh.transform.position = Vector3.zero;
         }
         public void CombineMeshes(List<MeshFilter> meshFilters)
         {

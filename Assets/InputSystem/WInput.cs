@@ -787,6 +787,15 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b3c18ec-0183-4f2e-b3f7-d9bfd91c733e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -908,6 +917,17 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Swap gun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb342b06-9880-408f-9766-995ea3956127"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1061,6 +1081,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         m_Player_Rotatemouse = m_Player.FindAction("Rotate mouse", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Swapgun = m_Player.FindAction("Swap gun", throwIfNotFound: true);
+        m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         // Gun
         m_Gun = asset.FindActionMap("Gun", throwIfNotFound: true);
         m_Gun_Fire = m_Gun.FindAction("Fire", throwIfNotFound: true);
@@ -1346,6 +1367,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Rotatemouse;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Swapgun;
+    private readonly InputAction m_Player_Interaction;
     public struct PlayerActions
     {
         private @WInput m_Wrapper;
@@ -1355,6 +1377,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         public InputAction @Rotatemouse => m_Wrapper.m_Player_Rotatemouse;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Swapgun => m_Wrapper.m_Player_Swapgun;
+        public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1379,6 +1402,9 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 @Swapgun.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapgun;
                 @Swapgun.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapgun;
                 @Swapgun.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapgun;
+                @Interaction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
+                @Interaction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
+                @Interaction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1398,6 +1424,9 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 @Swapgun.started += instance.OnSwapgun;
                 @Swapgun.performed += instance.OnSwapgun;
                 @Swapgun.canceled += instance.OnSwapgun;
+                @Interaction.started += instance.OnInteraction;
+                @Interaction.performed += instance.OnInteraction;
+                @Interaction.canceled += instance.OnInteraction;
             }
         }
     }
@@ -1542,6 +1571,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
         void OnRotatemouse(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnSwapgun(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
     }
     public interface IGunActions
     {

@@ -32,6 +32,9 @@ namespace WEditor.Input
             EditorEvent.instance.onPreviewModeEnter += OnMouseDisabled;
             EditorEvent.instance.onEditorExit += OnMouseDisabled;
             EditorEvent.instance.onPreviewModeExit += OnMouseEnabled;
+            EditorEvent.instance.onElevatorEditing += OnMouseDisabled;
+            EditorEvent.instance.onElevatorEditingExit += OnMouseEnabled;
+
         }
         private void OnDisable()
         {
@@ -39,11 +42,10 @@ namespace WEditor.Input
             EditorEvent.instance.onPreviewModeExit -= OnMouseEnabled;
             EditorEvent.instance.onEditorExit -= OnMouseDisabled;
             EditorEvent.instance.onEditorEnter -= OnMouseEnabled;
+            EditorEvent.instance.onElevatorEditing -= OnMouseDisabled;
+            EditorEvent.instance.onElevatorEditingExit -= OnMouseEnabled;
         }
-        private void Start()
-        {
-            instance = this;
-        }
+        private void Start() => instance = this;
 
         private void OnMouseEnabled()
         {
