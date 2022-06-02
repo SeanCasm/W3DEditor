@@ -15,17 +15,17 @@ namespace WEditor.Events
         public event Action<InfoStatsUIText> onLevelCompeted;
         public event Action onTeasuresChanged, onKillsChanged;
         public event Action<int> onLivesChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
-        public event Action onInteracted;
+        public event Action<List<KeyType>> onInteracted;
         private void OnEnable() => instance = this;
         public void LevelCompeted(InfoStatsUIText levelStats)
         {
             if (onLevelCompeted != null)
                 onLevelCompeted(levelStats);
         }
-        public void Interacted()
+        public void Interacted(List<KeyType> keyTrigger)
         {
             if (onInteracted != null)
-                onInteracted();
+                onInteracted(keyTrigger);
         }
         public void TeasuresChanged()
         {

@@ -119,7 +119,7 @@ namespace WEditor.Game.Player
         {
             if (context.started)
             {
-                GameplayEvent.instance.Interacted();
+                GameplayEvent.instance.Interacted(PlayerGlobalReference.instance.playerInventory.keysCollected);
             }
         }
     }

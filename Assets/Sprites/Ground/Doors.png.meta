@@ -163,7 +163,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Doors_finalk_1
+      name: Doors_key_1
       rect:
         serializedVersion: 2
         x: 64
@@ -205,7 +205,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Doors_end_3
+      name: Doors_3
       rect:
         serializedVersion: 2
         x: 192
@@ -322,11 +322,11 @@ TextureImporter:
     nameFileIdTable:
       Doors_4: 3230424311799132286
       Doors_7: -6315338081298181389
+      Doors_3: 3499683669041570755
       Doors_5: 1496226213467112817
       Doors_6: -3834454974551121022
+      Doors_key_1: -4950680412457382125
       Doors_elv_2: -551082938411016477
-      Doors_finalk_1: -4950680412457382125
-      Doors_end_3: 3499683669041570755
       Doors_end_0: -2869115396899081085
   spritePackingTag: 
   pSDRemoveMatte: 0

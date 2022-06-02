@@ -10,9 +10,9 @@ using WEditor.Utils;
 namespace WEditor.Scenario.Editor
 {
     /// <summary>
-    /// Handle the elevator generation in the editor grid.
+    /// Handle the elevator generation position in the editor grid.
     /// </summary>
-    public class ElevatorGeneration : MonoBehaviour
+    public class ElevatorPosition : MonoBehaviour
     {
         [SerializeField] Sprite elevatorSprite;
         public Tilemap mainTilemap { get; set; }
@@ -31,6 +31,7 @@ namespace WEditor.Scenario.Editor
             elevatorPanel.SetActive(false);
             mainTilemap.SetTile(elvPos, elv);
             elevatorPanel = null;
+            DataHandler.SetGrid(cellPos, new EditorGridLevelData(cellPos, elv.name));
             EditorEvent.instance.ElevatorEditingExit();
         }
         private Vector3Int Position(string where) => where switch

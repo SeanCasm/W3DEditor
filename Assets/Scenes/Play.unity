@@ -344,7 +344,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.3317972, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1168,6 +1168,7 @@ GameObject:
   - component: {fileID: 571158877}
   - component: {fileID: 571158878}
   - component: {fileID: 571158879}
+  - component: {fileID: 571158880}
   m_Layer: 0
   m_Name: '[HANDLERS]'
   m_TagString: Untagged
@@ -1223,9 +1224,8 @@ MonoBehaviour:
   gunPrefab: {fileID: 2436317904465227331, guid: 8a6659d1ae643af4186ae79303f7b51a, type: 3}
   wallPrefab: {fileID: 6664535523619635540, guid: 8c639ba0f5f64b449a9fc468262f652f, type: 3}
   wallScriptable: {fileID: 11400000, guid: 0ccb6c13d8af2db4a9e54858da5ca202, type: 2}
+  doorGeneration: {fileID: 571158880}
   doorScriptable: {fileID: 11400000, guid: b9d1d1fa3b2db9642b03ea8117ea13b7, type: 2}
-  doorPrefab: {fileID: 5636086484537324545, guid: a5c9f64f0829e0845b6e0d0579a061b6, type: 3}
-  elevatorPrefab: {fileID: 2896234702343724567, guid: 5e0e8090a80891045bdce5dc9bb66b19, type: 3}
   propPrefab: {fileID: 6861180019661640233, guid: 1fb39a2d33da52140899985fbf41564b, type: 3}
   propsDefaultSprites: {fileID: 11400000, guid: 7c844186d540d4147b11d9f4f564e6e2, type: 2}
   keyScriptables:
@@ -1399,6 +1399,24 @@ MonoBehaviour:
   playerStatusUIAnimator: {fileID: 1990570453}
   goldenKey: {fileID: 978061646}
   platinumKey: {fileID: 108577051}
+--- !u!114 &571158880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571158866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504f082377ffe2149a36d576c4f88b0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platinum: {fileID: 11400000, guid: 8cdca980effebc5478791a62af85d68f, type: 2}
+  golden: {fileID: 11400000, guid: 71827c2ab4385fa4b8983ab1a5ae68fb, type: 2}
+  defaultKey: {fileID: 11400000, guid: d08cc9037dda24241a9dca030760f133, type: 2}
+  elevatorKey: {fileID: 11400000, guid: c4df676ace4422747b1ee0825d3d0738, type: 2}
+  doorPrefab: {fileID: 5636086484537324545, guid: a5c9f64f0829e0845b6e0d0579a061b6, type: 3}
+  elevatorPrefab: {fileID: 2896234702343724567, guid: 5e0e8090a80891045bdce5dc9bb66b19, type: 3}
 --- !u!1 &609449310
 GameObject:
   m_ObjectHideFlags: 0

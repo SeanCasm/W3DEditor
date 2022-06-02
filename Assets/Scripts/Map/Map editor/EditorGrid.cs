@@ -13,7 +13,7 @@ namespace WEditor.Scenario.Editor
     public class EditorGrid : MonoBehaviour
     {
         public static EditorGrid instance;
-        [SerializeField] ElevatorGeneration elevatorGeneration;
+        [SerializeField] ElevatorPosition elevatorGeneration;
         [SerializeField] Tilemap mainTilemap, pointerPreview, whiteSquare;
         [SerializeField] Sprite gridSprite, helperSprite, eraserSprite;
         [SerializeField] ScenarioGenerator scenarioGenerator;
@@ -210,29 +210,19 @@ namespace WEditor.Scenario.Editor
                 if (tile.name.StartsWith("Door"))
                 {
                     if (tile.name.Contains("_end"))
-                    {
                         HandleElevatorLocation(cellPos, tile);
-                    }
                     else
-                    {
                         HandleDoorLocation(cellPos, tile);
-                    }
                 }
                 else if (tile.name.StartsWith("Ground"))
                 {
                     if (tile.name.Contains("health") || tile.name.Contains("ammo") || tile.name.Contains("score"))
-                    {
                         HandleCollectibleLocation(cellPos, tile);
-                    }
                     else
-                    {
                         HandlePropLocation(cellPos, tile);
-                    }
                 }
-                else
-                {
-                    mainTilemap.SetTile(cellPos, tile);
-                }
+
+                mainTilemap.SetTile(cellPos, tile);
                 DataHandler.SetGrid(cellPos, new EditorGridLevelData(cellPos, tile.name));
             }
         }

@@ -5,14 +5,17 @@ namespace WEditor.Scenario
 {
     public class Door : LevelBase
     {
-        public Door(bool topBottomSide, string name, Vector2Int[] walls)
+        public Door(string name, WallSide wallSide)
         {
-            this.topBottomSide = topBottomSide;
+            this.topBottomSide = wallSide;
             this.tileName = name;
-            this.walls = walls;
         }
         public Door() { }
-        public Vector2Int[] walls { get; set; }
-        public bool topBottomSide { get; private set; }
+        public Vector3Int elevatorPosition { get; set; }
+        public WallSide topBottomSide { get; set; }
+    }
+    public enum WallSide
+    {
+        TopBottom, LeftRight
     }
 }

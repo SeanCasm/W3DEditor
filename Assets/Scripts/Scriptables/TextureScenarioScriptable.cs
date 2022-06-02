@@ -8,10 +8,11 @@ namespace WEditor.Game.Scriptables
     public class TextureScenarioScriptable : ScriptableObject
     {
         [SerializeField] List<Texture2D> allTextures;
-        
+
         public Texture2D GetTexture(string textureName)
         {
-            int index = int.Parse(textureName.Split('_')[1]);
+            string[] nameSplitted = textureName.Split('_');
+            int index = int.Parse(nameSplitted.Last());
             return allTextures[index];
         }
     }

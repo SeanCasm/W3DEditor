@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
 namespace WEditor
 {
     public static class DataHandler
     {
-        public static object tileMap;
+        public static Tilemap tileMap;
         public static EditorGridLevelData[,] grid { get; private set; }
         public static Vector3 currentLevelPosition { get; set; }
         public static string currentLevelName { get; set; }

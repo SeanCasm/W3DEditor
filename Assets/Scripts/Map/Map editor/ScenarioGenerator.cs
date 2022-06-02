@@ -18,7 +18,7 @@ namespace WEditor.Scenario.Editor
         }
         public override void InitGeneration()
         {
-            Tilemap mainTilemap = DataHandler.tileMap as Tilemap;
+            Tilemap mainTilemap = DataHandler.tileMap;
             Vector3Int size = mainTilemap.size;
             base.InitGeneration();
             List<Door> doors = new List<Door>();
@@ -28,30 +28,17 @@ namespace WEditor.Scenario.Editor
                 for (int y = 0; y < size.y; y++)
                 {
                     Vector3Int pos = new Vector3Int(x, y, 0);
-                    Vector3 position = mainTilemap.CellToWorld(pos);
-                    if (mainTilemap.HasTile(pos))
-                    {
-                        mainGrid[x, y] = true;
-                        TileBase tile = mainTilemap.GetTile(pos);
-                        base.HandleTilesLocation(tile.name, pos, doors, walls);
-                    }
+                    if (!mainTilemap.HasTile(pos))
+                        continue;
+
+                    TileBase tile = mainTilemap.GetTile(pos);
+                    print(tile.name);
+                    base.HandleTilesLocation(tile.name, pos, doors, walls);
                 }
             }
             base.HandleWallGeneration(walls);
-            this.HandleDoorGeneration(doors);
+            base.HandleDoorsGeneration(doors);
             PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;
-        }
-        private void HandleDoorGeneration(List<Door> doors)
-        {
-            //Doors needs to be located after all of the rest of tiles
-            //to avoid fails on the generation
-            doors.ForEach(item =>
-            {
-                mainGrid[item.position.x, item.position.y] = true;
-
-                AddDoorToList(item);
-            });
-            base.HandleDoorsGeneration();
         }
         private new void OnPreviewModeExit()
         {

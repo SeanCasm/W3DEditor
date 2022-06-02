@@ -22,5 +22,5 @@ namespace WEditor.Game.Collectibles
 }
 public enum KeyType
 {
-    Golden, Platinum
+    Golden, Platinum,None
 }

@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Events;
+using WEditor.Game.Scriptables;
 
 namespace WEditor.Game
 {
     public class Sensor : MonoBehaviour
     {
         [SerializeField] float slideTime;
-        [SerializeField] float timeBeforeClose;
         [SerializeField] AudioClip openClip, closeClip;
+        public KeyDoorScriptable keyDoorScriptable { get; set; }
         private bool playerAround = false;
         private bool enemyAround = false;
         private AudioSource audioSource;
-        public float timeToClose { get => timeBeforeClose; set => timeBeforeClose = value; }
         public State doorState { get; private set; } = State.Close;
         private void Start()
         {
             audioSource = GetComponent<AudioSource>();
+            GetComponent<SpriteRenderer>().sprite = keyDoorScriptable.doorSprite;
         }
         private void OnEnable()
         {
@@ -27,9 +28,11 @@ namespace WEditor.Game
         {
             GameplayEvent.instance.onInteracted -= OnInteracted;
         }
-        private void OnInteracted()
+        private void OnInteracted(List<KeyType> keyToOpen)
         {
-            if (doorState == State.Close && playerAround)
+
+            if (doorState == State.Close && playerAround
+                && keyToOpen.Exists(x => x == keyDoorScriptable.keyType))
             {
                 doorState = State.Opening;
                 audioSource.clip = openClip;
@@ -78,10 +81,10 @@ namespace WEditor.Game
             }
             doorState = State.Open;
 
-            yield return new WaitForSeconds(timeBeforeClose);
+            yield return new WaitForSeconds(keyDoorScriptable.timeToClose);
             yield return new WaitWhile(() => playerAround || enemyAround);
 
-            if (timeBeforeClose > 0)
+            if (keyDoorScriptable.timeToClose > 0)
                 StartCoroutine(nameof(Close));
         }
         IEnumerator Close()
@@ -105,4 +108,5 @@ namespace WEditor.Game
     {
         Close, Closing, Open, Opening
     }
+
 }

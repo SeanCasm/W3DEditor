@@ -136,6 +136,7 @@ MonoBehaviour:
   timeBeforeClose: 3
   openClip: {fileID: 8300000, guid: a2287707542226440b7e2a3080472f40, type: 3}
   closeClip: {fileID: 8300000, guid: a0ea49cb9416fc946b9cc668edd7a817, type: 3}
+  keyTrigger: 2
 --- !u!212 &7697894135017996279
 SpriteRenderer:
   m_ObjectHideFlags: 0

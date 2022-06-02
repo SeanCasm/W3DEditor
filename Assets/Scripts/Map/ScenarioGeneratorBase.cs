@@ -19,9 +19,9 @@ namespace WEditor.Scenario
         [SerializeField] protected GameObject wallPrefab;
         [SerializeField] protected TextureScenarioScriptable wallScriptable;
         [Header("Door generation")]
+        [SerializeField] DoorGeneration doorGeneration;
         [SerializeField] protected TextureScenarioScriptable doorScriptable;
-        [SerializeField] GameObject doorPrefab;
-        [SerializeField] GameObject elevatorPrefab;
+
         [Header("Prop generation")]
         [SerializeField] GameObject propPrefab;
         [SerializeField] protected ScenarioScriptable propsDefaultSprites;
@@ -36,10 +36,7 @@ namespace WEditor.Scenario
         protected Door[,] doorGrid;
         protected bool[,] mainGrid;
         protected GameObject groundPlane;
-        private void Start()
-        {
-            instance = this;
-        }
+        private void Start() => instance = this;
         protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<Door> doors, List<Wall> walls)
         {
             Vector3 position = new Vector3(cellPos.x, 0, cellPos.y);
@@ -64,12 +61,14 @@ namespace WEditor.Scenario
             }
             else if (tileName.Contains("Door"))
             {
+                print(tileName);
                 doors.Add(new Door { tileName = tileName, position = cellPos });
             }
             else if (tileName.StartsWith("guard") || tileName.StartsWith("ss"))
             {
                 HandleEnemyGeneration(tileName, position);
             }
+            mainGrid[cellPos.x, cellPos.y] = true;
         }
         public void ResetLevel()
         {
@@ -227,43 +226,22 @@ namespace WEditor.Scenario
             int y = door.position.y;
 
             if (mainGrid[x, y + 1] && mainGrid[x, y - 1])
-            {
-                doorGrid[x, y] = new Door(
-                    true, door.tileName,
-                    new Vector2Int[] {
-                        new Vector2Int(x, y + 1),
-                        new Vector2Int(x, y - 1),
-                    }
-                );
-            }
+                doorGrid[x, y] = new Door { tileName = door.tileName, position = door.position, topBottomSide = WallSide.TopBottom };
             else if (mainGrid[x - 1, y] && mainGrid[x + 1, y])
-            {
-                doorGrid[x, y] = new Door(
-                    false, door.tileName,
-                    new Vector2Int[] {
-                        new Vector2Int(x+1, y),
-                        new Vector2Int(x-1, y),
-                    }
-                );
-            }
+                doorGrid[x, y] = new Door { tileName = door.tileName, position = door.position, topBottomSide = WallSide.LeftRight };
+
         }
-        protected void HandleDoorsGeneration()
+        protected void HandleDoorsGeneration(List<Door> doors)
         {
+            doors.ForEach(item => AddDoorToList(item));
             for (int x = 0; x < doorGrid.GetLength(0); x++)
             {
                 for (int y = 0; y < doorGrid.GetLength(1); y++)
                 {
                     Door door = doorGrid[x, y];
-                    GameObject doorObject = new GameObject("door");
-
                     if (door == null || !mainGrid[x, y]) continue;
-
-                    doorObject = Instantiate(doorPrefab, new Vector3(x + .5f, .5f, y + .5f), Quaternion.identity, null);
-
-                    if (door.topBottomSide)
-                        doorObject.transform.eulerAngles = new Vector3(0, 90, 0);
-
-                    objectsGenerated.Add(doorObject);
+                    GameObject newDoor = doorGeneration.StartGeneration(door);
+                    objectsGenerated.Add(newDoor);
                 }
             }
         }
@@ -291,9 +269,6 @@ namespace WEditor.Scenario
 
             objectsGenerated.Add(propObject);
         }
-        protected void OnPreviewModeExit()
-        {
-            meshCombiner.DisableTargetCombiner();
-        }
+        protected void OnPreviewModeExit() => meshCombiner.DisableTargetCombiner();
     }
 }
