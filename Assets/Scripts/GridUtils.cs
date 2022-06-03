@@ -5,6 +5,15 @@ namespace WEditor.Utils
 {
     public static class GridUtils
     {
+        public static bool InsideBounds(this (int x, int y) value, int maxX, int maxy)
+        {
+            return value.x < maxX && value.y < maxy && value.x >= 0 && value.y >= 0;
+        }
+        /// <summary>
+        /// Fix the position of the current object to match with the tile center.
+        /// </summary>
+        /// <param name="value1"></param>
+        /// <returns></returns>
         public static Vector3 FixTilePivot(this Vector3 value1)
         {
             return new Vector3(value1.x + .5f, value1.y, value1.z + .5f);

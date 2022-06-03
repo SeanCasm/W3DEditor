@@ -22,6 +22,7 @@ namespace WEditor.Scenario.Editor
         {
             Tile elv = ScriptableObject.CreateInstance("Tile") as Tile;
             elv.sprite = elevatorSprite;
+            elv.name = elevatorSprite.name;
             Vector3Int elvPos = Position(where);
             if (DataHandler.CheckForWall(elvPos))
             {
@@ -31,7 +32,7 @@ namespace WEditor.Scenario.Editor
             elevatorPanel.SetActive(false);
             mainTilemap.SetTile(elvPos, elv);
             elevatorPanel = null;
-            DataHandler.SetGrid(cellPos, new EditorGridLevelData(cellPos, elv.name));
+            DataHandler.SetGrid(cellPos, new EditorGridLevelData(cellPos, elv.sprite.name));
             EditorEvent.instance.ElevatorEditingExit();
         }
         private Vector3Int Position(string where) => where switch

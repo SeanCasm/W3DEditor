@@ -6,7 +6,7 @@ using WEditor.Game.Scriptables;
 
 namespace WEditor.Game
 {
-    public class Sensor : MonoBehaviour
+    public class Sensor : MonoBehaviour, IInteractable
     {
         [SerializeField] float slideTime;
         [SerializeField] AudioClip openClip, closeClip;
@@ -28,9 +28,8 @@ namespace WEditor.Game
         {
             GameplayEvent.instance.onInteracted -= OnInteracted;
         }
-        private void OnInteracted(List<KeyType> keyToOpen)
+        public void OnInteracted(List<KeyType> keyToOpen)
         {
-
             if (doorState == State.Close && playerAround
                 && keyToOpen.Exists(x => x == keyDoorScriptable.keyType))
             {
@@ -108,5 +107,11 @@ namespace WEditor.Game
     {
         Close, Closing, Open, Opening
     }
+
+}
+public interface IInteractable
+{
+    public void OnInteracted(List<KeyType> keyToOpen);
+    public KeyDoorScriptable keyDoorScriptable { get; set; }
 
 }

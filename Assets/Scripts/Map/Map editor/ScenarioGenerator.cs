@@ -32,7 +32,6 @@ namespace WEditor.Scenario.Editor
                         continue;
 
                     TileBase tile = mainTilemap.GetTile(pos);
-                    print(tile.name);
                     base.HandleTilesLocation(tile.name, pos, doors, walls);
                 }
             }

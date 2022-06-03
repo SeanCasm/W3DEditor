@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Scenario.Playable;
+
 namespace WEditor.Scenario
 {
     public class Door : LevelBase
@@ -11,11 +13,11 @@ namespace WEditor.Scenario
             this.tileName = name;
         }
         public Door() { }
-        public Vector3Int elevatorPosition { get; set; }
-        public WallSide topBottomSide { get; set; }
+        public WallSide topBottomSide { get; set; } = WallSide.None;
     }
+
     public enum WallSide
     {
-        TopBottom, LeftRight
+        TopBottom, LeftRight, None
     }
 }

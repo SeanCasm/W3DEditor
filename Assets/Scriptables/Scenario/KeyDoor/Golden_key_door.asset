@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Golden_key_door
   m_EditorClassIdentifier: 
   keyType: 0
-  doorSprite: {fileID: -4950680412457382125, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
+  doorSprite: {fileID: 3230424311799132286, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
   timeToClose: 1.75

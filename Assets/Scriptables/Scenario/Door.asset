@@ -15,6 +15,11 @@ MonoBehaviour:
   spritesCollection:
   - {fileID: -2869115396899081085, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
   - {fileID: -4950680412457382125, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
-  - {fileID: -551082938411016477, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
   - {fileID: 3230424311799132286, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
-  - {fileID: -6315338081298181389, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
+  - {fileID: -1617067123, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
+  - {fileID: -551082938411016477, guid: d1c74871f78882e4fb2bdfa8c258536a, type: 3}
+  textures:
+  - {fileID: 2800000, guid: e387a0caa2d0c544dbae66e934e2110a, type: 3}
+  - {fileID: 2800000, guid: 13a0cb6ed912d5d4aa91b41a74604bf1, type: 3}
+  - {fileID: 2800000, guid: 1a9867f87a5c334459a2576d4ae6eead, type: 3}
+  - {fileID: 2800000, guid: 312c77c9e11c9a746b4da4b18cca01ec, type: 3}

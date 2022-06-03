@@ -17,10 +17,10 @@ namespace WEditor.Scenario
         [SerializeField] GameObject ammoPrefab, healthPrefab, gunPrefab;
         [Header("Wall generation")]
         [SerializeField] protected GameObject wallPrefab;
-        [SerializeField] protected TextureScenarioScriptable wallScriptable;
+        [SerializeField] protected ScenarioScriptable wallScriptable;
         [Header("Door generation")]
         [SerializeField] DoorGeneration doorGeneration;
-        [SerializeField] protected TextureScenarioScriptable doorScriptable;
+        [SerializeField] protected ScenarioScriptable doorScriptable;
 
         [Header("Prop generation")]
         [SerializeField] GameObject propPrefab;
@@ -220,28 +220,33 @@ namespace WEditor.Scenario
             enemy.transform.position = position;
             objectsGenerated.Add(enemy);
         }
-        protected void AddDoorToList(Door door)
+        protected void AddDoorToGrid(Door door)
         {
+            Door initilizedDoor = new Door { tileName = door.tileName, position = door.position };
             int x = door.position.x;
             int y = door.position.y;
+            doorGrid[x, y] = initilizedDoor;
+
+            if (door.tileName.Contains("_elv"))
+                return;
 
             if (mainGrid[x, y + 1] && mainGrid[x, y - 1])
-                doorGrid[x, y] = new Door { tileName = door.tileName, position = door.position, topBottomSide = WallSide.TopBottom };
+                doorGrid[x, y].topBottomSide = WallSide.TopBottom;
             else if (mainGrid[x - 1, y] && mainGrid[x + 1, y])
-                doorGrid[x, y] = new Door { tileName = door.tileName, position = door.position, topBottomSide = WallSide.LeftRight };
+                doorGrid[x, y].topBottomSide = WallSide.LeftRight;
 
         }
         protected void HandleDoorsGeneration(List<Door> doors)
         {
-            doors.ForEach(item => AddDoorToList(item));
+            doors.ForEach(item => AddDoorToGrid(item));
             for (int x = 0; x < doorGrid.GetLength(0); x++)
             {
                 for (int y = 0; y < doorGrid.GetLength(1); y++)
                 {
                     Door door = doorGrid[x, y];
-                    if (door == null || !mainGrid[x, y]) continue;
-                    GameObject newDoor = doorGeneration.StartGeneration(door);
-                    objectsGenerated.Add(newDoor);
+                    if (door == null || !mainGrid[x, y] || door.tileName.Contains("_elv")) continue;
+                    List<GameObject> newDoor = doorGeneration.StartGeneration(door, doorGrid);
+                    objectsGenerated.AddRange(newDoor);
                 }
             }
         }

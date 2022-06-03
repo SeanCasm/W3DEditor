@@ -8,7 +8,8 @@ namespace WEditor.Game.Player
     /// </summary>
     public class Inventory : MonoBehaviour
     {
-        public List<KeyType> keysCollected { get; private set; } = new List<KeyType>() { KeyType.None };
+        public List<KeyType> keysCollected { get; private set; } = new List<KeyType>();
+        private void OnEnable() => keysCollected.Add(KeyType.None);
         public void AddKey(KeyType kt) => keysCollected.Add(kt);
         private void OnDisable() => keysCollected.Clear();
     }

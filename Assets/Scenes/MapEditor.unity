@@ -10449,9 +10449,9 @@ MonoBehaviour:
   healthPrefab: {fileID: 8137097100968022013, guid: bd61917eb07a40d4cbbf76dccdec16ba, type: 3}
   gunPrefab: {fileID: 2436317904465227331, guid: 8a6659d1ae643af4186ae79303f7b51a, type: 3}
   wallPrefab: {fileID: 6664535523619635540, guid: 8c639ba0f5f64b449a9fc468262f652f, type: 3}
-  wallScriptable: {fileID: 11400000, guid: 0ccb6c13d8af2db4a9e54858da5ca202, type: 2}
+  wallScriptable: {fileID: 11400000, guid: 3027a7fb4ae9112478926de6d0328190, type: 2}
   doorGeneration: {fileID: 1358627125}
-  doorScriptable: {fileID: 11400000, guid: b9d1d1fa3b2db9642b03ea8117ea13b7, type: 2}
+  doorScriptable: {fileID: 11400000, guid: 785a54e36717c7e4a90f9d1caeb400c7, type: 2}
   propPrefab: {fileID: 6861180019661640233, guid: 1fb39a2d33da52140899985fbf41564b, type: 3}
   propsDefaultSprites: {fileID: 11400000, guid: 7c844186d540d4147b11d9f4f564e6e2, type: 2}
   keyScriptables:
@@ -10707,7 +10707,6 @@ MonoBehaviour:
   defaultKey: {fileID: 11400000, guid: d08cc9037dda24241a9dca030760f133, type: 2}
   elevatorKey: {fileID: 11400000, guid: c4df676ace4422747b1ee0825d3d0738, type: 2}
   doorPrefab: {fileID: 5636086484537324545, guid: a5c9f64f0829e0845b6e0d0579a061b6, type: 3}
-  elevatorPrefab: {fileID: 2896234702343724567, guid: 5e0e8090a80891045bdce5dc9bb66b19, type: 3}
 --- !u!1 &1368866588
 GameObject:
   m_ObjectHideFlags: 0
