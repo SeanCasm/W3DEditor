@@ -20,7 +20,6 @@ namespace WEditor.Scenario
         [SerializeField] protected ScenarioScriptable wallScriptable;
         [Header("Door generation")]
         [SerializeField] DoorGeneration doorGeneration;
-        [SerializeField] protected ScenarioScriptable doorScriptable;
 
         [Header("Prop generation")]
         [SerializeField] GameObject propPrefab;

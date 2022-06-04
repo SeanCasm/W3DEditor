@@ -175,13 +175,15 @@ namespace WEditor.Scenario.Editor
             Vector3Int cellPos = mainTilemap.WorldToCell(pos);
             DataHandler.SetGrid(cellPos, null);
             TileBase tileToErase = mainTilemap.GetTile(cellPos);
-            if (tileToErase.name.Contains("Wall"))
+            if (tileToErase.name.Contains("Wall") || tileToErase.name.Contains("_elv") ||
+            tileToErase.name.Contains("_end"))
             {
                 EraseDoorTile(cellPos.GetLeft());
                 EraseDoorTile(cellPos.GetRight());
                 EraseDoorTile(cellPos.GetBottom());
                 EraseDoorTile(cellPos.GetTop());
             }
+
             mainTilemap.SetTile(cellPos, null);
 
             void EraseDoorTile(Vector3Int cellPos)
