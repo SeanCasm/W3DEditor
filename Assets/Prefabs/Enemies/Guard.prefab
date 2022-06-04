@@ -116,6 +116,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 31c386b26828ef141b8861b3dadc9479, type: 3}
   score: 100
   spriteRenderer: {fileID: 7822311282783936479}
+  ammoPrefab: {fileID: 8137097100968022013, guid: 3262a8fd4400d2f4aaec64329471fe93, type: 3}
+  ammoScriptables:
+  - {fileID: 11400000, guid: ba78c9e6740f3764d96ff6f65125b1aa, type: 2}
+  - {fileID: 11400000, guid: 3cb3bd5ee9a6b7f4f92a9a93e1c21b84, type: 2}
+  - {fileID: 11400000, guid: ec0b1dc51b0a3a2428b5e4921939e8c3, type: 2}
 --- !u!212 &6686163483271014676
 SpriteRenderer:
   m_ObjectHideFlags: 0

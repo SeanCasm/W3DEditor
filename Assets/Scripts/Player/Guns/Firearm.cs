@@ -23,7 +23,15 @@ namespace WEditor.Game.Player
         }
         public override void RefullAmmo() => currentAmmo = maxAmmo;
         public override void ResetAmmo() => currentAmmo = 0;
+        public override void Add(int amount)
+        {
+            if (ifFullOf)
+                return;
+            currentAmmo += amount;
+            if (currentAmmo >= maxAmmo) currentAmmo = maxAmmo;
 
+            GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
+        }
         public override void Init(bool enable)
         {
             if (!isInitialized)
@@ -71,12 +79,6 @@ namespace WEditor.Game.Player
 
             if (onGunStoppedFire != null)
                 onGunStoppedFire();
-        }
-        public override void Add(int amount)
-        {
-            currentAmmo += amount;
-            if (currentAmmo >= maxAmmo)
-                currentAmmo = maxAmmo;
         }
     }
 }

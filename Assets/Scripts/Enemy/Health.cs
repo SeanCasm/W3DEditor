@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Events;
+using WEditor.Game.Collectibles;
+using WEditor.Game.Scriptables;
 
 namespace WEditor.Game.Enemy
 {
@@ -9,6 +11,8 @@ namespace WEditor.Game.Enemy
     {
         [SerializeField] int score;
         [SerializeField] SpriteRenderer spriteRenderer;
+        [SerializeField] GameObject ammoPrefab;
+        [SerializeField] List<CollectibleScriptable> ammoScriptables;
         private AudioSource audioSource;
         private EnemyAI enemyAI;
         public static float healthMultiplier = 1;
@@ -43,6 +47,10 @@ namespace WEditor.Game.Enemy
             enabled = false;
             audioSource.clip = deathClip[Random.Range(0, deathClip.Length)];
             audioSource.Play();
+
+            GameObject ammoObject = Instantiate(ammoPrefab, transform.localPosition, Quaternion.identity, null);
+            Ammo ammo = ammoObject.GetComponent<Ammo>();
+            ammo.CollectibleScriptable = ammoScriptables[Random.Range(0, ammoScriptables.Count)];
         }
     }
 }

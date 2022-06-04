@@ -17,15 +17,15 @@ namespace WEditor.Game
             {
                 case DifficultyTier.Easy:
                     Enemy.Health.healthMultiplier = 1;
-                    Ammo.ammoDevalue = 0;
+                    Ammo.ammoDevalue = 1;
                     break;
                 case DifficultyTier.Medium:
                     Enemy.Health.healthMultiplier = 1.2f;
-                    Ammo.ammoDevalue = 10;
+                    Ammo.ammoDevalue = 2;
                     break;
                 case DifficultyTier.Hard:
                     Enemy.Health.healthMultiplier = 1.5f;
-                    Ammo.ammoDevalue = 25;
+                    Ammo.ammoDevalue = 3;
                     break;
             }
         }
