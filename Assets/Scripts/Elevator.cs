@@ -18,11 +18,18 @@ namespace WEditor.Scenario.Playable
         {
             animator = GetComponent<Animator>();
         }
+        private void OnEnable()
+        {
+            GameplayEvent.instance.onInteracted += OnInteracted;
+        }
+        private void OnDisable()
+        {
+            GameplayEvent.instance.onInteracted -= OnInteracted;
+        }
         public void OnInteracted(List<KeyType> keyToOpen)
         {
-            if (playerAround && keyToOpen.Exists(x => x == keyDoorScriptable.keyType))
+            if (playerAround)
             {
-                // Time.timeScale = 0;
                 animator.SetTrigger("Up");
             }
         }
@@ -46,8 +53,7 @@ namespace WEditor.Scenario.Playable
                 SceneHandler.instance.LoadEndGameScene();
                 return;
             }
-
-            EditorEvent.instance.PreviewModeExit();
+            WEditor.UI.PreviewHandler.instance.OnEdit();
         }
     }
 }

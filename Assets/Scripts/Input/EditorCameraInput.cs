@@ -9,8 +9,13 @@ namespace WEditor.Input
     {
         public static EditorCameraInput instance;
         private WInput wInput;
+        private void Awake()
+        {
+            wInput = GameInput.instance.wInput;
+        }
         private void OnEnable()
         {
+            instance = this;
             EditorEvent.instance.onPreviewModeEnter += OnPreviewMode;
             EditorEvent.instance.onPreviewModeExit += OnEditorMode;
         }
@@ -18,11 +23,6 @@ namespace WEditor.Input
         {
             EditorEvent.instance.onPreviewModeEnter -= OnPreviewMode;
             EditorEvent.instance.onPreviewModeExit -= OnEditorMode;
-        }
-        private void Start()
-        {
-            instance = this;
-            wInput = GameInput.instance.wInput;
         }
         public void SetRotateInput(bool enable)
         {

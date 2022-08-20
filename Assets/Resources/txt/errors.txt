@@ -7,7 +7,10 @@ grid_wd: Max walls around a door cannot be upper than 2.
 level_size_l: Map dimensions are required and cannot be zero or less.
 level_size_u: Map width and heigth cannot be upper to 50.
 level_name: Level name required.
+level_name_len: Level name must have 12 characters maximum.
 level_name_uc: The underscore '_' is not allowed to use in the level name. 
 level_found: A level with the same name was found.
 level_spawn_l: Spawn point cannot be located over a wall, prop or door.
 level_spawn_r: Spawn point required.
+level_end_door: Only 1 of this doors is allowed.
+level_bounds: This tile cannot be placed out of grid. 

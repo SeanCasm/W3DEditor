@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8732941147181798803}
   - component: {fileID: 6722701507187454746}
   - component: {fileID: 1542268047577504028}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Submachine gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
     m_Bits: 256
   damage: 4
   shootClip: {fileID: 8300000, guid: ae7ecbaf5e048514eae3158984db0116, type: 3}
+  animSpeed: 1.3
   maxAmmo: 100
   bulletBurst: 1
 --- !u!82 &1542268047577504028

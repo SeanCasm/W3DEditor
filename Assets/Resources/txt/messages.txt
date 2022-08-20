@@ -1,3 +1,3 @@
 save: Save complete!
-level_exist: The level _ currently exists on your files, replace it?
+level_exist: The level _ currently exist, you want to replace it?
 level_elv: Now place the elevator, this requires to put around the door you placed previously.

@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using System;
-using WEditor.Game.Player;
 
 namespace WEditor.Events
 {
@@ -12,15 +10,26 @@ namespace WEditor.Events
         public static GameplayEvent instance;
         public event Action<int> onKeyPickedUp;
         public event Action<string> onAmmoChanged;
-        public event Action<InfoStatsUIText> onLevelCompeted;
+        public event Action<InfoStatsUIText> onLevelCompleted;
+        public event Action onDeath,onReset;
         public event Action onTeasuresChanged, onKillsChanged;
-        public event Action<int> onLivesChanged, onScoreChanged, onHealthChanged, onArmourhChanged;
+        public event Action<int> onLivesChanged, onScoreChanged, onHealthChanged;
         public event Action<List<KeyType>> onInteracted;
         private void OnEnable() => instance = this;
-        public void LevelCompeted(InfoStatsUIText levelStats)
+        public void OnReset()
         {
-            if (onLevelCompeted != null)
-                onLevelCompeted(levelStats);
+            if(onReset!=null)
+                onReset();
+        }
+        public void OnDeath()
+        {
+            if (onDeath != null)
+                onDeath();
+        }
+        public void LevelCompleted(InfoStatsUIText levelStats)
+        {
+            if (onLevelCompleted != null)
+                onLevelCompleted(levelStats);
         }
         public void Interacted(List<KeyType> keyTrigger)
         {
@@ -49,39 +58,18 @@ namespace WEditor.Events
         public void HealthChanged(int amount)
         {
             if (onHealthChanged != null)
-            {
                 onHealthChanged(amount);
-            }
         }
-        public void ArmourhChanged(int amount)
-        {
-            if (onArmourhChanged != null)
-            {
-                onArmourhChanged(amount);
-            }
-        }
-        public void LivesChanged(int amount)
-        {
-            if (onLivesChanged != null)
-            {
-                onLivesChanged(amount);
-            }
-        }
+
         public void AmmoChanged(string amount)
         {
             if (onAmmoChanged != null)
-            {
                 onAmmoChanged(amount);
-            }
         }
         public void ScoreChanged(int amount)
         {
             if (onScoreChanged != null)
-            {
                 onScoreChanged(amount);
-            }
         }
     }
 }
-
-

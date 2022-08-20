@@ -7,11 +7,11 @@ namespace WEditor.Game.Enemy
     public class Gun : GunBase<int>
     {
         [Range(0, 100)]
-        [SerializeField] int failChance;
+        [SerializeField] int accuracy;
         public void Fire()
         {
-            int finalChance = UnityEngine.Random.Range(0, 100);
-            if (finalChance <= failChance) return;
+            int acc = UnityEngine.Random.Range(0, 100);
+            if (acc <= accuracy) return;
             PlayerGlobalReference.instance.playerHealth.Take(damage);
         }
     }

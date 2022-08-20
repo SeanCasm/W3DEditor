@@ -1,33 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace WEditor
 {
-    [System.Serializable]
     public class GameData
     {
-        public (int x, int z) levelSpawn;
-        public string[,] levelTiles { get; private set; }
-        public (int x, int y) levelSize;
+        public int levelSpawnX, levelSpawnZ;
+        public List<string> levelTiles = new List<string>();
+        public List<int> levelTilesX = new List<int>();
+        public List<int> levelTilesY = new List<int>();
+        public int levelSizeX, levelSizeY;
         public string levelName;
-        public int[] levelGuns;
-        public string difficultTier = "";
-        public int levelID;
-        public GameData()
+        public List<int> levelGuns = new List<int>();
+        public int[] levelGunsToArray => levelGuns.ToArray();
+
+        public void SetData()
         {
             this.levelName = DataHandler.currentLevelName;
-            this.levelSpawn.x = DataHandler.spawnPosition.x;
-            this.levelSpawn.z = DataHandler.spawnPosition.z;
-            this.levelSize.x = DataHandler.levelSize.x;
-            this.levelSize.y = DataHandler.levelSize.y;
-            this.levelTiles = new string[levelSize.x, levelSize.y];
-            this.levelGuns = DataHandler.levelGuns;
-            foreach (var item in DataHandler.grid)
+            this.levelSpawnX = DataHandler.spawnPosition.x;
+            this.levelSpawnZ = DataHandler.spawnPosition.z;
+            this.levelSizeX = DataHandler.levelSize.x;
+            this.levelSizeY = DataHandler.levelSize.y;
+            this.levelGuns = DataHandler.levelGuns.ToList();
+            int pos = 0;
+            for (int x = 0; x < DataHandler.grid.GetLength(0); x++)
             {
-                if (item != null)
+                for (int y = 0; y < DataHandler.grid.GetLength(1); y++)
                 {
-                    levelTiles[item.position.x, item.position.y] = item.tileName;
+                    EditorGridLevelData grid = DataHandler.grid[x, y];
+                    if (grid != null)
+                    {
+                        levelTiles.Add(grid.tileName);
+                        levelTilesX.Add(x);
+                        levelTilesY.Add(y);
+                        pos++;
+                    }
                 }
             }
         }

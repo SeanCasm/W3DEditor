@@ -27,6 +27,12 @@ namespace WEditor.Events
         public event Action onEditorInventoryActiveChanged;
         public event Action<int> onEditorInventorySelected;
         public event Action onElevatorEditing, onElevatorEditingExit;
+        public event Action<Vector3Int> onElevatorPlacementFailed;
+        public void ElevatorPlacementFailed(Vector3Int pos)
+        {
+            if (onElevatorPlacementFailed != null)
+                onElevatorPlacementFailed(pos);
+        }
         public void ElevatorEditingExit()
         {
             if (onElevatorEditingExit != null)

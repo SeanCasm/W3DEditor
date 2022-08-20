@@ -35,14 +35,15 @@ namespace WEditor.Scenario
 
                 Button buttonLevel = newLevel.GetComponent<Button>();
                 TextMeshProUGUI contentText = newLevel.GetComponentInChildren<TextMeshProUGUI>();
+                contentText.fontSize = levelName.Length >= 7 ? 14 : 18;
                 contentText.text = levelName;
                 GameData newGamedata = gameDatas[i];
                 buttonLevel.onClick.AddListener(() =>
                 {
-                    DataHandler.currentLevelName = levelName;
-                    DataHandler.levelGuns = newGamedata.levelGuns;
-                    (int x, int z) levelSpawn = newGamedata.levelSpawn;
-                    DataHandler.currentLevelPosition = new Vector3(levelSpawn.x, .5f, levelSpawn.z);
+                    (int x, int z) levelSpawn;
+                    levelSpawn.x = newGamedata.levelSpawnX;
+                    levelSpawn.z = newGamedata.levelSpawnZ;
+                    DataHandler.SetCurrentLevel(newGamedata);
                     if (SceneHandler.instance.isPreEditorScene)
                     {
                         SceneHandler.instance.LoadEditorFromLoadOption(newGamedata);

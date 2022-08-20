@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WEditor.Game.Player;
+using WEditor.Events;
 
 namespace WEditor.UI
 {
@@ -10,32 +10,38 @@ namespace WEditor.UI
         public static DeathMenu instance;
         [SerializeField] GameObject deathMenu;
         [SerializeField] bool isFromEditor;
+        private void OnEnable()
+        {
+            GameplayEvent.instance.onDeath += OnDeath;
+        }
+        private void OnDisable()
+        {
+            GameplayEvent.instance.onReset -= OnDeath;
+        }
         private void Start()
         {
             instance = this;
-        }
-        public void Enable()
-        {
-            deathMenu.SetActive(true);
         }
         public void Exit()
         {
             if (isFromEditor)
             {
-                SceneHandler.instance.LoadPreMapEditor();
+                PreviewHandler.instance.OnEdit();
             }
             else
             {
                 SceneHandler.instance.LoadMain();
             }
         }
+        private void OnDeath()
+        {
+            deathMenu.SetActive(true);
+        }
         public void Reset()
         {
             Time.timeScale = 1;
-            StatusBehaviour.instance.Respawn();
-        }
-        private void OnDisable()
-        {
+            SceneHandler.instance.LoadPlayScene(DataHandler.currentLevel);
+            GameplayEvent.instance.OnReset();
             deathMenu.SetActive(false);
         }
     }

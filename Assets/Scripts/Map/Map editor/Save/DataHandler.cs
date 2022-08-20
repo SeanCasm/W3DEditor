@@ -9,12 +9,19 @@ namespace WEditor
     {
         public static Tilemap tileMap;
         public static EditorGridLevelData[,] grid { get; private set; }
+        public static GameData currentLevel { get; set; }
         public static Vector3 currentLevelPosition { get; set; }
         public static string currentLevelName { get; set; }
-        public static DifficultyTier difficultyTier = DifficultyTier.Easy;
         public static Vector2Int levelSize { get => new Vector2Int(grid.GetLength(0), grid.GetLength(1)); }
         public static Vector3Int spawnPosition;
         public static int[] levelGuns = new int[] { 0, 1, 2, 3 }; //default value
+        public static void SetCurrentLevel(GameData curr)
+        {
+            currentLevel = curr;
+            currentLevelName = currentLevel.levelName;
+            levelGuns = currentLevel.levelGunsToArray;
+            DataHandler.currentLevelPosition = new Vector3(currentLevel.levelSpawnX, .5f, currentLevel.levelSpawnZ);
+        }
         public static bool CheckForWall(Vector3Int position)
         {
             EditorGridLevelData eg = grid[position.x, position.y];

@@ -16,7 +16,7 @@ namespace WEditor.Game.Player
         public static float currentRotationSpeed;
         private Rigidbody rigid;
         private GunHandler gunHandler;
-        private bool isMovingMouse;
+        private bool isMovingMouse, idle;
         private float currentSpeed;
         private void OnDisable()
         {
@@ -33,15 +33,29 @@ namespace WEditor.Game.Player
             PlayerControllerInput.instance.EnableAndSetCallbacks(this);
             currentSpeed = speed;
         }
+        private void Update()
+        {
+            if (idle)
+            {
+                currentSpeed = 0;
+                rigid.velocity = Vector3.zero;
+            }
+            else
+            {
+                currentSpeed = speed;
+            }
+        }
         public void OnMovement(InputAction.CallbackContext context)
         {
             Vector2 move = context.ReadValue<Vector2>();
             if (context.started)
             {
+                idle = false;
                 StartCoroutine(nameof(Move), move);
             }
             else if (context.canceled)
             {
+                idle = true;
                 rigid.velocity = Vector3.zero;
                 StopCoroutine(nameof(Move));
             }
@@ -111,7 +125,7 @@ namespace WEditor.Game.Player
         {
             if (context.started)
             {
-                gunHandler.TrySwapGun();
+                gunHandler.SwapToGunWithAmmo();
             }
         }
 

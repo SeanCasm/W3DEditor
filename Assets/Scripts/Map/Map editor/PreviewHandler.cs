@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using TMPro;
 using WEditor.Events;
 using WEditor.Scenario.Editor;
 namespace WEditor.UI
 {
     public class PreviewHandler : MonoBehaviour
     {
+        public static PreviewHandler instance;
         [SerializeField] UnityEvent<bool> changeActiveState;
         [SerializeField] GameObject previewUI, editorPanel;
+        private void Awake()
+        {
+            instance = this;
+        }
         public void OnPreview()
         {
             if (!EditorGrid.instance.isSpawnLocated)

@@ -19,7 +19,7 @@ namespace WEditor.Game.Player
             foreach (int i in initialAvailableGuns)
             {
                 playerGuns[i].RefullAmmo();
-                playerGuns[i].onEmptyAmmo = TrySwapGun;
+                playerGuns[i].onEmptyAmmo = SwapToGunWithAmmo;
             }
             gunIndex = initialAvailableGuns[0];
             playerGuns[gunIndex].Init(true);
@@ -29,18 +29,18 @@ namespace WEditor.Game.Player
             foreach (Gun g in playerGuns)
             {
                 g.Init(false);
-                g.ResetAmmo();
+                g.RefullAmmo();
             }
         }
-        public void RefullDefaultAmmo()
+        public void SetDefault()
         {
-            //knife
-            playerGuns[0].RefullAmmo();
-
-            // pistol
-            gunIndex = 1;
+            gunIndex = 0;
             currentGun.Init(true);
-            currentGun.RefullAmmo();
+            for (int i = 1; i < playerGunsCount; i++)
+            {
+                playerGuns[i].RefullAmmo();
+                playerGuns[i].Init(false);
+            }
         }
 
         public void AddTo(int amount) => currentGun.Add(amount);
@@ -60,19 +60,8 @@ namespace WEditor.Game.Player
                 currentGun.FireCanceled();
             }
         }
-        public void TrySwapGun()
-        {
-            if (currentGun.isShooting && currentGun.onGunStoppedFire == null)
-            {
-                currentGun.onGunStoppedFire = SwapToGunWithAmmo;
-            }
-            else
-            {
-                SwapToGunWithAmmo();
-            }
-        }
 
-        private void SwapToGunWithAmmo()
+        public void SwapToGunWithAmmo()
         {
             int actualIndex = gunIndex;
             while (true)

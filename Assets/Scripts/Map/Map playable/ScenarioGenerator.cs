@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace WEditor.Scenario.Playable
 {
@@ -9,23 +8,22 @@ namespace WEditor.Scenario.Playable
     {
         public void InitGeneration(GameData levelData)
         {
-            (int x, int y) size = levelData.levelSize;
+            (int x, int y) size;
+            size.x = levelData.levelSizeX;
+            size.y = levelData.levelSizeY;
             DataHandler.GridSize(new Vector3Int(size.x, size.y, 0));
             base.InitGeneration();
             List<Door> doors = new List<Door>();
             List<Wall> walls = new List<Wall>();
-            for (int x = 0; x < size.x; x++)
+            for (int pos = 0; pos < levelData.levelTiles.Count; pos++)
             {
-                for (int y = 0; y < size.y; y++)
-                {
-                    if (levelData.levelTiles[x, y] == null)
-                        continue;
-                        
-                    string tileName = levelData.levelTiles[x, y];
-                    Vector3Int cellPos = new Vector3Int(x, y, 0);
-                    base.HandleTilesLocation(tileName, cellPos, doors, walls);
-                    DataHandler.SetGrid(new Vector3Int(x, y, 0), new EditorGridLevelData(cellPos, tileName));
-                }
+                int y = levelData.levelTilesY[pos];
+                int x = levelData.levelTilesX[pos];
+
+                string tileName = levelData.levelTiles[pos];
+                Vector3Int cellPos = new Vector3Int(x, y, 0);
+                base.HandleTilesLocation(tileName, cellPos, doors, walls);
+                DataHandler.SetGrid(new Vector3Int(x, y, 0), new EditorGridLevelData(cellPos, tileName));
             }
 
             base.HandleWallGeneration(walls);

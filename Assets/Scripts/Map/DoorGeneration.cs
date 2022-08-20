@@ -12,9 +12,8 @@ namespace WEditor.Scenario
         [SerializeField] KeyDoorScriptable platinum, golden, defaultKey, elevatorKey;
         [SerializeField] GameObject doorPrefab;
         private bool IsEndDoor(string doorName) => doorName.Contains("_end");
-        public List<GameObject> StartGeneration(Door door, Door[,] doorGrid)
+        public void StartGeneration(Door door, Door[,] doorGrid, List<GameObject> levelDoors)
         {
-            List<GameObject> objects = new List<GameObject>();
 
             Vector3 doorPosition = new Vector3(door.position.x, .5f, door.position.y).FixTilePivot();
             Vector3Int doorPositionInt = Vector3Int.FloorToInt(doorPosition);
@@ -28,39 +27,34 @@ namespace WEditor.Scenario
                 doorObject.transform.eulerAngles = new Vector3(0, 90, 0);
 
             doorObject.GetComponentInChildren<IInteractable>().keyDoorScriptable = GetKey(door.tileName);
-            objects.Add(doorObject);
+            levelDoors.Add(doorObject);
 
-            if (IsEndDoor(door.tileName))
+            if (!IsEndDoor(door.tileName))
+                return;
+
+        
+            GameObject elevator = doorObject.transform.GetChild(3).gameObject;
+            elevator.GetComponentInChildren<IInteractable>().keyDoorScriptable = GetKey("Doors_elv_2");
+            if (doorGrid[x - 1, y] != null && doorGrid[x - 1, y].tileName.Contains("_elv")) //left-side
             {
-                GameObject elevator = doorObject.transform.GetChild(3).gameObject;
-                elevator.GetComponentInChildren<IInteractable>().keyDoorScriptable = GetKey("Doors_elv_2");
-                if ((x - 1, y).InsideBounds(doorGrid.GetLength(0), doorGrid.GetLength(1))
-                && doorGrid[x - 1, y] != null)
-                {
-                    elevator.transform.localPosition = new Vector3(0, 0, -1);
-                }
-                else if ((x + 1, y).InsideBounds(doorGrid.GetLength(0), doorGrid.GetLength(1))
-                && doorGrid[x + 1, y] != null)
-                {
-                    elevator.transform.Rotate(new Vector3(0, 180, 0), Space.World);
-                    elevator.transform.localPosition = new Vector3(0, 0, 1);
-                }
-                else if ((x, y - 1).InsideBounds(doorGrid.GetLength(0), doorGrid.GetLength(1))
-                && doorGrid[x, y - 1] != null)
-                {
-                    elevator.transform.localPosition = new Vector3(0, 0, -1);
-                }
-                else if ((x, y + 1).InsideBounds(doorGrid.GetLength(0), doorGrid.GetLength(1))
-                && doorGrid[x, y + 1] != null)
-                {
-                    elevator.transform.Rotate(new Vector3(0, 180, 0), Space.World);
-                    elevator.transform.localPosition = new Vector3(0, 0, 1);
-                }
-                elevator.SetActive(true);
-                objects.Add(elevator);
+                elevator.transform.localPosition = new Vector3(0, 0, -1);
             }
+            else if (doorGrid[x + 1, y] != null && doorGrid[x + 1, y].tileName.Contains("_elv"))//right-side
+            {
+                elevator.transform.Rotate(new Vector3(0, 180, 0), Space.World);
+                elevator.transform.localPosition = new Vector3(0, 0, 1);
+            }
+            else if (doorGrid[x, y - 1] != null && doorGrid[x, y - 1].tileName.Contains("_elv"))//bottom-side
+            {
+                elevator.transform.localPosition = new Vector3(0, 0, -1);
+            }
+            else if (doorGrid[x, y + 1] != null && doorGrid[x, y + 1].tileName.Contains("_elv"))//top-side
+            {
+                elevator.transform.Rotate(new Vector3(0, 180, 0), Space.World);
+                elevator.transform.localPosition = new Vector3(0, 0, 1);
+            }
+            elevator.SetActive(true);
 
-            return objects;
         }
         private KeyDoorScriptable GetKey(string tileName) => tileName switch
         {

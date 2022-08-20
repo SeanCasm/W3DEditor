@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Game.Enemy;
 
 namespace WEditor.Game
 {
@@ -17,22 +18,11 @@ namespace WEditor.Game
         {
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = shootClip;
-            // checks if is a player gun
-            if (hitLayer.value == 256)
-                shootPoint = transform.GetChild(0);
         }
         public void PlayShootClip()
         {
             audioSource.Play();
         }
-        public (bool, RaycastHit) ShootRay()
-        {
-            RaycastHit raycastHit = new RaycastHit();
-            Ray ray = new Ray(shootPoint.position, transform.root.forward);
-
-            bool hit = Physics.Raycast(ray, out raycastHit, checkDistance, hitLayer);
-            Debug.DrawLine(shootPoint.position, transform.root.forward * checkDistance, Color.green, 1000);
-            return (hit, raycastHit);
-        }
+        
     }
 }

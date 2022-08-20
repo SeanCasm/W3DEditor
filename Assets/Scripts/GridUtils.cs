@@ -5,10 +5,6 @@ namespace WEditor.Utils
 {
     public static class GridUtils
     {
-        public static bool InsideBounds(this (int x, int y) value, int maxX, int maxy)
-        {
-            return value.x < maxX && value.y < maxy && value.x >= 0 && value.y >= 0;
-        }
         /// <summary>
         /// Fix the position of the current object to match with the tile center.
         /// </summary>
@@ -35,10 +31,6 @@ namespace WEditor.Utils
             return new Vector3Int(cellPos.x + 1, cellPos.y, 0);
         }
         public static Vector3Int SwapZToY(this Vector3Int cellPos)
-        {
-            return new Vector3Int(cellPos.x, cellPos.z, cellPos.y);
-        }
-        public static Vector3Int ZEqualZero(this Vector3Int cellPos)
         {
             return new Vector3Int(cellPos.x, cellPos.z, 0);
         }

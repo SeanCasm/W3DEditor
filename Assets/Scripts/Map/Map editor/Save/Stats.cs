@@ -16,7 +16,7 @@ namespace WEditor.Game.Player
             GameplayEvent.instance.onScoreChanged += AddScore;
             GameplayEvent.instance.onKillsChanged += AddKill;
             GameplayEvent.instance.onTeasuresChanged += AddTeasure;
-            GameplayEvent.instance.onLevelCompeted += WriteLevelStats;
+            GameplayEvent.instance.onLevelCompleted += WriteLevelStats;
         }
         private void OnDisable()
         {
@@ -25,7 +25,7 @@ namespace WEditor.Game.Player
             GameplayEvent.instance.onScoreChanged -= AddScore;
             GameplayEvent.instance.onKillsChanged -= AddKill;
             GameplayEvent.instance.onTeasuresChanged -= AddTeasure;
-            GameplayEvent.instance.onLevelCompeted -= WriteLevelStats;
+            GameplayEvent.instance.onLevelCompleted -= WriteLevelStats;
         }
         /// <summary>
         /// Write the player stats in the text component of the level ending UI.

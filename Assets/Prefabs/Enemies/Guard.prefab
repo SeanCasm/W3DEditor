@@ -389,12 +389,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkDistance: 12
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 128
+  hitTag: Player
   damage: 12
   shootClip: {fileID: 8300000, guid: 09261a84dbb920348950f806f11a8985, type: 3}
-  failChance: 21
+  accuracy: 0
 --- !u!82 &8427845812610725643
 AudioSource:
   m_ObjectHideFlags: 0

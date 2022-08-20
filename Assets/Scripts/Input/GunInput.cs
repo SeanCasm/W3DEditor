@@ -14,6 +14,7 @@ namespace WEditor
             instance = this;
             wInput = GameInput.instance.wInput;
         }
+        
         public void EnableAndSetCallbacks(IGunActions callbacks)
         {
             wInput.Gun.Enable();

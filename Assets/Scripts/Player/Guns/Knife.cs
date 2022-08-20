@@ -10,7 +10,7 @@ namespace WEditor.Game.Player
         public override void Fire()
         {
             base.Fire();
-            ShootRay();
+            base.ShootRay();
         }
         private void OnEnable() => GameplayEvent.instance.AmmoChanged("-");
         private void OnDisable() => StopAllCoroutines();

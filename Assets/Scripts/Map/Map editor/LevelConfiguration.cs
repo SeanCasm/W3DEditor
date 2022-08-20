@@ -11,14 +11,6 @@ namespace WEditor.Scenario.Editor
     {
         [SerializeField] TMP_Dropdown dropdown;
         [SerializeField] TMP_Dropdown gunsDropdown;
-        public DifficultyTier difficultyMode = DifficultyTier.Easy;
-        public void Dropdown_SelectDifficult()
-        {
-            string difficultTier = dropdown.options[dropdown.value].text;
-            Enum.TryParse(difficultTier, out difficultyMode);
-            DifficultyHandler.instance.HandleDifficulty(difficultyMode);
-            DataHandler.difficultyTier = difficultyMode;
-        }
         public void Dropdown_SelectGuns()
         {
             string guns = gunsDropdown.options[gunsDropdown.value].text;
@@ -44,8 +36,4 @@ namespace WEditor.Scenario.Editor
             DataHandler.levelGuns = gunIndexes;
         }
     }
-}
-public enum DifficultyTier
-{
-    Easy, Medium, Hard
 }

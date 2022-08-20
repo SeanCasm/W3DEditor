@@ -22,7 +22,6 @@ namespace WEditor.Game.Player
             onEmptyAmmo = null;
         }
         public override void RefullAmmo() => currentAmmo = maxAmmo;
-        public override void ResetAmmo() => currentAmmo = 0;
         public override void Add(int amount)
         {
             if (ifFullOf)
@@ -52,7 +51,7 @@ namespace WEditor.Game.Player
             {
                 currentAmmo -= bulletBurst;
                 GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
-                ShootRay();
+                base.ShootRay();
             }
             base.Fire();
             if (currentAmmo == 0)
@@ -69,7 +68,7 @@ namespace WEditor.Game.Player
                 currentAmmo--;
                 yield return new WaitForSeconds(0.15f);
                 GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
-                ShootRay();
+                base.ShootRay();
                 bb++;
             }
         }
@@ -79,6 +78,9 @@ namespace WEditor.Game.Player
 
             if (onGunStoppedFire != null)
                 onGunStoppedFire();
+
+            if (currentAmmo == 0)
+                onEmptyAmmo();
         }
     }
 }

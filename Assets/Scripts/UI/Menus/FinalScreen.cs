@@ -3,16 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using WEditor.Events;
-
+using UnityEngine.InputSystem;
 namespace WEditor.UI
 {
     /// <summary>
     /// Handle the level completed screen.
     /// </summary>
-    public class EndedGame : MonoBehaviour
+    public class FinalScreen : MonoBehaviour
     {
         [SerializeField] InfoStatsUIText infoStats;
-        private void OnEnable() => GameplayEvent.instance.LevelCompeted(infoStats);
+        private bool exit;
+        private void OnEnable()
+        {
+            GameplayEvent.instance.LevelCompleted(infoStats);
+            GameInput.instance.DisableAll();
+        }
+        private void Update()
+        {
+            if (Keyboard.current.anyKey.wasPressedThisFrame && !exit)
+            {
+                SceneHandler.instance.LoadMain();
+                exit = true;
+            }
+        }
     }
 }
 [System.Serializable]

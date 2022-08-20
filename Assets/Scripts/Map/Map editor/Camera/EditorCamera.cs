@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static WInput;
-using WEditor.Events;
 using WEditor.Input;
 namespace WEditor.CameraUtils
 {

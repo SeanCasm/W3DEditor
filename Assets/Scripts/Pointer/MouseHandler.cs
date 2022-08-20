@@ -7,6 +7,8 @@ using WEditor.Scenario.Editor;
 using WEditor.Events;
 using UnityEngine.UI;
 using static WInput;
+using WEditor.Utils;
+
 namespace WEditor.Input
 {
     public class MouseHandler : MonoBehaviour, IMapEditorActions
@@ -111,13 +113,15 @@ namespace WEditor.Input
                     EditorGrid.instance.SetSpawnObject(worldPosition);
                     return;
                 }
+                Vector3Int pos = Vector3Int.FloorToInt(worldPosition);
+                pos = pos.SwapZToY();
                 switch (mouseType)
                 {
                     case MouseType.Eraser:
-                        EditorGrid.instance.EraseTile(worldPosition);
+                        EditorGrid.instance.EraseTile(pos);
                         break;
                     case MouseType.Pen:
-                        EditorGrid.instance.SetTile(worldPosition, tileRef);
+                        EditorGrid.instance.SetTile(pos, tileRef);
                         break;
                 }
             }

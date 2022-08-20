@@ -60,7 +60,6 @@ namespace WEditor.Scenario
             }
             else if (tileName.Contains("Door"))
             {
-                print(tileName);
                 doors.Add(new Door { tileName = tileName, position = cellPos });
             }
             else if (tileName.StartsWith("guard") || tileName.StartsWith("ss"))
@@ -238,14 +237,14 @@ namespace WEditor.Scenario
         protected void HandleDoorsGeneration(List<Door> doors)
         {
             doors.ForEach(item => AddDoorToGrid(item));
+
             for (int x = 0; x < doorGrid.GetLength(0); x++)
             {
                 for (int y = 0; y < doorGrid.GetLength(1); y++)
                 {
                     Door door = doorGrid[x, y];
                     if (door == null || !mainGrid[x, y] || door.tileName.Contains("_elv")) continue;
-                    List<GameObject> newDoor = doorGeneration.StartGeneration(door, doorGrid);
-                    objectsGenerated.AddRange(newDoor);
+                    doorGeneration.StartGeneration(door, doorGrid, objectsGenerated);
                 }
             }
         }
@@ -257,7 +256,6 @@ namespace WEditor.Scenario
 
             SpriteRenderer spriteRenderer = propObject.GetComponentInChildren<SpriteRenderer>();
 
-            //setup the collision for this prop
             if (!tileName.Contains("_n"))
             {
                 Rigidbody propRigid = propObject.AddComponent<Rigidbody>();
@@ -266,9 +264,8 @@ namespace WEditor.Scenario
                 propObject.AddComponent<BoxCollider>();
             }
             spriteRenderer.sprite = propsDefaultSprites.GetSprite(tileName);
-            position = new Vector3(position.x + .5f, .5f, position.z + .5f);
+            position = new Vector3(position.x + .5f, spriteRenderer.size.y / 2, position.z + .5f);
 
-            //fix the tile center pivot
             propObject.transform.position = position;
 
             objectsGenerated.Add(propObject);
