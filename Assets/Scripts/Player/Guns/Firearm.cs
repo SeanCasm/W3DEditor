@@ -6,81 +6,20 @@ using WEditor.Events;
 
 namespace WEditor.Game.Player
 {
-    public class Firearm : Gun, IFullable
+    public class Firearm : Gun
     {
-        [SerializeField] protected int maxAmmo;
-        [SerializeField] int bulletBurst = 1;
-        private int currentAmmo;
-        public bool hasAmmo { get => currentAmmo > 0; }
-        public bool ifFullOf => currentAmmo == maxAmmo;
-
-        private void OnEnable() => GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
-        private void OnDisable()
-        {
-            StopAllCoroutines();
-            onGunStoppedFire = null;
-            onEmptyAmmo = null;
-        }
-        public override void RefullAmmo() => currentAmmo = maxAmmo;
-        public override void Add(int amount)
-        {
-            if (ifFullOf)
-                return;
-            currentAmmo += amount;
-            if (currentAmmo >= maxAmmo) currentAmmo = maxAmmo;
-
-            GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
-        }
-        public override void Init(bool enable)
-        {
-            if (!isInitialized)
-            {
-                currentAmmo = maxAmmo;
-                isInitialized = true;
-            }
-            base.Init(enable);
-        }
-
         public override void Fire()
         {
-            if (bulletBurst > 1)
-            {
-                StartCoroutine(nameof(BurstShooting));
-            }
-            else
-            {
-                currentAmmo -= bulletBurst;
-                GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
-                base.ShootRay();
-            }
+            GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
+            base.ShootRay();
+
+            currentAmmo -= 1;
             base.Fire();
             if (currentAmmo == 0)
             {
                 onEmptyAmmo();
                 return;
             }
-        }
-        IEnumerator BurstShooting()
-        {
-            int bb = 0;
-            while (bb != bulletBurst)
-            {
-                currentAmmo--;
-                yield return new WaitForSeconds(0.15f);
-                GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
-                base.ShootRay();
-                bb++;
-            }
-        }
-        public override void AnimationEvent_StopShooting()
-        {
-            base.AnimationEvent_StopShooting();
-
-            if (onGunStoppedFire != null)
-                onGunStoppedFire();
-
-            if (currentAmmo == 0)
-                onEmptyAmmo();
         }
     }
 }

@@ -31,6 +31,7 @@ namespace WEditor.Game.Player
                 g.Init(false);
                 g.RefullAmmo();
             }
+            GunInput.instance.Disable();
         }
         public void SetDefault()
         {
@@ -68,8 +69,7 @@ namespace WEditor.Game.Player
             {
                 gunIndex++;
                 if (gunIndex >= playerGunsCount) gunIndex = 0;
-                if ((currentGun is Firearm && (currentGun as Firearm).hasAmmo) ||
-                    currentGun is Knife)
+                if (currentGun.hasAmmo || currentGun is Knife)
                 {
                     break;
                 }

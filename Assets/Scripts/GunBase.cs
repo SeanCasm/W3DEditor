@@ -13,16 +13,11 @@ namespace WEditor.Game
         [SerializeField] protected T damage;
         [SerializeField] AudioClip shootClip;
         protected Transform shootPoint;
-        private AudioSource audioSource;
+        protected AudioSource audioSource;
         protected void Start()
         {
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = shootClip;
         }
-        public void PlayShootClip()
-        {
-            audioSource.Play();
-        }
-        
     }
 }

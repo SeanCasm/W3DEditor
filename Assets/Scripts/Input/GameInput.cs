@@ -36,7 +36,6 @@ namespace WEditor
         }
         private void OnDeath()
         {
-            print("DEATH");
             wInput.Pause.Disable();
             wInput.Player.Disable();
             wInput.Gun.Disable();

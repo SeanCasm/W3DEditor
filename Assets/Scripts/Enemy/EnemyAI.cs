@@ -58,12 +58,12 @@ namespace WEditor.Game.Enemy
                         rigid.velocity = Vector3.zero;
                         FollowCamera(playerPosition);
                         break;
-                    case MovementBehaviour.Patrol:
-                        currentSpeed = speed;
-                        FollowCamera(playerPosition);
-                        MoveBetweenPath(playerPosition);
-                        // if (!isPatrolling) StartCoroutine(nameof(PatrollingMovement));
-                        break;
+                    // case MovementBehaviour.Patrol:
+                    //     currentSpeed = speed;
+                    //     FollowCamera(playerPosition);
+                    //     MoveBetweenPath(playerPosition);
+                    //     // if (!isPatrolling) StartCoroutine(nameof(PatrollingMovement));
+                    //     break;
                     case MovementBehaviour.Idle:
                         currentSpeed = 0;
                         break;

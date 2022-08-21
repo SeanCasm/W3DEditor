@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Events;
-
+using WEditor.Scenario.Editor;
 namespace WEditor.UI
 {
     public class DeathMenu : MonoBehaviour
@@ -27,6 +27,7 @@ namespace WEditor.UI
             if (isFromEditor)
             {
                 PreviewHandler.instance.OnEdit();
+                deathMenu.SetActive(false);
             }
             else
             {
@@ -40,7 +41,11 @@ namespace WEditor.UI
         public void Reset()
         {
             Time.timeScale = 1;
-            SceneHandler.instance.LoadPlayScene(DataHandler.currentLevel);
+            if (isFromEditor)
+                EditorGrid.instance.InitGeneration();
+            else
+                SceneHandler.instance.LoadPlayScene(DataHandler.currentLevel);
+
             GameplayEvent.instance.OnReset();
             deathMenu.SetActive(false);
         }

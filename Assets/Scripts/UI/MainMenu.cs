@@ -7,11 +7,16 @@ namespace WEditor.UI
     public class MainMenu : MonoBehaviour
     {
         [SerializeField] GameObject mainMenu, levelSelectorMenu;
+        
         public void Button_PlayLevels()
         {
             EditorEvent.instance.SrollViewEnable();
             mainMenu.SetActive(false);
             levelSelectorMenu.SetActive(true);
+        }
+        public void Button_Settings()
+        {
+            GameSettingsMenu.instance.Button_Enable();
         }
         public void Button_LoadPreEditor()
         {

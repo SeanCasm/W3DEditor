@@ -2,14 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Events;
 using WEditor.Game;
 namespace WEditor.Game.Player
 {
-    public class Gun : GunBase<float>
+    public class Gun : GunBase<float>, IFullable
     {
-        [SerializeField] float animSpeed=1;
+        [SerializeField] float animSpeed = 1;
+        [SerializeField] protected int maxAmmo;
+        protected int currentAmmo;
+        public bool hasAmmo { get => currentAmmo > 0; }
         protected Animator animator;
-        public bool isShooting { get; private set; }
+        protected bool isShooting;
+
+        public bool ifFullOf => currentAmmo == maxAmmo;
+
         protected bool isHolding;
         protected bool isInitialized;
         public Action onGunStoppedFire;
@@ -20,38 +27,65 @@ namespace WEditor.Game.Player
             shootPoint = transform.GetChild(0);
             animator = GetComponent<Animator>();
         }
+        public void RefullAmmo() => currentAmmo = maxAmmo;
+        public void Add(int amount)
+        {
+            if (ifFullOf)
+                return;
+            currentAmmo += amount;
+            if (currentAmmo >= maxAmmo) currentAmmo = maxAmmo;
+
+            GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
+        }
+        public void Init(bool enable)
+        {
+            if (!isInitialized)
+            {
+                currentAmmo = maxAmmo;
+                isInitialized = true;
+            }
+            gameObject.SetActive(enable);
+        }
         private void LateUpdate()
         {
             animator.SetBool("isShooting", isShooting);
             animator.SetFloat("Speed", animSpeed);
         }
+        private void OnEnable() => GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
+        private void OnDisable()
+        {
+            onGunStoppedFire = null;
+            onEmptyAmmo = null;
+            isShooting = isHolding = false;
+        }
+
+        public void Animation_Fire()
+        {
+            audioSource.Play();
+        }
         public void FireCanceled()
         {
             isHolding = false;
-            StopCoroutine(nameof(QueueShooting));
         }
         public void FirePerformed()
         {
-            isHolding = true;
-            StartCoroutine(nameof(QueueShooting));
-        }
-        private IEnumerator QueueShooting()
-        {
-            while (isHolding)
+            if (!isShooting)
             {
+                isHolding = true;
                 Fire();
-                yield return new WaitForSeconds(.5f);
             }
         }
-        public virtual void Init(bool enable)
-        {
-            gameObject.SetActive(enable);
-        }
-        public virtual void RefullAmmo() { }
-        public virtual void Add(int amount) { }
+
         public virtual void AnimationEvent_StopShooting()
         {
-            if (!isHolding) isShooting = false;
+            isShooting = false;
+            if (onGunStoppedFire != null)
+                onGunStoppedFire();
+
+            if (currentAmmo == 0)
+                onEmptyAmmo();
+
+            if (isHolding) Fire();
         }
         public void ShootRay()
         {

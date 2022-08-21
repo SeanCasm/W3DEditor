@@ -12,7 +12,7 @@ namespace WEditor.Game.UI
     /// </summary>
     public class HUD : MonoBehaviour
     {
-        [SerializeField] TextMeshProUGUI lives, ammo, score, health;
+        [SerializeField] TextMeshProUGUI ammo, score, health;
         [SerializeField] Animator playerStatusUIAnimator;
         [SerializeField] Image goldenKey, platinumKey;
         private void OnEnable()
@@ -20,7 +20,6 @@ namespace WEditor.Game.UI
             EditorEvent.instance.onPreviewModeExit += OnPreviewModeExit;
             GameplayEvent.instance.onAmmoChanged += OnAmmoChanged;
             GameplayEvent.instance.onScoreChanged += OnScoreChanged;
-            GameplayEvent.instance.onLivesChanged += OnLivesChanged;
             GameplayEvent.instance.onHealthChanged += OnHealthChanged;
             GameplayEvent.instance.onKeyPickedUp += OnKeyPickedUp;
         }
@@ -29,7 +28,6 @@ namespace WEditor.Game.UI
             EditorEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
             GameplayEvent.instance.onAmmoChanged -= OnAmmoChanged;
             GameplayEvent.instance.onScoreChanged -= OnScoreChanged;
-            GameplayEvent.instance.onLivesChanged -= OnLivesChanged;
             GameplayEvent.instance.onHealthChanged -= OnHealthChanged;
             GameplayEvent.instance.onKeyPickedUp -= OnKeyPickedUp;
         }
@@ -48,12 +46,6 @@ namespace WEditor.Game.UI
         {
             ammo.text = "Ammo <br>" + amount;
         }
-        private void OnLivesChanged(int amount)
-        {
-            lives.text = "Lives <br>" + amount;
-            int healthTier = amount / 16;
-            playerStatusUIAnimator.SetInteger("hurtTier", healthTier);
-        }
         private void OnScoreChanged(int amount)
         {
             int currentScore = int.Parse(score.text.Split(" ")[1]) + amount;
@@ -62,6 +54,12 @@ namespace WEditor.Game.UI
         private void OnHealthChanged(int amount)
         {
             health.text = "Health <br>" + amount;
+            int healthTier = amount / 16;
+            if (amount > 0 && amount <= 16)
+                healthTier = 1;
+            else if (amount == 100)
+                healthTier = 7;
+            playerStatusUIAnimator.SetInteger("hurtTier", healthTier);
         }
     }
 }

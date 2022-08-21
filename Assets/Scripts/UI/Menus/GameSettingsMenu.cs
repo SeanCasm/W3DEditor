@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
+
 
 namespace WEditor.UI
 {
@@ -12,42 +13,28 @@ namespace WEditor.UI
     public class GameSettingsMenu : MonoBehaviour
     {
         public static GameSettingsMenu instance;
-        [SerializeField] Transform currentMainCanvas;
-        [SerializeField] GameObject settingsMenuPrefab;
-        [SerializeField] UnityEvent<bool> enableSomething;
-        private Transform gameplayScreen, editorScreen, audioScreen;
-        private Button backButton;
-        private GameObject settingsSceneReference;
-        private void Start() => instance = this;
-        
-        /// <summary>
-        /// Instantiate the settings prefab into the current canvas in scene.
-        /// </summary>
-        public void InstantiateSettingsMenu()
+        [SerializeField] GameObject settingMenu;
+        [SerializeField] GameObject gameplayScreen, editorScreen, audioScreen;
+
+        public CurrentMenu editorPreviousMenu { get; set; } = CurrentMenu.None;
+        private void Start()
         {
-            enableSomething.Invoke(false);
-            settingsSceneReference =
-            Instantiate(
-                settingsMenuPrefab,
-                currentMainCanvas.transform.position,
-                Quaternion.identity,
-                currentMainCanvas
-            );
-            //Find the back button to add a event listener to destroy the settings menu itself.
-            backButton = ToFind("Back").GetComponent<Button>();
-            backButton.onClick.AddListener(() => DestroySelf());
-
-            gameplayScreen = ToFind("Gameplay screen");
-
-            audioScreen = ToFind("Audio screen");
-
-            editorScreen = ToFind("Editor screen");
-
-            Transform ToFind(string toFind)
+            if (instance == null)
             {
-                return settingsSceneReference.transform.Find(toFind);
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+            else
+            {
+                Destroy(this);
             }
         }
+        public void Button_Enable()
+        {
+            MenuManager.instance.currentMenu = CurrentMenu.Setting;
+            settingMenu.SetActive(true);
+        }
+
         public void ChangeToGameplayScreen()
         {
             gameplayScreen.gameObject.SetActive(true);
@@ -66,13 +53,11 @@ namespace WEditor.UI
             audioScreen.gameObject.SetActive(false);
             editorScreen.gameObject.SetActive(true);
         }
-        /// <summary>
-        /// Destroy the settings gameobject reference instantiated in the scene.
-        /// </summary>
-        public void DestroySelf()
+        public void Button_Back()
         {
-            enableSomething.Invoke(true);
-            Destroy(settingsSceneReference);
+            MenuManager.instance.currentMenu = CurrentMenu.None;
+            settingMenu.SetActive(false);
         }
     }
+
 }

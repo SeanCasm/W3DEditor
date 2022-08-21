@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5827763642006895853}
   - component: {fileID: 4431762507189190319}
   - component: {fileID: 8732941147181798803}
-  - component: {fileID: 3063314553811748330}
   - component: {fileID: -8986948574696758608}
+  - component: {fileID: 1532978724353725420}
   m_Layer: 7
   m_Name: Heavy machine gun
   m_TagString: Untagged
@@ -108,26 +108,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3063314553811748330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1486107571606022768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bdb872be974c524590d0efb2a4aa932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkDistance: 40
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  damage: 5
-  shootClip: {fileID: 8300000, guid: f2baa363231d1de4c8be04135dc7f35e, type: 3}
-  maxAmmo: 150
-  bulletBurst: 3
 --- !u!82 &-8986948574696758608
 AudioSource:
   m_ObjectHideFlags: 0
@@ -224,6 +204,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1532978724353725420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486107571606022768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdb872be974c524590d0efb2a4aa932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkDistance: 45
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  damage: 5
+  shootClip: {fileID: 8300000, guid: f2baa363231d1de4c8be04135dc7f35e, type: 3}
+  animSpeed: 2
+  maxAmmo: 150
 --- !u!1 &2474667039125096684
 GameObject:
   m_ObjectHideFlags: 0

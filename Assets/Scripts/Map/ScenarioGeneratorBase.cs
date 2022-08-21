@@ -33,7 +33,6 @@ namespace WEditor.Scenario
         protected List<GameObject> objectsGenerated = new List<GameObject>();
         protected Wall[,] wallGrid;
         protected Door[,] doorGrid;
-        protected bool[,] mainGrid;
         protected GameObject groundPlane;
         private void Start() => instance = this;
         protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<Door> doors, List<Wall> walls)
@@ -66,7 +65,6 @@ namespace WEditor.Scenario
             {
                 HandleEnemyGeneration(tileName, position);
             }
-            mainGrid[cellPos.x, cellPos.y] = true;
         }
         public void ResetLevel()
         {
@@ -77,7 +75,6 @@ namespace WEditor.Scenario
         {
             int mapWidth = DataHandler.levelSize.x;
             int mapHeight = DataHandler.levelSize.y;
-            mainGrid = new bool[mapWidth, mapHeight];
             wallGrid = new Wall[mapWidth, mapHeight];
             doorGrid = new Door[mapWidth, mapHeight];
             groundPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
@@ -86,14 +83,14 @@ namespace WEditor.Scenario
             float scaleX = mapWidth / .64f;
             float sclaeZ = mapHeight / .64f;
             groundPlane.transform.localScale = new Vector3(scaleX, 1, sclaeZ);
-            groundPlane.transform.position = new Vector3(mainGrid.GetLength(0) / 2, 0, mainGrid.GetLength(1) / 2);
+            groundPlane.transform.position = new Vector3(mapWidth / 2, 0, mapHeight / 2);
 
             CreateScenarioLimiter();
         }
         private void CreateScenarioLimiter()
         {
-            float mapWidth = mainGrid.GetLength(0);
-            float mapHeight = mainGrid.GetLength(1);
+            float mapWidth = doorGrid.GetLength(0);
+            float mapHeight = doorGrid.GetLength(1);
             List<MeshFilter> fences = new List<MeshFilter>();
             //bottom-right to top-left
             for (float y = 0; y < mapHeight; y += 1)
@@ -228,9 +225,9 @@ namespace WEditor.Scenario
             if (door.tileName.Contains("_elv"))
                 return;
 
-            if (mainGrid[x, y + 1] && mainGrid[x, y - 1])
+            if (wallGrid[x, y + 1] != null && wallGrid[x, y - 1] != null)
                 doorGrid[x, y].topBottomSide = WallSide.TopBottom;
-            else if (mainGrid[x - 1, y] && mainGrid[x + 1, y])
+            else if (wallGrid[x - 1, y] != null && wallGrid[x + 1, y] != null)
                 doorGrid[x, y].topBottomSide = WallSide.LeftRight;
 
         }
@@ -243,7 +240,7 @@ namespace WEditor.Scenario
                 for (int y = 0; y < doorGrid.GetLength(1); y++)
                 {
                     Door door = doorGrid[x, y];
-                    if (door == null || !mainGrid[x, y] || door.tileName.Contains("_elv")) continue;
+                    if (door == null || doorGrid[x, y] == null || door.tileName.Contains("_elv")) continue;
                     doorGeneration.StartGeneration(door, doorGrid, objectsGenerated);
                 }
             }

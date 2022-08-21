@@ -13,7 +13,7 @@ namespace WEditor.Events
         public event Action<InfoStatsUIText> onLevelCompleted;
         public event Action onDeath,onReset;
         public event Action onTeasuresChanged, onKillsChanged;
-        public event Action<int> onLivesChanged, onScoreChanged, onHealthChanged;
+        public event Action<int> onScoreChanged, onHealthChanged;
         public event Action<List<KeyType>> onInteracted;
         private void OnEnable() => instance = this;
         public void OnReset()

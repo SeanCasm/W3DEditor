@@ -6,7 +6,6 @@ using WEditor.UI;
 using WEditor.Events;
 using WEditor.Game.Scriptables;
 using WEditor.Utils;
-using WEditor.Input;
 
 namespace WEditor.Scenario.Editor
 {

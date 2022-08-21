@@ -7,7 +7,7 @@ AnimationClip:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shoot_loop
-  serializedVersion: 6
+  serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
   m_UseHighQualityCurve: 1
@@ -45,6 +45,7 @@ AnimationClip:
       typeID: 212
       customType: 23
       isPPtrCurve: 1
+      isIntCurve: 0
     pptrCurveMapping:
     - {fileID: -8589672695694742468, guid: f477131157560794f8cdf29f802e8378, type: 3}
     - {fileID: 1425588968670551369, guid: f477131157560794f8cdf29f802e8378, type: 3}
@@ -76,7 +77,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.083333336
-    functionName: PlayShootClip
+    functionName: Animation_Fire
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

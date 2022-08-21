@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Events;
 using TMPro;
-using UnityEngine.Events;
-
 namespace WEditor.UI
 {
     public class EditorMenu : MonoBehaviour
@@ -13,6 +11,10 @@ namespace WEditor.UI
         public void Button_LoadMapEditorFromCreate()
         {
             SceneHandler.instance.Button_LoadEditorFromCreateOption(int.Parse(width.text), int.Parse(height.text));
+        }
+        public void Button_Settings()
+        {
+            GameSettingsMenu.instance.Button_Enable();
         }
         public void Button_LoadLevels()
         {

@@ -13,8 +13,15 @@ namespace WEditor.Game.Player
             base.ShootRay();
         }
         private void OnEnable() => GameplayEvent.instance.AmmoChanged("-");
-        private void OnDisable() => StopAllCoroutines();
         private void LateUpdate() => animator.SetBool("isShooting", isShooting);
+        public override void AnimationEvent_StopShooting()
+        {
+            isShooting = false;
+            if (onGunStoppedFire != null)
+                onGunStoppedFire();
+
+            if (isHolding) Fire();
+        }
     }
 }
 

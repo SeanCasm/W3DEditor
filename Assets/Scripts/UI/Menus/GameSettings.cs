@@ -23,6 +23,20 @@ namespace WEditor
             aimSlider.value = PlayerPrefs.HasKey("aim") ? PlayerPrefs.GetFloat("aim") : defaultAimSensibility;
             fxSlider.value = PlayerPrefs.HasKey("fx") ? PlayerPrefs.GetFloat("fx") : defaultFxVolume;
             musicSlider.value = PlayerPrefs.HasKey("music") ? PlayerPrefs.GetFloat("music") : defaultMusicVolume;
+            SetFX(fxSlider.value);
+            SetMusic(musicSlider.value);
+            EditorCamera.currentSpeed = PlayerPrefs.GetFloat("camSpeed");
+            PlayerController.currentRotationSpeed = PlayerPrefs.HasKey("aim") ? PlayerPrefs.GetFloat("aim") : defaultAimSensibility;
+        }
+        private void SetMusic(float amount)
+        {
+            float correctValue = Mathf.Log10(amount) * 20;
+            musicGroup.audioMixer.SetFloat("music", correctValue);
+        }
+        private void SetFX(float amount)
+        {
+            float correctValue = Mathf.Log10(fxSlider.value) * 20;
+            fxGroup.audioMixer.SetFloat("fx", correctValue);
         }
         /// <summary>
         /// Set the mouse aim sensibility.
@@ -44,15 +58,13 @@ namespace WEditor
         }
         public void SetSoundEffectsVolume(float amount)
         {
-            float correctValue = Mathf.Log10(amount) * 20;
+            SetFX(amount);
             PlayerPrefs.SetFloat("fx", amount);
-            fxGroup.audioMixer.SetFloat("fx", correctValue);
         }
         public void SetMusicVolume(float amount)
         {
-            float correctValue = Mathf.Log10(amount) * 20;
+            SetMusic(amount);
             PlayerPrefs.SetFloat("music", amount);
-            musicGroup.audioMixer.SetFloat("music", correctValue);
         }
     }
 }

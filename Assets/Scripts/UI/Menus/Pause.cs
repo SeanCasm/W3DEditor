@@ -11,7 +11,6 @@ namespace WEditor.UI
     {
         [SerializeField] GameObject pauseUI;
         [SerializeField] GameObject settingsMenu;
-        private ActualMenu menuEnable = ActualMenu.None;
         private void OnEnable()
         {
             EditorEvent.instance.onPreviewModeEnter += EnableInput;
@@ -38,30 +37,27 @@ namespace WEditor.UI
         {
             if (context.started)
             {
-                switch (menuEnable)
+                CurrentMenu currentMenu = MenuManager.instance.currentMenu;
+                switch (currentMenu)
                 {
-                    case ActualMenu.None:
-
+                    case CurrentMenu.None:
                         pauseUI.SetActive(true);
                         PlayerControllerInput.instance.Disable();
                         GunInput.instance.Disable();
                         Cursor.lockState = CursorLockMode.None;
                         Time.timeScale = 0;
-                        menuEnable = ActualMenu.Pause;
+                        currentMenu = CurrentMenu.Pause;
                         break;
-                    case ActualMenu.Pause:
-
-                        menuEnable = ActualMenu.None;
+                    case CurrentMenu.Pause:
+                        currentMenu = CurrentMenu.None;
                         Resume();
-
-                        break;
-                    case ActualMenu.Settings:
-
-                        pauseUI.SetActive(true);
-
                         break;
                 }
             }
+        }
+        public void Button_Settings()
+        {
+            GameSettingsMenu.instance.Button_Enable();
         }
         private void Resume()
         {
@@ -88,8 +84,5 @@ namespace WEditor.UI
             Time.timeScale = 1;
         }
     }
-    public enum ActualMenu
-    {
-        Pause, Settings, None
-    }
+
 }
