@@ -637,7 +637,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1566103524}
         m_TargetAssemblyTypeName: WEditor.UI.MainMenu, Assembly-CSharp
         m_MethodName: Button_Exit
         m_Mode: 1
