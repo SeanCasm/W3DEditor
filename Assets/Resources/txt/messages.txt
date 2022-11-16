@@ -1,3 +1,5 @@
 save: Save complete!
 level_exist: The level _ currently exist, you want to replace it?
 level_elv: Now place the elevator, this requires to put around the door you placed previously.
+level_del: Are you sure you want to delete this level?, Press again if you would do it.
+level_del_done: Level successfully deleted.

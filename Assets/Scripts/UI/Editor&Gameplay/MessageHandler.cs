@@ -13,8 +13,8 @@ namespace WEditor.UI
         public static MessageHandler instance;
         [SerializeField] GameObject errorPanel;
         [SerializeField] TMPro.TextMeshProUGUI errorMessage;
-        [SerializeField] float messageTime;
-        [SerializeField] string errorsPath, messagesPath;
+        [SerializeField] float messageTime = 3;
+        [SerializeField] string errorsPath = "Assets/Resources/txt/errors.txt", messagesPath = "Assets/Resources/txt/messages.txt";
         [Header("Level save settings")]
         [SerializeField] GameObject messagePopUp;
         [SerializeField] Button accept, cancel;

@@ -14,7 +14,6 @@ namespace WEditor
         public int levelSizeX, levelSizeY;
         public string levelName;
         public List<int> levelGuns = new List<int>();
-        public int[] levelGunsToArray => levelGuns.ToArray();
 
         public void SetData()
         {

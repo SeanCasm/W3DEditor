@@ -7,7 +7,7 @@ namespace WEditor
 {
     public static class SaveData
     {
-        private static string persistentDataPath = Application.persistentDataPath + "/";
+        public static string persistentDataPath = Application.persistentDataPath + "/Levels/";
 
         public static void SaveToLocal()
         {

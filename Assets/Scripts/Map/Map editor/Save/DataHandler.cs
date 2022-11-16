@@ -19,7 +19,7 @@ namespace WEditor
         {
             currentLevel = curr;
             currentLevelName = currentLevel.levelName;
-            levelGuns = currentLevel.levelGunsToArray;
+            levelGuns = currentLevel.levelGuns.ToArray();
             DataHandler.currentLevelPosition = new Vector3(currentLevel.levelSpawnX, .5f, currentLevel.levelSpawnZ);
         }
         public static bool CheckForWall(Vector3Int position)

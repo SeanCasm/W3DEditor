@@ -78,7 +78,7 @@ namespace WEditor.Scenario.Editor
             height = gameData.levelSizeY;
 
             DataHandler.GridSize(new Vector3Int(width, height, 0));
-            DataHandler.levelGuns = gameData.levelGunsToArray;
+            DataHandler.levelGuns = gameData.levelGuns.ToArray();
 
             levelName = gameData.levelName;
             levelNameInputField.text = levelName;
