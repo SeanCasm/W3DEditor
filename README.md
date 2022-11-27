@@ -14,17 +14,4 @@ In the editor you can create your own level. If you need to test your level, the
 *Testing a level.*
 
 ### Play mode
-In this mode you can play directly a selected level you have saved in your pc.
-
-
-#### ToDo list:
-- [X] Enemies.
-- [X] Walls.
-- [X] Doors.
-- [X] Items.
-- [ ] Bosses.
-- [ ] Secret rooms.
-- [X] Commands.
-- [ ] Share levels.
-- [ ] Website.
-- [ ] Sound effects & music
+You can play directly a selected level from your pc.
