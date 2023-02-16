@@ -15,14 +15,5 @@ A Wolfenstein3D level editor to create and play.
 
 *Testing a level.*
 
-### Play mode
-- Play any level you have created.
-
 ### Download
 https://drive.google.com/drive/folders/1UbUXsgHBOXmG6amnZt0_RXD0etwOsfUn?usp=sharing
-
-### What's coming up.
-- Editor
-  - Painting tiles by holding the left click.
-  - Biggest map bounds.
-  - A few more enemies.
