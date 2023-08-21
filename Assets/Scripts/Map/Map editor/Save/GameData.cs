@@ -12,8 +12,8 @@ namespace WEditor
         public List<int> levelTilesX = new List<int>();
         public List<int> levelTilesY = new List<int>();
         public int levelSizeX, levelSizeY;
-        public string levelName;
-        public List<int> levelGuns = new List<int>();
+        public string levelName, levelMusicTheme;
+        public int levelGuns = 0;
 
         public void SetData()
         {
@@ -22,7 +22,8 @@ namespace WEditor
             this.levelSpawnZ = DataHandler.spawnPosition.z;
             this.levelSizeX = DataHandler.levelSize.x;
             this.levelSizeY = DataHandler.levelSize.y;
-            this.levelGuns = DataHandler.levelGuns.ToList();
+            this.levelMusicTheme = DataHandler.levelMusicTheme;
+            this.levelGuns = DataHandler.levelGuns;
             int pos = 0;
             for (int x = 0; x < DataHandler.grid.GetLength(0); x++)
             {

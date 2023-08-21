@@ -9,19 +9,25 @@ namespace WEditor.Game.Player
     {
         [SerializeField] Gun[] playerGuns;
         public Gun currentGun { get => playerGuns[gunIndex]; }
-        public int[] initialAvailableGuns { get; set; }
+        private int[] initialAvailableGuns = { 0 };
         private int playerGunsCount { get => playerGuns.Length; }
         int gunIndex = 0;
         private void OnEnable()
         {
-            initialAvailableGuns = DataHandler.levelGuns;
-            GunInput.instance.EnableAndSetCallbacks(this);
+            if (DataHandler.levelGuns == 0)
+            {
+                initialAvailableGuns = new int[] { 0, 1, 2, 3 };
+            }
+            else
+                initialAvailableGuns = new int[] { 0, DataHandler.levelGuns };
             foreach (int i in initialAvailableGuns)
             {
                 playerGuns[i].RefullAmmo();
                 playerGuns[i].onEmptyAmmo = SwapToGunWithAmmo;
             }
-            gunIndex = initialAvailableGuns[0];
+            GunInput.instance.EnableAndSetCallbacks(this);
+
+            gunIndex = 0;
             playerGuns[gunIndex].Init(true);
         }
         private void OnDisable()
@@ -31,6 +37,7 @@ namespace WEditor.Game.Player
                 g.Init(false);
                 g.RefullAmmo();
             }
+            gunIndex = 0;
             GunInput.instance.Disable();
         }
         public void SetDefault()

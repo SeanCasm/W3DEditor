@@ -52,9 +52,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alertedClip: {fileID: 8300000, guid: 63215ff99d04efd4a976e2c6d047a5c8, type: 3}
-  speed: 0.2
-  tileCheckDistance: 6
-  distanceToAttack: 2
+  speed: 0.25
+  tileCheckDistance: 12
+  distanceToAttack: 6
 --- !u!114 &952185697298849953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,7 +389,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkDistance: 12
-  hitTag: Player
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 0
   damage: 12
   shootClip: {fileID: 8300000, guid: 09261a84dbb920348950f806f11a8985, type: 3}
   accuracy: 0

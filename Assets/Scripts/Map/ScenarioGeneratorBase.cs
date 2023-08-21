@@ -30,7 +30,7 @@ namespace WEditor.Scenario
         [SerializeField] List<CollectibleScriptable> scoreScriptables, gunScriptables;
         [Header("Enemy generation")]
         [SerializeField] GameObject guardPrefab, ssPrefab;
-        protected List<GameObject> objectsGenerated = new List<GameObject>();
+        protected List<GameObject> prefabInstances = new List<GameObject>();
         protected Wall[,] wallGrid;
         protected Door[,] doorGrid;
         protected GameObject groundPlane;
@@ -68,7 +68,7 @@ namespace WEditor.Scenario
         }
         public void ResetLevel()
         {
-            objectsGenerated.ForEach(item => Destroy(item));
+            prefabInstances.ForEach(item => Destroy(item));
             InitGeneration();
         }
         public virtual void InitGeneration()
@@ -118,7 +118,7 @@ namespace WEditor.Scenario
                 GameObject fence = Instantiate(wallPrefab);
                 fence.transform.position = position;
                 fences.Add(fence.GetComponent<MeshFilter>());
-                objectsGenerated.Add(fence);
+                prefabInstances.Add(fence);
             }
             meshCombiner.CombineMeshes(fences);
         }
@@ -160,7 +160,7 @@ namespace WEditor.Scenario
         {
             itemGameObject.transform.position = position;
             itemGameObject.SetActive(true);
-            objectsGenerated.Add(itemGameObject);
+            prefabInstances.Add(itemGameObject);
         }
         protected void HandleAmmoGeneration(string tileName, Vector3Int cellPos)
         {
@@ -203,7 +203,7 @@ namespace WEditor.Scenario
                 wallGrid[x, y] = new Wall(tileName, wall.position);
                 //fix the tile center pivot
                 wallObject.transform.position = new Vector3(x, 0, y);
-                objectsGenerated.Add(wallObject);
+                prefabInstances.Add(wallObject);
             }
 
             meshCombiner.CombineMultipleMeshes(wallsToFilter);
@@ -213,7 +213,7 @@ namespace WEditor.Scenario
             position = new Vector3(position.x + .5f, position.y, position.z + .5f);
             GameObject enemy = tileName.StartsWith("guard") ? Instantiate(guardPrefab) : Instantiate(ssPrefab);
             enemy.transform.position = position;
-            objectsGenerated.Add(enemy);
+            prefabInstances.Add(enemy);
         }
         protected void AddDoorToGrid(Door door)
         {
@@ -241,7 +241,7 @@ namespace WEditor.Scenario
                 {
                     Door door = doorGrid[x, y];
                     if (door == null || doorGrid[x, y] == null || door.tileName.Contains("_elv")) continue;
-                    doorGeneration.StartGeneration(door, doorGrid, objectsGenerated);
+                    doorGeneration.StartGeneration(door, doorGrid, prefabInstances);
                 }
             }
         }
@@ -265,7 +265,7 @@ namespace WEditor.Scenario
 
             propObject.transform.position = position;
 
-            objectsGenerated.Add(propObject);
+            prefabInstances.Add(propObject);
         }
         protected void OnPreviewModeExit() => meshCombiner.DisableTargetCombiner();
     }

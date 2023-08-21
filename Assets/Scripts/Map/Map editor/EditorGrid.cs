@@ -78,7 +78,7 @@ namespace WEditor.Scenario.Editor
             height = gameData.levelSizeY;
 
             DataHandler.GridSize(new Vector3Int(width, height, 0));
-            DataHandler.levelGuns = gameData.levelGuns.ToArray();
+            DataHandler.levelGuns = gameData.levelGuns;
 
             levelName = gameData.levelName;
             levelNameInputField.text = levelName;
@@ -134,16 +134,6 @@ namespace WEditor.Scenario.Editor
             this.width = width;
             this.height = height;
 
-            if (width <= 0 || height <= 0)
-            {
-                MessageHandler.instance.SetError("level_size_l");
-                return;
-            }
-            else if (width > 50 || height > 50)
-            {
-                MessageHandler.instance.SetError("level_size_u");
-                return;
-            }
             InitLevel();
         }
         private void InitLevel()

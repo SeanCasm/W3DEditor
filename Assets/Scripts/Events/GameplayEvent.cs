@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
 namespace WEditor.Events
 {
     public class GameplayEvent : MonoBehaviour
@@ -10,41 +9,30 @@ namespace WEditor.Events
         public static GameplayEvent instance;
         public event Action<int> onKeyPickedUp;
         public event Action<string> onAmmoChanged;
-        public event Action<InfoStatsUIText> onLevelCompleted;
-        public event Action onDeath,onReset;
+        public event Action onDeath, onReset;
         public event Action onTeasuresChanged, onKillsChanged;
         public event Action<int> onScoreChanged, onHealthChanged;
         public event Action<List<KeyType>> onInteracted;
         private void OnEnable() => instance = this;
         public void OnReset()
         {
-            if(onReset!=null)
-                onReset();
+            onReset?.Invoke();
         }
         public void OnDeath()
         {
-            if (onDeath != null)
-                onDeath();
-        }
-        public void LevelCompleted(InfoStatsUIText levelStats)
-        {
-            if (onLevelCompleted != null)
-                onLevelCompleted(levelStats);
+            onDeath?.Invoke();
         }
         public void Interacted(List<KeyType> keyTrigger)
         {
-            if (onInteracted != null)
-                onInteracted(keyTrigger);
+            onInteracted?.Invoke(keyTrigger);
         }
         public void TeasuresChanged()
         {
-            if (onTeasuresChanged != null)
-                onTeasuresChanged();
+            onTeasuresChanged?.Invoke();
         }
         public void KillsChanged()
         {
-            if (onKillsChanged != null)
-                onKillsChanged();
+            onKillsChanged?.Invoke();
         }
         /// <summary>
         /// 
@@ -52,24 +40,20 @@ namespace WEditor.Events
         /// <param name="key">0: golden, 1: platinum</param>
         public void KeyPickedUp(int key)
         {
-            if (onKeyPickedUp != null)
-                onKeyPickedUp(key);
+            onKeyPickedUp?.Invoke(key);
         }
         public void HealthChanged(int amount)
         {
-            if (onHealthChanged != null)
-                onHealthChanged(amount);
+            onHealthChanged?.Invoke(amount);
         }
 
         public void AmmoChanged(string amount)
         {
-            if (onAmmoChanged != null)
-                onAmmoChanged(amount);
+            onAmmoChanged?.Invoke(amount);
         }
         public void ScoreChanged(int amount)
         {
-            if (onScoreChanged != null)
-                onScoreChanged(amount);
+            onScoreChanged?.Invoke(amount);
         }
     }
 }

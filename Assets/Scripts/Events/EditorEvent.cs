@@ -30,89 +30,56 @@ namespace WEditor.Events
         public event Action<Vector3Int> onElevatorPlacementFailed;
         public void ElevatorPlacementFailed(Vector3Int pos)
         {
-            if (onElevatorPlacementFailed != null)
-                onElevatorPlacementFailed(pos);
+            onElevatorPlacementFailed?.Invoke(pos);
         }
         public void ElevatorEditingExit()
         {
-            if (onElevatorEditingExit != null)
-                onElevatorEditingExit();
+            onElevatorEditingExit?.Invoke();
         }
         public void ElevatorEditing()
         {
-            if (onElevatorEditing != null)
-                onElevatorEditing();
+            onElevatorEditing?.Invoke();
         }
         public void EditorExit()
         {
-            if (onEditorExit != null)
-            {
-                onEditorExit();
-            }
+            onEditorExit?.Invoke();
         }
         public void PlayModeEnter()
         {
-            if (onPlayModeEnter != null)
-            {
-                onPlayModeEnter();
-            }
+            onPlayModeEnter?.Invoke();
         }
         public void PlayModeExit()
         {
-            if (onPlayModeExit != null)
-            {
-                onPlayModeExit();
-            }
+            onPlayModeExit?.Invoke();
         }
         public void SrollViewDisable()
         {
-            if (onSrollViewDisable != null)
-            {
-                onSrollViewDisable();
-            }
+            onSrollViewDisable?.Invoke();
         }
         public void SrollViewEnable()
         {
-            if (onSrollViewEnable != null)
-            {
-                onSrollViewEnable();
-            }
+            onSrollViewEnable?.Invoke();
         }
         public void EditorEnter()
         {
-            if (onEditorEnter != null)
-            {
-                onEditorEnter();
-            }
+            onEditorEnter?.Invoke();
         }
 
         public void EditorInventorySelected(int id)
         {
-            if (onEditorInventorySelected != null)
-            {
-                onEditorInventorySelected(id);
-            }
+            onEditorInventorySelected?.Invoke(id);
         }
         public void EditorInventoryActiveChanged()
         {
-            if (onEditorInventoryActiveChanged != null)
-            {
-                onEditorInventoryActiveChanged();
-            }
+            onEditorInventoryActiveChanged?.Invoke();
         }
         public void PreviewModeEnter()
         {
-            if (onPreviewModeEnter != null)
-            {
-                onPreviewModeEnter();
-            }
+            onPreviewModeEnter?.Invoke();
         }
         public void PreviewModeExit()
         {
-            if (onPreviewModeExit != null)
-            {
-                onPreviewModeExit();
-            }
+            onPreviewModeExit?.Invoke();
         }
     }
 }

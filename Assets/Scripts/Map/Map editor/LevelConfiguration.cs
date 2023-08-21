@@ -9,31 +9,40 @@ namespace WEditor.Scenario.Editor
 {
     public class LevelConfiguration : MonoBehaviour
     {
-        [SerializeField] TMP_Dropdown dropdown;
-        [SerializeField] TMP_Dropdown gunsDropdown;
+        [SerializeField] TMP_Dropdown gunsDropdown, musicDropdown;
+        private void OnEnable()
+        {
+            SetLevelMusic();
+            SetInitialGuns();
+        }
+        private void SetInitialGuns()
+        {
+            gunsDropdown.value = DataHandler.levelGuns;
+        }
+        private void SetLevelMusic()
+        {
+            if (DataHandler.levelMusicTheme == "Get Them Before They Get You")
+            {
+                musicDropdown.value = 0;
+            }
+            else
+            {
+                for (int i = 0; i < musicDropdown.options.Count; i++)
+                {
+                    if (musicDropdown.options[i].text == DataHandler.levelMusicTheme)
+                        musicDropdown.value = i;
+                }
+            }
+        }
+        public void Dropdown_LevelMusic()
+        {
+            string musicName = musicDropdown.options[musicDropdown.value].text;
+            DataHandler.levelMusicTheme = musicName;
+            Music.current.SetAnotherTheme(musicName);
+        }
         public void Dropdown_SelectGuns()
         {
-            string guns = gunsDropdown.options[gunsDropdown.value].text;
-            int[] gunIndexes = new int[] { };
-            switch (guns)
-            {
-                case "Knife":
-                    gunIndexes = new int[] { 0 };
-                    break;
-                case "Pistol":
-                    gunIndexes = new int[] { 0, 1 };
-                    break;
-                case "Machinegun":
-                    gunIndexes = new int[] { 0, 2 };
-                    break;
-                case "Heavy Machinegun":
-                    gunIndexes = new int[] { 0, 3 };
-                    break;
-                case "All":
-                    gunIndexes = new int[] { 0, 1, 2, 3 };
-                    break;
-            }
-            DataHandler.levelGuns = gunIndexes;
+            DataHandler.levelGuns = gunsDropdown.value;
         }
     }
 }

@@ -58,6 +58,7 @@ namespace WEditor.UI
                 {
                     item.gameObject.SetActive(true);
                     item.transform.SetParent(itemGroup.transform);
+                    item.transform.localScale = Vector2.one;
                 }
                 isInScrollView = true;
             }

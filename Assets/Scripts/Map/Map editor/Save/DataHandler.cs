@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using WEditor.Game.Player;
 
 namespace WEditor
 {
@@ -14,12 +15,14 @@ namespace WEditor
         public static string currentLevelName { get; set; }
         public static Vector2Int levelSize { get => new Vector2Int(grid.GetLength(0), grid.GetLength(1)); }
         public static Vector3Int spawnPosition;
-        public static int[] levelGuns = new int[] { 0, 1, 2, 3 }; //default value
+        public static string levelMusicTheme = "Get Them Before They Get You";
+        public static int levelGuns = 0;
+        public static LevelStats levelStats;
         public static void SetCurrentLevel(GameData curr)
         {
             currentLevel = curr;
             currentLevelName = currentLevel.levelName;
-            levelGuns = currentLevel.levelGuns.ToArray();
+            levelGuns = currentLevel.levelGuns;
             DataHandler.currentLevelPosition = new Vector3(currentLevel.levelSpawnX, .5f, currentLevel.levelSpawnZ);
         }
         public static bool CheckForWall(Vector3Int position)

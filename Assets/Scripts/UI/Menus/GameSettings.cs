@@ -20,6 +20,7 @@ namespace WEditor
         [SerializeField] AudioMixerGroup fxGroup, musicGroup;
         private void Start()
         {
+            Screen.SetResolution(1080, 1080, FullScreenMode.Windowed);
             aimSlider.value = PlayerPrefs.HasKey("aim") ? PlayerPrefs.GetFloat("aim") : defaultAimSensibility;
             fxSlider.value = PlayerPrefs.HasKey("fx") ? PlayerPrefs.GetFloat("fx") : defaultFxVolume;
             musicSlider.value = PlayerPrefs.HasKey("music") ? PlayerPrefs.GetFloat("music") : defaultMusicVolume;

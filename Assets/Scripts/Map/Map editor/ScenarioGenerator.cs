@@ -47,11 +47,11 @@ namespace WEditor.Scenario.Editor
             EditorGrid.instance.currentSpawn.SetActive(true);
             Destroy(groundPlane);
 
-            objectsGenerated.ForEach(wall =>
+            prefabInstances.ForEach(wall =>
             {
                 Destroy(wall);
             });
-            objectsGenerated.Clear();
+            prefabInstances.Clear();
         }
     }
 }

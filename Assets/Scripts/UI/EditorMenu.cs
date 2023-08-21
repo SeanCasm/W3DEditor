@@ -10,7 +10,19 @@ namespace WEditor.UI
         [SerializeField] TMP_InputField width, height;
         public void Button_LoadMapEditorFromCreate()
         {
-            SceneHandler.instance.Button_LoadEditorFromCreateOption(int.Parse(width.text), int.Parse(height.text));
+            int w = int.Parse(width.text);
+            int h = int.Parse(height.text);
+            if (w < 8 || h < 8)
+            {
+                MessageHandler.instance.SetError("level_size_l");
+                return;
+            }
+            if (w > 50 || h > 50)
+            {
+                MessageHandler.instance.SetError("level_size_u");
+                return;
+            }
+            SceneHandler.instance.Button_LoadEditorFromCreateOption(w, h);
         }
         public void Button_Settings()
         {

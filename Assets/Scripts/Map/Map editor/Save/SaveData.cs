@@ -22,7 +22,7 @@ namespace WEditor
             void save()
             {
 
-                GameData data = new GameData();
+                GameData data = new();
                 data.SetData();
                 string json = JsonUtility.ToJson(data);
                 File.WriteAllText(path, json);
@@ -31,13 +31,12 @@ namespace WEditor
         }
         public static GameData[] LoadLocalLevels()
         {
-
             string[] levelPaths = Directory.GetFiles(persistentDataPath);
             GameData[] gameDatas = new GameData[levelPaths.Length];
+
             for (int i = 0; i < levelPaths.Length; i++)
-            {
                 gameDatas[i] = JsonUtility.FromJson<GameData>(File.ReadAllText(levelPaths[i]));
-            }
+
             return gameDatas;
         }
     }

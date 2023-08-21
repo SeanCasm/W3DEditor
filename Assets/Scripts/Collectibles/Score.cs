@@ -11,6 +11,7 @@ namespace WEditor.Game.Collectibles
         protected override bool OnPlayerEnter()
         {
             GameplayEvent.instance.ScoreChanged(amount);
+            GameplayEvent.instance.TeasuresChanged();
             return true;
         }
     }

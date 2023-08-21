@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using WEditor.Events;
-using TMPro;
 namespace WEditor.Game.Player
 {
     /// <summary>
@@ -10,33 +10,23 @@ namespace WEditor.Game.Player
     /// </summary>
     public class Stats : MonoBehaviour
     {
-        private LevelStats levelStats = new LevelStats(0, 0, 0);
+        private LevelStats levelStats = new(0, 0, 0);
         private void OnEnable()
         {
             GameplayEvent.instance.onScoreChanged += AddScore;
             GameplayEvent.instance.onKillsChanged += AddKill;
             GameplayEvent.instance.onTeasuresChanged += AddTeasure;
-            GameplayEvent.instance.onLevelCompleted += WriteLevelStats;
         }
         private void OnDisable()
         {
+            DataHandler.levelStats = levelStats;
             GameplayEvent.instance.ScoreChanged(-levelStats.totalScore);
-            levelStats = new LevelStats(0, 0, 0);
+            levelStats = new(0, 0, 0);
             GameplayEvent.instance.onScoreChanged -= AddScore;
             GameplayEvent.instance.onKillsChanged -= AddKill;
             GameplayEvent.instance.onTeasuresChanged -= AddTeasure;
-            GameplayEvent.instance.onLevelCompleted -= WriteLevelStats;
         }
-        /// <summary>
-        /// Write the player stats in the text component of the level ending UI.
-        /// </summary>
-        /// <param name="infoStatsUIText"></param>
-        private void WriteLevelStats(InfoStatsUIText infoStatsUIText)
-        {
-            infoStatsUIText.ScoreText = levelStats.totalScore.ToString();
-            infoStatsUIText.KillsText = levelStats.totalKills.ToString();
-            infoStatsUIText.TeasuresText = levelStats.totalTeasures.ToString();
-        }
+
         private void AddTeasure() => levelStats.totalTeasures++;
         private void AddKill() => levelStats.totalKills++;
         private void AddScore(int amount) => levelStats.totalScore += amount;

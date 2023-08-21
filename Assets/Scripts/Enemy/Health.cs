@@ -43,7 +43,9 @@ namespace WEditor.Game.Enemy
             enemyAI.OnDeath();
             isDead = true;
             healthBox.enabled = false;
+            GameplayEvent.instance.KillsChanged();
             GameplayEvent.instance.ScoreChanged(score);
+
             enabled = false;
             audioSource.clip = deathClip[Random.Range(0, deathClip.Length)];
             audioSource.Play();

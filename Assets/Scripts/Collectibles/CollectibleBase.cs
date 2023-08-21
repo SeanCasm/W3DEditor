@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WEditor.Events;
 using WEditor.Game.Scriptables;
 namespace WEditor.Game.Collectibles
 {
@@ -31,10 +32,17 @@ namespace WEditor.Game.Collectibles
         private void OnEnable()
         {
             OnPlayerTrigger += OnPlayerEnter;
+            EditorEvent.instance.onPreviewModeExit += DestroyOnUnload;
         }
         private void OnDisable()
         {
             OnPlayerTrigger -= OnPlayerEnter;
+            EditorEvent.instance.onPreviewModeExit -= DestroyOnUnload;
+        }
+
+        private void DestroyOnUnload()
+        {
+            Destroy(gameObject);
         }
         private void Update()
         {

@@ -11,12 +11,64 @@ namespace WEditor.UI
     /// </summary>
     public class FinalScreen : MonoBehaviour
     {
-        [SerializeField] InfoStatsUIText infoStats;
+        [SerializeField] TextMeshProUGUI scoreText, killsText, teasuresText;
         private bool exit;
         private void OnEnable()
         {
-            GameplayEvent.instance.LevelCompleted(infoStats);
             GameInput.instance.DisableAll();
+            int score = DataHandler.levelStats.totalScore;
+            int kills = DataHandler.levelStats.totalKills;
+            int teasures = DataHandler.levelStats.totalTeasures;
+            string levelName = DataHandler.currentLevelName;
+
+            bool hasScoreSaved = PlayerPrefs.HasKey($"{levelName}-Score");
+            bool hasKillsSaved = PlayerPrefs.HasKey($"{levelName}-Kills");
+            bool hasTeasuresSaved = PlayerPrefs.HasKey($"{levelName}-Teasures");
+            scoreText.text = $"Score: {score}";
+            killsText.text = $"Kills: {kills}";
+            teasuresText.text = $"Teasures: {teasures}";
+            if (hasScoreSaved)
+            {
+                int scoreSaved = PlayerPrefs.GetInt($"{levelName}-Score");
+
+                if (score > scoreSaved)
+                {
+                    PlayerPrefs.SetInt($"{levelName}-Score", score);
+                    scoreText.text += " - Best: " + scoreSaved;
+                }
+            }
+            else
+            {
+                PlayerPrefs.SetInt($"{levelName}-Score", score);
+            }
+            if (hasKillsSaved)
+            {
+                int killsSaved = PlayerPrefs.GetInt($"{levelName}-Kills");
+
+                if (score > killsSaved)
+                {
+                    PlayerPrefs.SetInt($"{levelName}-Kills", kills);
+                    killsText.text += " - Best: " + killsSaved;
+                }
+            }
+            else
+            {
+                PlayerPrefs.SetInt($"{levelName}-Kills", kills);
+            }
+            if (hasTeasuresSaved)
+            {
+                int teasuresSaved = PlayerPrefs.GetInt($"{levelName}-Teasures");
+
+                if (score > teasuresSaved)
+                {
+                    PlayerPrefs.SetInt($"{levelName}-Teasures", teasures);
+                    teasuresText.text += " - Best: " + teasuresSaved;
+                }
+            }
+            else
+            {
+                PlayerPrefs.SetInt($"{levelName}-Teasures", teasures);
+            }
         }
         private void Update()
         {
@@ -27,19 +79,4 @@ namespace WEditor.UI
             }
         }
     }
-}
-[System.Serializable]
-public struct InfoStatsUIText
-{
-    [SerializeField] TextMeshProUGUI scoreText, killsText, teasuresText;
-    public InfoStatsUIText(TextMeshProUGUI scoreText, TextMeshProUGUI killsText, TextMeshProUGUI teasuresText)
-    {
-        this.scoreText = scoreText;
-        this.killsText = killsText;
-        this.teasuresText = teasuresText;
-    }
-    public string ScoreText { get => scoreText.text; set => scoreText.text = value; }
-    public string KillsText { get => killsText.text; set => killsText.text = value; }
-    public string TeasuresText { get => teasuresText.text; set => teasuresText.text = value; }
-
 }

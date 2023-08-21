@@ -3,8 +3,8 @@ grid_door: A door require to have walls around, left-right or top-bottom.
 grid_prop_l: Props cannot be located over a wall or door.
 grid_elv: Elevator location not available, there's an other object.
 grid_item_l: This item cannot be located over a wall or door.
-grid_wd: Max walls around a door cannot be upper than 2.  
-level_size_l: Map dimensions are required and cannot be zero or less.
+grid_wd: Walls around a door cannot be more than 2.  
+level_size_l: Map dimensions are required and cannot be less than 8x8.
 level_size_u: Map width and heigth cannot be upper to 50.
 level_name: Level name required.
 level_name_len: Level name must have 12 characters maximum.
