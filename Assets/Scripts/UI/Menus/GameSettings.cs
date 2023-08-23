@@ -47,7 +47,6 @@ namespace WEditor
                 Screen.SetResolution(800, 600, false);
                 SetFullscreen(false);
             }
-            print(fs);
             fullScreen.isOn = fs;
         }
         private void SetMusic(float amount)
