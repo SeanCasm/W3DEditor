@@ -17,10 +17,13 @@ namespace WEditor
         [Range(0.0001f, 1)]
         [SerializeField] float defaultFxVolume, defaultMusicVolume;
         [SerializeField] Slider aimSlider, fxSlider, musicSlider;
+        [SerializeField] Toggle fullScreen;
         [SerializeField] AudioMixerGroup fxGroup, musicGroup;
+        [SerializeField] AudioSource sampleFxSource, sampleMusicSource;
         private void Start()
         {
             Screen.SetResolution(800, 600, FullScreenMode.Windowed);
+            Application.targetFrameRate = 60;
             aimSlider.value = PlayerPrefs.HasKey("aim") ? PlayerPrefs.GetFloat("aim") : defaultAimSensibility;
             fxSlider.value = PlayerPrefs.HasKey("fx") ? PlayerPrefs.GetFloat("fx") : defaultFxVolume;
             musicSlider.value = PlayerPrefs.HasKey("music") ? PlayerPrefs.GetFloat("music") : defaultMusicVolume;
@@ -28,6 +31,24 @@ namespace WEditor
             SetMusic(musicSlider.value);
             EditorCamera.currentSpeed = PlayerPrefs.GetFloat("camSpeed");
             PlayerController.currentRotationSpeed = PlayerPrefs.HasKey("aim") ? PlayerPrefs.GetFloat("aim") : defaultAimSensibility;
+            LoadFullscreenData();
+        }
+        private void LoadFullscreenData()
+        {
+            bool fs = false;
+            if (PlayerPrefs.HasKey("fullscreen"))
+            {
+                fs = PlayerPrefs.GetInt("fullscreen") == 0;
+                SetFullscreen(fs);
+                Screen.SetResolution(800, 600, fs);
+            }
+            else
+            {
+                Screen.SetResolution(800, 600, false);
+                SetFullscreen(false);
+            }
+            print(fs);
+            fullScreen.isOn = fs;
         }
         private void SetMusic(float amount)
         {
@@ -48,6 +69,11 @@ namespace WEditor
             PlayerController.currentRotationSpeed = aim;
             PlayerPrefs.SetFloat("aim", aim);
         }
+        public void SetFullscreen(bool value)
+        {
+            Screen.fullScreen = value;
+            PlayerPrefs.SetInt("fullscreen", value ? 0 : 1);
+        }
         /// <summary>
         /// Set the editor camera speed.
         /// </summary>
@@ -61,11 +87,15 @@ namespace WEditor
         {
             SetFX(amount);
             PlayerPrefs.SetFloat("fx", amount);
+            if (!sampleFxSource.isPlaying)
+                sampleFxSource.Play();
         }
         public void SetMusicVolume(float amount)
         {
             SetMusic(amount);
             PlayerPrefs.SetFloat("music", amount);
+            if (!sampleMusicSource.isPlaying)
+                sampleMusicSource.Play();
         }
     }
 }
