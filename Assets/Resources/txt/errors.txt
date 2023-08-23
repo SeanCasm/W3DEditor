@@ -6,7 +6,7 @@ grid_item_l: This item must be placed on empty floor.
 grid_wd: Walls around a door cannot be more than 2.  
 level_size_l: Map dimensions are required and cannot be less than 8x8.
 level_size_u: Map width and heigth cannot be upper to 50.
-level_name: Level name required.
+level_name: Level must have a name.
 level_name_len: Level name must have 12 characters maximum.
 level_name_uc: The underscore '_' is not allowed to use in the level name. 
 level_found: A level with the same name was found.

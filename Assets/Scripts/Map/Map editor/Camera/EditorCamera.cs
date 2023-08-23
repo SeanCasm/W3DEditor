@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static WInput;
 using WEditor.Input;
+
 namespace WEditor.CameraUtils
 {
     public class EditorCamera : BaseCamera, IMapEditorCameraActions
@@ -27,11 +28,11 @@ namespace WEditor.CameraUtils
             if (context.started)
             {
                 float cameraZoom = context.ReadValue<Vector2>().normalized.y;
-                float fov = virtualCam.m_Lens.FieldOfView;
-                if (fov >= minZoom && fov <= maxZoom)
-                {
-                    virtualCam.m_Lens.FieldOfView = Mathf.Clamp(fov - cameraZoom, minZoom, maxZoom);
-                }
+                Vector3 currPos = transform.position;
+                float y = currPos.y;
+
+                float yClamped = Mathf.Clamp(y - cameraZoom, maxZoom, minZoom);
+                transform.position = new Vector3(currPos.x, yClamped, currPos.z);
             }
         }
 

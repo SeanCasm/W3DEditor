@@ -10,7 +10,7 @@ namespace WEditor
     {
         private static string documentPath => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private static string editorFolder => Path.Combine(documentPath, Application.companyName, Application.productName);
-        public static string LevelFolder(string levelName) => Path.Combine(documentPath, editorFolder, levelName + ".json");
+        public static string LevelFolder(string levelName) => Path.Combine(editorFolder, levelName);
         public static void SaveToLocal()
         {
             if (!Directory.Exists(editorFolder))

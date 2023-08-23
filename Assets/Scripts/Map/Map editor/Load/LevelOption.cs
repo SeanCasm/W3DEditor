@@ -13,7 +13,8 @@ namespace WEditor.UI
             PlayerPrefs.DeleteKey($"{currLevelSelected}-Score");
             PlayerPrefs.DeleteKey($"{currLevelSelected}-Kills");
             PlayerPrefs.DeleteKey($"{currLevelSelected}-Teasures");
-            File.Delete($"{SaveData.LevelFolder(currLevelSelected)}.json");
+            File.Delete(SaveData.LevelFolder(currLevelSelected));
+            print(SaveData.LevelFolder(currLevelSelected));
             MessageHandler.instance.SetMessage("level_del_done");
             Destroy(gameObject);
         }
