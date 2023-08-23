@@ -11,7 +11,7 @@ namespace WEditor.Game.Player
         /// <summary>
         /// Cheks if the current amount of health is equal to the max amount of health
         /// </summary>
-        public bool ifFullOf => currentHealth == maxHealth;
+        public bool isFullOfAmmo => currentHealth == maxHealth;
 
         private void OnEnable()
         {

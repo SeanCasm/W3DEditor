@@ -11,7 +11,7 @@ namespace WEditor.Game.Collectibles
         protected override bool OnPlayerEnter()
         {
             GunHandler gunHandler = PlayerGlobalReference.instance.gunHandler;
-            if (gunHandler.currentGun is Firearm && !(gunHandler.currentGun as Firearm).ifFullOf)
+            if (gunHandler.currentGun is Firearm && !(gunHandler.currentGun as Firearm).isFullOfAmmo)
             {
                 gunHandler.AddTo(amount - ammoDevalue);
                 return true;

@@ -2,41 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Events;
-using WEditor.Game.Scriptables;
+
 namespace WEditor.Game.Collectibles
 {
     public class CollectibleBase : MonoBehaviour
     {
-        /// <summary>
-        /// Boolean defines if the current action happens without problems
-        /// </summary>
-        protected event System.Func<bool> OnPlayerTrigger;
-        protected int amount;
-        private SpriteRenderer spriteRenderer;
-        private CollectibleScriptable collectibleScriptable;
-        public CollectibleScriptable CollectibleScriptable
+        public SpriteRenderer SpriteRenderer { get; set; }
+        private AudioSource audioSource;
+        public Sprite itemSprite;
+        public int amount;
+        public AudioClip collectSound;
+        public Sprite GetSprite { get => SpriteRenderer.sprite; }
+        void Start()
         {
-            get
-            {
-                return collectibleScriptable;
-            }
-            set
-            {
-                collectibleScriptable = value;
-                spriteRenderer = GetComponent<SpriteRenderer>();
-                spriteRenderer.sprite = collectibleScriptable.itemSprite;
-                amount = collectibleScriptable.amount;
-            }
+            audioSource = GetComponent<AudioSource>();
+            SpriteRenderer = GetComponent<SpriteRenderer>();
         }
-        public Sprite getSprite { get => spriteRenderer.sprite; }
-        private void OnEnable()
+        protected void OnEnable()
         {
-            OnPlayerTrigger += OnPlayerEnter;
             EditorEvent.instance.onPreviewModeExit += DestroyOnUnload;
         }
-        private void OnDisable()
+        protected void OnDisable()
         {
-            OnPlayerTrigger -= OnPlayerEnter;
             EditorEvent.instance.onPreviewModeExit -= DestroyOnUnload;
         }
 
@@ -44,7 +31,7 @@ namespace WEditor.Game.Collectibles
         {
             Destroy(gameObject);
         }
-        private void Update()
+        protected void Update()
         {
             transform.LookAt(PlayerGlobalReference.instance.position, Vector3.up);
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
@@ -53,21 +40,26 @@ namespace WEditor.Game.Collectibles
         {
             return true;
         }
-        private void OnTriggerEnter(Collider other)
+        protected void OnTriggerEnter(Collider other)
         {
-            if (OnPlayerTrigger != null && other.CompareTag("Player"))
+            if (other.CompareTag("Player"))
             {
-                bool triggered = OnPlayerTrigger();
+                bool triggered = OnPlayerEnter();
                 if (triggered)
                     OnCollected();
             }
         }
         private void OnCollected()
         {
-            if (CollectibleScriptable.collectSound != null)
-                AudioSource.PlayClipAtPoint(CollectibleScriptable.collectSound, transform.position);
-
+            audioSource.PlayOneShot(collectSound);
+            SpriteRenderer.enabled = false;
+            GetComponent<Collider>().enabled = false;
+            Invoke(nameof(DestroyAfterSound), 1f);
+        }
+        private void DestroyAfterSound()
+        {
             Destroy(gameObject);
         }
+
     }
 }

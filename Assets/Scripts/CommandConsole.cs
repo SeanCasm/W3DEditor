@@ -9,6 +9,8 @@ using static WInput;
 using WEditor.Game.Player;
 using WEditor.UI;
 using TMPro;
+using Unity.VisualScripting;
+
 public class CommandConsole : MonoBehaviour, ICommandConsoleActions
 {
     [SerializeField] Health health;
@@ -18,17 +20,29 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
     [SerializeField] TMP_InputField inputField;
     private bool isEnable;
     public string commandLine { get; set; }
-    private List<Tuple<string, string>> commandsList = new List<Tuple<string, string>>()
+    private List<Tuple<string, string>> commandsList = new()
     {
-        Tuple.Create(nameof(HurtPlayer),"numberParam"),
-        Tuple.Create(nameof(GiveHealthPlayer),"numberParam"),
-        Tuple.Create(nameof(FullAmmo),"numberParam"),
-        Tuple.Create(nameof(God),"numberParam (0 or 1)"),
+        Tuple.Create(nameof(Hurt).ToLower(),"integer"),
+        Tuple.Create(nameof(Heal).ToLower(),"integer"),
+        Tuple.Create(nameof(Charge).ToLower(),""),
+        Tuple.Create(nameof(God).ToLower(),"integer (0:yes or 1:false)"),
     };
     private void Start()
     {
         ConsoleInput.instance.EnableAndSetCallbacks(this);
     }
+    void OnEnable()
+    {
+        commandsList.ForEach(command =>
+        {
+            helpText.text += command.Item1 + ": " + command.Item2 + "\n";
+        });
+    }
+    void OnDisable()
+    {
+        helpText.text = "";
+    }
+
     public void Reader()
     {
         var commandSplitted = HandleCommandLine();
@@ -36,10 +50,11 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
         {
             return;
         }
+        string methodName = commandSplitted[0];
+        MethodInfo method = this.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
-        MethodInfo method = this.GetType().GetMethod(commandSplitted[0], BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-
-        if (method == null)
+        bool validMethod = commandsList.Exists(x => x.Item1 == methodName);
+        if (!validMethod)
         {
             MessageHandler.instance.SetError("editor_command");
             return;
@@ -58,46 +73,42 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
         string[] split = new string[2];
         if (commandLine.Contains(" "))
         {
-            split = commandLine.Split(' ');
+            split = commandLine.Split(" ");
+            split[0] = CapitalizeAndLowerString(split[0]);
             return split;
         }
         else
         {
-            split[0] = commandLine;
+
+            split[0] = CapitalizeAndLowerString(commandLine);
             return split;
         }
     }
-    private void HurtPlayer(int amount)
+    private string CapitalizeAndLowerString(string methodName)
+    {
+        methodName = methodName.ToLower();
+        methodName = methodName.FirstCharacterToUpper();
+        return methodName;
+    }
+    private void Hurt(int amount)
     {
         health.Take(amount);
     }
-    private void GiveHealthPlayer(int amount)
+    private void Heal(int amount)
     {
         health.Add(amount);
     }
-    private void Help()
-    {
-        commandsList.ForEach(command =>
-        {
-            helpText.text += command.Item1 + ": " + command.Item2 + "<br>";
-        });
-        Invoke(nameof(HideHelpGuide), 5);
-    }
     private void God(int value)
     {
-        health.isImmortal = value == 0 ? true : false;
+        health.isImmortal = value == 0;
     }
     private void Gamemode(int amount)
     {
 
     }
-    private void FullAmmo()
+    private void Charge()
     {
         gunHandler.currentGun.Add(999);
-    }
-    private void HideHelpGuide()
-    {
-        helpText.text = "";
     }
     public void OnOpen(InputAction.CallbackContext context)
     {

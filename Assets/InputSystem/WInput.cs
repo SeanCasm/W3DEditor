@@ -1027,7 +1027,7 @@ public partial class @WInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f4de553a-8b2b-4273-aaf3-f4217b493351"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Keyboard>/leftAlt"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

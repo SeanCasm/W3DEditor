@@ -7,11 +7,11 @@ namespace WEditor.Game.Enemy
 {
     public class PathFinding : MonoBehaviour
     {
-        [SerializeField] float checkUpdate;
-        public List<Node> finalPath { get; set; } = new List<Node>();
 
-        public void FindPath(Vector3 startPosition, Vector3 targetPosition)
+        public List<Node> FindPath(Vector3 startPosition, Vector3 targetPosition)
         {
+            List<Node> finalPath = new();
+
             List<Node> openSet = new List<Node>();
             HashSet<Node> closedSet = new HashSet<Node>();
 
@@ -35,8 +35,8 @@ namespace WEditor.Game.Enemy
 
                 if (currentNode == targetNode)
                 {
-                    RetracePath(startNode, targetNode);
-                    return;
+                    finalPath = RetracePath(startNode, targetNode);
+                    return finalPath;
                 }
 
                 foreach (Node neighbour in Grid.instance.GetNeighbours(currentNode))
@@ -54,6 +54,7 @@ namespace WEditor.Game.Enemy
                     }
                 }
             }
+            return finalPath;
         }
         public void Stop()
         {
@@ -68,7 +69,7 @@ namespace WEditor.Game.Enemy
                 return 10 * dstY + 10 * (dstX - dstY);
             return 10 * dstX + 10 * (dstY - dstX);
         }
-        private void RetracePath(Node startNode, Node targetNode)
+        private List<Node> RetracePath(Node startNode, Node targetNode)
         {
             List<Node> path = new List<Node>();
             Node currentNode = targetNode;
@@ -79,7 +80,7 @@ namespace WEditor.Game.Enemy
                 currentNode = currentNode.parent;
             }
             path.Reverse();
-            finalPath = path;
+            return path;
         }
     }
 }

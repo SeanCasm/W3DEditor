@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using WEditor.Events;
 using UnityEngine.InputSystem;
 namespace WEditor.UI
 {
@@ -34,7 +33,11 @@ namespace WEditor.UI
                 if (score > scoreSaved)
                 {
                     PlayerPrefs.SetInt($"{levelName}-Score", score);
-                    scoreText.text += " - Best: " + scoreSaved;
+                    scoreText.text += " NEW BEST!";
+                }
+                else
+                {
+                    scoreText.text += $"\n BEST: {scoreSaved}";
                 }
             }
             else
@@ -45,10 +48,14 @@ namespace WEditor.UI
             {
                 int killsSaved = PlayerPrefs.GetInt($"{levelName}-Kills");
 
-                if (score > killsSaved)
+                if (kills > killsSaved)
                 {
                     PlayerPrefs.SetInt($"{levelName}-Kills", kills);
-                    killsText.text += " - Best: " + killsSaved;
+                    killsText.text += " NEW BEST!";
+                }
+                else
+                {
+                    killsText.text += $"\n BEST: {killsSaved}";
                 }
             }
             else
@@ -59,10 +66,14 @@ namespace WEditor.UI
             {
                 int teasuresSaved = PlayerPrefs.GetInt($"{levelName}-Teasures");
 
-                if (score > teasuresSaved)
+                if (teasures > teasuresSaved)
                 {
                     PlayerPrefs.SetInt($"{levelName}-Teasures", teasures);
-                    teasuresText.text += " - Best: " + teasuresSaved;
+                    teasuresText.text += " NEW BEST!";
+                }
+                else
+                {
+                    teasuresText.text += $"\n BEST: {teasuresSaved}";
                 }
             }
             else

@@ -10,11 +10,15 @@ namespace WEditor.Game.Collectibles
     /// </summary>
     public class Key : CollectibleBase
     {
-        public KeyType keyType { get; set; }
+        public KeyType KeyType { get; private set; }
+        public void SetKeyTypeFromName(string n)
+        {
+            KeyType = n.Contains("Golden") ? KeyType.Golden : KeyType.Platinum;
+        }
         protected override bool OnPlayerEnter()
         {
-            PlayerGlobalReference.instance.playerInventory.AddKey(keyType);
-            int key = keyType == KeyType.Golden ? 0 : 1;
+            PlayerGlobalReference.instance.playerInventory.AddKey(KeyType);
+            int key = KeyType == KeyType.Golden ? 0 : 1;
             GameplayEvent.instance.KeyPickedUp(key);
             return true;
         }
@@ -22,5 +26,5 @@ namespace WEditor.Game.Collectibles
 }
 public enum KeyType
 {
-    Golden, Platinum,None
+    Golden, Platinum, None
 }

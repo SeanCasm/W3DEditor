@@ -15,7 +15,7 @@ namespace WEditor.Game.Player
         protected Animator animator;
         protected bool isShooting;
 
-        public bool ifFullOf => currentAmmo == maxAmmo;
+        public bool isFullOfAmmo => currentAmmo == maxAmmo;
 
         protected bool isHolding;
         protected bool isInitialized;
@@ -30,7 +30,7 @@ namespace WEditor.Game.Player
         public void RefullAmmo() => currentAmmo = maxAmmo;
         public void Add(int amount)
         {
-            if (ifFullOf)
+            if (isFullOfAmmo)
                 return;
             currentAmmo += amount;
             if (currentAmmo >= maxAmmo) currentAmmo = maxAmmo;

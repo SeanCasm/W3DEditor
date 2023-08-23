@@ -91,7 +91,7 @@ namespace WEditor.Scenario
         {
             float mapWidth = doorGrid.GetLength(0);
             float mapHeight = doorGrid.GetLength(1);
-            List<MeshFilter> fences = new List<MeshFilter>();
+            List<MeshFilter> fences = new();
             //bottom-right to top-left
             for (float y = 0; y < mapHeight; y += 1)
             {
@@ -126,30 +126,32 @@ namespace WEditor.Scenario
         {
             GameObject keyObject = Instantiate(keyPrefab);
             Key key = keyObject.GetComponent<Key>();
-            key.CollectibleScriptable = keyScriptables.Find(x => x.spriteName == tileName);
-            key.keyType = key.CollectibleScriptable.name.Contains("Golden") ? KeyType.Golden : KeyType.Platinum;
-            Vector3 position = GetWorldPosition(key.getSprite, cellPos);
-            SetItemPosition(keyObject, position);
+            var collectible = keyScriptables.Find(x => x.spriteName == tileName);
+            key.SetKeyTypeFromName(collectible.name);
+            ConfigScriptables(keyObject, cellPos, collectible);
         }
         protected void HandleGunGeneration(string tileName, Vector3Int cellPos)
         {
             GameObject gunObject = Instantiate(gunPrefab);
             Gun gun = gunObject.GetComponent<Gun>();
             int index = gunScriptables.FindIndex(x => x.spriteName == tileName);
-            gun.CollectibleScriptable = gunScriptables[index];
+            var collectible = gunScriptables[index];
             gun.gunIndex = index + 2;
-            Vector3 position = GetWorldPosition(gun.getSprite, cellPos);
-            SetItemPosition(gunObject, position);
+            ConfigScriptables(gunObject, cellPos, collectible);
         }
         protected void HandleScoreGeneration(string tileName, Vector3Int cellPos)
         {
             GameObject scoreObject = Instantiate(scorePrefab);
+            var collectible = scoreScriptables.Find(x => x.spriteName == tileName);
+            ConfigScriptables(scoreObject, cellPos, collectible);
+        }
+        private void ConfigScriptables(GameObject prefab, Vector3Int cellPos, CollectibleScriptable collectible)
+        {
+            CollectibleBase collBase = prefab.GetComponent<CollectibleBase>();
+            collectible.LoadFromScriptable(collBase);
 
-            Score score = scoreObject.GetComponent<Score>();
-            score.CollectibleScriptable = scoreScriptables.Find(x => x.spriteName == tileName);
-
-            Vector3 position = GetWorldPosition(score.getSprite, cellPos);
-            SetItemPosition(scoreObject, position);
+            Vector3 position = GetWorldPosition(collBase.GetSprite, cellPos);
+            SetItemPosition(prefab, position);
         }
         private Vector3 GetWorldPosition(Sprite tileSprite, Vector3Int pos)
         {
@@ -165,23 +167,18 @@ namespace WEditor.Scenario
         protected void HandleAmmoGeneration(string tileName, Vector3Int cellPos)
         {
             GameObject ammoObject = Instantiate(ammoPrefab);
-            Ammo ammo = ammoObject.GetComponent<Ammo>();
-            ammo.CollectibleScriptable = ammoScriptables[Random.Range(0, ammoScriptables.Count)];
-            Vector3 position = GetWorldPosition(ammo.getSprite, cellPos);
-            SetItemPosition(ammoObject, position);
+            var collectible = ammoScriptables.Find(x => x.spriteName == tileName);
+            ConfigScriptables(ammoObject, cellPos, collectible);
         }
         protected void HandleHealthGeneration(string tileName, Vector3Int cellPos)
         {
             GameObject healthObject = Instantiate(healthPrefab);
-            Health health = healthObject.GetComponent<Health>();
-            health.CollectibleScriptable = healthScriptables.Find(x => x.spriteName == tileName);
-            Vector3 position = GetWorldPosition(health.getSprite, cellPos);
-
-            SetItemPosition(healthObject, position);
+            var collectible = healthScriptables.Find(x => x.spriteName == tileName);
+            ConfigScriptables(healthObject, cellPos, collectible);
         }
         protected void HandleWallGeneration(List<Wall> walls)
         {
-            Dictionary<string, List<GameObject>> wallsToFilter = new Dictionary<string, List<GameObject>>();
+            Dictionary<string, List<GameObject>> wallsToFilter = new();
             foreach (var wall in walls)
             {
                 string tileName = wall.tileName;
@@ -196,7 +193,7 @@ namespace WEditor.Scenario
                 }
                 else
                 {
-                    List<GameObject> l = new List<GameObject>(new GameObject[] { wallObject });
+                    List<GameObject> l = new(new GameObject[] { wallObject });
                     wallsToFilter.Add(tileName, l);
                 }
                 wallObject.GetComponent<MeshRenderer>().material.mainTexture = wallTex;

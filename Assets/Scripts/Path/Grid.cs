@@ -8,7 +8,6 @@ namespace WEditor.Game
     {
         public static Grid instance;
         private Vector2Int levelSize { get => DataHandler.levelSize; }
-        public const float levelTileSize = .64f;
         Node[,] grid;
 
         void Start()

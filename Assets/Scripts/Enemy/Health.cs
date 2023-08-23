@@ -29,6 +29,7 @@ namespace WEditor.Game.Enemy
             currentHealth -= amount;
             spriteRenderer.color = Color.red;
             Invoke("NormalColor", .1f);
+            enemyAI.HurtBehaviour();
             if (currentHealth <= 0 && !isDead)
             {
                 OnDeath();
@@ -51,8 +52,8 @@ namespace WEditor.Game.Enemy
             audioSource.Play();
 
             GameObject ammoObject = Instantiate(ammoPrefab, transform.localPosition, Quaternion.identity, null);
-            Ammo ammo = ammoObject.GetComponent<Ammo>();
-            ammo.CollectibleScriptable = ammoScriptables[Random.Range(0, ammoScriptables.Count)];
+            CollectibleBase collectible = ammoObject.GetComponent<CollectibleBase>();
+            ammoScriptables[UnityEngine.Random.Range(0, 3)].LoadFromScriptable(collectible);
         }
     }
 }

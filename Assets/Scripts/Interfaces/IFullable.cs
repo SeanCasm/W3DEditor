@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IFullable
 {
-    public bool ifFullOf { get; }
+    public bool isFullOfAmmo { get; }
 }

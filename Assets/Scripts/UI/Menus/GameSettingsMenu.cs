@@ -1,13 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace WEditor.UI
 {
     /// <summary>
-    /// This class handle the game settings menu UI instantiation.
+    /// This class handles the game settings menu UI.
     /// </summary>
     public class GameSettingsMenu : MonoBehaviour
     {
@@ -15,7 +13,6 @@ namespace WEditor.UI
         [SerializeField] GameObject settingMenu;
         [SerializeField] GameObject gameplayScreen, editorScreen, audioScreen;
 
-        public CurrentMenu editorPreviousMenu { get; set; } = CurrentMenu.None;
         private void Start()
         {
             if (instance == null)
