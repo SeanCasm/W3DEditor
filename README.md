@@ -1,5 +1,5 @@
-# WEditor
-A Wolfenstein3D level editor to create and play.
+# W3DEditor
+An editor game inspired by Wolfenstein3D. This game takes assets from the original. Not all aspects are the same, but this version works similar. 
 
 ## Features
 ### Editor mode
@@ -7,13 +7,6 @@ A Wolfenstein3D level editor to create and play.
 - Test at any time.
 - Play it.
 
-![movie_001_AdobeCreativeCloudExpress](https://user-images.githubusercontent.com/51692672/170841303-9ffb6e5c-0caa-4294-859b-7915bfad4e86.gif)
-
-*Creating and testing a level.*
-
-![movie_005_AdobeCreativeCloudExpress](https://user-images.githubusercontent.com/51692672/170841879-3ed5bba2-f6af-4335-a47b-ec84bc190fa9.gif)
-
-*Testing a level.*
-
 ### Download
-https://drive.google.com/drive/folders/1UbUXsgHBOXmG6amnZt0_RXD0etwOsfUn?usp=sharing
+Just download the .rar file from [this drive](https://drive.google.com/drive/folders/1UbUXsgHBOXmG6amnZt0_RXD0etwOsfUn?usp=sharing) and uncompressed the game.
+
