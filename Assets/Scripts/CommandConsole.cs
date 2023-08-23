@@ -22,10 +22,10 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
     public string commandLine { get; set; }
     private List<Tuple<string, string>> commandsList = new()
     {
-        Tuple.Create(nameof(Hurt).ToLower(),"integer"),
-        Tuple.Create(nameof(Heal).ToLower(),"integer"),
-        Tuple.Create(nameof(Charge).ToLower(),""),
-        Tuple.Create(nameof(God).ToLower(),"integer (0:yes or 1:false)"),
+        Tuple.Create(nameof(Hurt),"integer"),
+        Tuple.Create(nameof(Heal),"integer"),
+        Tuple.Create(nameof(Charge),""),
+        Tuple.Create(nameof(God),"integer (0:yes or 1:false)"),
     };
     private void Start()
     {
@@ -51,6 +51,7 @@ public class CommandConsole : MonoBehaviour, ICommandConsoleActions
             return;
         }
         string methodName = commandSplitted[0];
+        print(methodName);
         MethodInfo method = this.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
         bool validMethod = commandsList.Exists(x => x.Item1 == methodName);
