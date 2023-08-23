@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
 using UnityEngine;
 using WEditor.UI;
 namespace WEditor
 {
     public static class SaveData
     {
-        public static string persistentDataPath = Application.persistentDataPath + "/Levels/";
-
+        private static string documentPath => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private static string editorFolder => Path.Combine(documentPath, Application.companyName, Application.productName);
+        public static string LevelFolder(string levelName) => Path.Combine(documentPath, editorFolder, levelName + ".json");
         public static void SaveToLocal()
         {
-            string path = $"{persistentDataPath}{DataHandler.currentLevelName}.json";
+            if (!Directory.Exists(editorFolder))
+                Directory.CreateDirectory(editorFolder);
+            string path = Path.Combine(documentPath, editorFolder, DataHandler.currentLevelName);
             if (File.Exists(path))
             {
                 MessageHandler.instance.SetPopUpMessage("level_exist", DataHandler.currentLevelName, () => { save(); });
@@ -31,7 +35,7 @@ namespace WEditor
         }
         public static GameData[] LoadLocalLevels()
         {
-            string[] levelPaths = Directory.GetFiles(persistentDataPath);
+            string[] levelPaths = Directory.GetFiles(Path.Combine(documentPath, editorFolder));
             GameData[] gameDatas = new GameData[levelPaths.Length];
 
             for (int i = 0; i < levelPaths.Length; i++)
