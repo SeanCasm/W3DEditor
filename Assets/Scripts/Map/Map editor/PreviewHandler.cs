@@ -10,7 +10,7 @@ namespace WEditor.UI
     {
         public static PreviewHandler instance;
         [SerializeField] UnityEvent<bool> changeActiveState;
-        [SerializeField] GameObject previewUI, editorPanel;
+        [SerializeField] GameObject hudCanvas, editorPanel;
         private void Awake()
         {
             instance = this;
@@ -24,14 +24,14 @@ namespace WEditor.UI
             }
             EditorGrid.instance.InitGeneration();
             changeActiveState.Invoke(false);
-            previewUI.SetActive(true);
+            hudCanvas.SetActive(true);
             editorPanel.SetActive(false);
             EditorEvent.instance.PreviewModeEnter();
         }
         public void OnEdit()
         {
             changeActiveState.Invoke(true);
-            previewUI.SetActive(false);
+            hudCanvas.SetActive(false);
             EditorEvent.instance.PreviewModeExit();
             Time.timeScale = 1;
         }

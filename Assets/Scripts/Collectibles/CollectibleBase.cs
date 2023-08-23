@@ -21,10 +21,12 @@ namespace WEditor.Game.Collectibles
         protected void OnEnable()
         {
             EditorEvent.instance.onPreviewModeExit += DestroyOnUnload;
+            GameplayEvent.instance.onReset += DestroyOnUnload;
         }
         protected void OnDisable()
         {
             EditorEvent.instance.onPreviewModeExit -= DestroyOnUnload;
+            GameplayEvent.instance.onReset -= DestroyOnUnload;
         }
 
         private void DestroyOnUnload()

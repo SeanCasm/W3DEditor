@@ -38,15 +38,19 @@ namespace WEditor.UI
         {
             deathMenu.SetActive(true);
         }
+        //TODO:
         public void Reset()
         {
             Time.timeScale = 1;
+            GameplayEvent.instance.OnReset();
+
             if (isFromEditor)
+            {
                 EditorGrid.instance.InitGeneration();
+            }
             else
                 SceneHandler.instance.LoadPlayScene(DataHandler.currentLevel);
 
-            GameplayEvent.instance.OnReset();
             deathMenu.SetActive(false);
         }
     }

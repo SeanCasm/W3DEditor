@@ -30,5 +30,9 @@ namespace WEditor.Scenario.Playable
             base.HandleDoorsGeneration(doors);
             PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;
         }
+        public override void ResetLevel()
+        {
+            base.ResetLevel();
+        }
     }
 }

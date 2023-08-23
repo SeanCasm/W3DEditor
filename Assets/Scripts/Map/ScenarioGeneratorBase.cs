@@ -66,10 +66,11 @@ namespace WEditor.Scenario
                 HandleEnemyGeneration(tileName, position);
             }
         }
-        public void ResetLevel()
+        public virtual void ResetLevel()
         {
             prefabInstances.ForEach(item => Destroy(item));
-            InitGeneration();
+            prefabInstances.Clear();
+            Destroy(groundPlane);
         }
         public virtual void InitGeneration()
         {

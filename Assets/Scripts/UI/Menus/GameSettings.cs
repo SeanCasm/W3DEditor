@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 using WEditor.CameraUtils;
 using WEditor.Game.Player;
-using WEditor.Input;
 
 namespace WEditor
 {

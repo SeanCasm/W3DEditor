@@ -21,8 +21,8 @@ namespace WEditor.Scenario.Editor
             Tilemap mainTilemap = DataHandler.tileMap;
             Vector3Int size = mainTilemap.size;
             base.InitGeneration();
-            List<Door> doors = new List<Door>();
-            List<Wall> walls = new List<Wall>();
+            List<Door> doors = new();
+            List<Wall> walls = new();
             for (int x = 0; x < size.x; x++)
             {
                 for (int y = 0; y < size.y; y++)
@@ -39,19 +39,17 @@ namespace WEditor.Scenario.Editor
             base.HandleDoorsGeneration(doors);
             PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;
         }
+        public override void ResetLevel()
+        {
+            base.ResetLevel();
+            base.OnPreviewModeExit();
+        }
         private new void OnPreviewModeExit()
         {
-            base.OnPreviewModeExit();
             doorGrid = new Door[0, 0];
             wallGrid = new Wall[0, 0];
             EditorGrid.instance.currentSpawn.SetActive(true);
-            Destroy(groundPlane);
-
-            prefabInstances.ForEach(wall =>
-            {
-                Destroy(wall);
-            });
-            prefabInstances.Clear();
+            this.ResetLevel();
         }
     }
 }

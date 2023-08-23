@@ -3379,7 +3379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &434024403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4386,7 +4386,7 @@ GameObject:
   - component: {fileID: 562419619}
   - component: {fileID: 562419618}
   m_Layer: 5
-  m_Name: Spawn (2)
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10052,19 +10052,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 434024402}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  previewUI: {fileID: 434024402}
+  hudCanvas: {fileID: 434024402}
   editorPanel: {fileID: 1436772813}
 --- !u!114 &1358627115
 MonoBehaviour:
@@ -11763,7 +11751,7 @@ GameObject:
   - component: {fileID: 1575687947}
   - component: {fileID: 1575687946}
   m_Layer: 5
-  m_Name: Spawn
+  m_Name: Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14521,7 +14509,7 @@ GameObject:
   - component: {fileID: 1888725779}
   - component: {fileID: 1888725778}
   m_Layer: 5
-  m_Name: Spawn (1)
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16651,7 +16639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2798170415632318376, guid: 87818dcb1e7c48d42a8debe3c2eb0848, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2798170415632318378, guid: 87818dcb1e7c48d42a8debe3c2eb0848, type: 3}
       propertyPath: m_ChildControlHeight
