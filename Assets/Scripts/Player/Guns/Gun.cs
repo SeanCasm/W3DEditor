@@ -3,23 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Events;
-using WEditor.Game;
 namespace WEditor.Game.Player
 {
     public class Gun : GunBase<float>, IFullable
     {
         [SerializeField] float animSpeed = 1;
         [SerializeField] protected int maxAmmo;
+        [SerializeField] int inventoryIndex;
         protected int currentAmmo;
+        public int InventoryIndex => inventoryIndex;
         public bool hasAmmo { get => currentAmmo > 0; }
         protected Animator animator;
         protected bool isShooting;
-
         public bool isFullOfAmmo => currentAmmo == maxAmmo;
 
         protected bool isHolding;
-        protected bool isInitialized;
-        public Action onGunStoppedFire;
         public Action onEmptyAmmo;
         private new void Start()
         {
@@ -27,24 +25,35 @@ namespace WEditor.Game.Player
             shootPoint = transform.GetChild(0);
             animator = GetComponent<Animator>();
         }
+        public void SwapToThisFromGround()
+        {
+            Enable();
+            RefullAmmo();
+            GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
+        }
         public void RefullAmmo() => currentAmmo = maxAmmo;
         public void Add(int amount)
         {
-            if (isFullOfAmmo)
+            if (isFullOfAmmo || !gameObject.activeSelf)
                 return;
             currentAmmo += amount;
             if (currentAmmo >= maxAmmo) currentAmmo = maxAmmo;
 
             GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
         }
-        public void Init(bool enable)
+        public void Disable()
         {
-            if (!isInitialized)
-            {
-                currentAmmo = maxAmmo;
-                isInitialized = true;
-            }
-            gameObject.SetActive(enable);
+            gameObject.SetActive(false);
+        }
+        public void Reset()
+        {
+            currentAmmo = 0;
+            onEmptyAmmo = null;
+            Disable();
+        }
+        public void Enable()
+        {
+            gameObject.SetActive(true);
         }
         private void LateUpdate()
         {
@@ -54,8 +63,6 @@ namespace WEditor.Game.Player
         private void OnEnable() => GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
         private void OnDisable()
         {
-            onGunStoppedFire = null;
-            onEmptyAmmo = null;
             isShooting = isHolding = false;
         }
 
@@ -79,9 +86,6 @@ namespace WEditor.Game.Player
         public virtual void AnimationEvent_StopShooting()
         {
             isShooting = false;
-            if (onGunStoppedFire != null)
-                onGunStoppedFire();
-
             if (currentAmmo == 0)
                 onEmptyAmmo();
 

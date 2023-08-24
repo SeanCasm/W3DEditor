@@ -4185,8 +4185,8 @@ MonoBehaviour:
   errorPanel: {fileID: 666542}
   errorMessage: {fileID: 1838353203}
   messageTime: 3
-  errorsPath: Assets/Resources/txt/errors.txt
-  messagesPath: Assets/Resources/txt/messages.txt
+  errorsPath: Texts/errors
+  messagesPath: Texts/messages
   messagePopUp: {fileID: 0}
   accept: {fileID: 0}
   cancel: {fileID: 0}

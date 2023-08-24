@@ -7,7 +7,7 @@ namespace WEditor.Game.Collectibles
         public int gunIndex { get; set; }
         protected override bool OnPlayerEnter()
         {
-            PlayerGlobalReference.instance.gunHandler.AddGun(gunIndex);
+            PlayerGlobalReference.instance.GunHandler.AddGun(gunIndex);
             return true;
         }
     }

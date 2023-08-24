@@ -21,7 +21,6 @@ namespace WEditor.Scenario.Editor
         [SerializeField] GameObject spawnPrefab;
         [Header("Level load settings")]
         [SerializeField] TMPro.TMP_InputField levelNameInputField;
-        [SerializeField] GameObject loadScreen;
         [SerializeField] ScenarioScriptable wall, door, props;
         [Header("Enemy scriptables")]
         [SerializeField] List<EnemyScriptable> enemies;
@@ -78,7 +77,7 @@ namespace WEditor.Scenario.Editor
             height = gameData.levelSizeY;
 
             DataHandler.GridSize(new Vector3Int(width, height, 0));
-            DataHandler.levelGuns = gameData.levelGuns;
+            DataHandler.levelGunIndex = gameData.levelGuns;
 
             levelName = gameData.levelName;
             levelNameInputField.text = levelName;
@@ -126,7 +125,6 @@ namespace WEditor.Scenario.Editor
                     });
                 }
 
-                loadScreen.SetActive(false);
             }
         }
         public void Create(int width, int height)
@@ -252,7 +250,7 @@ namespace WEditor.Scenario.Editor
             isSpawnLocated = true;
             DataHandler.spawnPosition = Vector3Int.FloorToInt(spawnPosition);
         }
-        private bool InsideTilemap(Vector3Int cellPos) => (cellPos.x >= 0 && cellPos.x < width && cellPos.y >= 0 && cellPos.y < height);
+        private bool InsideTilemap(Vector3Int cellPos) => cellPos.x >= 0 && cellPos.x < width && cellPos.y >= 0 && cellPos.y < height;
         public void SetEraserTileOnAim(Vector3 pos)
         {
             Vector3Int cellPos = pointerPreview.WorldToCell(pos);

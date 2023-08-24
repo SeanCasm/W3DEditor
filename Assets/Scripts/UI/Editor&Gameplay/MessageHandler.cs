@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using WEditor.Input;
 using UnityEngine.UI;
+using System.IO;
 
 namespace WEditor.UI
 {
@@ -14,13 +15,13 @@ namespace WEditor.UI
         [SerializeField] GameObject errorPanel;
         [SerializeField] TMPro.TextMeshProUGUI errorMessage;
         [SerializeField] float messageTime = 3;
-        [SerializeField] string errorsPath = "Assets/Resources/txt/errors.txt", messagesPath = "Assets/Resources/txt/messages.txt";
+        [SerializeField] string errorsPath = "Texts/errors", messagesPath = "Texts/messages";
         [Header("Level save settings")]
         [SerializeField] GameObject messagePopUp;
         [SerializeField] Button accept, cancel;
         [SerializeField] TextMeshProUGUI textMessage;
-        private Dictionary<string, string> errors = new Dictionary<string, string>();
-        private Dictionary<string, string> messages = new Dictionary<string, string>();
+        private Dictionary<string, string> errors = new();
+        private Dictionary<string, string> messages = new();
         private void Awake()
         {
             instance = this;
@@ -67,17 +68,26 @@ namespace WEditor.UI
         }
         private void ReadMessages()
         {
-            string[] lines = System.IO.File.ReadAllLines(messagesPath);
-            foreach (var line in lines)
+            TextAsset fileText = Resources.Load<TextAsset>(messagesPath);
+            using StringReader reader = new(fileText.text);
+            List<string> lines = new();
+            string line;
+
+            while ((line = reader.ReadLine()) != null)
             {
                 (string key, string value) = GetErrorTextKeyAndValue(line);
                 messages.Add(key, value);
             }
+
         }
         private void ReadErrors()
         {
-            string[] lines = System.IO.File.ReadAllLines(errorsPath);
-            foreach (var line in lines)
+            TextAsset fileText = Resources.Load<TextAsset>(errorsPath);
+            using StringReader reader = new(fileText.text);
+            List<string> lines = new();
+            string line;
+
+            while ((line = reader.ReadLine()) != null)
             {
                 (string key, string value) = GetErrorTextKeyAndValue(line);
                 errors.Add(key, value);

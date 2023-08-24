@@ -19,8 +19,6 @@ namespace WEditor.Game.Player
         public override void AnimationEvent_StopShooting()
         {
             isShooting = false;
-            if (onGunStoppedFire != null)
-                onGunStoppedFire();
 
             if (currentAmmo == 0)
                 onEmptyAmmo();

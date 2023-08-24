@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7519954910807211028}
   - component: {fileID: 641872517752662494}
   - component: {fileID: 5340776671987080653}
+  - component: {fileID: 6727604299256303568}
   m_Layer: 8
   m_Name: SS
   m_TagString: Enemy
@@ -55,8 +56,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alertedClip: {fileID: 8300000, guid: 63215ff99d04efd4a976e2c6d047a5c8, type: 3}
   speed: 1.85
-  tileCheckDistance: 12
-  distanceToAttack: 9
+  tileCheckDistance: 14
+  distanceToAttack: 6
 --- !u!114 &952185697298849953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,3 +404,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6727604299256303568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2342706216233829273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9340baf0b9126f742870293e43bdfb3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

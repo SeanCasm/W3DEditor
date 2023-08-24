@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using WEditor.Game.Scriptables;
 using WEditor.Game.Collectibles;
-using WEditor.Game;
+using WEditor.Events;
+using WEditor.Scenario.Editor;
 
 namespace WEditor.Scenario
 {
@@ -30,11 +31,19 @@ namespace WEditor.Scenario
         [SerializeField] List<CollectibleScriptable> scoreScriptables, gunScriptables;
         [Header("Enemy generation")]
         [SerializeField] GameObject guardPrefab, ssPrefab;
-        protected List<GameObject> prefabInstances = new List<GameObject>();
+        protected List<GameObject> prefabInstances = new();
         protected Wall[,] wallGrid;
         protected Door[,] doorGrid;
         protected GameObject groundPlane;
         private void Start() => instance = this;
+        protected void OnEnable()
+        {
+            GameplayEvent.instance.onReset += ClearLevel;
+        }
+        protected void OnDisable()
+        {
+            GameplayEvent.instance.onReset -= ClearLevel;
+        }
         protected void HandleTilesLocation(string tileName, Vector3Int cellPos, List<Door> doors, List<Wall> walls)
         {
             Vector3 position = new Vector3(cellPos.x, 0, cellPos.y);
@@ -66,7 +75,7 @@ namespace WEditor.Scenario
                 HandleEnemyGeneration(tileName, position);
             }
         }
-        public virtual void ResetLevel()
+        public virtual void ClearLevel()
         {
             prefabInstances.ForEach(item => Destroy(item));
             prefabInstances.Clear();
@@ -265,6 +274,13 @@ namespace WEditor.Scenario
 
             prefabInstances.Add(propObject);
         }
-        protected void OnPreviewModeExit() => meshCombiner.DisableTargetCombiner();
+        protected void OnPreviewModeExit()
+        {
+            doorGrid = new Door[0, 0];
+            wallGrid = new Wall[0, 0];
+            EditorGrid.instance.currentSpawn.SetActive(true);
+            this.ClearLevel();
+            meshCombiner.DisableTargetCombiner();
+        }
     }
 }

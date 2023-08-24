@@ -23,11 +23,11 @@ namespace WEditor.Game.Enemy
         {
             var raycastHit = enemyAI.DrawRaycast();
 
-            if (raycastHit[0].collider.CompareTag("Player"))
+            if (raycastHit[0].collider != null && raycastHit[0].collider.CompareTag("Player"))
             {
                 int acc = UnityEngine.Random.Range(0, 100);
                 if (acc > accuracy)
-                    PlayerGlobalReference.instance.playerHealth.Take(damage);
+                    PlayerGlobalReference.instance.PlayerHealth.Take(damage);
             }
         }
     }

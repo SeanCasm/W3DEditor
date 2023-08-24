@@ -33,11 +33,6 @@ namespace WEditor.Game.Collectibles
         {
             Destroy(gameObject);
         }
-        protected void Update()
-        {
-            transform.LookAt(PlayerGlobalReference.instance.position, Vector3.up);
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-        }
         protected virtual bool OnPlayerEnter()
         {
             return true;

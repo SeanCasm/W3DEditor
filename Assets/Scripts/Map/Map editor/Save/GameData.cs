@@ -23,7 +23,7 @@ namespace WEditor
             this.levelSizeX = DataHandler.levelSize.x;
             this.levelSizeY = DataHandler.levelSize.y;
             this.levelMusicTheme = DataHandler.levelMusicTheme;
-            this.levelGuns = DataHandler.levelGuns;
+            this.levelGuns = DataHandler.levelGunIndex;
             int pos = 0;
             for (int x = 0; x < DataHandler.grid.GetLength(0); x++)
             {

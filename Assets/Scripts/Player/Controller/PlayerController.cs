@@ -133,7 +133,7 @@ namespace WEditor.Game.Player
         {
             if (context.started)
             {
-                GameplayEvent.instance.Interacted(PlayerGlobalReference.instance.playerInventory.keysCollected);
+                GameplayEvent.instance.Interacted(PlayerGlobalReference.instance.PlayerInventory.keysCollected);
             }
         }
     }

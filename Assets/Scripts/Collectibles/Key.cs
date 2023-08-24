@@ -17,7 +17,7 @@ namespace WEditor.Game.Collectibles
         }
         protected override bool OnPlayerEnter()
         {
-            PlayerGlobalReference.instance.playerInventory.AddKey(KeyType);
+            PlayerGlobalReference.instance.PlayerInventory.AddKey(KeyType);
             int key = KeyType == KeyType.Golden ? 0 : 1;
             GameplayEvent.instance.KeyPickedUp(key);
             return true;

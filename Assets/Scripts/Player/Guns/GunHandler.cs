@@ -3,24 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using static WInput;
 using UnityEngine.InputSystem;
+
 namespace WEditor.Game.Player
 {
     public class GunHandler : MonoBehaviour, IGunActions
     {
-        [SerializeField] Gun[] playerGuns;
+        [SerializeField] List<Gun> playerGuns = new();
         public Gun currentGun { get => playerGuns[gunIndex]; }
-        private int[] initialAvailableGuns = { 0 };
-        private int playerGunsCount { get => playerGuns.Length; }
+        private List<int> initialGunsIndexes = new() { 0 };
         int gunIndex = 0;
         private void OnEnable()
         {
-            if (DataHandler.levelGuns == 0)
+            InitGuns();
+        }
+        private void OnDisable()
+        {
+            playerGuns.ForEach(g => g.Reset());
+            gunIndex = 0;
+            GunInput.instance.Disable();
+        }
+        private void InitGuns()
+        {
+            if (DataHandler.levelGunIndex == 0) //all
             {
-                initialAvailableGuns = new int[] { 0, 1, 2, 3 };
+                initialGunsIndexes = new() { 0, 1, 2, 3 };
             }
             else
-                initialAvailableGuns = new int[] { 0, DataHandler.levelGuns };
-            foreach (int i in initialAvailableGuns)
+                initialGunsIndexes = new() { 0, DataHandler.levelGunIndex };
+            foreach (int i in initialGunsIndexes)
             {
                 playerGuns[i].RefullAmmo();
                 playerGuns[i].onEmptyAmmo = SwapToGunWithAmmo;
@@ -28,33 +38,16 @@ namespace WEditor.Game.Player
             GunInput.instance.EnableAndSetCallbacks(this);
 
             gunIndex = 0;
-            playerGuns[gunIndex].Init(true);
+            //knife
+            playerGuns[gunIndex].Enable();
         }
-        private void OnDisable()
-        {
-            foreach (Gun g in playerGuns)
-            {
-                g.Init(false);
-                g.RefullAmmo();
-            }
-            gunIndex = 0;
-            GunInput.instance.Disable();
-        }
-        public void SetDefault()
-        {
-            gunIndex = 0;
-            currentGun.Init(true);
-            for (int i = 1; i < playerGunsCount; i++)
-            {
-                playerGuns[i].RefullAmmo();
-                playerGuns[i].Init(false);
-            }
-        }
-
         public void AddTo(int amount) => currentGun.Add(amount);
         public void AddGun(int index)
         {
-            playerGuns[index].RefullAmmo();
+            currentGun.Disable();
+            gunIndex = index;
+            currentGun.SwapToThisFromGround();
+            currentGun.onEmptyAmmo = SwapToGunWithAmmo;
         }
         public void OnFire(InputAction.CallbackContext context)
         {
@@ -71,21 +64,18 @@ namespace WEditor.Game.Player
 
         public void SwapToGunWithAmmo()
         {
-            int actualIndex = gunIndex;
+            currentGun.Disable();
             while (true)
             {
                 gunIndex++;
-                if (gunIndex >= playerGunsCount) gunIndex = 0;
+                if (gunIndex >= playerGuns.Count) gunIndex = 0;
                 if (currentGun.hasAmmo || currentGun is Knife)
                 {
                     break;
                 }
             }
             if (!currentGun.gameObject.activeSelf)
-            {
-                playerGuns[actualIndex].Init(false);
-                currentGun.Init(true);
-            }
+                currentGun.Enable();
         }
     }
 }

@@ -28,11 +28,7 @@ namespace WEditor.Scenario.Playable
 
             base.HandleWallGeneration(walls);
             base.HandleDoorsGeneration(doors);
-            PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;
-        }
-        public override void ResetLevel()
-        {
-            base.ResetLevel();
+            PlayerGlobalReference.instance.Position = DataHandler.currentLevelPosition;
         }
     }
 }

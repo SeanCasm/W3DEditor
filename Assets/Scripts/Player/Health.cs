@@ -46,6 +46,7 @@ namespace WEditor.Game.Player
 
         public override void OnDeath()
         {
+            gameObject.SetActive(false);
             GameplayEvent.instance.OnDeath();
             Time.timeScale = 0;
         }

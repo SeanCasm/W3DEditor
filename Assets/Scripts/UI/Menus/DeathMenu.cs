@@ -38,7 +38,6 @@ namespace WEditor.UI
         {
             deathMenu.SetActive(true);
         }
-        //TODO:
         public void Reset()
         {
             Time.timeScale = 1;

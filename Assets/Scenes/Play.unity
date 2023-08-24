@@ -4203,7 +4203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21117cc3b1ac6a243a04f7e0a23c68eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunHandler: {fileID: 1736282408}
   playerHealth: {fileID: 1540030952}
 --- !u!114 &1540030959
 MonoBehaviour:

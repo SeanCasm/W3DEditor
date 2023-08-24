@@ -8,12 +8,14 @@ namespace WEditor.Scenario.Editor
 {
     public class ScenarioGenerator : ScenarioGeneratorBase
     {
-        private void OnEnable()
+        protected new void OnEnable()
         {
+            base.OnEnable();
             EditorEvent.instance.onPreviewModeExit += OnPreviewModeExit;
         }
-        private void OnDisable()
+        protected new void OnDisable()
         {
+            base.OnDisable();
             EditorEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
         }
         public override void InitGeneration()
@@ -37,19 +39,7 @@ namespace WEditor.Scenario.Editor
             }
             base.HandleWallGeneration(walls);
             base.HandleDoorsGeneration(doors);
-            PlayerGlobalReference.instance.position = DataHandler.currentLevelPosition;
-        }
-        public override void ResetLevel()
-        {
-            base.ResetLevel();
-            base.OnPreviewModeExit();
-        }
-        private new void OnPreviewModeExit()
-        {
-            doorGrid = new Door[0, 0];
-            wallGrid = new Wall[0, 0];
-            EditorGrid.instance.currentSpawn.SetActive(true);
-            this.ResetLevel();
+            PlayerGlobalReference.instance.Position = DataHandler.currentLevelPosition;
         }
     }
 }

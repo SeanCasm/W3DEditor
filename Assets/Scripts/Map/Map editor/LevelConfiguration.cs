@@ -17,7 +17,7 @@ namespace WEditor.Scenario.Editor
         }
         private void SetInitialGuns()
         {
-            gunsDropdown.value = DataHandler.levelGuns;
+            gunsDropdown.value = DataHandler.levelGunIndex;
         }
         private void SetLevelMusic()
         {
@@ -42,7 +42,7 @@ namespace WEditor.Scenario.Editor
         }
         public void Dropdown_SelectGuns()
         {
-            DataHandler.levelGuns = gunsDropdown.value;
+            DataHandler.levelGunIndex = gunsDropdown.value;
         }
     }
 }

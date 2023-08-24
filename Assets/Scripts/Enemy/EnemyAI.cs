@@ -13,8 +13,8 @@ namespace WEditor.Game.Enemy
         private Animator animator;
         private AudioSource audioSource;
         private float currentSpeed;
-        private Vector3 PlayerDirection { get => (PlayerGlobalReference.instance.position - LocalCenter).normalized; }
-        private Vector3 PlayerPosition { get => PlayerGlobalReference.instance.position; }
+        private Vector3 PlayerDirection { get => (PlayerGlobalReference.instance.Position - LocalCenter).normalized; }
+        private Vector3 PlayerPosition { get => PlayerGlobalReference.instance.Position; }
         private Vector3 LocalCenter { get => spriteRenderer.bounds.center; }
         private Rigidbody rigid;
         private SpriteRenderer spriteRenderer;
@@ -37,8 +37,6 @@ namespace WEditor.Game.Enemy
 
         void Update()
         {
-            FollowCamera(PlayerPosition);
-
             if (eBehaviour != MovementBehaviour.Death)
             {
                 CheckBehaviour();
@@ -79,12 +77,6 @@ namespace WEditor.Game.Enemy
                 animator.SetBool("Idle", eBehaviour == MovementBehaviour.Idle);
                 animator.SetBool("Walk", eBehaviour == MovementBehaviour.Follow);
             }
-        }
-
-        public void FollowCamera(Vector3 playerPosition)
-        {
-            spriteRenderer.transform.LookAt(playerPosition, Vector3.up);
-            spriteRenderer.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
         public RaycastHit[] DrawRaycast()
         {

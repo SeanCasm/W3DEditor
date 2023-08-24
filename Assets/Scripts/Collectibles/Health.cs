@@ -7,7 +7,7 @@ namespace WEditor.Game.Collectibles
 
         protected override bool OnPlayerEnter()
         {
-            WEditor.Game.Player.Health pHealth = PlayerGlobalReference.instance.playerHealth;
+            WEditor.Game.Player.Health pHealth = PlayerGlobalReference.instance.PlayerHealth;
             if (!pHealth.isFullOfAmmo)
             {
                 pHealth.Add(amount);

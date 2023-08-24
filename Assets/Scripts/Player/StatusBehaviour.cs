@@ -9,7 +9,6 @@ namespace WEditor.Game.Player
     /// </summary>
     public class StatusBehaviour : MonoBehaviour
     {
-        [SerializeField] GunHandler gunHandler;
         [SerializeField] Health playerHealth;
         private void OnEnable()
         {
@@ -22,13 +21,12 @@ namespace WEditor.Game.Player
         private void Respawn()
         {
             Vector3Int pos = DataHandler.spawnPosition;
-            PlayerGlobalReference.instance.position = new Vector3(pos.x, pos.y, pos.z);
-            gunHandler.SetDefault();
+            PlayerGlobalReference.instance.Position = new Vector3(pos.x, pos.y, pos.z);
             playerHealth.Add(100);
             if (SceneHandler.instance.isEditorScene)
-                WEditor.Scenario.Editor.ScenarioGenerator.instance.ResetLevel();
+                WEditor.Scenario.Editor.ScenarioGenerator.instance.ClearLevel();
             else
-                WEditor.Scenario.Playable.ScenarioGenerator.instance.ResetLevel();
+                WEditor.Scenario.Playable.ScenarioGenerator.instance.ClearLevel();
         }
     }
 }

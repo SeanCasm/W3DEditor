@@ -295,8 +295,8 @@ MonoBehaviour:
   errorPanel: {fileID: 624226409}
   errorMessage: {fileID: 1549988481}
   messageTime: 3
-  errorsPath: Assets/Resources/txt/errors.txt
-  messagesPath: Assets/Resources/txt/messages.txt
+  errorsPath: Texts/errors
+  messagesPath: Texts/messages
   messagePopUp: {fileID: 0}
   accept: {fileID: 0}
   cancel: {fileID: 0}
@@ -2835,7 +2835,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v1.0
+  m_text: 'v1.0.1
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a058da38dc3e12046b215b3dfa10327e, type: 2}
   m_sharedMaterial: {fileID: 2985958180745567178, guid: a058da38dc3e12046b215b3dfa10327e, type: 2}

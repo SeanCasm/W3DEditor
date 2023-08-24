@@ -12,7 +12,7 @@ namespace WEditor.Game
         {
             if (isVisible)
             {
-                transform.LookAt(PlayerGlobalReference.instance.position, Vector3.up);
+                transform.LookAt(PlayerGlobalReference.instance.Position, Vector3.up);
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
             }
         }

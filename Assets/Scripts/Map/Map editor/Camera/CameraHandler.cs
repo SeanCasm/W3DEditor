@@ -8,7 +8,6 @@ namespace WEditor.CameraUtils
     public class CameraHandler : MonoBehaviour
     {
         [SerializeField] EditorCamera editorCamera;
-        [SerializeField] GameObject player;
         private void OnEnable()
         {
             EditorEvent.instance.onPreviewModeEnter += OnPreviewModeEnter;
@@ -22,14 +21,10 @@ namespace WEditor.CameraUtils
         private void OnPreviewModeEnter()
         {
             editorCamera.gameObject.SetActive(false);
-            player.SetActive(true);
         }
         private void OnPreviewModeExit()
         {
             editorCamera.gameObject.SetActive(true);
-            player.SetActive(false);
         }
-
-
     }
 }
