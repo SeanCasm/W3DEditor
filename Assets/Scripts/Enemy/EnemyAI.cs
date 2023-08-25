@@ -20,6 +20,7 @@ namespace WEditor.Game.Enemy
         private SpriteRenderer spriteRenderer;
         private PathFinding pathfinding;
         private Coroutine moveToPosition;
+        private bool Paused => Time.timeScale == 0;
         private bool IsFollowing => eBehaviour == MovementBehaviour.Follow;
         private bool IsIdle => eBehaviour == MovementBehaviour.Idle;
         private bool IsAttacking => eBehaviour == MovementBehaviour.Attack;
@@ -37,7 +38,7 @@ namespace WEditor.Game.Enemy
 
         void Update()
         {
-            if (eBehaviour != MovementBehaviour.Death)
+            if (eBehaviour != MovementBehaviour.Death && !Paused)
             {
                 CheckBehaviour();
                 switch (eBehaviour)
@@ -74,39 +75,36 @@ namespace WEditor.Game.Enemy
         {
             if (eBehaviour != MovementBehaviour.Death)
             {
-                animator.SetBool("Idle", eBehaviour == MovementBehaviour.Idle);
-                animator.SetBool("Walk", eBehaviour == MovementBehaviour.Follow);
+                animator.SetBool("Idle", IsIdle);
+                animator.SetBool("Walk", IsFollowing);
             }
         }
-        public RaycastHit[] DrawRaycast()
+        public RaycastHit DrawRaycast()
         {
-            return Physics.RaycastAll(LocalCenter, PlayerDirection,
-            Vector3.Distance(LocalCenter, PlayerPosition), layerMaskCombined);
+            Physics.Raycast(LocalCenter, PlayerDirection, out RaycastHit hit, tileCheckDistance, layerMaskCombined);
+            return hit;
         }
         private void CheckBehaviour()
         {
 
-            var raycastHit = DrawRaycast();
+            RaycastHit raycastHit = DrawRaycast();
 
-            if (raycastHit.Length == 0)
-                return;
 #if UNITY_EDITOR
             Debug.DrawRay(LocalCenter, PlayerDirection * Vector3.Distance(LocalCenter, PlayerPosition), Color.cyan);
 #endif
-            switch (raycastHit[0].collider.tag)
+            switch (raycastHit.collider.tag)
             {
                 case "Ground":
 #if UNITY_EDITOR
                     Debug.DrawRay(LocalCenter, PlayerDirection * tileCheckDistance, Color.red);
 #endif
 
-                    if (raycastHit[0].transform.gameObject.name.Contains("Door"))
+                    float distance = Vector3.Distance(transform.position, raycastHit.transform.position);
+                    Sensor doorSensor = raycastHit.collider.GetComponent<Sensor>();
+                    if (doorSensor != null && distance <= .1f)
                     {
-                        Sensor doorSensor = raycastHit[0].collider.GetComponent<Sensor>();
                         if (doorSensor.doorState != State.Open)
-                        {
                             eBehaviour = MovementBehaviour.Idle;
-                        }
                     }
                     if (IsAttacking)
                         eBehaviour = MovementBehaviour.Follow;
@@ -124,7 +122,7 @@ namespace WEditor.Game.Enemy
                         eBehaviour = MovementBehaviour.Alert;
                     }
                     else
-                    if (playerDistance <= tileCheckDistance && playerDistance > distanceToAttack && (IsIdle || IsAttacking))
+                    if (playerDistance > distanceToAttack && (IsIdle || IsAttacking))
                     {
                         eBehaviour = MovementBehaviour.Follow;
                     }

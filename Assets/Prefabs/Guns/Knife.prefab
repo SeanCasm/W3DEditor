@@ -219,9 +219,12 @@ MonoBehaviour:
   checkDistance: 0.4
   hitLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
   damage: 6
   shootClip: {fileID: 8300000, guid: 5655adda6d8833048a6e30f6d58bf52c, type: 3}
+  animSpeed: 1
+  maxAmmo: 0
+  inventoryIndex: 0
 --- !u!1 &2474667039125096684
 GameObject:
   m_ObjectHideFlags: 0

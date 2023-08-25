@@ -93,15 +93,18 @@ namespace WEditor.Game.Player
         }
         public void ShootRay()
         {
-            RaycastHit[] raycastHit = Physics.RaycastAll(shootPoint.position, shootPoint.forward,
-            checkDistance, hitLayer);
-            if (raycastHit.Length > 0)
+            if (Physics.Raycast(shootPoint.position, shootPoint.forward, out RaycastHit hit, checkDistance, hitLayer))
             {
-                Enemy.Health healthComponent = raycastHit[0].collider.GetComponent<Enemy.Health>();
-                healthComponent.Take(damage);
-            }
+                Enemy.Health healthComponent = hit.collider.GetComponent<Enemy.Health>();
 
-            Debug.DrawLine(shootPoint.position, shootPoint.forward * checkDistance, Color.green, 5);
+                if (healthComponent != null)
+                {
+                    healthComponent.Take(damage);
+                }
+#if UNITY_EDITOR
+                Debug.DrawLine(shootPoint.position, hit.point, Color.green, 5);
+#endif
+            }
 
         }
         public virtual void Fire()

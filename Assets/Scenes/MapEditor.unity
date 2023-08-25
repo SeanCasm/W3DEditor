@@ -8941,7 +8941,6 @@ MonoBehaviour:
   editorCamera: {fileID: 1781500848}
   spawnPrefab: {fileID: 2212014697439868761, guid: d6fc595d4af6f7942bce7e489b95d08f, type: 3}
   levelNameInputField: {fileID: 441371909}
-  loadScreen: {fileID: 0}
   wall: {fileID: 11400000, guid: 3027a7fb4ae9112478926de6d0328190, type: 2}
   door: {fileID: 11400000, guid: 785a54e36717c7e4a90f9d1caeb400c7, type: 2}
   props: {fileID: 11400000, guid: 7c844186d540d4147b11d9f4f564e6e2, type: 2}
@@ -12992,9 +12991,9 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 35
+  m_Spacing: 15
   m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
+  m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -14410,7 +14409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 326, y: -233.32}
+  m_AnchoredPosition: {x: 326, y: -342.5}
   m_SizeDelta: {x: 426.18, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058303429
@@ -14550,8 +14549,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 326, y: -70.41}
-  m_SizeDelta: {x: 502.7, y: 140.82}
+  m_AnchoredPosition: {x: 326, y: -115}
+  m_SizeDelta: {x: 502.7, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2069695874
 MonoBehaviour:
@@ -14573,7 +14572,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: dasdasdadasdasda
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a058da38dc3e12046b215b3dfa10327e, type: 2}
   m_sharedMaterial: {fileID: 2985958180745567178, guid: a058da38dc3e12046b215b3dfa10327e, type: 2}

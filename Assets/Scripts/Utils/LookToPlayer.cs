@@ -7,6 +7,7 @@ public class LookToPlayer : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private bool isVisible;
+    private bool Paused => Time.timeScale == 0;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -14,7 +15,7 @@ public class LookToPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isVisible)
+        if (isVisible && !Paused)
             FollowCamera();
     }
     void OnBecameVisible()
