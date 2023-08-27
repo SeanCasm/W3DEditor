@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +9,10 @@ namespace WEditor.Game.Player
     {
         public override void Fire()
         {
-            GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
             base.ShootRay();
-
-            currentAmmo -= 1;
             base.Fire();
-            if (currentAmmo == 0)
-            {
-                onEmptyAmmo();
-                return;
-            }
+            GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
         }
+
     }
 }

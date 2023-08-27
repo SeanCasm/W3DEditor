@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static WInput;
 using UnityEngine.InputSystem;
+using System;
 
 namespace WEditor.Game.Player
 {
@@ -64,12 +65,14 @@ namespace WEditor.Game.Player
 
         public void SwapToGunWithAmmo()
         {
+            if (currentGun.IsShooting)
+                return;
             currentGun.Disable();
             while (true)
             {
                 gunIndex++;
                 if (gunIndex >= playerGuns.Count) gunIndex = 0;
-                if (currentGun.hasAmmo || currentGun is Knife)
+                if (currentGun.HasAmmo || currentGun is Knife)
                 {
                     break;
                 }

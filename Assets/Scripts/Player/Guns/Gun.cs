@@ -12,9 +12,9 @@ namespace WEditor.Game.Player
         [SerializeField] int inventoryIndex;
         protected int currentAmmo;
         public int InventoryIndex => inventoryIndex;
-        public bool hasAmmo { get => currentAmmo > 0; }
+        public bool HasAmmo { get => currentAmmo > 0; }
         protected Animator animator;
-        protected bool isShooting;
+        public bool IsShooting { get; protected set; }
         public bool isFullOfAmmo => currentAmmo == maxAmmo;
 
         protected bool isHolding;
@@ -57,15 +57,14 @@ namespace WEditor.Game.Player
         }
         private void LateUpdate()
         {
-            animator.SetBool("isShooting", isShooting);
+            animator.SetBool("isShooting", IsShooting);
             animator.SetFloat("Speed", animSpeed);
         }
         private void OnEnable() => GameplayEvent.instance.AmmoChanged(currentAmmo.ToString());
         private void OnDisable()
         {
-            isShooting = isHolding = false;
+            IsShooting = isHolding = false;
         }
-
         public void Animation_Fire()
         {
             audioSource.Play();
@@ -76,7 +75,7 @@ namespace WEditor.Game.Player
         }
         public void FirePerformed()
         {
-            if (!isShooting)
+            if (!IsShooting)
             {
                 isHolding = true;
                 Fire();
@@ -85,10 +84,13 @@ namespace WEditor.Game.Player
 
         public virtual void AnimationEvent_StopShooting()
         {
-            isShooting = false;
-            if (currentAmmo == 0)
+            IsShooting = false;
+            currentAmmo -= 1;
+            if (currentAmmo <= 0)
+            {
                 onEmptyAmmo();
-
+                return;
+            }
             if (isHolding) Fire();
         }
         public void ShootRay()
@@ -97,10 +99,7 @@ namespace WEditor.Game.Player
             {
                 Enemy.Health healthComponent = hit.collider.GetComponent<Enemy.Health>();
 
-                if (healthComponent != null)
-                {
-                    healthComponent.Take(damage);
-                }
+                healthComponent?.Take(damage);
 #if UNITY_EDITOR
                 Debug.DrawLine(shootPoint.position, hit.point, Color.green, 5);
 #endif
@@ -109,7 +108,7 @@ namespace WEditor.Game.Player
         }
         public virtual void Fire()
         {
-            isShooting = true;
+            IsShooting = true;
             animator.SetTrigger("Shoot");
         }
     }

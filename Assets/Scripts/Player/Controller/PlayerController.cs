@@ -16,7 +16,8 @@ namespace WEditor.Game.Player
         public static float currentRotationSpeed;
         private Rigidbody rigid;
         private GunHandler gunHandler;
-        private bool isMovingMouse, idle;
+        private bool isMovingMouse, isMoving;
+        private Vector2 movement = Vector2.zero;
         private float currentSpeed;
         private void OnDisable()
         {
@@ -33,31 +34,30 @@ namespace WEditor.Game.Player
             PlayerControllerInput.instance.EnableAndSetCallbacks(this);
             currentSpeed = speed;
         }
-        private void Update()
+        void FixedUpdate()
         {
-            if (idle)
+            if (isMoving)
             {
-                currentSpeed = 0;
-                rigid.velocity = Vector3.zero;
+                Vector3 dir = transform.forward * movement.y + transform.right * movement.x;
+                rigid.MovePosition(rigid.position + dir * currentSpeed * Time.deltaTime);
             }
             else
             {
-                currentSpeed = speed;
+                rigid.velocity = Vector3.zero;
             }
         }
         public void OnMovement(InputAction.CallbackContext context)
         {
-            Vector2 move = context.ReadValue<Vector2>();
+            movement = context.ReadValue<Vector2>();
             if (context.started)
             {
-                idle = false;
-                StartCoroutine(nameof(Move), move);
+                isMoving = true;
+                currentSpeed = speed;
             }
             else if (context.canceled)
             {
-                idle = true;
-                rigid.velocity = Vector3.zero;
-                StopCoroutine(nameof(Move));
+                isMoving = false;
+                currentSpeed = 0;
             }
         }
 
@@ -99,15 +99,7 @@ namespace WEditor.Game.Player
                 yield return null;
             }
         }
-        IEnumerator Move(Vector2 move)
-        {
-            while (move != Vector2.zero)
-            {
-                Vector3 dir = transform.forward * move.y + transform.right * move.x;
-                rigid.MovePosition(rigid.position + dir * currentSpeed * Time.deltaTime);
-                yield return null;
-            }
-        }
+
 
         public void OnSprint(InputAction.CallbackContext context)
         {

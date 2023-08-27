@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using WEditor.Events;
 
 namespace WEditor.Game.Player
@@ -13,10 +12,10 @@ namespace WEditor.Game.Player
             base.ShootRay();
         }
         private void OnEnable() => GameplayEvent.instance.AmmoChanged("-");
-        private void LateUpdate() => animator.SetBool("isShooting", isShooting);
+        private void LateUpdate() => animator.SetBool("isShooting", IsShooting);
         public override void AnimationEvent_StopShooting()
         {
-            isShooting = false;
+            IsShooting = false;
 
             if (isHolding) Fire();
         }

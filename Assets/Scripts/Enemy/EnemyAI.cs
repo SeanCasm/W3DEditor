@@ -23,6 +23,7 @@ namespace WEditor.Game.Enemy
         private bool Paused => Time.timeScale == 0;
         private bool IsFollowing => eBehaviour == MovementBehaviour.Follow;
         private bool IsIdle => eBehaviour == MovementBehaviour.Idle;
+        private bool IsAlerted => eBehaviour == MovementBehaviour.Alert;
         private bool IsAttacking => eBehaviour == MovementBehaviour.Attack;
         private int layerMaskCombined = (1 << 6) | (1 << 7);
         private MovementBehaviour eBehaviour = MovementBehaviour.Idle;
@@ -77,6 +78,7 @@ namespace WEditor.Game.Enemy
             {
                 animator.SetBool("Idle", IsIdle);
                 animator.SetBool("Walk", IsFollowing);
+                animator.SetBool("Attack", IsAlerted || IsAttacking);
             }
         }
         public RaycastHit DrawRaycast()
@@ -92,42 +94,46 @@ namespace WEditor.Game.Enemy
 #if UNITY_EDITOR
             Debug.DrawRay(LocalCenter, PlayerDirection * Vector3.Distance(LocalCenter, PlayerPosition), Color.cyan);
 #endif
-            switch (raycastHit.collider.tag)
-            {
-                case "Ground":
+            if (raycastHit.collider)
+                switch (raycastHit.collider.tag)
+                {
+                    case "Sensor":
 #if UNITY_EDITOR
-                    Debug.DrawRay(LocalCenter, PlayerDirection * tileCheckDistance, Color.red);
+                        Debug.DrawRay(LocalCenter, PlayerDirection * tileCheckDistance, Color.red);
 #endif
+                        float distance = Vector3.Distance(LocalCenter, raycastHit.collider.bounds.center);
+                        Sensor doorSensor = raycastHit.collider.GetComponent<Sensor>();
+                        if (doorSensor != null && distance <= .1f)
+                        {
+                            if (doorSensor.doorState != State.Open && !IsAttacking)
+                                eBehaviour = MovementBehaviour.Follow;
 
-                    float distance = Vector3.Distance(transform.position, raycastHit.transform.position);
-                    Sensor doorSensor = raycastHit.collider.GetComponent<Sensor>();
-                    if (doorSensor != null && distance <= .1f)
-                    {
-                        if (doorSensor.doorState != State.Open)
-                            eBehaviour = MovementBehaviour.Idle;
-                    }
-                    if (IsAttacking)
-                        eBehaviour = MovementBehaviour.Follow;
-                    break;
-                case "Player":
-                    float playerDistance = Vector3.Distance(LocalCenter, PlayerPosition);
+                        }
+                        else if (IsAttacking)
+                            eBehaviour = MovementBehaviour.Follow;
+                        break;
+                    case "Ground":
+                        if (IsAttacking)
+                            eBehaviour = MovementBehaviour.Follow;
+                        break;
+                    case "Player":
+                        float playerDistance = Vector3.Distance(LocalCenter, PlayerPosition);
 #if UNITY_EDITOR
-                    Debug.DrawRay(LocalCenter, PlayerDirection * playerDistance, Color.green);
+                        Debug.DrawRay(LocalCenter, PlayerDirection * playerDistance, Color.green);
 #endif
-                    if (playerDistance <= distanceToAttack && (IsFollowing || IsIdle))
-                    {
-                        if (!audioSource.isPlaying)
-                            audioSource.PlayOneShot(alertedClip);
-                        animator.SetTrigger("Attack");
-                        eBehaviour = MovementBehaviour.Alert;
-                    }
-                    else
-                    if (playerDistance > distanceToAttack && (IsIdle || IsAttacking))
-                    {
-                        eBehaviour = MovementBehaviour.Follow;
-                    }
-                    break;
-            }
+                        if (playerDistance <= distanceToAttack && !IsAttacking && !IsAlerted)
+                        {
+                            if (!audioSource.isPlaying)
+                                audioSource.PlayOneShot(alertedClip);
+                            eBehaviour = MovementBehaviour.Alert;
+                        }
+                        else
+                        if (playerDistance > distanceToAttack)
+                        {
+                            eBehaviour = MovementBehaviour.Follow;
+                        }
+                        break;
+                }
         }
         void FollowPlayerPath(Vector3 target)
         {
