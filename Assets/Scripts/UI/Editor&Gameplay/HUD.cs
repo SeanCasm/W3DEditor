@@ -19,6 +19,7 @@ namespace WEditor.Game.UI
         {
             EditorEvent.instance.onPreviewModeExit += OnPreviewModeExit;
             GameplayEvent.instance.onAmmoChanged += OnAmmoChanged;
+            GameplayEvent.instance.onReset += OnPreviewModeExit;
             GameplayEvent.instance.onScoreChanged += OnScoreChanged;
             GameplayEvent.instance.onHealthChanged += OnHealthChanged;
             GameplayEvent.instance.onKeyPickedUp += OnKeyPickedUp;
@@ -27,6 +28,7 @@ namespace WEditor.Game.UI
         {
             EditorEvent.instance.onPreviewModeExit -= OnPreviewModeExit;
             GameplayEvent.instance.onAmmoChanged -= OnAmmoChanged;
+            GameplayEvent.instance.onReset -= OnPreviewModeExit;
             GameplayEvent.instance.onScoreChanged -= OnScoreChanged;
             GameplayEvent.instance.onHealthChanged -= OnHealthChanged;
             GameplayEvent.instance.onKeyPickedUp -= OnKeyPickedUp;
@@ -44,7 +46,7 @@ namespace WEditor.Game.UI
         }
         private void OnAmmoChanged(string amount)
         {
-            ammo.text = "Ammo <br>" + amount;
+            ammo.text = "Ammo \n" + amount;
         }
         private void OnScoreChanged(int amount)
         {
@@ -53,7 +55,7 @@ namespace WEditor.Game.UI
         }
         private void OnHealthChanged(int amount)
         {
-            health.text = "Health <br>" + amount;
+            health.text = "Health \n" + amount;
             int healthTier = amount / 16;
             if (amount > 0 && amount <= 16)
                 healthTier = 1;
